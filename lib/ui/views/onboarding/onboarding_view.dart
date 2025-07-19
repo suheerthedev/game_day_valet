@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:game_day_valet/ui/common/app_colors.dart';
+import 'package:game_day_valet/ui/widgets/common/main_button/main_button.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:stacked/stacked.dart';
 
@@ -37,27 +38,13 @@ class OnboardingView extends StackedView<OnboardingViewModel> {
                       fontSize: 16.sp,
                       fontWeight: FontWeight.w600,
                       color: AppColors.white)),
-              InkWell(
-                onTap: viewModel.onGetStarted,
-                child: Container(
-                    width: 340.w,
-                    height: 58.h,
-                    decoration: BoxDecoration(
-                      color: AppColors.secondary,
-                      borderRadius: BorderRadius.circular(10.r),
-                      border:
-                          BoxBorder.all(width: 1.04.w, color: AppColors.white),
-                    ),
-                    child: Center(
-                      child: Text(
-                        'Get Started',
-                        style: GoogleFonts.poppins(
-                            fontSize: 16.sp,
-                            fontWeight: FontWeight.w500,
-                            color: AppColors.white),
-                      ),
-                    )),
-              )
+              MainButton(
+                  text: "Get Started",
+                  onTap: viewModel.onGetStarted,
+                  hasBorder: true,
+                  color: AppColors.secondary,
+                  borderColor: AppColors.white,
+                  textColor: AppColors.white)
             ],
           )),
     );
