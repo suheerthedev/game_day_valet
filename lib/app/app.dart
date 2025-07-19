@@ -4,13 +4,15 @@ import 'package:game_day_valet/ui/views/home/home_view.dart';
 import 'package:game_day_valet/ui/views/startup/startup_view.dart';
 import 'package:stacked/stacked_annotations.dart';
 import 'package:stacked_services/stacked_services.dart';
+import 'package:game_day_valet/ui/views/onboarding/onboarding_view.dart';
 // @stacked-import
 
 @StackedApp(
   routes: [
     MaterialRoute(page: HomeView),
     MaterialRoute(page: StartupView),
-    // @stacked-route
+    MaterialRoute(page: OnboardingView),
+// @stacked-route
   ],
   dependencies: [
     LazySingleton(classType: BottomSheetService),

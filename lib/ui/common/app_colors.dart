@@ -41,10 +41,10 @@ class AppColors {
   static const Color primaryOpacity60 = Color(0x990066FF); // 60% opacity
 }
 
-  // static const Color headingTextColor = Color(0xFF192126);
-  // static const Color subHeadingTextColor = Color(0xFF150000);
-  // static const Color subHeadingTextColor2 = Color(0xFFC94C4C);
+// static const Color headingTextColor = Color(0xFF192126);
+// static const Color subHeadingTextColor = Color(0xFF150000);
+// static const Color subHeadingTextColor2 = Color(0xFFC94C4C);
 
-  // static const Color hintTextColor = Color(0xFF9EA3AE);
+// static const Color hintTextColor = Color(0xFF9EA3AE);
 
-  // static const Color lightContainerColor = Color(0xFFE5E6EB);
+// static const Color lightContainerColor = Color(0xFFE5E6EB);
