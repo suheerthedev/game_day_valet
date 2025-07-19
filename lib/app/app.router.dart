@@ -57,9 +57,15 @@ class StackedRouter extends _i1.RouterBase {
       );
     },
     _i4.OnboardingView: (data) {
-      return _i5.MaterialPageRoute<dynamic>(
-        builder: (context) => const _i4.OnboardingView(),
+      return _i5.PageRouteBuilder<dynamic>(
+        pageBuilder: (context, animation, secondaryAnimation) =>
+            const _i4.OnboardingView(),
         settings: data,
+        opaque: false,
+        transitionsBuilder:
+            data.transition ?? _i1.TransitionsBuilders.slideLeftWithFade,
+        transitionDuration: const Duration(milliseconds: 1000),
+        fullscreenDialog: true,
       );
     },
   };
