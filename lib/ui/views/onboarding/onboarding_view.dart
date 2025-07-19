@@ -17,6 +17,7 @@ class OnboardingView extends StackedView<OnboardingViewModel> {
     Widget? child,
   ) {
     return Scaffold(
+      backgroundColor: AppColors.scaffoldBackground,
       body: Container(
           width: double.infinity,
           height: double.infinity,

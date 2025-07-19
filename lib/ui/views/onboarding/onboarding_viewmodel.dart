@@ -7,6 +7,6 @@ class OnboardingViewModel extends BaseViewModel {
   final _navigationService = locator<NavigationService>();
 
   void onGetStarted() {
-    _navigationService.clearStackAndShow(Routes.homeView);
+    _navigationService.clearStackAndShow(Routes.signUpView);
   }
 }
