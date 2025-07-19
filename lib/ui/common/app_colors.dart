@@ -7,3 +7,44 @@ const Color kcMediumGrey = Color(0xFF474A54);
 const Color kcLightGrey = Color.fromARGB(255, 187, 187, 187);
 const Color kcVeryLightGrey = Color(0xFFE3E3E3);
 const Color kcBackgroundColor = kcDarkGreyColor;
+
+class AppColors {
+  //Brand Colors
+  static const Color primary = Color(0xFF192126);
+  static const Color secondary = Color(0xFFC94C4C);
+
+  // GRAYSCALE
+  static const Color black = Color(0xFF000000);
+  static const Color white = Color(0xFFFFFFFF);
+  static const Color grey100 = Color(0xFFF5F5F5);
+  static const Color grey300 = Color(0xFFE0E0E0);
+  static const Color grey500 = Color(0xFF9E9E9E);
+  static const Color grey700 = Color(0xFF616161);
+
+  // BACKGROUNDS
+  static const Color background = white;
+  static const Color scaffoldBackground = white;
+  static const Color container = Color(0xFFE5E6EB);
+
+  // TEXT
+  static const Color textPrimary = Color(0xFF192126);
+  static const Color textSecondary = Color(0xFFC94C4C);
+  static const Color textHint = Color(0xFF9EA3AE);
+
+  // STATUS COLORS
+  static const Color success = Color(0xFF4CAF50);
+  static const Color error = Color(0xFFF44336);
+  static const Color warning = Color(0xFFFFC107);
+  static const Color info = Color(0xFF2196F3);
+
+  // TRANSPARENT VARIANTS
+  static const Color primaryOpacity60 = Color(0x990066FF); // 60% opacity
+}
+
+  // static const Color headingTextColor = Color(0xFF192126);
+  // static const Color subHeadingTextColor = Color(0xFF150000);
+  // static const Color subHeadingTextColor2 = Color(0xFFC94C4C);
+
+  // static const Color hintTextColor = Color(0xFF9EA3AE);
+
+  // static const Color lightContainerColor = Color(0xFFE5E6EB);
