@@ -1,7 +1,7 @@
 import 'package:stacked/stacked.dart';
 
 class HomeViewModel extends BaseViewModel {
-  String selectedSport = 'Football'; // Default selected sport
+  String selectedSport = ''; // Default selected sport
 
   final List<String> sports = [
     'Soccer',

@@ -31,6 +31,7 @@ class AppColors {
   static const Color textPrimary = Color(0xFF192126);
   static const Color textSecondary = Color(0xFFC94C4C);
   static const Color textHint = Color(0xFF9EA3AE);
+  static const Color lightText = Color(0xFF828282);
 
   // STATUS COLORS
   static const Color success = Color(0xFF4CAF50);
