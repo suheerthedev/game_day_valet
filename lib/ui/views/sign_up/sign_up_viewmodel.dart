@@ -15,7 +15,7 @@ class SignUpViewModel extends BaseViewModel {
     print(emailController.text);
     print(nameController.text);
     print(passwordController.text);
-    _navigationService.navigateToHomeView();
+    _navigationService.navigateToMainView();
   }
 
   void onGoogleSignUp() {
