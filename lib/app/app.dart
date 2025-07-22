@@ -19,7 +19,7 @@ import 'package:game_day_valet/ui/views/reset_password/reset_password_view.dart'
     CustomRoute(
       page: OnboardingView,
       transitionsBuilder: TransitionsBuilders.slideLeft,
-      durationInMilliseconds: 500,
+      durationInMilliseconds: 1000,
       opaque: false,
       fullscreenDialog: true,
     ),
