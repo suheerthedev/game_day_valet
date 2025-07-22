@@ -34,20 +34,23 @@ Account""",
                       color: AppColors.primary,
                     )),
                 SizedBox(height: 5.h),
-                Text.rich(TextSpan(
-                    text: "Already have an account? ",
-                    style: GoogleFonts.poppins(
-                        fontSize: 14.sp,
-                        fontWeight: FontWeight.w600,
-                        color: AppColors.primary),
-                    children: [
-                      TextSpan(
-                          text: "Sign in",
-                          style: GoogleFonts.poppins(
-                              fontSize: 14.sp,
-                              color: AppColors.secondary,
-                              fontWeight: FontWeight.w600))
-                    ])),
+                GestureDetector(
+                  onTap: viewModel.goToSignIn,
+                  child: Text.rich(TextSpan(
+                      text: "Already have an account? ",
+                      style: GoogleFonts.poppins(
+                          fontSize: 14.sp,
+                          fontWeight: FontWeight.w600,
+                          color: AppColors.primary),
+                      children: [
+                        TextSpan(
+                            text: "Sign in",
+                            style: GoogleFonts.poppins(
+                                fontSize: 14.sp,
+                                color: AppColors.secondary,
+                                fontWeight: FontWeight.w600))
+                      ])),
+                ),
                 SizedBox(height: 30.h),
                 TextField(
                   controller: viewModel.emailController,
@@ -113,6 +116,11 @@ Account""",
                       fontWeight: FontWeight.w500,
                       color: AppColors.textHint,
                     ),
+                    suffixIcon: IconButton(
+                      onPressed: () {},
+                      icon: const Icon(Icons.visibility_outlined),
+                    ),
+                    suffixIconColor: AppColors.primary,
                     filled: true,
                     fillColor: AppColors.grey50,
                     border: OutlineInputBorder(
@@ -137,7 +145,7 @@ Account""",
                     color: AppColors.secondary,
                     borderColor: AppColors.white,
                     textColor: AppColors.white),
-                SizedBox(height: 20.h),
+                SizedBox(height: 30.h),
                 Row(
                   children: [
                     const Expanded(
@@ -160,7 +168,7 @@ Account""",
                 ),
 
                 //Google Button
-                SizedBox(height: 20.h),
+                SizedBox(height: 30.h),
                 InkWell(
                   onTap: viewModel.onGoogleSignUp,
                   child: Container(
