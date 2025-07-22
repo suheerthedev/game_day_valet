@@ -8,6 +8,7 @@ import 'package:stacked_services/stacked_services.dart';
 import 'package:game_day_valet/ui/views/onboarding/onboarding_view.dart';
 import 'package:game_day_valet/ui/views/sign_up/sign_up_view.dart';
 import 'package:game_day_valet/ui/views/sign_in/sign_in_view.dart';
+import 'package:game_day_valet/ui/views/forgot_password/forgot_password_view.dart';
 // @stacked-import
 
 @StackedApp(
@@ -23,6 +24,7 @@ import 'package:game_day_valet/ui/views/sign_in/sign_in_view.dart';
     ),
     MaterialRoute(page: SignUpView),
     MaterialRoute(page: SignInView),
+    MaterialRoute(page: ForgotPasswordView),
 // @stacked-route
   ],
   dependencies: [
