@@ -15,6 +15,7 @@ class SignInViewModel extends BaseViewModel {
   void onSignIn() {
     print(emailController.text);
     print(passwordController.text);
+    _navigationService.navigateToHomeView();
   }
 
   void onGoogleSignIn() {
