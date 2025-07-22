@@ -34,6 +34,8 @@ class Routes {
 
   static const resetPasswordView = '/reset-password-view';
 
+  static const homeView = '/home-view';
+
   static const all = <String>{
     homeView,
     startupView,
@@ -75,6 +77,10 @@ class StackedRouter extends _i1.RouterBase {
       Routes.resetPasswordView,
       page: _i8.ResetPasswordView,
     ),
+    _i1.RouteDef(
+      Routes.homeView,
+      page: _i2.HomeView,
+    ),
   ];
 
   final _pagesMap = <Type, _i1.StackedRouteFactory>{
@@ -98,7 +104,7 @@ class StackedRouter extends _i1.RouterBase {
         opaque: false,
         transitionsBuilder:
             data.transition ?? _i1.TransitionsBuilders.slideLeft,
-        transitionDuration: const Duration(milliseconds: 500),
+        transitionDuration: const Duration(milliseconds: 1000),
         fullscreenDialog: true,
       );
     },
@@ -234,6 +240,20 @@ extension NavigatorStateExtension on _i10.NavigationService {
         transition: transition);
   }
 
+  Future<dynamic> navigateToHomeView([
+    int? routerId,
+    bool preventDuplicates = true,
+    Map<String, String>? parameters,
+    Widget Function(BuildContext, Animation<double>, Animation<double>, Widget)?
+        transition,
+  ]) async {
+    return navigateTo<dynamic>(Routes.homeView,
+        id: routerId,
+        preventDuplicates: preventDuplicates,
+        parameters: parameters,
+        transition: transition);
+  }
+
   Future<dynamic> replaceWithHomeView([
     int? routerId,
     bool preventDuplicates = true,
@@ -326,6 +346,20 @@ extension NavigatorStateExtension on _i10.NavigationService {
         transition,
   ]) async {
     return replaceWith<dynamic>(Routes.resetPasswordView,
+        id: routerId,
+        preventDuplicates: preventDuplicates,
+        parameters: parameters,
+        transition: transition);
+  }
+
+  Future<dynamic> replaceWithHomeView([
+    int? routerId,
+    bool preventDuplicates = true,
+    Map<String, String>? parameters,
+    Widget Function(BuildContext, Animation<double>, Animation<double>, Widget)?
+        transition,
+  ]) async {
+    return replaceWith<dynamic>(Routes.homeView,
         id: routerId,
         preventDuplicates: preventDuplicates,
         parameters: parameters,
