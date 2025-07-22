@@ -319,6 +319,7 @@ class HomeView extends StackedView<HomeViewModel> {
                                           fontWeight: FontWeight.w600,
                                           color: AppColors.textPrimary),
                                     ),
+                                    SizedBox(height: 10.h),
                                     SizedBox(
                                       width: double.infinity,
                                       height: 201.h,
