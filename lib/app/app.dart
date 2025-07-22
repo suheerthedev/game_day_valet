@@ -7,6 +7,7 @@ import 'package:stacked/stacked_annotations.dart';
 import 'package:stacked_services/stacked_services.dart';
 import 'package:game_day_valet/ui/views/onboarding/onboarding_view.dart';
 import 'package:game_day_valet/ui/views/sign_up/sign_up_view.dart';
+import 'package:game_day_valet/ui/views/sign_in/sign_in_view.dart';
 // @stacked-import
 
 @StackedApp(
@@ -21,6 +22,7 @@ import 'package:game_day_valet/ui/views/sign_up/sign_up_view.dart';
       fullscreenDialog: true,
     ),
     MaterialRoute(page: SignUpView),
+    MaterialRoute(page: SignInView),
 // @stacked-route
   ],
   dependencies: [
