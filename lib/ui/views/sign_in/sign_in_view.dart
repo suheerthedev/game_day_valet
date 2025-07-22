@@ -21,7 +21,7 @@ class SignInView extends StackedView<SignInViewModel> {
         backgroundColor: AppColors.scaffoldBackground,
         body: SafeArea(
             child: Padding(
-          padding: EdgeInsets.symmetric(horizontal: 20.w, vertical: 20.h),
+          padding: EdgeInsets.symmetric(horizontal: 25.w, vertical: 20.h),
           child: SingleChildScrollView(
             child: Column(
               crossAxisAlignment: CrossAxisAlignment.start,
