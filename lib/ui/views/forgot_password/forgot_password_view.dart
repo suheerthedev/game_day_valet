@@ -20,7 +20,7 @@ class ForgotPasswordView extends StackedView<ForgotPasswordViewModel> {
         backgroundColor: AppColors.scaffoldBackground,
         body: SafeArea(
             child: Padding(
-          padding: EdgeInsets.symmetric(horizontal: 25.w, vertical: 20.h),
+          padding: EdgeInsets.symmetric(horizontal: 20.w, vertical: 20.h),
           child: SingleChildScrollView(
             child: Column(
               crossAxisAlignment: CrossAxisAlignment.start,
@@ -42,29 +42,33 @@ Password""",
                   ),
                 ),
                 SizedBox(height: 30.h),
-                TextField(
-                  controller: viewModel.emailController,
-                  cursorColor: AppColors.primary,
-                  decoration: InputDecoration(
-                    labelText: "Email",
-                    labelStyle: GoogleFonts.poppins(
-                      fontSize: 14.sp,
-                      fontWeight: FontWeight.w500,
-                      color: AppColors.textHint,
-                    ),
-                    filled: true,
-                    fillColor: AppColors.grey50,
-                    border: OutlineInputBorder(
-                      borderSide: const BorderSide(color: AppColors.grey100),
-                      borderRadius: BorderRadius.circular(10.r),
-                    ),
-                    enabledBorder: OutlineInputBorder(
-                      borderSide: const BorderSide(color: AppColors.grey100),
-                      borderRadius: BorderRadius.circular(10.r),
-                    ),
-                    focusedBorder: OutlineInputBorder(
-                      borderSide: const BorderSide(color: AppColors.primary),
-                      borderRadius: BorderRadius.circular(10.r),
+                SizedBox(
+                  width: 340.w,
+                  height: 58.h,
+                  child: TextField(
+                    controller: viewModel.emailController,
+                    cursorColor: AppColors.primary,
+                    decoration: InputDecoration(
+                      labelText: "Email",
+                      labelStyle: GoogleFonts.poppins(
+                        fontSize: 14.sp,
+                        fontWeight: FontWeight.w500,
+                        color: AppColors.textHint,
+                      ),
+                      filled: true,
+                      fillColor: AppColors.grey50,
+                      border: OutlineInputBorder(
+                        borderSide: const BorderSide(color: AppColors.grey100),
+                        borderRadius: BorderRadius.circular(10.r),
+                      ),
+                      enabledBorder: OutlineInputBorder(
+                        borderSide: const BorderSide(color: AppColors.grey100),
+                        borderRadius: BorderRadius.circular(10.r),
+                      ),
+                      focusedBorder: OutlineInputBorder(
+                        borderSide: const BorderSide(color: AppColors.primary),
+                        borderRadius: BorderRadius.circular(10.r),
+                      ),
                     ),
                   ),
                 ),

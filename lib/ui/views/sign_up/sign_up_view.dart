@@ -21,7 +21,7 @@ class SignUpView extends StackedView<SignUpViewModel> {
         backgroundColor: AppColors.scaffoldBackground,
         body: SafeArea(
             child: Padding(
-          padding: EdgeInsets.symmetric(horizontal: 25.w, vertical: 20.h),
+          padding: EdgeInsets.symmetric(horizontal: 20.w, vertical: 20.h),
           child: SingleChildScrollView(
             child: Column(
               crossAxisAlignment: CrossAxisAlignment.start,
@@ -52,88 +52,100 @@ Account""",
                       ])),
                 ),
                 SizedBox(height: 30.h),
-                TextField(
-                  controller: viewModel.emailController,
-                  cursorColor: AppColors.primary,
-                  decoration: InputDecoration(
-                    labelText: "Email",
-                    labelStyle: GoogleFonts.poppins(
-                      fontSize: 14.sp,
-                      fontWeight: FontWeight.w500,
-                      color: AppColors.textHint,
-                    ),
-                    filled: true,
-                    fillColor: AppColors.grey50,
-                    border: OutlineInputBorder(
-                      borderSide: const BorderSide(color: AppColors.grey100),
-                      borderRadius: BorderRadius.circular(10.r),
-                    ),
-                    enabledBorder: OutlineInputBorder(
-                      borderSide: const BorderSide(color: AppColors.grey100),
-                      borderRadius: BorderRadius.circular(10.r),
-                    ),
-                    focusedBorder: OutlineInputBorder(
-                      borderSide: const BorderSide(color: AppColors.primary),
-                      borderRadius: BorderRadius.circular(10.r),
-                    ),
-                  ),
-                ),
-                SizedBox(height: 20.h),
-                TextField(
-                  controller: viewModel.nameController,
-                  cursorColor: AppColors.primary,
-                  decoration: InputDecoration(
-                    labelText: "Name",
-                    labelStyle: GoogleFonts.poppins(
-                      fontSize: 14.sp,
-                      fontWeight: FontWeight.w500,
-                      color: AppColors.textHint,
-                    ),
-                    filled: true,
-                    fillColor: AppColors.grey50,
-                    border: OutlineInputBorder(
-                      borderSide: const BorderSide(color: AppColors.grey100),
-                      borderRadius: BorderRadius.circular(10.r),
-                    ),
-                    enabledBorder: OutlineInputBorder(
-                      borderSide: const BorderSide(color: AppColors.grey100),
-                      borderRadius: BorderRadius.circular(10.r),
-                    ),
-                    focusedBorder: OutlineInputBorder(
-                      borderSide: const BorderSide(color: AppColors.primary),
-                      borderRadius: BorderRadius.circular(10.r),
+                SizedBox(
+                  width: 340.w,
+                  height: 58.h,
+                  child: TextField(
+                    controller: viewModel.emailController,
+                    cursorColor: AppColors.primary,
+                    decoration: InputDecoration(
+                      labelText: "Email",
+                      labelStyle: GoogleFonts.poppins(
+                        fontSize: 14.sp,
+                        fontWeight: FontWeight.w500,
+                        color: AppColors.textHint,
+                      ),
+                      filled: true,
+                      fillColor: AppColors.grey50,
+                      border: OutlineInputBorder(
+                        borderSide: const BorderSide(color: AppColors.grey100),
+                        borderRadius: BorderRadius.circular(10.r),
+                      ),
+                      enabledBorder: OutlineInputBorder(
+                        borderSide: const BorderSide(color: AppColors.grey100),
+                        borderRadius: BorderRadius.circular(10.r),
+                      ),
+                      focusedBorder: OutlineInputBorder(
+                        borderSide: const BorderSide(color: AppColors.primary),
+                        borderRadius: BorderRadius.circular(10.r),
+                      ),
                     ),
                   ),
                 ),
                 SizedBox(height: 20.h),
-                TextField(
-                  controller: viewModel.passwordController,
-                  cursorColor: AppColors.primary,
-                  decoration: InputDecoration(
-                    labelText: "Password",
-                    labelStyle: GoogleFonts.poppins(
-                      fontSize: 14.sp,
-                      fontWeight: FontWeight.w500,
-                      color: AppColors.textHint,
+                SizedBox(
+                  width: 340.w,
+                  height: 58.h,
+                  child: TextField(
+                    controller: viewModel.nameController,
+                    cursorColor: AppColors.primary,
+                    decoration: InputDecoration(
+                      labelText: "Name",
+                      labelStyle: GoogleFonts.poppins(
+                        fontSize: 14.sp,
+                        fontWeight: FontWeight.w500,
+                        color: AppColors.textHint,
+                      ),
+                      filled: true,
+                      fillColor: AppColors.grey50,
+                      border: OutlineInputBorder(
+                        borderSide: const BorderSide(color: AppColors.grey100),
+                        borderRadius: BorderRadius.circular(10.r),
+                      ),
+                      enabledBorder: OutlineInputBorder(
+                        borderSide: const BorderSide(color: AppColors.grey100),
+                        borderRadius: BorderRadius.circular(10.r),
+                      ),
+                      focusedBorder: OutlineInputBorder(
+                        borderSide: const BorderSide(color: AppColors.primary),
+                        borderRadius: BorderRadius.circular(10.r),
+                      ),
                     ),
-                    suffixIcon: IconButton(
-                      onPressed: () {},
-                      icon: const Icon(Icons.visibility_outlined),
-                    ),
-                    suffixIconColor: AppColors.primary,
-                    filled: true,
-                    fillColor: AppColors.grey50,
-                    border: OutlineInputBorder(
-                      borderSide: const BorderSide(color: AppColors.grey100),
-                      borderRadius: BorderRadius.circular(10.r),
-                    ),
-                    enabledBorder: OutlineInputBorder(
-                      borderSide: const BorderSide(color: AppColors.grey100),
-                      borderRadius: BorderRadius.circular(10.r),
-                    ),
-                    focusedBorder: OutlineInputBorder(
-                      borderSide: const BorderSide(color: AppColors.primary),
-                      borderRadius: BorderRadius.circular(10.r),
+                  ),
+                ),
+                SizedBox(height: 20.h),
+                SizedBox(
+                  width: 340.w,
+                  height: 58.h,
+                  child: TextField(
+                    controller: viewModel.passwordController,
+                    cursorColor: AppColors.primary,
+                    decoration: InputDecoration(
+                      labelText: "Password",
+                      labelStyle: GoogleFonts.poppins(
+                        fontSize: 14.sp,
+                        fontWeight: FontWeight.w500,
+                        color: AppColors.textHint,
+                      ),
+                      suffixIcon: IconButton(
+                        onPressed: () {},
+                        icon: const Icon(Icons.visibility_outlined),
+                      ),
+                      suffixIconColor: AppColors.primary,
+                      filled: true,
+                      fillColor: AppColors.grey50,
+                      border: OutlineInputBorder(
+                        borderSide: const BorderSide(color: AppColors.grey100),
+                        borderRadius: BorderRadius.circular(10.r),
+                      ),
+                      enabledBorder: OutlineInputBorder(
+                        borderSide: const BorderSide(color: AppColors.grey100),
+                        borderRadius: BorderRadius.circular(10.r),
+                      ),
+                      focusedBorder: OutlineInputBorder(
+                        borderSide: const BorderSide(color: AppColors.primary),
+                        borderRadius: BorderRadius.circular(10.r),
+                      ),
                     ),
                   ),
                 ),
