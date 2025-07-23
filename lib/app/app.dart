@@ -16,6 +16,7 @@ import 'package:game_day_valet/ui/views/rental_status/rental_status_view.dart';
 import 'package:game_day_valet/ui/views/profile/profile_view.dart';
 import 'package:game_day_valet/ui/views/edit_profile/edit_profile_view.dart';
 import 'package:game_day_valet/ui/views/rental_history/rental_history_view.dart';
+import 'package:game_day_valet/ui/views/favorites/favorites_view.dart';
 // @stacked-import
 
 @StackedApp(
@@ -39,6 +40,7 @@ import 'package:game_day_valet/ui/views/rental_history/rental_history_view.dart'
     MaterialRoute(page: ProfileView),
     MaterialRoute(page: EditProfileView),
     MaterialRoute(page: RentalHistoryView),
+    MaterialRoute(page: FavoritesView),
 // @stacked-route
   ],
   dependencies: [
