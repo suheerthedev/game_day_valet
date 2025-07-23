@@ -31,4 +31,8 @@ class ProfileViewModel extends BaseViewModel {
   }
 
   void onNotificationsTap() {}
+
+  void onChatTap() {
+    _navigationService.navigateToChatView();
+  }
 }

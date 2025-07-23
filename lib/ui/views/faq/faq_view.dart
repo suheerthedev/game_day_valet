@@ -1,3 +1,4 @@
+import 'package:floating_chat_button/floating_chat_button.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:game_day_valet/models/faq_item_model.dart';
@@ -5,6 +6,7 @@ import 'package:game_day_valet/ui/common/app_colors.dart';
 import 'package:game_day_valet/ui/views/faq/faq_viewmodel.dart';
 import 'package:game_day_valet/ui/widgets/common/main_app_bar/main_app_bar.dart';
 import 'package:google_fonts/google_fonts.dart';
+import 'package:iconsax_flutter/iconsax_flutter.dart';
 import 'package:stacked/stacked.dart';
 
 class FaqView extends StackedView<FaqViewModel> {
@@ -33,20 +35,49 @@ class FaqView extends StackedView<FaqViewModel> {
         body: SafeArea(
             child: Padding(
                 padding: EdgeInsets.symmetric(horizontal: 25.w, vertical: 20.h),
-                child: Column(
+                child: Stack(
                   children: [
-                    ListView.separated(
-                      shrinkWrap: true,
-                      physics: const NeverScrollableScrollPhysics(),
-                      itemCount: viewModel.faqItems.length,
-                      itemBuilder: (context, index) {
-                        return _buildFAQItem(context, viewModel, index,
-                            viewModel.faqItems[index]);
-                      },
-                      separatorBuilder: (context, index) {
-                        return SizedBox(height: 10.h);
-                      },
+                    Column(
+                      children: [
+                        ListView.separated(
+                          shrinkWrap: true,
+                          physics: const NeverScrollableScrollPhysics(),
+                          itemCount: viewModel.faqItems.length,
+                          itemBuilder: (context, index) {
+                            return _buildFAQItem(context, viewModel, index,
+                                viewModel.faqItems[index]);
+                          },
+                          separatorBuilder: (context, index) {
+                            return SizedBox(height: 10.h);
+                          },
+                        ),
+                      ],
                     ),
+                    FloatingChatButton(
+                      onTap: (_) {
+                        viewModel.onChatTap();
+                      },
+                      chatIconWidget: const Padding(
+                        padding: EdgeInsets.all(14.0),
+                        child: Icon(
+                          Iconsax.message_2_copy,
+                          color: AppColors.white,
+                          size: 24,
+                        ),
+                      ),
+                      messageBackgroundColor: AppColors.secondary,
+                      chatIconBorderColor: AppColors.secondary,
+                      chatIconBackgroundColor: AppColors.secondary,
+                      messageBorderWidth: 2,
+                      messageText: "You've received a message!",
+                      messageTextStyle: GoogleFonts.poppins(
+                          fontSize: 14.sp,
+                          fontWeight: FontWeight.w400,
+                          color: AppColors.white),
+                      showMessageParameters: ShowMessageParameters(
+                          delayDuration: const Duration(seconds: 2),
+                          durationToShowMessage: const Duration(seconds: 5)),
+                    )
                   ],
                 ))));
   }

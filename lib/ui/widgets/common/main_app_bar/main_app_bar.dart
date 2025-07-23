@@ -49,7 +49,7 @@ class MainAppBar extends StackedView<MainAppBarModel>
       ),
       actionsPadding: EdgeInsets.only(right: 16.w),
       actions: [
-        InkWell(
+        GestureDetector(
           onTap: () {
             viewModel.onNotificationTap();
           },

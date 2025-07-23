@@ -8,6 +8,7 @@ environment:
 
 dependencies:
   bottom_sheet: ^4.0.4
+  floating_chat_button: ^1.1.0
   flutter:
     sdk: flutter
   flutter_screenutil: ^5.9.3
