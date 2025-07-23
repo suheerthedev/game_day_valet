@@ -22,10 +22,7 @@ class FaqView extends StackedView<FaqViewModel> {
         backgroundColor: AppColors.scaffoldBackground,
         appBar: MainAppBar(
           title: Text(
-            'Frequently Asked Questions',
-            softWrap: true,
-            maxLines: 2,
-            overflow: TextOverflow.visible,
+            'FAQs',
             style: GoogleFonts.poppins(
                 fontSize: 24.sp,
                 fontWeight: FontWeight.w600,

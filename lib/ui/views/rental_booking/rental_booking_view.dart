@@ -317,12 +317,15 @@ class RentalBookingView extends StackedView<RentalBookingViewModel> {
                           viewModel.insuranceTwo = value ?? false;
                           viewModel.notifyListeners();
                         }),
-                    Text(
-                      "7-Day Warranty – \$1.5 (Recommended)",
-                      style: GoogleFonts.poppins(
-                          fontSize: 14.sp,
-                          fontWeight: FontWeight.w500,
-                          color: AppColors.textPrimary),
+                    Expanded(
+                      child: Text(
+                        "7-Day Warranty – \$1.5 (Recommended)",
+                        softWrap: true,
+                        style: GoogleFonts.poppins(
+                            fontSize: 14.sp,
+                            fontWeight: FontWeight.w500,
+                            color: AppColors.textPrimary),
+                      ),
                     ),
                   ],
                 ),
