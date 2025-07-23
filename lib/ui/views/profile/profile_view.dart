@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:game_day_valet/ui/common/app_colors.dart';
+import 'package:game_day_valet/ui/widgets/common/main_app_bar/main_app_bar.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:iconsax_flutter/iconsax_flutter.dart';
 import 'package:stacked/stacked.dart';
@@ -18,52 +19,79 @@ class ProfileView extends StackedView<ProfileViewModel> {
   ) {
     return Scaffold(
         backgroundColor: AppColors.scaffoldBackground,
-        appBar: AppBar(
-          backgroundColor: AppColors.scaffoldBackground,
-          surfaceTintColor: Colors.transparent,
-          automaticallyImplyLeading: false,
-          title: Row(
-            mainAxisAlignment: MainAxisAlignment.spaceBetween,
+        appBar: MainAppBar(
+          hasLeading: true,
+          hasSubtitle: true,
+          leading: Row(
             children: [
-              Row(
-                children: [
-                  CircleAvatar(
-                    child: Image.asset('assets/images/pfp.png',
-                        width: 50.w, height: 50.h),
-                  ),
-                  SizedBox(width: 10.w),
-                  Column(
-                    crossAxisAlignment: CrossAxisAlignment.start,
-                    children: [
-                      Text(
-                        'Katie',
-                        style: GoogleFonts.poppins(
-                            fontSize: 18.sp,
-                            fontWeight: FontWeight.w700,
-                            color: AppColors.textPrimary),
-                      ),
-                      Text(
-                        'katie@gmail.com',
-                        style: GoogleFonts.poppins(
-                            fontSize: 12.sp,
-                            fontWeight: FontWeight.w400,
-                            color: AppColors.textHint),
-                      ),
-                    ],
-                  ),
-                ],
-              ),
               CircleAvatar(
-                radius: 20.r,
-                backgroundColor: AppColors.secondary.withOpacity(0.1),
-                child: Center(
-                  child: Icon(Iconsax.notification,
-                      size: 24.w, color: AppColors.textPrimary),
-                ),
-              )
+                child: Image.asset('assets/images/pfp.png',
+                    width: 50.w, height: 50.h),
+              ),
+              SizedBox(width: 10.w),
             ],
           ),
+          title: Text(
+            'Katie',
+            style: GoogleFonts.poppins(
+                fontSize: 18.sp,
+                fontWeight: FontWeight.w700,
+                color: AppColors.textPrimary),
+          ),
+          subtitle: Text(
+            'katie@gmail.com',
+            style: GoogleFonts.poppins(
+                fontSize: 12.sp,
+                fontWeight: FontWeight.w400,
+                color: AppColors.textHint),
+          ),
         ),
+        // appBar: AppBar(
+        //   backgroundColor: AppColors.scaffoldBackground,
+        //   surfaceTintColor: Colors.transparent,
+        //   automaticallyImplyLeading: false,
+        //   title: Row(
+        //     mainAxisAlignment: MainAxisAlignment.spaceBetween,
+        //     children: [
+        //       Row(
+        //         children: [
+        //           CircleAvatar(
+        //             child: Image.asset('assets/images/pfp.png',
+        //                 width: 50.w, height: 50.h),
+        //           ),
+        //           SizedBox(width: 10.w),
+        //           Column(
+        //             crossAxisAlignment: CrossAxisAlignment.start,
+        //             children: [
+        //               Text(
+        //                 'Katie',
+        //                 style: GoogleFonts.poppins(
+        //                     fontSize: 18.sp,
+        //                     fontWeight: FontWeight.w700,
+        //                     color: AppColors.textPrimary),
+        //               ),
+        //               Text(
+        //                 'katie@gmail.com',
+        //                 style: GoogleFonts.poppins(
+        //                     fontSize: 12.sp,
+        //                     fontWeight: FontWeight.w400,
+        //                     color: AppColors.textHint),
+        //               ),
+        //             ],
+        //           ),
+        //         ],
+        //       ),
+        //       CircleAvatar(
+        //         radius: 20.r,
+        //         backgroundColor: AppColors.secondary.withOpacity(0.1),
+        //         child: Center(
+        //           child: Icon(Iconsax.notification,
+        //               size: 24.w, color: AppColors.textPrimary),
+        //         ),
+        //       )
+        //     ],
+        //   ),
+        // ),
         body: SafeArea(
             child: Padding(
           padding: EdgeInsets.symmetric(horizontal: 25.w, vertical: 20.h),

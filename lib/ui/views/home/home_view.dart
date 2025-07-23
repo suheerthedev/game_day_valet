@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import 'package:game_day_valet/ui/common/app_colors.dart';
+import 'package:game_day_valet/ui/widgets/common/main_app_bar/main_app_bar.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:iconsax_flutter/iconsax_flutter.dart';
 // import 'package:flutter_screenutil/flutter_screenutil.dart';
@@ -21,39 +22,21 @@ class HomeView extends StackedView<HomeViewModel> {
   ) {
     return Scaffold(
         backgroundColor: AppColors.scaffoldBackground,
-        appBar: AppBar(
-          backgroundColor: AppColors.scaffoldBackground,
-          surfaceTintColor: Colors.transparent,
-          automaticallyImplyLeading: false,
-          // elevation: 10,
-          // shadowColor: AppColors.primary.withOpacity(0.1),
-          title: Row(
-            mainAxisAlignment: MainAxisAlignment.spaceBetween,
+        appBar: MainAppBar(
+          title: Column(
+            crossAxisAlignment: CrossAxisAlignment.start,
             children: [
-              Column(
-                crossAxisAlignment: CrossAxisAlignment.start,
-                children: [
-                  Text('Select City',
-                      style: GoogleFonts.poppins(
-                          fontSize: 14.sp,
-                          fontWeight: FontWeight.w400,
-                          color: AppColors.textSecondary)),
-                  Text(
-                    'New York, United States',
-                    style: GoogleFonts.poppins(
-                        fontSize: 14.sp,
-                        fontWeight: FontWeight.w700,
-                        color: AppColors.textPrimary),
-                  )
-                ],
-              ),
-              CircleAvatar(
-                radius: 20.r,
-                backgroundColor: AppColors.secondary.withOpacity(0.1),
-                child: Center(
-                  child: Icon(Iconsax.notification,
-                      size: 24.w, color: AppColors.textPrimary),
-                ),
+              Text('Select City',
+                  style: GoogleFonts.poppins(
+                      fontSize: 14.sp,
+                      fontWeight: FontWeight.w400,
+                      color: AppColors.textSecondary)),
+              Text(
+                'New York, United States',
+                style: GoogleFonts.poppins(
+                    fontSize: 14.sp,
+                    fontWeight: FontWeight.w700,
+                    color: AppColors.textPrimary),
               )
             ],
           ),

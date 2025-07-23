@@ -3,8 +3,8 @@ import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:game_day_valet/models/faq_item_model.dart';
 import 'package:game_day_valet/ui/common/app_colors.dart';
 import 'package:game_day_valet/ui/views/faq/faq_viewmodel.dart';
+import 'package:game_day_valet/ui/widgets/common/main_app_bar/main_app_bar.dart';
 import 'package:google_fonts/google_fonts.dart';
-import 'package:iconsax_flutter/iconsax_flutter.dart';
 import 'package:stacked/stacked.dart';
 
 class FaqView extends StackedView<FaqViewModel> {
@@ -18,34 +18,16 @@ class FaqView extends StackedView<FaqViewModel> {
   ) {
     return Scaffold(
         backgroundColor: AppColors.scaffoldBackground,
-        appBar: AppBar(
-          backgroundColor: AppColors.scaffoldBackground,
-          surfaceTintColor: Colors.transparent,
-          automaticallyImplyLeading: false,
-          // elevation: 10,
-          // shadowColor: AppColors.primary.withOpacity(0.1),
-          title: Row(
-            mainAxisAlignment: MainAxisAlignment.spaceBetween,
-            children: [
-              Text(
-                'Frequently Asked Questions',
-                softWrap: true,
-                maxLines: 2,
-                overflow: TextOverflow.visible,
-                style: GoogleFonts.poppins(
-                    fontSize: 24.sp,
-                    fontWeight: FontWeight.w600,
-                    color: AppColors.textPrimary),
-              ),
-              CircleAvatar(
-                radius: 20.r,
-                backgroundColor: AppColors.secondary.withOpacity(0.1),
-                child: Center(
-                  child: Icon(Iconsax.notification,
-                      size: 24.w, color: AppColors.textPrimary),
-                ),
-              )
-            ],
+        appBar: MainAppBar(
+          title: Text(
+            'Frequently Asked Questions',
+            softWrap: true,
+            maxLines: 2,
+            overflow: TextOverflow.visible,
+            style: GoogleFonts.poppins(
+                fontSize: 24.sp,
+                fontWeight: FontWeight.w600,
+                color: AppColors.textPrimary),
           ),
         ),
         body: SafeArea(

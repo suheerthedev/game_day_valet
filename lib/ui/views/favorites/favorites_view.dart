@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:game_day_valet/ui/common/app_colors.dart';
+import 'package:game_day_valet/ui/widgets/common/main_app_bar/main_app_bar.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:iconsax_flutter/iconsax_flutter.dart';
 import 'package:stacked/stacked.dart';
@@ -18,31 +19,13 @@ class FavoritesView extends StackedView<FavoritesViewModel> {
   ) {
     return Scaffold(
         backgroundColor: AppColors.scaffoldBackground,
-        appBar: AppBar(
-          backgroundColor: AppColors.scaffoldBackground,
-          surfaceTintColor: Colors.transparent,
-          // elevation: 10,
-          // shadowColor: AppColors.primary.withOpacity(0.1),
-          automaticallyImplyLeading: false,
-          title: Row(
-            mainAxisAlignment: MainAxisAlignment.spaceBetween,
-            children: [
-              Text(
-                'Favorites',
-                style: GoogleFonts.poppins(
-                    fontSize: 24.sp,
-                    fontWeight: FontWeight.w600,
-                    color: AppColors.textPrimary),
-              ),
-              CircleAvatar(
-                radius: 20.r,
-                backgroundColor: AppColors.secondary.withOpacity(0.1),
-                child: Center(
-                  child: Icon(Iconsax.notification,
-                      size: 24.w, color: AppColors.textPrimary),
-                ),
-              )
-            ],
+        appBar: MainAppBar(
+          title: Text(
+            'Favorites',
+            style: GoogleFonts.poppins(
+                fontSize: 24.sp,
+                fontWeight: FontWeight.w600,
+                color: AppColors.textPrimary),
           ),
         ),
         body: SafeArea(
