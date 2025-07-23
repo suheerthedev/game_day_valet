@@ -5,8 +5,10 @@
 // **************************************************************************
 
 // ignore_for_file: no_leading_underscores_for_library_prefixes
-import 'package:flutter/material.dart' as _i13;
+import 'package:flutter/material.dart' as _i14;
 import 'package:flutter/material.dart';
+import 'package:game_day_valet/ui/views/edit_profile/edit_profile_view.dart'
+    as _i13;
 import 'package:game_day_valet/ui/views/forgot_password/forgot_password_view.dart'
     as _i7;
 import 'package:game_day_valet/ui/views/home/home_view.dart' as _i2;
@@ -23,7 +25,7 @@ import 'package:game_day_valet/ui/views/sign_in/sign_in_view.dart' as _i6;
 import 'package:game_day_valet/ui/views/sign_up/sign_up_view.dart' as _i5;
 import 'package:game_day_valet/ui/views/startup/startup_view.dart' as _i3;
 import 'package:stacked/stacked.dart' as _i1;
-import 'package:stacked_services/stacked_services.dart' as _i14;
+import 'package:stacked_services/stacked_services.dart' as _i15;
 
 class Routes {
   static const homeView = '/home-view';
@@ -48,6 +50,8 @@ class Routes {
 
   static const profileView = '/profile-view';
 
+  static const editProfileView = '/edit-profile-view';
+
   static const all = <String>{
     homeView,
     startupView,
@@ -60,6 +64,7 @@ class Routes {
     rentalBookingView,
     rentalStatusView,
     profileView,
+    editProfileView,
   };
 }
 
@@ -109,23 +114,27 @@ class StackedRouter extends _i1.RouterBase {
       Routes.profileView,
       page: _i12.ProfileView,
     ),
+    _i1.RouteDef(
+      Routes.editProfileView,
+      page: _i13.EditProfileView,
+    ),
   ];
 
   final _pagesMap = <Type, _i1.StackedRouteFactory>{
     _i2.HomeView: (data) {
-      return _i13.MaterialPageRoute<dynamic>(
+      return _i14.MaterialPageRoute<dynamic>(
         builder: (context) => const _i2.HomeView(),
         settings: data,
       );
     },
     _i3.StartupView: (data) {
-      return _i13.MaterialPageRoute<dynamic>(
+      return _i14.MaterialPageRoute<dynamic>(
         builder: (context) => const _i3.StartupView(),
         settings: data,
       );
     },
     _i4.OnboardingView: (data) {
-      return _i13.PageRouteBuilder<dynamic>(
+      return _i14.PageRouteBuilder<dynamic>(
         pageBuilder: (context, animation, secondaryAnimation) =>
             const _i4.OnboardingView(),
         settings: data,
@@ -137,50 +146,56 @@ class StackedRouter extends _i1.RouterBase {
       );
     },
     _i5.SignUpView: (data) {
-      return _i13.MaterialPageRoute<dynamic>(
+      return _i14.MaterialPageRoute<dynamic>(
         builder: (context) => const _i5.SignUpView(),
         settings: data,
       );
     },
     _i6.SignInView: (data) {
-      return _i13.MaterialPageRoute<dynamic>(
+      return _i14.MaterialPageRoute<dynamic>(
         builder: (context) => const _i6.SignInView(),
         settings: data,
       );
     },
     _i7.ForgotPasswordView: (data) {
-      return _i13.MaterialPageRoute<dynamic>(
+      return _i14.MaterialPageRoute<dynamic>(
         builder: (context) => const _i7.ForgotPasswordView(),
         settings: data,
       );
     },
     _i8.ResetPasswordView: (data) {
-      return _i13.MaterialPageRoute<dynamic>(
+      return _i14.MaterialPageRoute<dynamic>(
         builder: (context) => const _i8.ResetPasswordView(),
         settings: data,
       );
     },
     _i9.MainView: (data) {
-      return _i13.MaterialPageRoute<dynamic>(
+      return _i14.MaterialPageRoute<dynamic>(
         builder: (context) => const _i9.MainView(),
         settings: data,
       );
     },
     _i10.RentalBookingView: (data) {
-      return _i13.MaterialPageRoute<dynamic>(
+      return _i14.MaterialPageRoute<dynamic>(
         builder: (context) => const _i10.RentalBookingView(),
         settings: data,
       );
     },
     _i11.RentalStatusView: (data) {
-      return _i13.MaterialPageRoute<dynamic>(
+      return _i14.MaterialPageRoute<dynamic>(
         builder: (context) => const _i11.RentalStatusView(),
         settings: data,
       );
     },
     _i12.ProfileView: (data) {
-      return _i13.MaterialPageRoute<dynamic>(
+      return _i14.MaterialPageRoute<dynamic>(
         builder: (context) => const _i12.ProfileView(),
+        settings: data,
+      );
+    },
+    _i13.EditProfileView: (data) {
+      return _i14.MaterialPageRoute<dynamic>(
+        builder: (context) => const _i13.EditProfileView(),
         settings: data,
       );
     },
@@ -193,7 +208,7 @@ class StackedRouter extends _i1.RouterBase {
   Map<Type, _i1.StackedRouteFactory> get pagesMap => _pagesMap;
 }
 
-extension NavigatorStateExtension on _i14.NavigationService {
+extension NavigatorStateExtension on _i15.NavigationService {
   Future<dynamic> navigateToHomeView([
     int? routerId,
     bool preventDuplicates = true,
@@ -348,6 +363,20 @@ extension NavigatorStateExtension on _i14.NavigationService {
         transition: transition);
   }
 
+  Future<dynamic> navigateToEditProfileView([
+    int? routerId,
+    bool preventDuplicates = true,
+    Map<String, String>? parameters,
+    Widget Function(BuildContext, Animation<double>, Animation<double>, Widget)?
+        transition,
+  ]) async {
+    return navigateTo<dynamic>(Routes.editProfileView,
+        id: routerId,
+        preventDuplicates: preventDuplicates,
+        parameters: parameters,
+        transition: transition);
+  }
+
   Future<dynamic> replaceWithHomeView([
     int? routerId,
     bool preventDuplicates = true,
@@ -496,6 +525,20 @@ extension NavigatorStateExtension on _i14.NavigationService {
         transition,
   ]) async {
     return replaceWith<dynamic>(Routes.profileView,
+        id: routerId,
+        preventDuplicates: preventDuplicates,
+        parameters: parameters,
+        transition: transition);
+  }
+
+  Future<dynamic> replaceWithEditProfileView([
+    int? routerId,
+    bool preventDuplicates = true,
+    Map<String, String>? parameters,
+    Widget Function(BuildContext, Animation<double>, Animation<double>, Widget)?
+        transition,
+  ]) async {
+    return replaceWith<dynamic>(Routes.editProfileView,
         id: routerId,
         preventDuplicates: preventDuplicates,
         parameters: parameters,
