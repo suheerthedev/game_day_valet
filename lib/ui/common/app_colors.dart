@@ -25,6 +25,10 @@ class AppColors {
   static const Color grey600 = Color(0xFFEEEEF1);
   static const Color grey700 = Color(0xFF616161);
 
+  static const Color grey800 = Color(0xFFD9D9D9);
+
+  static const Color grey900 = Color(0xFFECECEC);
+
   // BACKGROUNDS
   static const Color background = white;
   static const Color scaffoldBackground = white;

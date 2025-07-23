@@ -10,7 +10,9 @@ class ProfileViewModel extends BaseViewModel {
     _navigationService.navigateToEditProfileView();
   }
 
-  void onRentalHistoryTap() {}
+  void onRentalHistoryTap() {
+    _navigationService.navigateToRentalHistoryView();
+  }
 
   void onFavoritesTap() {}
 
