@@ -5,7 +5,7 @@
 // **************************************************************************
 
 // ignore_for_file: no_leading_underscores_for_library_prefixes
-import 'package:flutter/material.dart' as _i19;
+import 'package:flutter/material.dart' as _i20;
 import 'package:flutter/material.dart';
 import 'package:game_day_valet/ui/views/edit_profile/edit_profile_view.dart'
     as _i13;
@@ -15,6 +15,8 @@ import 'package:game_day_valet/ui/views/forgot_password/forgot_password_view.dar
     as _i7;
 import 'package:game_day_valet/ui/views/home/home_view.dart' as _i2;
 import 'package:game_day_valet/ui/views/main/main_view.dart' as _i9;
+import 'package:game_day_valet/ui/views/notification/notification_view.dart'
+    as _i19;
 import 'package:game_day_valet/ui/views/onboarding/onboarding_view.dart' as _i4;
 import 'package:game_day_valet/ui/views/privacy_policy/privacy_policy_view.dart'
     as _i16;
@@ -33,7 +35,7 @@ import 'package:game_day_valet/ui/views/sign_in/sign_in_view.dart' as _i6;
 import 'package:game_day_valet/ui/views/sign_up/sign_up_view.dart' as _i5;
 import 'package:game_day_valet/ui/views/startup/startup_view.dart' as _i3;
 import 'package:stacked/stacked.dart' as _i1;
-import 'package:stacked_services/stacked_services.dart' as _i20;
+import 'package:stacked_services/stacked_services.dart' as _i21;
 
 class Routes {
   static const homeView = '/home-view';
@@ -70,6 +72,8 @@ class Routes {
 
   static const faqView = '/faq-view';
 
+  static const notificationView = '/notification-view';
+
   static const all = <String>{
     homeView,
     startupView,
@@ -88,6 +92,7 @@ class Routes {
     privacyPolicyView,
     referAndEarnView,
     faqView,
+    notificationView,
   };
 }
 
@@ -161,23 +166,27 @@ class StackedRouter extends _i1.RouterBase {
       Routes.faqView,
       page: _i18.FaqView,
     ),
+    _i1.RouteDef(
+      Routes.notificationView,
+      page: _i19.NotificationView,
+    ),
   ];
 
   final _pagesMap = <Type, _i1.StackedRouteFactory>{
     _i2.HomeView: (data) {
-      return _i19.MaterialPageRoute<dynamic>(
+      return _i20.MaterialPageRoute<dynamic>(
         builder: (context) => const _i2.HomeView(),
         settings: data,
       );
     },
     _i3.StartupView: (data) {
-      return _i19.MaterialPageRoute<dynamic>(
+      return _i20.MaterialPageRoute<dynamic>(
         builder: (context) => const _i3.StartupView(),
         settings: data,
       );
     },
     _i4.OnboardingView: (data) {
-      return _i19.PageRouteBuilder<dynamic>(
+      return _i20.PageRouteBuilder<dynamic>(
         pageBuilder: (context, animation, secondaryAnimation) =>
             const _i4.OnboardingView(),
         settings: data,
@@ -189,86 +198,92 @@ class StackedRouter extends _i1.RouterBase {
       );
     },
     _i5.SignUpView: (data) {
-      return _i19.MaterialPageRoute<dynamic>(
+      return _i20.MaterialPageRoute<dynamic>(
         builder: (context) => const _i5.SignUpView(),
         settings: data,
       );
     },
     _i6.SignInView: (data) {
-      return _i19.MaterialPageRoute<dynamic>(
+      return _i20.MaterialPageRoute<dynamic>(
         builder: (context) => const _i6.SignInView(),
         settings: data,
       );
     },
     _i7.ForgotPasswordView: (data) {
-      return _i19.MaterialPageRoute<dynamic>(
+      return _i20.MaterialPageRoute<dynamic>(
         builder: (context) => const _i7.ForgotPasswordView(),
         settings: data,
       );
     },
     _i8.ResetPasswordView: (data) {
-      return _i19.MaterialPageRoute<dynamic>(
+      return _i20.MaterialPageRoute<dynamic>(
         builder: (context) => const _i8.ResetPasswordView(),
         settings: data,
       );
     },
     _i9.MainView: (data) {
-      return _i19.MaterialPageRoute<dynamic>(
+      return _i20.MaterialPageRoute<dynamic>(
         builder: (context) => const _i9.MainView(),
         settings: data,
       );
     },
     _i10.RentalBookingView: (data) {
-      return _i19.MaterialPageRoute<dynamic>(
+      return _i20.MaterialPageRoute<dynamic>(
         builder: (context) => const _i10.RentalBookingView(),
         settings: data,
       );
     },
     _i11.RentalStatusView: (data) {
-      return _i19.MaterialPageRoute<dynamic>(
+      return _i20.MaterialPageRoute<dynamic>(
         builder: (context) => const _i11.RentalStatusView(),
         settings: data,
       );
     },
     _i12.ProfileView: (data) {
-      return _i19.MaterialPageRoute<dynamic>(
+      return _i20.MaterialPageRoute<dynamic>(
         builder: (context) => const _i12.ProfileView(),
         settings: data,
       );
     },
     _i13.EditProfileView: (data) {
-      return _i19.MaterialPageRoute<dynamic>(
+      return _i20.MaterialPageRoute<dynamic>(
         builder: (context) => const _i13.EditProfileView(),
         settings: data,
       );
     },
     _i14.RentalHistoryView: (data) {
-      return _i19.MaterialPageRoute<dynamic>(
+      return _i20.MaterialPageRoute<dynamic>(
         builder: (context) => const _i14.RentalHistoryView(),
         settings: data,
       );
     },
     _i15.FavoritesView: (data) {
-      return _i19.MaterialPageRoute<dynamic>(
+      return _i20.MaterialPageRoute<dynamic>(
         builder: (context) => const _i15.FavoritesView(),
         settings: data,
       );
     },
     _i16.PrivacyPolicyView: (data) {
-      return _i19.MaterialPageRoute<dynamic>(
+      return _i20.MaterialPageRoute<dynamic>(
         builder: (context) => const _i16.PrivacyPolicyView(),
         settings: data,
       );
     },
     _i17.ReferAndEarnView: (data) {
-      return _i19.MaterialPageRoute<dynamic>(
+      return _i20.MaterialPageRoute<dynamic>(
         builder: (context) => const _i17.ReferAndEarnView(),
         settings: data,
       );
     },
     _i18.FaqView: (data) {
-      return _i19.MaterialPageRoute<dynamic>(
+      return _i20.MaterialPageRoute<dynamic>(
         builder: (context) => const _i18.FaqView(),
+        settings: data,
+      );
+    },
+    _i19.NotificationView: (data) {
+      return _i20.MaterialPageRoute<dynamic>(
+        builder: (context) => const _i19.NotificationView(),
         settings: data,
       );
     },
@@ -281,7 +296,7 @@ class StackedRouter extends _i1.RouterBase {
   Map<Type, _i1.StackedRouteFactory> get pagesMap => _pagesMap;
 }
 
-extension NavigatorStateExtension on _i20.NavigationService {
+extension NavigatorStateExtension on _i21.NavigationService {
   Future<dynamic> navigateToHomeView([
     int? routerId,
     bool preventDuplicates = true,
@@ -520,6 +535,20 @@ extension NavigatorStateExtension on _i20.NavigationService {
         transition: transition);
   }
 
+  Future<dynamic> navigateToNotificationView([
+    int? routerId,
+    bool preventDuplicates = true,
+    Map<String, String>? parameters,
+    Widget Function(BuildContext, Animation<double>, Animation<double>, Widget)?
+        transition,
+  ]) async {
+    return navigateTo<dynamic>(Routes.notificationView,
+        id: routerId,
+        preventDuplicates: preventDuplicates,
+        parameters: parameters,
+        transition: transition);
+  }
+
   Future<dynamic> replaceWithHomeView([
     int? routerId,
     bool preventDuplicates = true,
@@ -752,6 +781,20 @@ extension NavigatorStateExtension on _i20.NavigationService {
         transition,
   ]) async {
     return replaceWith<dynamic>(Routes.faqView,
+        id: routerId,
+        preventDuplicates: preventDuplicates,
+        parameters: parameters,
+        transition: transition);
+  }
+
+  Future<dynamic> replaceWithNotificationView([
+    int? routerId,
+    bool preventDuplicates = true,
+    Map<String, String>? parameters,
+    Widget Function(BuildContext, Animation<double>, Animation<double>, Widget)?
+        transition,
+  ]) async {
+    return replaceWith<dynamic>(Routes.notificationView,
         id: routerId,
         preventDuplicates: preventDuplicates,
         parameters: parameters,
