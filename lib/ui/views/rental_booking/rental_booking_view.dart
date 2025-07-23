@@ -20,6 +20,33 @@ class RentalBookingView extends StackedView<RentalBookingViewModel> {
   ) {
     return Scaffold(
         backgroundColor: AppColors.scaffoldBackground,
+        appBar: AppBar(
+          backgroundColor: AppColors.scaffoldBackground,
+          surfaceTintColor: Colors.transparent,
+          elevation: 10,
+          shadowColor: AppColors.primary.withOpacity(0.1),
+          automaticallyImplyLeading: false,
+          title: Row(
+            mainAxisAlignment: MainAxisAlignment.spaceBetween,
+            children: [
+              Text(
+                'Rental Status',
+                style: GoogleFonts.poppins(
+                    fontSize: 24.sp,
+                    fontWeight: FontWeight.w600,
+                    color: AppColors.textPrimary),
+              ),
+              CircleAvatar(
+                radius: 24.r,
+                backgroundColor: AppColors.secondary.withOpacity(0.1),
+                child: Center(
+                  child: Icon(Iconsax.notification,
+                      size: 24.w, color: AppColors.textPrimary),
+                ),
+              )
+            ],
+          ),
+        ),
         body: SafeArea(
             child: Padding(
           padding: EdgeInsets.symmetric(horizontal: 25.w, vertical: 20.h),
@@ -27,26 +54,6 @@ class RentalBookingView extends StackedView<RentalBookingViewModel> {
             child: Column(
               crossAxisAlignment: CrossAxisAlignment.start,
               children: [
-                Row(
-                  mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                  children: [
-                    Text(
-                      'Rental Booking',
-                      style: GoogleFonts.poppins(
-                          fontSize: 24.sp,
-                          fontWeight: FontWeight.w600,
-                          color: AppColors.textPrimary),
-                    ),
-                    CircleAvatar(
-                      radius: 24.r,
-                      backgroundColor: AppColors.secondary.withOpacity(0.1),
-                      child: Center(
-                        child: Icon(Iconsax.notification,
-                            size: 24.w, color: AppColors.textPrimary),
-                      ),
-                    )
-                  ],
-                ),
                 //DropDowns
                 SizedBox(height: 20.h),
                 Row(

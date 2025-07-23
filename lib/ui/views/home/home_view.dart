@@ -21,42 +21,48 @@ class HomeView extends StackedView<HomeViewModel> {
   ) {
     return Scaffold(
         backgroundColor: AppColors.scaffoldBackground,
+        appBar: AppBar(
+          backgroundColor: AppColors.scaffoldBackground,
+          surfaceTintColor: Colors.transparent,
+          automaticallyImplyLeading: false,
+          elevation: 10,
+          shadowColor: AppColors.primary.withOpacity(0.1),
+          title: Row(
+            mainAxisAlignment: MainAxisAlignment.spaceBetween,
+            children: [
+              Column(
+                crossAxisAlignment: CrossAxisAlignment.start,
+                children: [
+                  Text('Select City',
+                      style: GoogleFonts.poppins(
+                          fontSize: 14.sp,
+                          fontWeight: FontWeight.w400,
+                          color: AppColors.textSecondary)),
+                  Text(
+                    'New York, United States',
+                    style: GoogleFonts.poppins(
+                        fontSize: 14.sp,
+                        fontWeight: FontWeight.w700,
+                        color: AppColors.textPrimary),
+                  )
+                ],
+              ),
+              CircleAvatar(
+                radius: 24.r,
+                backgroundColor: AppColors.secondary.withOpacity(0.1),
+                child: Center(
+                  child: Icon(Iconsax.notification,
+                      size: 24.w, color: AppColors.textPrimary),
+                ),
+              )
+            ],
+          ),
+        ),
         body: SafeArea(
           child: Padding(
             padding: EdgeInsets.symmetric(horizontal: 25.w, vertical: 20.h),
             child: Column(
               children: [
-                Row(
-                  mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                  children: [
-                    Column(
-                      crossAxisAlignment: CrossAxisAlignment.start,
-                      children: [
-                        Text('Select City',
-                            style: GoogleFonts.poppins(
-                                fontSize: 14.sp,
-                                fontWeight: FontWeight.w400,
-                                color: AppColors.textSecondary)),
-                        Text(
-                          'New York, United States',
-                          style: GoogleFonts.poppins(
-                              fontSize: 14.sp,
-                              fontWeight: FontWeight.w700,
-                              color: AppColors.textPrimary),
-                        )
-                      ],
-                    ),
-                    CircleAvatar(
-                      radius: 24.r,
-                      backgroundColor: AppColors.secondary.withOpacity(0.1),
-                      child: Center(
-                        child: Icon(Iconsax.notification,
-                            size: 24.w, color: AppColors.textPrimary),
-                      ),
-                    )
-                  ],
-                ),
-                SizedBox(height: 20.h),
                 SizedBox(
                   height: 40.h,
                   child: TextField(
