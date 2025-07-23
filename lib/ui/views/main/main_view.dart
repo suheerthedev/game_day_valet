@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:game_day_valet/ui/common/app_colors.dart';
 import 'package:game_day_valet/ui/views/home/home_view.dart';
+import 'package:game_day_valet/ui/views/rental_booking/rental_booking_view.dart';
 import 'package:iconsax_flutter/iconsax_flutter.dart';
 import 'package:stacked/stacked.dart';
 
@@ -21,7 +22,7 @@ class MainView extends StackedView<MainViewModel> {
         index: viewModel.currentIndex,
         children: const [
           HomeView(),
-          HomeView(),
+          RentalBookingView(),
           HomeView(),
           HomeView(),
         ],

@@ -3,6 +3,7 @@ import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import 'package:game_day_valet/ui/common/app_colors.dart';
 import 'package:game_day_valet/ui/widgets/common/main_button/main_button.dart';
+import 'package:game_day_valet/ui/widgets/common/main_text_field/main_text_field.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:stacked/stacked.dart';
 
@@ -52,72 +53,34 @@ Account""",
                       ])),
                 ),
                 SizedBox(height: 30.h),
-                SizedBox(
-                  width: 340.w,
-                  height: 58.h,
-                  child: TextField(
-                    controller: viewModel.emailController,
-                    cursorColor: AppColors.primary,
-                    decoration: InputDecoration(
-                      labelText: "Email",
-                      labelStyle: GoogleFonts.poppins(
-                        fontSize: 14.sp,
-                        fontWeight: FontWeight.w500,
-                        color: AppColors.textHint,
-                      ),
-                      filled: true,
-                      fillColor: AppColors.grey50,
-                      border: OutlineInputBorder(
-                        borderSide: const BorderSide(color: AppColors.grey100),
-                        borderRadius: BorderRadius.circular(10.r),
-                      ),
-                      enabledBorder: OutlineInputBorder(
-                        borderSide: const BorderSide(color: AppColors.grey100),
-                        borderRadius: BorderRadius.circular(10.r),
-                      ),
-                      focusedBorder: OutlineInputBorder(
-                        borderSide: const BorderSide(color: AppColors.primary),
-                        borderRadius: BorderRadius.circular(10.r),
-                      ),
-                    ),
-                  ),
+                MainTextField(
+                  label: 'Email',
+                  controller: viewModel.emailController,
+                  labelColor: AppColors.textHint,
+                  cursorColor: AppColors.primary,
+                  fillColor: AppColors.grey50,
+                  borderColor: AppColors.grey100,
+                  enabledBorderColor: AppColors.grey100,
+                  focusedBorderColor: AppColors.primary,
+                  hasSuffixIcon: false,
                 ),
 
                 SizedBox(height: 20.h),
-                SizedBox(
-                  width: 340.w,
-                  height: 58.h,
-                  child: TextField(
-                    controller: viewModel.passwordController,
-                    cursorColor: AppColors.primary,
-                    decoration: InputDecoration(
-                      labelText: "Password",
-                      labelStyle: GoogleFonts.poppins(
-                        fontSize: 14.sp,
-                        fontWeight: FontWeight.w500,
-                        color: AppColors.textHint,
-                      ),
-                      suffixIcon: IconButton(
-                        onPressed: () {},
-                        icon: const Icon(Icons.visibility_outlined),
-                      ),
-                      suffixIconColor: AppColors.primary,
-                      filled: true,
-                      fillColor: AppColors.grey50,
-                      border: OutlineInputBorder(
-                        borderSide: const BorderSide(color: AppColors.grey100),
-                        borderRadius: BorderRadius.circular(10.r),
-                      ),
-                      enabledBorder: OutlineInputBorder(
-                        borderSide: const BorderSide(color: AppColors.grey100),
-                        borderRadius: BorderRadius.circular(10.r),
-                      ),
-                      focusedBorder: OutlineInputBorder(
-                        borderSide: const BorderSide(color: AppColors.primary),
-                        borderRadius: BorderRadius.circular(10.r),
-                      ),
-                    ),
-                  ),
+                MainTextField(
+                  label: 'Password',
+                  controller: viewModel.passwordController,
+                  labelColor: AppColors.textHint,
+                  cursorColor: AppColors.primary,
+                  fillColor: AppColors.grey50,
+                  borderColor: AppColors.grey100,
+                  enabledBorderColor: AppColors.grey100,
+                  focusedBorderColor: AppColors.primary,
+                  hasSuffixIcon: true,
+                  obscureText: true,
+                  suffixIcon: IconButton(
+                      onPressed: () {},
+                      icon: const Icon(Icons.visibility_outlined)),
+                  suffixIconColor: AppColors.primary,
                 ),
                 Row(
                   mainAxisAlignment: MainAxisAlignment.spaceBetween,
