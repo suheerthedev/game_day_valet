@@ -4,7 +4,6 @@ import 'package:game_day_valet/ui/common/app_colors.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:iconsax_flutter/iconsax_flutter.dart';
 import 'package:stacked/stacked.dart';
-import 'package:intl/intl.dart';
 
 import 'favorites_viewmodel.dart';
 
