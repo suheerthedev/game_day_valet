@@ -71,6 +71,7 @@ class ProfileView extends StackedView<ProfileViewModel> {
             child: Column(
               children: [
                 ListTile(
+                  onTap: viewModel.onEditProfileTap,
                   tileColor: AppColors.grey600,
                   shape: RoundedRectangleBorder(
                     borderRadius: BorderRadius.circular(16.r),
@@ -87,6 +88,7 @@ class ProfileView extends StackedView<ProfileViewModel> {
                 ),
                 SizedBox(height: 10.h),
                 ListTile(
+                  onTap: viewModel.onRentalHistoryTap,
                   tileColor: AppColors.grey600,
                   shape: RoundedRectangleBorder(
                     borderRadius: BorderRadius.circular(16.r),
@@ -103,6 +105,7 @@ class ProfileView extends StackedView<ProfileViewModel> {
                 ),
                 SizedBox(height: 10.h),
                 ListTile(
+                  onTap: viewModel.onFavoritesTap,
                   tileColor: AppColors.grey600,
                   shape: RoundedRectangleBorder(
                     borderRadius: BorderRadius.circular(16.r),
@@ -119,6 +122,7 @@ class ProfileView extends StackedView<ProfileViewModel> {
                 ),
                 SizedBox(height: 10.h),
                 ListTile(
+                  onTap: viewModel.onPrivacyPolicyTap,
                   tileColor: AppColors.grey600,
                   shape: RoundedRectangleBorder(
                     borderRadius: BorderRadius.circular(16.r),
@@ -135,6 +139,7 @@ class ProfileView extends StackedView<ProfileViewModel> {
                 ),
                 SizedBox(height: 10.h),
                 ListTile(
+                  onTap: viewModel.onReferAndEarnTap,
                   tileColor: AppColors.grey600,
                   shape: RoundedRectangleBorder(
                     borderRadius: BorderRadius.circular(16.r),
@@ -151,6 +156,7 @@ class ProfileView extends StackedView<ProfileViewModel> {
                 ),
                 SizedBox(height: 10.h),
                 ListTile(
+                  onTap: viewModel.onFrequentlyAskedQuestionsTap,
                   tileColor: AppColors.grey600,
                   shape: RoundedRectangleBorder(
                     borderRadius: BorderRadius.circular(16.r),
@@ -167,6 +173,7 @@ class ProfileView extends StackedView<ProfileViewModel> {
                 ),
                 SizedBox(height: 10.h),
                 ListTile(
+                  onTap: viewModel.onNotificationsTap,
                   tileColor: AppColors.grey600,
                   shape: RoundedRectangleBorder(
                     borderRadius: BorderRadius.circular(16.r),

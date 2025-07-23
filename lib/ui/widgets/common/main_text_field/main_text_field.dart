@@ -19,6 +19,7 @@ class MainTextField extends StackedView<MainTextFieldModel> {
   final Color? suffixIconColor;
   final Widget? suffixIcon;
   final bool obscureText;
+  final BorderRadius? borderRadius;
   const MainTextField({
     super.key,
     required this.label,
@@ -33,6 +34,7 @@ class MainTextField extends StackedView<MainTextFieldModel> {
     this.suffixIcon,
     this.hasSuffixIcon = false,
     this.obscureText = false,
+    this.borderRadius,
   });
 
   @override
@@ -48,6 +50,11 @@ class MainTextField extends StackedView<MainTextFieldModel> {
         obscureText: obscureText,
         controller: controller,
         cursorColor: cursorColor ?? AppColors.primary,
+        style: GoogleFonts.poppins(
+          fontSize: 14.sp,
+          fontWeight: FontWeight.w400,
+          color: AppColors.textPrimary,
+        ),
         decoration: InputDecoration(
           labelText: label,
           labelStyle: GoogleFonts.poppins(
@@ -61,17 +68,17 @@ class MainTextField extends StackedView<MainTextFieldModel> {
           fillColor: fillColor ?? AppColors.grey50,
           border: OutlineInputBorder(
             borderSide: BorderSide(color: borderColor ?? AppColors.grey100),
-            borderRadius: BorderRadius.circular(10.r),
+            borderRadius: borderRadius ?? BorderRadius.circular(10.r),
           ),
           enabledBorder: OutlineInputBorder(
             borderSide:
                 BorderSide(color: enabledBorderColor ?? AppColors.grey100),
-            borderRadius: BorderRadius.circular(10.r),
+            borderRadius: borderRadius ?? BorderRadius.circular(10.r),
           ),
           focusedBorder: OutlineInputBorder(
             borderSide:
                 BorderSide(color: focusedBorderColor ?? AppColors.primary),
-            borderRadius: BorderRadius.circular(10.r),
+            borderRadius: borderRadius ?? BorderRadius.circular(10.r),
           ),
         ),
       ),
