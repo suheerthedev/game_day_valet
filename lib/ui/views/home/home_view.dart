@@ -25,8 +25,8 @@ class HomeView extends StackedView<HomeViewModel> {
           backgroundColor: AppColors.scaffoldBackground,
           surfaceTintColor: Colors.transparent,
           automaticallyImplyLeading: false,
-          elevation: 10,
-          shadowColor: AppColors.primary.withOpacity(0.1),
+          // elevation: 10,
+          // shadowColor: AppColors.primary.withOpacity(0.1),
           title: Row(
             mainAxisAlignment: MainAxisAlignment.spaceBetween,
             children: [

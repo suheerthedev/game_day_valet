@@ -23,8 +23,8 @@ class RentalBookingView extends StackedView<RentalBookingViewModel> {
         appBar: AppBar(
           backgroundColor: AppColors.scaffoldBackground,
           surfaceTintColor: Colors.transparent,
-          elevation: 10,
-          shadowColor: AppColors.primary.withOpacity(0.1),
+          // elevation: 10,
+          // shadowColor: AppColors.primary.withOpacity(0.1),
           automaticallyImplyLeading: false,
           title: Row(
             mainAxisAlignment: MainAxisAlignment.spaceBetween,
