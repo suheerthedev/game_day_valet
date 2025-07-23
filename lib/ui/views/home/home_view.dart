@@ -48,7 +48,7 @@ class HomeView extends StackedView<HomeViewModel> {
                 ],
               ),
               CircleAvatar(
-                radius: 24.r,
+                radius: 20.r,
                 backgroundColor: AppColors.secondary.withOpacity(0.1),
                 child: Center(
                   child: Icon(Iconsax.notification,

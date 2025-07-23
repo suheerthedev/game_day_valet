@@ -35,7 +35,7 @@ class RentalStatusView extends StackedView<RentalStatusViewModel> {
                     color: AppColors.textPrimary),
               ),
               CircleAvatar(
-                radius: 24.r,
+                radius: 20.r,
                 backgroundColor: AppColors.secondary.withOpacity(0.1),
                 child: Center(
                   child: Icon(Iconsax.notification,
