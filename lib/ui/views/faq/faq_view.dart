@@ -1,7 +1,11 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_screenutil/flutter_screenutil.dart';
+import 'package:game_day_valet/models/faq_item_model.dart';
+import 'package:game_day_valet/ui/common/app_colors.dart';
+import 'package:game_day_valet/ui/views/faq/faq_viewmodel.dart';
+import 'package:google_fonts/google_fonts.dart';
+import 'package:iconsax_flutter/iconsax_flutter.dart';
 import 'package:stacked/stacked.dart';
-
-import 'faq_viewmodel.dart';
 
 class FaqView extends StackedView<FaqViewModel> {
   const FaqView({Key? key}) : super(key: key);
@@ -13,10 +17,118 @@ class FaqView extends StackedView<FaqViewModel> {
     Widget? child,
   ) {
     return Scaffold(
-      backgroundColor: Theme.of(context).colorScheme.background,
-      body: Container(
-        padding: const EdgeInsets.only(left: 25.0, right: 25.0),
-        child: const Center(child: Text("FaqView")),
+        backgroundColor: AppColors.scaffoldBackground,
+        appBar: AppBar(
+          backgroundColor: AppColors.scaffoldBackground,
+          surfaceTintColor: Colors.transparent,
+          automaticallyImplyLeading: false,
+          // elevation: 10,
+          // shadowColor: AppColors.primary.withOpacity(0.1),
+          title: Row(
+            mainAxisAlignment: MainAxisAlignment.spaceBetween,
+            children: [
+              Text(
+                'Frequently Asked Questions',
+                softWrap: true,
+                maxLines: 2,
+                overflow: TextOverflow.visible,
+                style: GoogleFonts.poppins(
+                    fontSize: 24.sp,
+                    fontWeight: FontWeight.w600,
+                    color: AppColors.textPrimary),
+              ),
+              CircleAvatar(
+                radius: 20.r,
+                backgroundColor: AppColors.secondary.withOpacity(0.1),
+                child: Center(
+                  child: Icon(Iconsax.notification,
+                      size: 24.w, color: AppColors.textPrimary),
+                ),
+              )
+            ],
+          ),
+        ),
+        body: SafeArea(
+            child: Padding(
+                padding: EdgeInsets.symmetric(horizontal: 25.w, vertical: 20.h),
+                child: Column(
+                  children: [
+                    ListView.separated(
+                      shrinkWrap: true,
+                      physics: const NeverScrollableScrollPhysics(),
+                      itemCount: viewModel.faqItems.length,
+                      itemBuilder: (context, index) {
+                        return _buildFAQItem(context, viewModel, index,
+                            viewModel.faqItems[index]);
+                      },
+                      separatorBuilder: (context, index) {
+                        return SizedBox(height: 10.h);
+                      },
+                    ),
+                  ],
+                ))));
+  }
+
+  Widget _buildFAQItem(
+    BuildContext context,
+    FaqViewModel viewModel,
+    int index,
+    FaqItemModel faqItem,
+  ) {
+    return Container(
+      width: 340.w,
+      height: faqItem.isExpanded ? 115.h : 58.h,
+      padding: EdgeInsets.symmetric(horizontal: 16.w),
+      decoration: BoxDecoration(
+        color: AppColors.grey100,
+        borderRadius: BorderRadius.circular(16.r),
+      ),
+      child: Column(
+        mainAxisAlignment: MainAxisAlignment.center,
+        crossAxisAlignment: CrossAxisAlignment.start,
+        children: [
+          // Question
+          GestureDetector(
+            onTap: () => viewModel.toggleExpansion(index),
+            child: Padding(
+              padding: const EdgeInsets.symmetric(vertical: 12.0),
+              child: Row(
+                children: [
+                  Expanded(
+                    child: Text(
+                      faqItem.question,
+                      style: GoogleFonts.poppins(
+                        fontSize: 14.sp,
+                        fontWeight: FontWeight.w600,
+                        color: AppColors.textPrimary,
+                      ),
+                    ),
+                  ),
+                  Icon(
+                    faqItem.isExpanded
+                        ? Icons.keyboard_arrow_up
+                        : Icons.keyboard_arrow_down,
+                    color: Colors.black54,
+                  ),
+                ],
+              ),
+            ),
+          ),
+
+          // Answer (only visible when expanded)
+          if (faqItem.isExpanded)
+            Padding(
+              padding: const EdgeInsets.only(bottom: 12.0),
+              child: Text(
+                faqItem.answer,
+                style: GoogleFonts.poppins(
+                  fontSize: 12.sp,
+                  color: AppColors.textHint,
+                  fontWeight: FontWeight.w400,
+                ),
+              ),
+            ),
+        ],
       ),
     );
   }

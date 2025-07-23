@@ -26,7 +26,9 @@ class ProfileViewModel extends BaseViewModel {
     _navigationService.navigateToReferAndEarnView();
   }
 
-  void onFrequentlyAskedQuestionsTap() {}
+  void onFrequentlyAskedQuestionsTap() {
+    _navigationService.navigateToFaqView();
+  }
 
   void onNotificationsTap() {}
 }
