@@ -30,7 +30,7 @@ class RentalBookingView extends StackedView<RentalBookingViewModel> {
             mainAxisAlignment: MainAxisAlignment.spaceBetween,
             children: [
               Text(
-                'Rental Status',
+                'Rental Booking',
                 style: GoogleFonts.poppins(
                     fontSize: 24.sp,
                     fontWeight: FontWeight.w600,
@@ -55,7 +55,6 @@ class RentalBookingView extends StackedView<RentalBookingViewModel> {
               crossAxisAlignment: CrossAxisAlignment.start,
               children: [
                 //DropDowns
-                SizedBox(height: 20.h),
                 Row(
                   children: [
                     const Spacer(),

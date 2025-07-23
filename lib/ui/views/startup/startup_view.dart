@@ -23,7 +23,7 @@ class StartupView extends StackedView<StartupViewModel> {
         padding: EdgeInsets.only(bottom: 20.h),
         decoration: const BoxDecoration(
           image: DecorationImage(
-            image: AssetImage('assets/images/splash_image.png'),
+            image: AssetImage('assets/images/splash_image_1.png'),
             fit: BoxFit.cover,
           ),
         ),
