@@ -18,7 +18,9 @@ class ProfileViewModel extends BaseViewModel {
     _navigationService.navigateToFavoritesView();
   }
 
-  void onPrivacyPolicyTap() {}
+  void onPrivacyPolicyTap() {
+    _navigationService.navigateToPrivacyPolicyView();
+  }
 
   void onReferAndEarnTap() {}
 
