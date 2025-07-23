@@ -18,6 +18,7 @@ import 'package:game_day_valet/ui/views/edit_profile/edit_profile_view.dart';
 import 'package:game_day_valet/ui/views/rental_history/rental_history_view.dart';
 import 'package:game_day_valet/ui/views/favorites/favorites_view.dart';
 import 'package:game_day_valet/ui/views/privacy_policy/privacy_policy_view.dart';
+import 'package:game_day_valet/ui/views/refer_and_earn/refer_and_earn_view.dart';
 // @stacked-import
 
 @StackedApp(
@@ -43,6 +44,7 @@ import 'package:game_day_valet/ui/views/privacy_policy/privacy_policy_view.dart'
     MaterialRoute(page: RentalHistoryView),
     MaterialRoute(page: FavoritesView),
     MaterialRoute(page: PrivacyPolicyView),
+    MaterialRoute(page: ReferAndEarnView),
 // @stacked-route
   ],
   dependencies: [

@@ -22,7 +22,9 @@ class ProfileViewModel extends BaseViewModel {
     _navigationService.navigateToPrivacyPolicyView();
   }
 
-  void onReferAndEarnTap() {}
+  void onReferAndEarnTap() {
+    _navigationService.navigateToReferAndEarnView();
+  }
 
   void onFrequentlyAskedQuestionsTap() {}
 
