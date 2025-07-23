@@ -49,12 +49,17 @@ class MainAppBar extends StackedView<MainAppBarModel>
       ),
       actionsPadding: EdgeInsets.only(right: 16.w),
       actions: [
-        CircleAvatar(
-          radius: 20.r,
-          backgroundColor: AppColors.secondary.withOpacity(0.1),
-          child: Center(
-            child: Icon(Iconsax.notification,
-                size: 24.w, color: AppColors.textPrimary),
+        InkWell(
+          onTap: () {
+            viewModel.onNotificationTap();
+          },
+          child: CircleAvatar(
+            radius: 20.r,
+            backgroundColor: AppColors.secondary.withOpacity(0.1),
+            child: Center(
+              child: Icon(Iconsax.notification,
+                  size: 24.w, color: AppColors.textPrimary),
+            ),
           ),
         )
       ],
