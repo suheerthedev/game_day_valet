@@ -196,17 +196,24 @@ class HomeView extends StackedView<HomeViewModel> {
                                                       Align(
                                                         alignment: Alignment
                                                             .bottomRight,
-                                                        child: Padding(
-                                                          padding:
-                                                              EdgeInsets.only(
-                                                                  bottom: 10.h,
-                                                                  right: 10.w),
-                                                          child: Text(
-                                                            'Field Map View',
-                                                            style: GoogleFonts
-                                                                .poppins(
-                                                              color: const Color(
-                                                                  0xFFFFE168),
+                                                        child: GestureDetector(
+                                                          onTap: () => viewModel
+                                                              .showMapPopup(
+                                                                  context),
+                                                          child: Padding(
+                                                            padding:
+                                                                EdgeInsets.only(
+                                                                    bottom:
+                                                                        10.h,
+                                                                    right:
+                                                                        10.w),
+                                                            child: Text(
+                                                              'Field Map View',
+                                                              style: GoogleFonts
+                                                                  .poppins(
+                                                                color: const Color(
+                                                                    0xFFFFE168),
+                                                              ),
                                                             ),
                                                           ),
                                                         ),

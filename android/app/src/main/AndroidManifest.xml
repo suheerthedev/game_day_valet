@@ -1,8 +1,19 @@
 <manifest xmlns:android="http://schemas.android.com/apk/res/android">
+    <!-- Permissions required for Google Maps -->
+    <uses-permission android:name="android.permission.INTERNET" />
+    <uses-permission android:name="android.permission.ACCESS_NETWORK_STATE" />
+    <uses-permission android:name="android.permission.ACCESS_FINE_LOCATION" />
+    <uses-permission android:name="android.permission.ACCESS_COARSE_LOCATION" />
+    
     <application
         android:label="game_day_valet"
         android:name="${applicationName}"
         android:icon="@mipmap/ic_launcher">
+        
+        <!-- Google Maps API Key - must be in application tag -->
+        <meta-data android:name="com.google.android.geo.API_KEY"
+               android:value="AIzaSyC4RMAZ1fc72X_orjKdWcWHzG18C3m83q0"/>
+        
         <activity
             android:name=".MainActivity"
             android:exported="true"
@@ -16,8 +27,6 @@
                  the Android process has started. This theme is visible to the user
                  while the Flutter UI initializes. After that, this theme continues
                  to determine the Window background behind the Flutter UI. -->
-            <meta-data android:name="com.google.android.geo.API_KEY"
-               android:value="AIzaSyC4RMAZ1fc72X_orjKdWcWHzG18C3m83q0"/>
             <meta-data
               android:name="io.flutter.embedding.android.NormalTheme"
               android:resource="@style/NormalTheme"
