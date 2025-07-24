@@ -161,9 +161,42 @@ class RentalBookingView extends StackedView<RentalBookingViewModel> {
                   focusedBorderColor: AppColors.primary,
                   hasSuffixIcon: true,
                   suffixIcon: IconButton(
-                      onPressed: () {}, icon: const Icon(Iconsax.arrow_down)),
+                      onPressed: () {
+                        viewModel.isGearExpanded = !viewModel.isGearExpanded;
+                        viewModel.notifyListeners();
+                      },
+                      icon: const Icon(Iconsax.arrow_down)),
                   suffixIconColor: AppColors.textHint,
                 ),
+                if (viewModel.isGearExpanded) ...[
+                  Container(
+                    width: 340.w,
+                    height: 142.h,
+                    decoration: BoxDecoration(
+                      color: AppColors.grey50,
+                      borderRadius: BorderRadius.circular(10),
+                      border: Border.all(color: AppColors.grey100),
+                    ),
+                    child: ListView.builder(
+                      physics: const NeverScrollableScrollPhysics(),
+                      shrinkWrap: true,
+                      itemCount: viewModel.gears.length,
+                      itemBuilder: (context, index) {
+                        final gear = viewModel.gears[index];
+                        return _buildGearOption(
+                          context,
+                          // icon: network['image'],
+                          name: gear['name'],
+                          isLast: index == viewModel.gears.length - 1,
+                          onPreviewImage: () {
+                            viewModel.showMapPopup(
+                                context, gear['image'], gear['name']);
+                          },
+                        );
+                      },
+                    ),
+                  ),
+                ],
                 SizedBox(height: 10.h),
                 MainTextField(
                   label: "Quantity",
@@ -355,13 +388,9 @@ class RentalBookingView extends StackedView<RentalBookingViewModel> {
                         shape: RoundedRectangleBorder(
                             borderRadius:
                                 BorderRadius.all(Radius.circular(2.r))),
-                        value: viewModel.insuranceTwo,
+                        value: viewModel.damageWaiver,
                         onChanged: (value) {
-                          if (viewModel.insuranceOne == true &&
-                              viewModel.insuranceTwo == false) {
-                            viewModel.insuranceOne = false;
-                          }
-                          viewModel.insuranceTwo = value ?? false;
+                          viewModel.damageWaiver = value ?? false;
                           viewModel.notifyListeners();
                         }),
                     Text(
@@ -513,6 +542,52 @@ class RentalBookingView extends StackedView<RentalBookingViewModel> {
             ),
           ),
         )));
+  }
+
+  Widget _buildGearOption(
+    BuildContext context, {
+    // required String icon,
+    required String name,
+    required VoidCallback onPreviewImage,
+    required bool isLast,
+  }) {
+    return Column(
+      crossAxisAlignment: CrossAxisAlignment.start,
+      children: [
+        Padding(
+          padding: EdgeInsets.symmetric(horizontal: 16.w, vertical: 8.h),
+          child: Row(
+            mainAxisAlignment: MainAxisAlignment.spaceBetween,
+            children: [
+              Text(
+                name,
+                style: GoogleFonts.poppins(
+                  fontSize: 14.sp,
+                  fontWeight: FontWeight.w500,
+                  color: AppColors.textHint,
+                ),
+              ),
+              GestureDetector(
+                onTap: onPreviewImage,
+                child: Text(
+                  'Preview Photo',
+                  style: GoogleFonts.poppins(
+                    fontSize: 10.sp,
+                    fontWeight: FontWeight.w500,
+                    color: AppColors.secondary,
+                  ),
+                ),
+              ),
+            ],
+          ),
+        ),
+        if (!isLast)
+          Divider(
+            color: AppColors.grey300,
+            height: 1.h,
+          ),
+      ],
+    );
   }
 
   @override
