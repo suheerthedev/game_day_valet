@@ -17,8 +17,10 @@ class ProfileViewModel extends BaseViewModel {
 
   Future<void> onLogoutTap() async {
     isLoggingOut = true;
+    rebuildUi();
     await Future.delayed(const Duration(seconds: 2));
     await _secureStorageService.deleteToken();
+    _userService.clearUser();
     await _navigationService.clearStackAndShow(Routes.signInView);
     isLoggingOut = false;
   }
