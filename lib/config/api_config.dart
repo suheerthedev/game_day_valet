@@ -5,5 +5,6 @@ class ApiConfig {
 
   static const loginEndPoint = '/api/login';
   static const registerEndPoint = '/api/register';
+  static const validateReferralCodeEndPoint = '/api/validate/referral-code';
   // Add more as needed
 }

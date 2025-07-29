@@ -51,4 +51,19 @@ class AuthService {
       throw ApiException("Registration Failed. $e");
     }
   }
+
+  Future<dynamic> validateReferralCode(String referralCode) async {
+    final url = ApiConfig.baseUrl + ApiConfig.validateReferralCodeEndPoint;
+
+    try {
+      final response =
+          await _apiService.post(url, {'referral_code': referralCode});
+      return response;
+    } on ApiException catch (e) {
+      print("Api Exception: $e");
+      rethrow;
+    } catch (e) {
+      throw ApiException("Referral Code Validation Failed. $e");
+    }
+  }
 }

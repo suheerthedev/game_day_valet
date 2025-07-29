@@ -5,6 +5,7 @@ import 'package:game_day_valet/ui/common/app_colors.dart';
 import 'package:game_day_valet/ui/widgets/common/main_button/main_button.dart';
 import 'package:game_day_valet/ui/widgets/common/main_text_field/main_text_field.dart';
 import 'package:google_fonts/google_fonts.dart';
+import 'package:iconsax_flutter/iconsax_flutter.dart';
 import 'package:stacked/stacked.dart';
 
 import 'sign_up_viewmodel.dart';
@@ -124,6 +125,91 @@ Account""",
                           if (viewModel.passwordError != null)
                             Text(
                               viewModel.passwordError ?? '',
+                              style: GoogleFonts.poppins(
+                                fontSize: 12.sp,
+                                color: AppColors.error,
+                              ),
+                            ),
+                          SizedBox(height: 20.h),
+                          SizedBox(
+                            width: 340.w,
+                            height: 58.h,
+                            child: Row(
+                              children: [
+                                Expanded(
+                                  child: SizedBox(
+                                    child: TextField(
+                                      controller:
+                                          viewModel.referralCodeController,
+                                      obscureText: false,
+                                      cursorColor: AppColors.primary,
+                                      style: GoogleFonts.poppins(
+                                        fontSize: 14.sp,
+                                        fontWeight: FontWeight.w400,
+                                        color: AppColors.textPrimary,
+                                      ),
+                                      decoration: InputDecoration(
+                                        focusColor: AppColors.primary,
+                                        labelText: 'Referral Code',
+                                        labelStyle: GoogleFonts.poppins(
+                                          fontSize: 14.sp,
+                                          fontWeight: FontWeight.w500,
+                                          color: AppColors.textHint,
+                                        ),
+                                        suffixIcon:
+                                            viewModel.isReferralCodeValid
+                                                ? const Icon(
+                                                    Iconsax.tick_circle,
+                                                    color: AppColors.success,
+                                                  )
+                                                : null,
+                                        filled: true,
+                                        fillColor: AppColors.grey50,
+                                        border: OutlineInputBorder(
+                                          borderSide: const BorderSide(
+                                              color: AppColors.grey100),
+                                          borderRadius:
+                                              BorderRadius.circular(10.r),
+                                        ),
+                                        enabledBorder: OutlineInputBorder(
+                                          borderSide: const BorderSide(
+                                              color: AppColors.grey100),
+                                          borderRadius:
+                                              BorderRadius.circular(10.r),
+                                        ),
+                                        focusedBorder: OutlineInputBorder(
+                                          borderSide: const BorderSide(
+                                              color: AppColors.primary),
+                                          borderRadius:
+                                              BorderRadius.circular(10.r),
+                                        ),
+                                      ),
+                                    ),
+                                  ),
+                                ),
+                                SizedBox(width: 10.w),
+                                FloatingActionButton(
+                                  elevation: 0,
+                                  onPressed: viewModel.validateReferralCode,
+                                  backgroundColor: AppColors.primary,
+                                  shape: RoundedRectangleBorder(
+                                      borderRadius:
+                                          BorderRadius.circular(10.r)),
+                                  child: Text(
+                                    "Apply",
+                                    style: GoogleFonts.poppins(
+                                      color: AppColors.white,
+                                      fontSize: 14.sp,
+                                      fontWeight: FontWeight.w500,
+                                    ),
+                                  ),
+                                )
+                              ],
+                            ),
+                          ),
+                          if (viewModel.referralCodeError != null)
+                            Text(
+                              viewModel.referralCodeError ?? '',
                               style: GoogleFonts.poppins(
                                 fontSize: 12.sp,
                                 color: AppColors.error,
