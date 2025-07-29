@@ -1,0 +1,3 @@
+class SecureStorageService {
+  dynamic getToken() {}
+}
