@@ -14,7 +14,7 @@ class ApiService {
     return {
       'Accept': 'application/json',
       if (!isMultiPart) 'Content-Type': 'application/json',
-      // if(token != null) 'Authorization': 'Bearer $token',
+      if (token != null) 'Authorization': 'Bearer $token',
     };
   }
 
@@ -65,6 +65,7 @@ class ApiService {
     try {
       final headers = await _getHeaders(isMultiPart: true);
       final request = http.MultipartRequest('POST', Uri.parse(url));
+      request.headers.addAll(headers);
 
       for (File file in files) {
         request.files
