@@ -22,6 +22,7 @@ import 'package:game_day_valet/ui/views/refer_and_earn/refer_and_earn_view.dart'
 import 'package:game_day_valet/ui/views/faq/faq_view.dart';
 import 'package:game_day_valet/ui/views/notification/notification_view.dart';
 import 'package:game_day_valet/ui/views/chat/chat_view.dart';
+import 'package:game_day_valet/services/api_service.dart';
 // @stacked-import
 
 @StackedApp(
@@ -57,7 +58,8 @@ import 'package:game_day_valet/ui/views/chat/chat_view.dart';
     LazySingleton(classType: BottomSheetService),
     LazySingleton(classType: DialogService),
     LazySingleton(classType: NavigationService),
-    // @stacked-service
+    LazySingleton(classType: ApiService),
+// @stacked-service
   ],
   bottomsheets: [
     StackedBottomsheet(classType: NoticeSheet),

@@ -12,11 +12,14 @@ dependencies:
   floating_chat_button: ^1.1.0
   flutter:
     sdk: flutter
+  flutter_dotenv: ^5.2.1
   flutter_screenutil: ^5.9.3
+  flutter_secure_storage: ^4.2.1
   flutter_svg: ^2.2.0
   font_awesome_flutter: ^10.8.0
   google_fonts: ^6.2.1
   google_maps_flutter: ^2.12.3
+  http: ^1.4.0
   iconsax_flutter: ^1.0.1
   intl: ^0.20.2
   stacked: ^3.4.0
