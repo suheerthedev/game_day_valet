@@ -24,6 +24,7 @@ import 'package:game_day_valet/ui/views/notification/notification_view.dart';
 import 'package:game_day_valet/ui/views/chat/chat_view.dart';
 import 'package:game_day_valet/services/api_service.dart';
 import 'package:game_day_valet/services/secure_storage_service.dart';
+import 'package:game_day_valet/services/auth_service.dart';
 // @stacked-import
 
 @StackedApp(
@@ -61,6 +62,7 @@ import 'package:game_day_valet/services/secure_storage_service.dart';
     LazySingleton(classType: NavigationService),
     LazySingleton(classType: ApiService),
     LazySingleton(classType: SecureStorageService),
+    LazySingleton(classType: AuthService),
 // @stacked-service
   ],
   bottomsheets: [

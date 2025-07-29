@@ -4,6 +4,7 @@ import 'package:game_day_valet/app/app.locator.dart';
 import 'package:stacked_services/stacked_services.dart';
 import 'package:game_day_valet/services/api_service.dart';
 import 'package:game_day_valet/services/secure_storage_service.dart';
+import 'package:game_day_valet/services/auth_service.dart';
 // @stacked-import
 
 import 'test_helpers.mocks.dart';
@@ -16,6 +17,7 @@ import 'test_helpers.mocks.dart';
     MockSpec<DialogService>(onMissingStub: OnMissingStub.returnDefault),
     MockSpec<ApiService>(onMissingStub: OnMissingStub.returnDefault),
     MockSpec<SecureStorageService>(onMissingStub: OnMissingStub.returnDefault),
+    MockSpec<AuthService>(onMissingStub: OnMissingStub.returnDefault),
 // @stacked-mock-spec
   ],
 )
@@ -25,6 +27,7 @@ void registerServices() {
   getAndRegisterDialogService();
   getAndRegisterApiService();
   getAndRegisterSecureStorageService();
+  getAndRegisterAuthService();
 // @stacked-mock-register
 }
 
@@ -93,6 +96,13 @@ MockSecureStorageService getAndRegisterSecureStorageService() {
   _removeRegistrationIfExists<SecureStorageService>();
   final service = MockSecureStorageService();
   locator.registerSingleton<SecureStorageService>(service);
+  return service;
+}
+
+MockAuthService getAndRegisterAuthService() {
+  _removeRegistrationIfExists<AuthService>();
+  final service = MockAuthService();
+  locator.registerSingleton<AuthService>(service);
   return service;
 }
 // @stacked-mock-create
