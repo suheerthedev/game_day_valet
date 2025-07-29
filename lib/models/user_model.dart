@@ -6,6 +6,8 @@ class UserModel {
   final String email;
   final String? referralCode;
   final AddressModel? address;
+  final List<String> roles;
+  final List<String> permissions;
 
   UserModel({
     required this.id,
@@ -13,6 +15,8 @@ class UserModel {
     required this.email,
     this.referralCode,
     this.address,
+    required this.roles,
+    required this.permissions,
   });
 
   factory UserModel.fromJson(Map<String, dynamic> json) {
@@ -24,6 +28,10 @@ class UserModel {
       address: json['address'] != null
           ? AddressModel.fromJson(json['address'])
           : null,
+      roles: json['roles'] != null ? List<String>.from(json['roles']) : [],
+      permissions: json['permissions'] != null
+          ? List<String>.from(json['permissions'])
+          : [],
     );
   }
 }

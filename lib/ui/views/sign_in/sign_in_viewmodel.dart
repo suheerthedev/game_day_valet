@@ -4,6 +4,7 @@ import 'package:game_day_valet/app/app.router.dart';
 import 'package:game_day_valet/services/api_exception.dart';
 import 'package:game_day_valet/services/auth_service.dart';
 import 'package:game_day_valet/services/secure_storage_service.dart';
+import 'package:game_day_valet/services/user_service.dart';
 import 'package:stacked/stacked.dart';
 import 'package:stacked_services/stacked_services.dart';
 
@@ -11,6 +12,7 @@ class SignInViewModel extends BaseViewModel {
   final _navigationService = locator<NavigationService>();
   final _authService = locator<AuthService>();
   final _secureStorageService = locator<SecureStorageService>();
+  final _userService = locator<UserService>();
 
   final TextEditingController emailController = TextEditingController();
   final TextEditingController passwordController = TextEditingController();
@@ -73,8 +75,10 @@ class SignInViewModel extends BaseViewModel {
         final token = tokenParts[1];
         await _secureStorageService.saveToken(token);
 
+        await _userService.fetchCurrentUser();
+
+        await _navigationService.clearStackAndShow(Routes.mainView);
         setBusy(false);
-        // _navigationService.clearStackAndShow(Routes.mainView);
       }
 
       print("Login Response: $response");

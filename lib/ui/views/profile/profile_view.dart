@@ -3,6 +3,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:game_day_valet/ui/common/app_colors.dart';
 import 'package:game_day_valet/ui/widgets/common/main_app_bar/main_app_bar.dart';
+import 'package:game_day_valet/ui/widgets/common/main_button/main_button.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:iconsax_flutter/iconsax_flutter.dart';
 import 'package:stacked/stacked.dart';
@@ -18,192 +19,228 @@ class ProfileView extends StackedView<ProfileViewModel> {
     ProfileViewModel viewModel,
     Widget? child,
   ) {
-    return Scaffold(
-        backgroundColor: AppColors.scaffoldBackground,
-        appBar: MainAppBar(
-          hasLeading: true,
-          hasSubtitle: true,
-          leading: Row(
-            children: [
-              CircleAvatar(
-                child: Image.asset('assets/images/pfp.png',
-                    width: 50.w, height: 50.h),
-              ),
-              SizedBox(width: 10.w),
-            ],
-          ),
-          title: Text(
-            'Katie',
-            style: GoogleFonts.poppins(
-                fontSize: 18.sp,
-                fontWeight: FontWeight.w700,
-                color: AppColors.textPrimary),
-          ),
-          subtitle: Text(
-            'katie@gmail.com',
-            style: GoogleFonts.poppins(
-                fontSize: 12.sp,
-                fontWeight: FontWeight.w400,
-                color: AppColors.textHint),
-          ),
-        ),
-        body: SafeArea(
-            child: Padding(
-          padding: EdgeInsets.symmetric(horizontal: 25.w, vertical: 20.h),
-          child: Stack(
-            children: [
-              SingleChildScrollView(
-                child: Column(
-                  children: [
-                    ListTile(
-                      onTap: viewModel.onEditProfileTap,
-                      tileColor: AppColors.grey600,
-                      shape: RoundedRectangleBorder(
-                        borderRadius: BorderRadius.circular(16.r),
-                      ),
-                      leading: Icon(Iconsax.user,
-                          size: 24.w, color: AppColors.secondary),
-                      title: Text('Edit Profile',
-                          style: GoogleFonts.poppins(
-                              fontSize: 14.sp,
-                              fontWeight: FontWeight.w400,
-                              color: AppColors.textPrimary)),
-                      trailing: Icon(Iconsax.arrow_right_2,
-                          size: 24.w, color: AppColors.textPrimary),
-                    ),
-                    SizedBox(height: 10.h),
-                    ListTile(
-                      onTap: viewModel.onRentalHistoryTap,
-                      tileColor: AppColors.grey600,
-                      shape: RoundedRectangleBorder(
-                        borderRadius: BorderRadius.circular(16.r),
-                      ),
-                      leading: Icon(Iconsax.receipt_item,
-                          size: 24.w, color: AppColors.secondary),
-                      title: Text('Rental History',
-                          style: GoogleFonts.poppins(
-                              fontSize: 14.sp,
-                              fontWeight: FontWeight.w400,
-                              color: AppColors.textPrimary)),
-                      trailing: Icon(Iconsax.arrow_right_2,
-                          size: 24.w, color: AppColors.textPrimary),
-                    ),
-                    SizedBox(height: 10.h),
-                    ListTile(
-                      onTap: viewModel.onFavoritesTap,
-                      tileColor: AppColors.grey600,
-                      shape: RoundedRectangleBorder(
-                        borderRadius: BorderRadius.circular(16.r),
-                      ),
-                      leading: Icon(Iconsax.heart,
-                          size: 24.w, color: AppColors.secondary),
-                      title: Text('Favorites',
-                          style: GoogleFonts.poppins(
-                              fontSize: 14.sp,
-                              fontWeight: FontWeight.w400,
-                              color: AppColors.textPrimary)),
-                      trailing: Icon(Iconsax.arrow_right_2,
-                          size: 24.w, color: AppColors.textPrimary),
-                    ),
-                    SizedBox(height: 10.h),
-                    ListTile(
-                      onTap: viewModel.onPrivacyPolicyTap,
-                      tileColor: AppColors.grey600,
-                      shape: RoundedRectangleBorder(
-                        borderRadius: BorderRadius.circular(16.r),
-                      ),
-                      leading: Icon(Iconsax.shield_tick,
-                          size: 24.w, color: AppColors.secondary),
-                      title: Text('Privacy Policy',
-                          style: GoogleFonts.poppins(
-                              fontSize: 14.sp,
-                              fontWeight: FontWeight.w400,
-                              color: AppColors.textPrimary)),
-                      trailing: Icon(Iconsax.arrow_right_2,
-                          size: 24.w, color: AppColors.textPrimary),
-                    ),
-                    SizedBox(height: 10.h),
-                    ListTile(
-                      onTap: viewModel.onReferAndEarnTap,
-                      tileColor: AppColors.grey600,
-                      shape: RoundedRectangleBorder(
-                        borderRadius: BorderRadius.circular(16.r),
-                      ),
-                      leading: Icon(Iconsax.gift,
-                          size: 24.w, color: AppColors.secondary),
-                      title: Text('Refer and Earn',
-                          style: GoogleFonts.poppins(
-                              fontSize: 14.sp,
-                              fontWeight: FontWeight.w400,
-                              color: AppColors.textPrimary)),
-                      trailing: Icon(Iconsax.arrow_right_2,
-                          size: 24.w, color: AppColors.textPrimary),
-                    ),
-                    SizedBox(height: 10.h),
-                    ListTile(
-                      onTap: viewModel.onFrequentlyAskedQuestionsTap,
-                      tileColor: AppColors.grey600,
-                      shape: RoundedRectangleBorder(
-                        borderRadius: BorderRadius.circular(16.r),
-                      ),
-                      leading: Icon(Iconsax.message_question,
-                          size: 24.w, color: AppColors.secondary),
-                      title: Text('Frequently Asked Questions',
-                          style: GoogleFonts.poppins(
-                              fontSize: 14.sp,
-                              fontWeight: FontWeight.w400,
-                              color: AppColors.textPrimary)),
-                      trailing: Icon(Iconsax.arrow_right_2,
-                          size: 24.w, color: AppColors.textPrimary),
-                    ),
-                    SizedBox(height: 10.h),
-                    ListTile(
-                      onTap: viewModel.onNotificationsTap,
-                      tileColor: AppColors.grey600,
-                      shape: RoundedRectangleBorder(
-                        borderRadius: BorderRadius.circular(16.r),
-                      ),
-                      leading: Icon(Iconsax.notification,
-                          size: 24.w, color: AppColors.secondary),
-                      title: Text('Notifications',
-                          style: GoogleFonts.poppins(
-                              fontSize: 14.sp,
-                              fontWeight: FontWeight.w400,
-                              color: AppColors.textPrimary)),
-                      trailing: Icon(Iconsax.toggle_off_circle_copy,
-                          size: 24.w, color: AppColors.textPrimary),
-                    ),
-                  ],
-                ),
-              ),
-              FloatingChatButton(
-                onTap: (_) {
-                  viewModel.onChatTap();
-                },
-                chatIconWidget: const Padding(
-                  padding: EdgeInsets.all(14.0),
-                  child: Icon(
-                    Iconsax.message_2_copy,
-                    color: AppColors.white,
-                    size: 24,
+    return Stack(
+      children: [
+        Scaffold(
+            backgroundColor: AppColors.scaffoldBackground,
+            appBar: MainAppBar(
+              hasLeading: true,
+              hasSubtitle: true,
+              leading: Row(
+                children: [
+                  CircleAvatar(
+                    child: Image.asset('assets/images/pfp.png',
+                        width: 50.w, height: 50.h),
                   ),
-                ),
-                messageBackgroundColor: AppColors.secondary,
-                chatIconBorderColor: AppColors.secondary,
-                chatIconBackgroundColor: AppColors.secondary,
-                messageBorderWidth: 2,
-                messageText: "You've received a message!",
-                messageTextStyle: GoogleFonts.poppins(
-                    fontSize: 14.sp,
+                  SizedBox(width: 10.w),
+                ],
+              ),
+              title: Text(
+                viewModel.currentUser?.name ?? '',
+                style: GoogleFonts.poppins(
+                    fontSize: 18.sp,
+                    fontWeight: FontWeight.w700,
+                    color: AppColors.textPrimary),
+              ),
+              subtitle: Text(
+                viewModel.currentUser?.email ?? '',
+                style: GoogleFonts.poppins(
+                    fontSize: 12.sp,
                     fontWeight: FontWeight.w400,
-                    color: AppColors.white),
-                showMessageParameters: ShowMessageParameters(
-                    delayDuration: const Duration(seconds: 2),
-                    durationToShowMessage: const Duration(seconds: 5)),
-              )
-            ],
+                    color: AppColors.textHint),
+              ),
+            ),
+            body: SafeArea(
+                child: Padding(
+              padding: EdgeInsets.symmetric(horizontal: 25.w, vertical: 20.h),
+              child: Stack(
+                children: [
+                  SingleChildScrollView(
+                    child: Column(
+                      children: [
+                        ListTile(
+                          onTap: viewModel.onEditProfileTap,
+                          tileColor: AppColors.grey600,
+                          shape: RoundedRectangleBorder(
+                            borderRadius: BorderRadius.circular(16.r),
+                          ),
+                          leading: Icon(Iconsax.user,
+                              size: 24.w, color: AppColors.secondary),
+                          title: Text('Edit Profile',
+                              style: GoogleFonts.poppins(
+                                  fontSize: 14.sp,
+                                  fontWeight: FontWeight.w400,
+                                  color: AppColors.textPrimary)),
+                          trailing: Icon(Iconsax.arrow_right_2,
+                              size: 24.w, color: AppColors.textPrimary),
+                        ),
+                        SizedBox(height: 10.h),
+                        ListTile(
+                          onTap: viewModel.onRentalHistoryTap,
+                          tileColor: AppColors.grey600,
+                          shape: RoundedRectangleBorder(
+                            borderRadius: BorderRadius.circular(16.r),
+                          ),
+                          leading: Icon(Iconsax.receipt_item,
+                              size: 24.w, color: AppColors.secondary),
+                          title: Text('Rental History',
+                              style: GoogleFonts.poppins(
+                                  fontSize: 14.sp,
+                                  fontWeight: FontWeight.w400,
+                                  color: AppColors.textPrimary)),
+                          trailing: Icon(Iconsax.arrow_right_2,
+                              size: 24.w, color: AppColors.textPrimary),
+                        ),
+                        SizedBox(height: 10.h),
+                        ListTile(
+                          onTap: viewModel.onFavoritesTap,
+                          tileColor: AppColors.grey600,
+                          shape: RoundedRectangleBorder(
+                            borderRadius: BorderRadius.circular(16.r),
+                          ),
+                          leading: Icon(Iconsax.heart,
+                              size: 24.w, color: AppColors.secondary),
+                          title: Text('Favorites',
+                              style: GoogleFonts.poppins(
+                                  fontSize: 14.sp,
+                                  fontWeight: FontWeight.w400,
+                                  color: AppColors.textPrimary)),
+                          trailing: Icon(Iconsax.arrow_right_2,
+                              size: 24.w, color: AppColors.textPrimary),
+                        ),
+                        SizedBox(height: 10.h),
+                        ListTile(
+                          onTap: viewModel.onPrivacyPolicyTap,
+                          tileColor: AppColors.grey600,
+                          shape: RoundedRectangleBorder(
+                            borderRadius: BorderRadius.circular(16.r),
+                          ),
+                          leading: Icon(Iconsax.shield_tick,
+                              size: 24.w, color: AppColors.secondary),
+                          title: Text('Privacy Policy',
+                              style: GoogleFonts.poppins(
+                                  fontSize: 14.sp,
+                                  fontWeight: FontWeight.w400,
+                                  color: AppColors.textPrimary)),
+                          trailing: Icon(Iconsax.arrow_right_2,
+                              size: 24.w, color: AppColors.textPrimary),
+                        ),
+                        SizedBox(height: 10.h),
+                        ListTile(
+                          onTap: viewModel.onReferAndEarnTap,
+                          tileColor: AppColors.grey600,
+                          shape: RoundedRectangleBorder(
+                            borderRadius: BorderRadius.circular(16.r),
+                          ),
+                          leading: Icon(Iconsax.gift,
+                              size: 24.w, color: AppColors.secondary),
+                          title: Text('Refer and Earn',
+                              style: GoogleFonts.poppins(
+                                  fontSize: 14.sp,
+                                  fontWeight: FontWeight.w400,
+                                  color: AppColors.textPrimary)),
+                          trailing: Icon(Iconsax.arrow_right_2,
+                              size: 24.w, color: AppColors.textPrimary),
+                        ),
+                        SizedBox(height: 10.h),
+                        ListTile(
+                          onTap: viewModel.onFrequentlyAskedQuestionsTap,
+                          tileColor: AppColors.grey600,
+                          shape: RoundedRectangleBorder(
+                            borderRadius: BorderRadius.circular(16.r),
+                          ),
+                          leading: Icon(Iconsax.message_question,
+                              size: 24.w, color: AppColors.secondary),
+                          title: Text('Frequently Asked Questions',
+                              style: GoogleFonts.poppins(
+                                  fontSize: 14.sp,
+                                  fontWeight: FontWeight.w400,
+                                  color: AppColors.textPrimary)),
+                          trailing: Icon(Iconsax.arrow_right_2,
+                              size: 24.w, color: AppColors.textPrimary),
+                        ),
+                        SizedBox(height: 10.h),
+                        ListTile(
+                          onTap: viewModel.onNotificationsTap,
+                          tileColor: AppColors.grey600,
+                          shape: RoundedRectangleBorder(
+                            borderRadius: BorderRadius.circular(16.r),
+                          ),
+                          leading: Icon(Iconsax.notification,
+                              size: 24.w, color: AppColors.secondary),
+                          title: Text('Notifications',
+                              style: GoogleFonts.poppins(
+                                  fontSize: 14.sp,
+                                  fontWeight: FontWeight.w400,
+                                  color: AppColors.textPrimary)),
+                          trailing: Icon(Iconsax.toggle_off_circle_copy,
+                              size: 24.w, color: AppColors.textPrimary),
+                        ),
+                      ],
+                    ),
+                  ),
+                  Align(
+                    alignment: Alignment.bottomCenter,
+                    child: MainButton(
+                      text: 'Logout',
+                      onTap: viewModel.onLogoutTap,
+                      color: AppColors.secondary,
+                      textColor: AppColors.white,
+                      borderColor: AppColors.secondary,
+                    ),
+                  ),
+                  FloatingChatButton(
+                    onTap: (_) {
+                      viewModel.onChatTap();
+                    },
+                    chatIconWidget: const Padding(
+                      padding: EdgeInsets.all(14.0),
+                      child: Icon(
+                        Iconsax.message_2_copy,
+                        color: AppColors.white,
+                        size: 24,
+                      ),
+                    ),
+                    messageBackgroundColor: AppColors.secondary,
+                    chatIconBorderColor: AppColors.secondary,
+                    chatIconBackgroundColor: AppColors.secondary,
+                    messageBorderWidth: 2,
+                    messageText: "You've received a message!",
+                    messageTextStyle: GoogleFonts.poppins(
+                        fontSize: 14.sp,
+                        fontWeight: FontWeight.w400,
+                        color: AppColors.white),
+                    showMessageParameters: ShowMessageParameters(
+                        delayDuration: const Duration(seconds: 2),
+                        durationToShowMessage: const Duration(seconds: 5)),
+                  )
+                ],
+              ),
+            ))),
+        if (viewModel.isLoggingOut)
+          Container(
+            color: Colors.black.withOpacity(0.5),
+            child: const Center(
+              child: Column(
+                mainAxisSize: MainAxisSize.min,
+                children: [
+                  CircularProgressIndicator(
+                    valueColor: AlwaysStoppedAnimation<Color>(Colors.white),
+                  ),
+                  SizedBox(height: 16),
+                  Text(
+                    'Logging out...',
+                    style: TextStyle(
+                      color: Colors.white,
+                      fontSize: 16,
+                    ),
+                  ),
+                ],
+              ),
+            ),
           ),
-        )));
+      ],
+    );
   }
 
   @override

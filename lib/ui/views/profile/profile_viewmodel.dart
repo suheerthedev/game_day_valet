@@ -1,10 +1,27 @@
 import 'package:game_day_valet/app/app.locator.dart';
 import 'package:game_day_valet/app/app.router.dart';
+import 'package:game_day_valet/models/user_model.dart';
+import 'package:game_day_valet/services/secure_storage_service.dart';
+import 'package:game_day_valet/services/user_service.dart';
 import 'package:stacked/stacked.dart';
 import 'package:stacked_services/stacked_services.dart';
 
 class ProfileViewModel extends BaseViewModel {
   final _navigationService = locator<NavigationService>();
+  final _userService = locator<UserService>();
+  final _secureStorageService = locator<SecureStorageService>();
+
+  UserModel? get currentUser => _userService.currentUser;
+
+  bool isLoggingOut = false;
+
+  Future<void> onLogoutTap() async {
+    isLoggingOut = true;
+    await Future.delayed(const Duration(seconds: 2));
+    await _secureStorageService.deleteToken();
+    await _navigationService.clearStackAndShow(Routes.signInView);
+    isLoggingOut = false;
+  }
 
   void onEditProfileTap() {
     _navigationService.navigateToEditProfileView();
