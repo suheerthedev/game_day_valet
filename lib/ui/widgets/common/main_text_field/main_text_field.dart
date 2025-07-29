@@ -56,6 +56,7 @@ class MainTextField extends StackedView<MainTextFieldModel> {
           color: AppColors.textPrimary,
         ),
         decoration: InputDecoration(
+          focusColor: AppColors.primary,
           labelText: label,
           labelStyle: GoogleFonts.poppins(
             fontSize: 14.sp,

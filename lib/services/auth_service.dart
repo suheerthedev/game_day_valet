@@ -38,15 +38,17 @@ class AuthService {
     }
   }
 
-  Future<void> register(Map<String, dynamic> body) async {
+  Future<dynamic> register(Map<String, dynamic> body) async {
     final url = ApiConfig.baseUrl + ApiConfig.registerEndPoint;
 
     try {
-      await _apiService.post(url, body);
-    } on ApiException catch (_) {
+      final response = await _apiService.post(url, body);
+      return response;
+    } on ApiException catch (e) {
+      print("Api Exception: $e");
       rethrow;
-    } catch (_) {
-      throw ApiException("Registration Failed.");
+    } catch (e) {
+      throw ApiException("Registration Failed. $e");
     }
   }
 }

@@ -12,6 +12,10 @@ class NoInternetException extends ApiException {
   NoInternetException() : super("No Internet Connection.");
 }
 
+class RequestTimeoutException extends ApiException {
+  RequestTimeoutException() : super("Request Timeout.");
+}
+
 class UnauthorizedException extends ApiException {
   UnauthorizedException() : super("Unauthorized Access.", 401);
 }

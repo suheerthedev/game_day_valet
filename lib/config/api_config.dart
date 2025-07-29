@@ -3,8 +3,7 @@ import 'package:flutter_dotenv/flutter_dotenv.dart';
 class ApiConfig {
   static final baseUrl = dotenv.env['BASE_URL'] ?? '';
 
-  static const loginEndPoint = '/login';
-  static const registerEndPoint = '/register';
-  static const productsEndPoint = '/products';
+  static const loginEndPoint = '/api/login';
+  static const registerEndPoint = '/api/register';
   // Add more as needed
 }

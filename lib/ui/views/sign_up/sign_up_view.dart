@@ -21,211 +21,281 @@ class SignUpView extends StackedView<SignUpViewModel> {
     return Scaffold(
         backgroundColor: AppColors.scaffoldBackground,
         body: SafeArea(
-            child: Padding(
-          padding: EdgeInsets.symmetric(horizontal: 20.w, vertical: 20.h),
-          child: SingleChildScrollView(
-            child: Column(
-              crossAxisAlignment: CrossAxisAlignment.start,
-              children: [
-                Text("""Create New 
+            child: viewModel.isBusy
+                ? const Center(child: CircularProgressIndicator())
+                : Padding(
+                    padding:
+                        EdgeInsets.symmetric(horizontal: 20.w, vertical: 20.h),
+                    child: SingleChildScrollView(
+                      child: Column(
+                        crossAxisAlignment: CrossAxisAlignment.start,
+                        children: [
+                          Text("""Create New 
 Account""",
-                    style: GoogleFonts.poppins(
-                      fontSize: 32.sp,
-                      fontWeight: FontWeight.w700,
-                      color: AppColors.primary,
-                    )),
-                SizedBox(height: 5.h),
-                GestureDetector(
-                  onTap: viewModel.goToSignIn,
-                  child: Text.rich(TextSpan(
-                      text: "Already have an account? ",
-                      style: GoogleFonts.poppins(
-                          fontSize: 14.sp,
-                          fontWeight: FontWeight.w600,
-                          color: AppColors.primary),
-                      children: [
-                        TextSpan(
-                            text: "Sign in",
-                            style: GoogleFonts.poppins(
-                                fontSize: 14.sp,
-                                color: AppColors.secondary,
-                                fontWeight: FontWeight.w600))
-                      ])),
-                ),
-                SizedBox(height: 30.h),
-                MainTextField(
-                  label: 'Email',
-                  controller: viewModel.emailController,
-                  labelColor: AppColors.textHint,
-                  cursorColor: AppColors.primary,
-                  fillColor: AppColors.grey50,
-                  borderColor: AppColors.grey100,
-                  enabledBorderColor: AppColors.grey100,
-                  focusedBorderColor: AppColors.primary,
-                  hasSuffixIcon: false,
-                ),
-                SizedBox(height: 20.h),
-                MainTextField(
-                  label: 'Name',
-                  controller: viewModel.nameController,
-                  labelColor: AppColors.textHint,
-                  cursorColor: AppColors.primary,
-                  fillColor: AppColors.grey50,
-                  borderColor: AppColors.grey100,
-                  enabledBorderColor: AppColors.grey100,
-                  focusedBorderColor: AppColors.primary,
-                  hasSuffixIcon: false,
-                ),
+                              style: GoogleFonts.poppins(
+                                fontSize: 32.sp,
+                                fontWeight: FontWeight.w700,
+                                color: AppColors.primary,
+                              )),
+                          SizedBox(height: 5.h),
+                          GestureDetector(
+                            onTap: viewModel.goToSignIn,
+                            child: Text.rich(TextSpan(
+                                text: "Already have an account? ",
+                                style: GoogleFonts.poppins(
+                                    fontSize: 14.sp,
+                                    fontWeight: FontWeight.w600,
+                                    color: AppColors.primary),
+                                children: [
+                                  TextSpan(
+                                      text: "Sign in",
+                                      style: GoogleFonts.poppins(
+                                          fontSize: 14.sp,
+                                          color: AppColors.secondary,
+                                          fontWeight: FontWeight.w600))
+                                ])),
+                          ),
+                          SizedBox(height: 30.h),
+                          MainTextField(
+                            label: 'Name',
+                            controller: viewModel.nameController,
+                            labelColor: AppColors.textHint,
+                            cursorColor: AppColors.primary,
+                            fillColor: AppColors.grey50,
+                            borderColor: AppColors.grey100,
+                            enabledBorderColor: AppColors.grey100,
+                            focusedBorderColor: AppColors.primary,
+                            hasSuffixIcon: false,
+                            // errorText: viewModel.nameError,
+                          ),
+                          if (viewModel.nameError != null)
+                            Text(
+                              viewModel.nameError ?? '',
+                              style: GoogleFonts.poppins(
+                                fontSize: 12.sp,
+                                color: AppColors.error,
+                              ),
+                            ),
 
-                SizedBox(height: 20.h),
-                MainTextField(
-                  label: 'Password',
-                  controller: viewModel.passwordController,
-                  labelColor: AppColors.textHint,
-                  cursorColor: AppColors.primary,
-                  fillColor: AppColors.grey50,
-                  borderColor: AppColors.grey100,
-                  enabledBorderColor: AppColors.grey100,
-                  focusedBorderColor: AppColors.primary,
-                  hasSuffixIcon: true,
-                  obscureText: true,
-                  suffixIcon: IconButton(
-                      onPressed: () {},
-                      icon: const Icon(Icons.visibility_outlined)),
-                  suffixIconColor: AppColors.primary,
-                ),
+                          SizedBox(height: 20.h),
+                          MainTextField(
+                            label: 'Email',
+                            controller: viewModel.emailController,
+                            labelColor: AppColors.textHint,
+                            cursorColor: AppColors.primary,
+                            fillColor: AppColors.grey50,
+                            borderColor: AppColors.grey100,
+                            enabledBorderColor: AppColors.grey100,
+                            focusedBorderColor: AppColors.primary,
+                            hasSuffixIcon: false,
+                            // errorText: viewModel.emailError,
+                          ),
+                          if (viewModel.emailError != null)
+                            Text(
+                              viewModel.emailError ?? '',
+                              style: GoogleFonts.poppins(
+                                fontSize: 12.sp,
+                                color: AppColors.error,
+                              ),
+                            ),
 
-                SizedBox(height: 30.h),
-                MainButton(
-                    text: "Sign Up",
-                    onTap: viewModel.onSignUp,
-                    hasBorder: true,
-                    color: AppColors.secondary,
-                    borderColor: AppColors.white,
-                    textColor: AppColors.white),
-                SizedBox(height: 30.h),
-                Row(
-                  children: [
-                    const Expanded(
-                        child: Divider(
-                      color: AppColors.grey300,
-                    )),
-                    Padding(
-                      padding: EdgeInsets.symmetric(horizontal: 10.w),
-                      child: Text("OR",
-                          style: GoogleFonts.poppins(
-                              fontSize: 18.sp,
-                              fontWeight: FontWeight.w500,
-                              color: AppColors.primary)),
+                          SizedBox(height: 20.h),
+                          MainTextField(
+                            label: 'Password',
+                            controller: viewModel.passwordController,
+                            labelColor: AppColors.textHint,
+                            cursorColor: AppColors.primary,
+                            fillColor: AppColors.grey50,
+                            borderColor: AppColors.grey100,
+                            enabledBorderColor: AppColors.grey100,
+                            focusedBorderColor: AppColors.primary,
+                            hasSuffixIcon: true,
+                            obscureText: !viewModel.isPasswordVisible,
+                            suffixIcon: IconButton(
+                                onPressed: viewModel.togglePasswordVisibility,
+                                icon: Icon(
+                                  viewModel.isPasswordVisible
+                                      ? Icons.visibility_outlined
+                                      : Icons.visibility_off_outlined,
+                                )),
+                            suffixIconColor: AppColors.primary,
+                            // errorText: viewModel.passwordError,
+                          ),
+                          if (viewModel.passwordError != null)
+                            Text(
+                              viewModel.passwordError ?? '',
+                              style: GoogleFonts.poppins(
+                                fontSize: 12.sp,
+                                color: AppColors.error,
+                              ),
+                            ),
+
+                          if (viewModel.generalError != null)
+                            Padding(
+                              padding: EdgeInsets.only(top: 8.h, bottom: 8.h),
+                              child: Container(
+                                padding: EdgeInsets.all(10.w),
+                                decoration: BoxDecoration(
+                                  color: AppColors.error.withOpacity(0.1),
+                                  borderRadius: BorderRadius.circular(8.r),
+                                ),
+                                child: Row(
+                                  crossAxisAlignment: CrossAxisAlignment.start,
+                                  mainAxisAlignment: MainAxisAlignment.center,
+                                  children: [
+                                    Icon(
+                                      Icons.error_outline,
+                                      color: AppColors.error,
+                                      size: 16.sp,
+                                    ),
+                                    SizedBox(width: 8.w),
+                                    Expanded(
+                                      child: Text(
+                                        viewModel.generalError!,
+                                        style: GoogleFonts.poppins(
+                                          color: AppColors.error,
+                                          fontSize: 14.sp,
+                                        ),
+                                      ),
+                                    ),
+                                  ],
+                                ),
+                              ),
+                            ),
+
+                          SizedBox(height: 30.h),
+                          MainButton(
+                              text: "Sign Up",
+                              onTap: viewModel.onSignUp,
+                              hasBorder: true,
+                              color: AppColors.secondary,
+                              borderColor: AppColors.white,
+                              textColor: AppColors.white),
+                          SizedBox(height: 30.h),
+                          Row(
+                            children: [
+                              const Expanded(
+                                  child: Divider(
+                                color: AppColors.grey300,
+                              )),
+                              Padding(
+                                padding: EdgeInsets.symmetric(horizontal: 10.w),
+                                child: Text("OR",
+                                    style: GoogleFonts.poppins(
+                                        fontSize: 18.sp,
+                                        fontWeight: FontWeight.w500,
+                                        color: AppColors.primary)),
+                              ),
+                              const Expanded(
+                                  child: Divider(
+                                color: AppColors.grey300,
+                              ))
+                            ],
+                          ),
+
+                          //Google Button
+                          SizedBox(height: 30.h),
+                          InkWell(
+                            onTap: viewModel.onGoogleSignUp,
+                            child: Container(
+                                width: 340.w,
+                                height: 58.h,
+                                decoration: BoxDecoration(
+                                  color: AppColors.white,
+                                  borderRadius: BorderRadius.circular(10.r),
+                                  border: BoxBorder.all(
+                                      width: 1.04.w, color: AppColors.primary),
+                                ),
+                                child: Center(
+                                  child: Row(
+                                    mainAxisAlignment: MainAxisAlignment.center,
+                                    children: [
+                                      FaIcon(FontAwesomeIcons.google,
+                                          size: 24.sp,
+                                          color: AppColors.primary),
+                                      SizedBox(width: 10.w),
+                                      Text(
+                                        "Continue with Google",
+                                        style: GoogleFonts.poppins(
+                                            fontSize: 16.sp,
+                                            fontWeight: FontWeight.w500,
+                                            color: AppColors.primary),
+                                      ),
+                                    ],
+                                  ),
+                                )),
+                          ),
+
+                          //Apple button
+                          SizedBox(height: 10.h),
+                          InkWell(
+                            onTap: viewModel.onAppleSignUp,
+                            child: Container(
+                                width: 340.w,
+                                height: 58.h,
+                                decoration: BoxDecoration(
+                                  color: AppColors.white,
+                                  borderRadius: BorderRadius.circular(10.r),
+                                  border: BoxBorder.all(
+                                      width: 1.04.w, color: AppColors.primary),
+                                ),
+                                child: Center(
+                                  child: Row(
+                                    mainAxisAlignment: MainAxisAlignment.center,
+                                    children: [
+                                      FaIcon(FontAwesomeIcons.apple,
+                                          size: 24.sp,
+                                          color: AppColors.primary),
+                                      SizedBox(width: 10.w),
+                                      Text(
+                                        "Continue with Apple",
+                                        style: GoogleFonts.poppins(
+                                            fontSize: 16.sp,
+                                            fontWeight: FontWeight.w500,
+                                            color: AppColors.primary),
+                                      ),
+                                    ],
+                                  ),
+                                )),
+                          ),
+
+                          //Terms and conditions
+                          SizedBox(height: 20.h),
+                          Padding(
+                            padding: EdgeInsets.symmetric(horizontal: 20.w),
+                            child: Text.rich(
+                                textAlign: TextAlign.center,
+                                TextSpan(
+                                    text: "By signing up, you agree to our ",
+                                    style: GoogleFonts.poppins(
+                                        fontSize: 14.sp,
+                                        fontWeight: FontWeight.w500,
+                                        color: AppColors.primary),
+                                    children: [
+                                      TextSpan(
+                                          text: "Terms ",
+                                          style: GoogleFonts.poppins(
+                                              fontSize: 14.sp,
+                                              color: AppColors.primary,
+                                              fontWeight: FontWeight.w600)),
+                                      TextSpan(
+                                          text: "and ",
+                                          style: GoogleFonts.poppins(
+                                              fontSize: 14.sp,
+                                              color: AppColors.primary,
+                                              fontWeight: FontWeight.w500)),
+                                      TextSpan(
+                                          text: "Privacy Policy",
+                                          style: GoogleFonts.poppins(
+                                              fontSize: 14.sp,
+                                              color: AppColors.primary,
+                                              fontWeight: FontWeight.w600))
+                                    ])),
+                          ),
+                        ],
+                      ),
                     ),
-                    const Expanded(
-                        child: Divider(
-                      color: AppColors.grey300,
-                    ))
-                  ],
-                ),
-
-                //Google Button
-                SizedBox(height: 30.h),
-                InkWell(
-                  onTap: viewModel.onGoogleSignUp,
-                  child: Container(
-                      width: 340.w,
-                      height: 58.h,
-                      decoration: BoxDecoration(
-                        color: AppColors.white,
-                        borderRadius: BorderRadius.circular(10.r),
-                        border: BoxBorder.all(
-                            width: 1.04.w, color: AppColors.primary),
-                      ),
-                      child: Center(
-                        child: Row(
-                          mainAxisAlignment: MainAxisAlignment.center,
-                          children: [
-                            FaIcon(FontAwesomeIcons.google,
-                                size: 24.sp, color: AppColors.primary),
-                            SizedBox(width: 10.w),
-                            Text(
-                              "Continue with Google",
-                              style: GoogleFonts.poppins(
-                                  fontSize: 16.sp,
-                                  fontWeight: FontWeight.w500,
-                                  color: AppColors.primary),
-                            ),
-                          ],
-                        ),
-                      )),
-                ),
-
-                //Apple button
-                SizedBox(height: 10.h),
-                InkWell(
-                  onTap: viewModel.onAppleSignUp,
-                  child: Container(
-                      width: 340.w,
-                      height: 58.h,
-                      decoration: BoxDecoration(
-                        color: AppColors.white,
-                        borderRadius: BorderRadius.circular(10.r),
-                        border: BoxBorder.all(
-                            width: 1.04.w, color: AppColors.primary),
-                      ),
-                      child: Center(
-                        child: Row(
-                          mainAxisAlignment: MainAxisAlignment.center,
-                          children: [
-                            FaIcon(FontAwesomeIcons.apple,
-                                size: 24.sp, color: AppColors.primary),
-                            SizedBox(width: 10.w),
-                            Text(
-                              "Continue with Apple",
-                              style: GoogleFonts.poppins(
-                                  fontSize: 16.sp,
-                                  fontWeight: FontWeight.w500,
-                                  color: AppColors.primary),
-                            ),
-                          ],
-                        ),
-                      )),
-                ),
-
-                //Terms and conditions
-                SizedBox(height: 20.h),
-                Padding(
-                  padding: EdgeInsets.symmetric(horizontal: 20.w),
-                  child: Text.rich(
-                      textAlign: TextAlign.center,
-                      TextSpan(
-                          text: "By signing up, you agree to our ",
-                          style: GoogleFonts.poppins(
-                              fontSize: 14.sp,
-                              fontWeight: FontWeight.w500,
-                              color: AppColors.primary),
-                          children: [
-                            TextSpan(
-                                text: "Terms ",
-                                style: GoogleFonts.poppins(
-                                    fontSize: 14.sp,
-                                    color: AppColors.primary,
-                                    fontWeight: FontWeight.w600)),
-                            TextSpan(
-                                text: "and ",
-                                style: GoogleFonts.poppins(
-                                    fontSize: 14.sp,
-                                    color: AppColors.primary,
-                                    fontWeight: FontWeight.w500)),
-                            TextSpan(
-                                text: "Privacy Policy",
-                                style: GoogleFonts.poppins(
-                                    fontSize: 14.sp,
-                                    color: AppColors.primary,
-                                    fontWeight: FontWeight.w600))
-                          ])),
-                ),
-              ],
-            ),
-          ),
-        )));
+                  )));
   }
 
   @override

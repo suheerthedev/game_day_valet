@@ -819,7 +819,36 @@ class MockSecureStorageService extends _i1.Mock
 /// A class which mocks [AuthService].
 ///
 /// See the documentation for Mockito's code generation for more information.
-class MockAuthService extends _i1.Mock implements _i10.AuthService {}
+class MockAuthService extends _i1.Mock implements _i10.AuthService {
+  @override
+  _i5.Future<void> login({
+    required String? email,
+    required String? password,
+  }) =>
+      (super.noSuchMethod(
+        Invocation.method(
+          #login,
+          [],
+          {
+            #email: email,
+            #password: password,
+          },
+        ),
+        returnValue: _i5.Future<void>.value(),
+        returnValueForMissingStub: _i5.Future<void>.value(),
+      ) as _i5.Future<void>);
+
+  @override
+  _i5.Future<dynamic> register(Map<String, dynamic>? body) =>
+      (super.noSuchMethod(
+        Invocation.method(
+          #register,
+          [body],
+        ),
+        returnValue: _i5.Future<dynamic>.value(),
+        returnValueForMissingStub: _i5.Future<dynamic>.value(),
+      ) as _i5.Future<dynamic>);
+}
 
 /// A class which mocks [UserService].
 ///

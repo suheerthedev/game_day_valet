@@ -4,6 +4,7 @@ import 'package:game_day_valet/app/app.bottomsheets.dart';
 import 'package:game_day_valet/app/app.dialogs.dart';
 import 'package:game_day_valet/app/app.locator.dart';
 import 'package:game_day_valet/app/app.router.dart';
+import 'package:game_day_valet/ui/common/app_colors.dart';
 import 'package:stacked_services/stacked_services.dart';
 import 'package:flutter_dotenv/flutter_dotenv.dart';
 
@@ -26,6 +27,9 @@ class MainApp extends StatelessWidget {
       minTextAdapt: true,
       splitScreenMode: true,
       child: MaterialApp(
+        theme: ThemeData(
+          colorScheme: ColorScheme.fromSeed(seedColor: AppColors.secondary),
+        ),
         debugShowCheckedModeBanner: false,
         initialRoute: Routes.startupView,
         onGenerateRoute: StackedRouter().onGenerateRoute,

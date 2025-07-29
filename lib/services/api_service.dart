@@ -1,3 +1,4 @@
+import 'dart:async';
 import 'dart:convert';
 import 'dart:io';
 
@@ -13,7 +14,7 @@ class ApiService {
     final token = await _secureStorageService.getToken();
     return {
       'Accept': 'application/json',
-      if (!isMultiPart) 'Content-Type': 'application/json',
+      // if (!isMultiPart) 'Content-Type': 'application/json',
       if (token != null) 'Authorization': 'Bearer $token',
     };
   }
@@ -25,6 +26,8 @@ class ApiService {
       return _handleResponse(response);
     } on SocketException {
       throw NoInternetException();
+    } on TimeoutException {
+      throw RequestTimeoutException();
     }
   }
 
@@ -33,9 +36,12 @@ class ApiService {
       final headers = await _getHeaders();
       final response =
           await http.post(Uri.parse(url), headers: headers, body: body);
+
       return _handleResponse(response);
     } on SocketException {
       throw NoInternetException();
+    } on TimeoutException {
+      throw RequestTimeoutException();
     }
   }
 
@@ -47,6 +53,8 @@ class ApiService {
       return _handleResponse(response);
     } on SocketException {
       throw NoInternetException();
+    } on TimeoutException {
+      throw RequestTimeoutException();
     }
   }
 
@@ -58,6 +66,8 @@ class ApiService {
       return _handleResponse(response);
     } on SocketException {
       throw NoInternetException();
+    } on TimeoutException {
+      throw RequestTimeoutException();
     }
   }
 
@@ -77,6 +87,8 @@ class ApiService {
       return _handleMultiPartResponse(response.statusCode, responseBody);
     } on SocketException {
       throw NoInternetException();
+    } on TimeoutException {
+      throw RequestTimeoutException();
     }
   }
 
@@ -86,8 +98,9 @@ class ApiService {
       case 200:
       case 201:
         return decoded;
-      case 400:
       case 422:
+        return decoded;
+      case 400:
         throw ApiException(
             decoded['message'] ?? "Bad Request", response.statusCode);
       case 401:

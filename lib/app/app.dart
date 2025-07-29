@@ -26,6 +26,7 @@ import 'package:game_day_valet/services/api_service.dart';
 import 'package:game_day_valet/services/secure_storage_service.dart';
 import 'package:game_day_valet/services/auth_service.dart';
 import 'package:game_day_valet/services/user_service.dart';
+import 'package:game_day_valet/ui/dialogs/success/success_dialog.dart';
 // @stacked-import
 
 @StackedApp(
@@ -73,7 +74,8 @@ import 'package:game_day_valet/services/user_service.dart';
   ],
   dialogs: [
     StackedDialog(classType: InfoAlertDialog),
-    // @stacked-dialog
+    StackedDialog(classType: SuccessDialog),
+// @stacked-dialog
   ],
 )
 class App {}
