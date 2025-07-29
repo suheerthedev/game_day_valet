@@ -11,6 +11,7 @@ import 'package:flutter/material.dart' as _i4;
 import 'package:game_day_valet/services/api_service.dart' as _i7;
 import 'package:game_day_valet/services/auth_service.dart' as _i10;
 import 'package:game_day_valet/services/secure_storage_service.dart' as _i9;
+import 'package:game_day_valet/services/user_service.dart' as _i11;
 import 'package:mockito/mockito.dart' as _i1;
 import 'package:mockito/src/dummies.dart' as _i3;
 import 'package:stacked_services/stacked_services.dart' as _i2;
@@ -819,3 +820,8 @@ class MockSecureStorageService extends _i1.Mock
 ///
 /// See the documentation for Mockito's code generation for more information.
 class MockAuthService extends _i1.Mock implements _i10.AuthService {}
+
+/// A class which mocks [UserService].
+///
+/// See the documentation for Mockito's code generation for more information.
+class MockUserService extends _i1.Mock implements _i11.UserService {}
