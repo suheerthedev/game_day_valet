@@ -8,6 +8,7 @@ import 'dart:io' as _i8;
 import 'dart:ui' as _i6;
 
 import 'package:flutter/material.dart' as _i4;
+import 'package:game_day_valet/models/user_model.dart' as _i12;
 import 'package:game_day_valet/services/api_service.dart' as _i7;
 import 'package:game_day_valet/services/auth_service.dart' as _i10;
 import 'package:game_day_valet/services/secure_storage_service.dart' as _i9;
@@ -821,7 +822,7 @@ class MockSecureStorageService extends _i1.Mock
 /// See the documentation for Mockito's code generation for more information.
 class MockAuthService extends _i1.Mock implements _i10.AuthService {
   @override
-  _i5.Future<void> login({
+  _i5.Future<dynamic> login({
     required String? email,
     required String? password,
   }) =>
@@ -834,9 +835,9 @@ class MockAuthService extends _i1.Mock implements _i10.AuthService {
             #password: password,
           },
         ),
-        returnValue: _i5.Future<void>.value(),
-        returnValueForMissingStub: _i5.Future<void>.value(),
-      ) as _i5.Future<void>);
+        returnValue: _i5.Future<dynamic>.value(),
+        returnValueForMissingStub: _i5.Future<dynamic>.value(),
+      ) as _i5.Future<dynamic>);
 
   @override
   _i5.Future<dynamic> register(Map<String, dynamic>? body) =>
@@ -848,9 +849,102 @@ class MockAuthService extends _i1.Mock implements _i10.AuthService {
         returnValue: _i5.Future<dynamic>.value(),
         returnValueForMissingStub: _i5.Future<dynamic>.value(),
       ) as _i5.Future<dynamic>);
+
+  @override
+  _i5.Future<dynamic> forgotPassword(String? email) => (super.noSuchMethod(
+        Invocation.method(
+          #forgotPassword,
+          [email],
+        ),
+        returnValue: _i5.Future<dynamic>.value(),
+        returnValueForMissingStub: _i5.Future<dynamic>.value(),
+      ) as _i5.Future<dynamic>);
+
+  @override
+  _i5.Future<dynamic> validateReferralCode(String? referralCode) =>
+      (super.noSuchMethod(
+        Invocation.method(
+          #validateReferralCode,
+          [referralCode],
+        ),
+        returnValue: _i5.Future<dynamic>.value(),
+        returnValueForMissingStub: _i5.Future<dynamic>.value(),
+      ) as _i5.Future<dynamic>);
 }
 
 /// A class which mocks [UserService].
 ///
 /// See the documentation for Mockito's code generation for more information.
-class MockUserService extends _i1.Mock implements _i11.UserService {}
+class MockUserService extends _i1.Mock implements _i11.UserService {
+  @override
+  int get listenersCount => (super.noSuchMethod(
+        Invocation.getter(#listenersCount),
+        returnValue: 0,
+        returnValueForMissingStub: 0,
+      ) as int);
+
+  @override
+  _i5.Future<void> fetchCurrentUser() => (super.noSuchMethod(
+        Invocation.method(
+          #fetchCurrentUser,
+          [],
+        ),
+        returnValue: _i5.Future<void>.value(),
+        returnValueForMissingStub: _i5.Future<void>.value(),
+      ) as _i5.Future<void>);
+
+  @override
+  void clearUser() => super.noSuchMethod(
+        Invocation.method(
+          #clearUser,
+          [],
+        ),
+        returnValueForMissingStub: null,
+      );
+
+  @override
+  void updateUser(_i12.UserModel? user) => super.noSuchMethod(
+        Invocation.method(
+          #updateUser,
+          [user],
+        ),
+        returnValueForMissingStub: null,
+      );
+
+  @override
+  void listenToReactiveValues(List<dynamic>? reactiveValues) =>
+      super.noSuchMethod(
+        Invocation.method(
+          #listenToReactiveValues,
+          [reactiveValues],
+        ),
+        returnValueForMissingStub: null,
+      );
+
+  @override
+  void addListener(void Function()? listener) => super.noSuchMethod(
+        Invocation.method(
+          #addListener,
+          [listener],
+        ),
+        returnValueForMissingStub: null,
+      );
+
+  @override
+  void removeListener(void Function()? listener) => super.noSuchMethod(
+        Invocation.method(
+          #removeListener,
+          [listener],
+        ),
+        returnValueForMissingStub: null,
+      );
+
+  @override
+  void notifyListeners() => super.noSuchMethod(
+        Invocation.method(
+          #notifyListeners,
+          [],
+        ),
+        returnValueForMissingStub: null,
+      );
+}

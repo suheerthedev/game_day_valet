@@ -4,7 +4,10 @@ import 'package:game_day_valet/app/app.bottomsheets.dart';
 import 'package:game_day_valet/app/app.dialogs.dart';
 import 'package:game_day_valet/app/app.locator.dart';
 import 'package:game_day_valet/app/app.router.dart';
+import 'package:game_day_valet/core/enums/snackbar_type.dart';
 import 'package:game_day_valet/ui/common/app_colors.dart';
+import 'package:game_day_valet/ui/snackbars/error/error_snackbar.dart';
+import 'package:game_day_valet/ui/snackbars/success/success_snackbar.dart';
 import 'package:stacked_services/stacked_services.dart';
 import 'package:flutter_dotenv/flutter_dotenv.dart';
 
@@ -12,6 +15,17 @@ Future<void> main() async {
   WidgetsFlutterBinding.ensureInitialized();
   await dotenv.load(fileName: ".env");
   await setupLocator();
+
+  locator<SnackbarService>().registerCustomSnackbarConfig(
+    variant: SnackbarType.success,
+    config: getSuccessSnackbarConfig(),
+  );
+
+  locator<SnackbarService>().registerCustomSnackbarConfig(
+    variant: SnackbarType.error,
+    config: getErrorSnackbarConfig(),
+  );
+
   setupDialogUi();
   setupBottomSheetUi();
   runApp(const MainApp());

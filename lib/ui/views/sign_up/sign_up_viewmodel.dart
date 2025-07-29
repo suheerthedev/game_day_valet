@@ -10,7 +10,7 @@ import 'package:stacked_services/stacked_services.dart';
 class SignUpViewModel extends BaseViewModel {
   final _navigationService = locator<NavigationService>();
   final _authService = locator<AuthService>();
-  final _dialogService = locator<DialogService>();
+  final _snackbarService = locator<SnackbarService>();
 
   final TextEditingController emailController = TextEditingController();
   final TextEditingController nameController = TextEditingController();
@@ -112,12 +112,10 @@ class SignUpViewModel extends BaseViewModel {
       } else {
         clearControllers();
         setBusy(false);
-        _dialogService.showCustomDialog(
-          variant: DialogType.success,
-          title: "Success",
-          description: response['message'],
-          mainButtonTitle: "Got it",
-        );
+        _snackbarService.showSnackbar(
+            title: 'Success',
+            message: response['message'],
+            duration: const Duration(seconds: 3));
       }
       print("Name Error: $nameError");
       print("Email Error: $emailError");

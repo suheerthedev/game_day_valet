@@ -17,8 +17,6 @@ class AuthService {
           await _apiService.post(url, {'email': email, 'password': password});
 
       return response;
-      // final user = UserModel.fromJson(response['user']);
-      // await _userService.getUser(user);
     } on ApiException catch (_) {
       rethrow;
     } catch (_) {
@@ -37,6 +35,20 @@ class AuthService {
       rethrow;
     } catch (e) {
       throw ApiException("Registration Failed. $e");
+    }
+  }
+
+  Future<dynamic> forgotPassword(String email) async {
+    final url = ApiConfig.baseUrl + ApiConfig.forgotPasswordEndPoint;
+
+    try {
+      final response = await _apiService.post(url, {'email': email});
+      return response;
+    } on ApiException catch (e) {
+      print("Api Exception: $e");
+      rethrow;
+    } catch (e) {
+      throw ApiException("Forgot Password Failed. $e");
     }
   }
 

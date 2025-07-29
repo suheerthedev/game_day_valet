@@ -61,6 +61,7 @@ import 'package:game_day_valet/ui/dialogs/success/success_dialog.dart';
   dependencies: [
     LazySingleton(classType: BottomSheetService),
     LazySingleton(classType: DialogService),
+    LazySingleton(classType: SnackbarService),
     LazySingleton(classType: NavigationService),
     LazySingleton(classType: ApiService),
     LazySingleton(classType: SecureStorageService),

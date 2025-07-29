@@ -1,16 +1,63 @@
 import 'package:flutter/material.dart';
 import 'package:game_day_valet/app/app.locator.dart';
 import 'package:game_day_valet/app/app.router.dart';
+import 'package:game_day_valet/core/enums/snackbar_type.dart';
+import 'package:game_day_valet/services/api_exception.dart';
+import 'package:game_day_valet/services/auth_service.dart';
 import 'package:stacked/stacked.dart';
 import 'package:stacked_services/stacked_services.dart';
 
 class ForgotPasswordViewModel extends BaseViewModel {
   final _navigationService = locator<NavigationService>();
+  final _authService = locator<AuthService>();
+  final _snackbarService = locator<SnackbarService>();
+  final _dialogService = locator<DialogService>();
 
   final TextEditingController emailController = TextEditingController();
 
-  void onForgotPassword() {
-    print(emailController.text);
-    _navigationService.navigateToResetPasswordView();
+  String? emailError;
+  String? generalError;
+
+  void clearErrors() {
+    emailError = null;
+    generalError = null;
+  }
+
+  void clearController() {
+    emailController.clear();
+  }
+
+  Future<void> onForgotPassword() async {
+    clearErrors();
+    setBusy(true);
+    try {
+      final response = await _authService.forgotPassword(emailController.text);
+      print("Forgot Password Response: $response");
+
+      if (response.containsKey('errors')) {
+        if (response['message'] != null) {
+          generalError = response['message'];
+        }
+        if (response['errors'].containsKey('email')) {
+          emailError = response['errors']['email'][0];
+        }
+      } else {
+        _snackbarService.showCustomSnackBar(
+            message: response['message'], variant: SnackbarType.success);
+
+        clearController();
+
+        // _navigationService.navigateToResetPasswordView();
+      }
+    } catch (e) {
+      if (e is ApiException) {
+        print("Error: ${e.message}");
+      } else {
+        print("Error: $e");
+      }
+    } finally {
+      rebuildUi();
+      setBusy(false);
+    }
   }
 }
