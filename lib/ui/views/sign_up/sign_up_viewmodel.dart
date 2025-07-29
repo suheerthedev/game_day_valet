@@ -26,14 +26,14 @@ class SignUpViewModel extends BaseViewModel {
 
   bool isPasswordVisible = false;
 
-  bool isReferralCodeValid = true;
+  bool isReferralCodeValid = false;
 
   void togglePasswordVisibility() {
     isPasswordVisible = !isPasswordVisible;
     rebuildUi();
   }
 
-  void clearErrors() {
+  void clearAllErrors() {
     emailError = null;
     nameError = null;
     passwordError = null;
@@ -82,7 +82,7 @@ class SignUpViewModel extends BaseViewModel {
       rebuildUi();
       return;
     }
-    clearErrors();
+    clearAllErrors();
     setBusy(true);
     try {
       final body = {
