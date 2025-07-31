@@ -30,24 +30,27 @@ class ForgotPasswordViewModel extends BaseViewModel {
     clearErrors();
     setBusy(true);
     try {
-      final response = await _authService.forgotPassword(emailController.text);
-      print("Forgot Password Response: $response");
+      // final response = await _authService.forgotPassword(emailController.text);
+      // print("Forgot Password Response: $response");
 
-      if (response.containsKey('errors')) {
-        if (response['message'] != null) {
-          generalError = response['message'];
-        }
-        if (response['errors'].containsKey('email')) {
-          emailError = response['errors']['email'][0];
-        }
-      } else {
-        _snackbarService.showCustomSnackBar(
-            message: response['message'], variant: SnackbarType.success);
+      // if (response.containsKey('errors')) {
+      //   if (response['message'] != null) {
+      //     generalError = response['message'];
+      //   }
+      //   if (response['errors'].containsKey('email')) {
+      //     emailError = response['errors']['email'][0];
+      //   }
+      // } else {
+      //   _snackbarService.showCustomSnackBar(
+      //       message: response['message'], variant: SnackbarType.success);
 
-        clearController();
+      //   clearController();
 
-        _navigationService.navigateToResetPasswordView();
-      }
+      //   _navigationService.navigateToOtpView(email: emailController.text);
+      // }
+
+      _navigationService.navigateToOtpView(email: emailController.text);
+      clearController();
     } catch (e) {
       if (e is ApiException) {
         print("Error: ${e.message}");

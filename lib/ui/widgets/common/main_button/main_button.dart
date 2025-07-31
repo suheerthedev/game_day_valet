@@ -13,6 +13,7 @@ class MainButton extends StackedView<MainButtonModel> {
   final Color? color;
   final Color? textColor;
   final Color? borderColor;
+  final bool isDisabled;
   const MainButton(
       {super.key,
       required this.text,
@@ -20,7 +21,8 @@ class MainButton extends StackedView<MainButtonModel> {
       this.hasBorder = false,
       this.color,
       this.textColor,
-      this.borderColor});
+      this.borderColor,
+      this.isDisabled = false});
 
   @override
   Widget builder(
@@ -29,12 +31,13 @@ class MainButton extends StackedView<MainButtonModel> {
     Widget? child,
   ) {
     return InkWell(
-      onTap: onTap,
+      onTap: isDisabled ? null : onTap,
       child: Container(
           width: 340.w,
           height: 58.h,
           decoration: BoxDecoration(
-            color: color ?? AppColors.secondary,
+            color:
+                isDisabled ? AppColors.grey500 : color ?? AppColors.secondary,
             borderRadius: BorderRadius.circular(10.r),
             border: hasBorder
                 ? BoxBorder.all(

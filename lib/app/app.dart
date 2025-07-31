@@ -27,6 +27,7 @@ import 'package:game_day_valet/services/secure_storage_service.dart';
 import 'package:game_day_valet/services/auth_service.dart';
 import 'package:game_day_valet/services/user_service.dart';
 import 'package:game_day_valet/ui/dialogs/success/success_dialog.dart';
+import 'package:game_day_valet/ui/views/otp/otp_view.dart';
 // @stacked-import
 
 @StackedApp(
@@ -56,6 +57,7 @@ import 'package:game_day_valet/ui/dialogs/success/success_dialog.dart';
     MaterialRoute(page: FaqView),
     MaterialRoute(page: NotificationView),
     MaterialRoute(page: ChatView),
+    MaterialRoute(page: OtpView),
 // @stacked-route
   ],
   dependencies: [

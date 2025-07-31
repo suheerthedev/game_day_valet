@@ -55,10 +55,20 @@ class SignInViewModel extends BaseViewModel {
 
       if (response.containsKey('errors')) {
         if (response['message'] != null) {
-          _snackbarService.showCustomSnackBar(
-            variant: SnackbarType.error,
-            message: response['message'],
-          );
+          if (response['message'] ==
+              'Your email is not verified. A new OTP has been sent.') {
+            await _snackbarService.showCustomSnackBar(
+              variant: SnackbarType.error,
+              message: response['message'],
+            );
+            await _navigationService.navigateToOtpView(
+                email: emailController.text);
+          } else {
+            _snackbarService.showCustomSnackBar(
+              variant: SnackbarType.error,
+              message: response['message'],
+            );
+          }
         }
 
         if (response['errors'].containsKey('email')) {
@@ -87,18 +97,16 @@ class SignInViewModel extends BaseViewModel {
       }
 
       print("Login Response: $response");
+    } on ApiException catch (e) {
+      _snackbarService.showCustomSnackBar(
+        variant: SnackbarType.error,
+        message: e.message,
+      );
     } catch (e) {
-      if (e is ApiException) {
-        _snackbarService.showCustomSnackBar(
-          variant: SnackbarType.error,
-          message: e.message,
-        );
-      } else {
-        _snackbarService.showCustomSnackBar(
-          variant: SnackbarType.error,
-          message: e.toString(),
-        );
-      }
+      _snackbarService.showCustomSnackBar(
+        variant: SnackbarType.error,
+        message: e.toString(),
+      );
     } finally {
       rebuildUi();
       setBusy(false);

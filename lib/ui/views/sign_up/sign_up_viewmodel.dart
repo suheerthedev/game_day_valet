@@ -113,12 +113,13 @@ class SignUpViewModel extends BaseViewModel {
           passwordError = response['errors']['password'][0];
         }
       } else {
-        clearControllers();
         setBusy(false);
-        _snackbarService.showCustomSnackBar(
+        await _snackbarService.showCustomSnackBar(
           variant: SnackbarType.success,
           message: response['message'],
         );
+        _navigationService.navigateToOtpView(email: emailController.text);
+        clearControllers();
       }
       print("Name Error: $nameError");
       print("Email Error: $emailError");

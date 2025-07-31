@@ -66,4 +66,19 @@ class AuthService {
       throw ApiException("Referral Code Validation Failed. $e");
     }
   }
+
+  Future<dynamic> verifyOtp(String email, String otp) async {
+    final url = ApiConfig.baseUrl + ApiConfig.verifyOtpEndPoint;
+
+    try {
+      final response =
+          await _apiService.post(url, {'email': email, 'otp': otp});
+      return response;
+    } on ApiException catch (e) {
+      print("Api Exception: $e");
+      rethrow;
+    } catch (e) {
+      throw ApiException("OTP Verification Failed. $e");
+    }
+  }
 }
