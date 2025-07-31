@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:game_day_valet/app/app.locator.dart';
 import 'package:game_day_valet/app/app.router.dart';
+import 'package:game_day_valet/core/enums/snackbar_type.dart';
 import 'package:game_day_valet/services/api_exception.dart';
 import 'package:game_day_valet/services/auth_service.dart';
 import 'package:game_day_valet/services/secure_storage_service.dart';
@@ -13,6 +14,7 @@ class SignInViewModel extends BaseViewModel {
   final _authService = locator<AuthService>();
   final _secureStorageService = locator<SecureStorageService>();
   final _userService = locator<UserService>();
+  final _snackbarService = locator<SnackbarService>();
 
   final TextEditingController emailController = TextEditingController();
   final TextEditingController passwordController = TextEditingController();
@@ -53,7 +55,10 @@ class SignInViewModel extends BaseViewModel {
 
       if (response.containsKey('errors')) {
         if (response['message'] != null) {
-          generalError = response['message'];
+          _snackbarService.showCustomSnackBar(
+            variant: SnackbarType.error,
+            message: response['message'],
+          );
         }
 
         if (response['errors'].containsKey('email')) {
@@ -84,9 +89,15 @@ class SignInViewModel extends BaseViewModel {
       print("Login Response: $response");
     } catch (e) {
       if (e is ApiException) {
-        generalError = e.message;
+        _snackbarService.showCustomSnackBar(
+          variant: SnackbarType.error,
+          message: e.message,
+        );
       } else {
-        generalError = "Something went wrong. Please try again.";
+        _snackbarService.showCustomSnackBar(
+          variant: SnackbarType.error,
+          message: e.toString(),
+        );
       }
     } finally {
       rebuildUi();

@@ -11,7 +11,6 @@ class ForgotPasswordViewModel extends BaseViewModel {
   final _navigationService = locator<NavigationService>();
   final _authService = locator<AuthService>();
   final _snackbarService = locator<SnackbarService>();
-  final _dialogService = locator<DialogService>();
 
   final TextEditingController emailController = TextEditingController();
 
@@ -47,7 +46,7 @@ class ForgotPasswordViewModel extends BaseViewModel {
 
         clearController();
 
-        // _navigationService.navigateToResetPasswordView();
+        _navigationService.navigateToResetPasswordView();
       }
     } catch (e) {
       if (e is ApiException) {

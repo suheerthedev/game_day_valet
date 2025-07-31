@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
-import 'package:game_day_valet/app/app.dialogs.dart';
 import 'package:game_day_valet/app/app.locator.dart';
 import 'package:game_day_valet/app/app.router.dart';
+import 'package:game_day_valet/core/enums/snackbar_type.dart';
 import 'package:game_day_valet/services/api_exception.dart';
 import 'package:game_day_valet/services/auth_service.dart';
 import 'package:stacked/stacked.dart';
@@ -98,7 +98,10 @@ class SignUpViewModel extends BaseViewModel {
 
       if (response.containsKey('errors')) {
         if (response['message'] != null) {
-          generalError = response['message'];
+          _snackbarService.showCustomSnackBar(
+            variant: SnackbarType.error,
+            message: response['message'],
+          );
         }
         if (response['errors'].containsKey('email')) {
           emailError = response['errors']['email'][0];
@@ -112,20 +115,26 @@ class SignUpViewModel extends BaseViewModel {
       } else {
         clearControllers();
         setBusy(false);
-        _snackbarService.showSnackbar(
-            title: 'Success',
-            message: response['message'],
-            duration: const Duration(seconds: 3));
+        _snackbarService.showCustomSnackBar(
+          variant: SnackbarType.success,
+          message: response['message'],
+        );
       }
       print("Name Error: $nameError");
       print("Email Error: $emailError");
       print("Password Error: $passwordError");
 
       print(response);
+    } on ApiException catch (e) {
+      _snackbarService.showCustomSnackBar(
+        variant: SnackbarType.error,
+        message: e.message,
+      );
     } catch (e) {
-      if (e is ApiException) {
-        generalError = e.message;
-      }
+      _snackbarService.showCustomSnackBar(
+        variant: SnackbarType.error,
+        message: e.toString(),
+      );
       print(e);
     } finally {
       rebuildUi();
