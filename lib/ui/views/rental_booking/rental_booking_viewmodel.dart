@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
+import 'package:game_day_valet/services/logger_service.dart';
 import 'package:game_day_valet/ui/common/app_colors.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:stacked/stacked.dart';
@@ -45,7 +46,7 @@ class RentalBookingViewModel extends BaseViewModel {
       TextEditingController();
 
   void showMapPopup(BuildContext context, String image, String name) {
-    print('Google Map Popup Triggered');
+    logger.info('Google Map Popup Triggered');
 
     showDialog(
       context: context,

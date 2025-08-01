@@ -1,3 +1,4 @@
+import 'package:game_day_valet/services/logger_service.dart';
 import 'package:stacked/stacked.dart';
 
 class ReferAndEarnViewModel extends BaseViewModel {
@@ -8,7 +9,7 @@ class ReferAndEarnViewModel extends BaseViewModel {
 
   void calculateProgress() {
     progress = currentValue / finalValue;
-    print(progress);
+    logger.info("Refer and Earn Progress: $progress");
     rebuildUi();
   }
 }

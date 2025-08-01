@@ -4,6 +4,7 @@ import 'package:game_day_valet/app/app.router.dart';
 import 'package:game_day_valet/core/enums/snackbar_type.dart';
 import 'package:game_day_valet/services/api_exception.dart';
 import 'package:game_day_valet/services/auth_service.dart';
+import 'package:game_day_valet/services/logger_service.dart';
 import 'package:game_day_valet/services/secure_storage_service.dart';
 import 'package:game_day_valet/services/user_service.dart';
 import 'package:stacked/stacked.dart';
@@ -51,7 +52,7 @@ class SignInViewModel extends BaseViewModel {
       final response = await _authService.login(
           email: emailController.text, password: passwordController.text);
 
-      print("Login Response: $response");
+      logger.info("Login Response: $response");
 
       if (response.containsKey('errors')) {
         if (response['message'] != null) {
@@ -95,14 +96,14 @@ class SignInViewModel extends BaseViewModel {
         await _navigationService.clearStackAndShow(Routes.mainView);
         setBusy(false);
       }
-
-      print("Login Response: $response");
     } on ApiException catch (e) {
+      logger.error("Login failed from ViewModel - API Exception", e);
       _snackbarService.showCustomSnackBar(
         variant: SnackbarType.error,
         message: e.message,
       );
     } catch (e) {
+      logger.error("Login failed from ViewModel - Unknown error", e);
       _snackbarService.showCustomSnackBar(
         variant: SnackbarType.error,
         message: e.toString(),
@@ -114,11 +115,11 @@ class SignInViewModel extends BaseViewModel {
   }
 
   void onGoogleSignIn() {
-    print("Google Sign In");
+    logger.info("Google Sign In");
   }
 
   void onAppleSignIn() {
-    print("Apple Sign In");
+    logger.info("Apple Sign In");
   }
 
   void goToSignUp() {

@@ -4,6 +4,7 @@ import 'package:game_day_valet/app/app.router.dart';
 import 'package:game_day_valet/core/enums/snackbar_type.dart';
 import 'package:game_day_valet/services/api_exception.dart';
 import 'package:game_day_valet/services/auth_service.dart';
+import 'package:game_day_valet/services/logger_service.dart';
 import 'package:stacked/stacked.dart';
 import 'package:stacked_services/stacked_services.dart';
 
@@ -31,7 +32,7 @@ class OtpViewModel extends BaseViewModel {
     try {
       final response = await _authService.verifyOtp(email, otp);
 
-      print("Response: $response");
+      logger.info("OTP Verification Response: $response");
 
       if (response['message'] == 'Invalid or expired OTP.') {
         _snackbarService.showCustomSnackBar(
@@ -48,11 +49,13 @@ class OtpViewModel extends BaseViewModel {
 
       _navigationService.replaceWithSignInView();
     } on ApiException catch (e) {
+      logger.error("OTP Verification failed from ViewModel - API Exception", e);
       _snackbarService.showCustomSnackBar(
         variant: SnackbarType.error,
         message: e.message,
       );
     } catch (e) {
+      logger.error("OTP Verification failed from ViewModel - Unknown error", e);
       _snackbarService.showCustomSnackBar(
         variant: SnackbarType.error,
         message: e.toString(),

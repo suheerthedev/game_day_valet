@@ -4,6 +4,7 @@ import 'package:game_day_valet/app/app.router.dart';
 import 'package:game_day_valet/core/enums/snackbar_type.dart';
 import 'package:game_day_valet/services/api_exception.dart';
 import 'package:game_day_valet/services/auth_service.dart';
+import 'package:game_day_valet/services/logger_service.dart';
 import 'package:stacked/stacked.dart';
 import 'package:stacked_services/stacked_services.dart';
 
@@ -55,7 +56,7 @@ class SignUpViewModel extends BaseViewModel {
     try {
       final response =
           await _authService.validateReferralCode(referralCodeController.text);
-      print("Validate Referral Code Response: $response");
+      logger.info("Validate Referral Code Response: $response");
 
       if (response.containsKey('errors')) {
         referralCodeError = response['errors']['referral_code'][0];
@@ -66,11 +67,13 @@ class SignUpViewModel extends BaseViewModel {
       } else {
         isReferralCodeValid = false;
       }
+    } on ApiException catch (e) {
+      logger.error(
+          "Validate Referral Code failed from ViewModel - API Exception", e);
+      referralCodeError = e.message;
     } catch (e) {
-      if (e is ApiException) {
-        referralCodeError = e.message;
-      }
-      print(e);
+      logger.error(
+          "Validate Referral Code failed from ViewModel - Unknown error", e);
     } finally {
       setBusy(false);
     }
@@ -92,7 +95,7 @@ class SignUpViewModel extends BaseViewModel {
         if (referralCodeController.text.isNotEmpty)
           'referral_code': referralCodeController.text,
       };
-      print("Register Body: $body");
+      logger.info("Register Body: $body");
 
       final response = await _authService.register(body);
 
@@ -121,22 +124,23 @@ class SignUpViewModel extends BaseViewModel {
         _navigationService.navigateToOtpView(email: emailController.text);
         clearControllers();
       }
-      print("Name Error: $nameError");
-      print("Email Error: $emailError");
-      print("Password Error: $passwordError");
+      logger.info("Name Error: $nameError");
+      logger.info("Email Error: $emailError");
+      logger.info("Password Error: $passwordError");
 
-      print(response);
+      logger.info("Register Response: $response");
     } on ApiException catch (e) {
+      logger.error("Register failed from ViewModel - API Exception", e);
       _snackbarService.showCustomSnackBar(
         variant: SnackbarType.error,
         message: e.message,
       );
     } catch (e) {
+      logger.error("Register failed from ViewModel - Unknown error", e);
       _snackbarService.showCustomSnackBar(
         variant: SnackbarType.error,
         message: e.toString(),
       );
-      print(e);
     } finally {
       rebuildUi();
       setBusy(false);
@@ -144,11 +148,11 @@ class SignUpViewModel extends BaseViewModel {
   }
 
   void onGoogleSignUp() {
-    print("Google Sign Up");
+    logger.info("Google Sign Up");
   }
 
   void onAppleSignUp() {
-    print("Apple Sign Up");
+    logger.info("Apple Sign Up");
   }
 
   void goToSignIn() {

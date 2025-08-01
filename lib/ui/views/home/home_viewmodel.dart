@@ -4,6 +4,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:game_day_valet/app/app.locator.dart';
 import 'package:game_day_valet/app/app.router.dart';
+import 'package:game_day_valet/services/logger_service.dart';
 import 'package:game_day_valet/ui/common/app_colors.dart';
 import 'package:google_maps_flutter/google_maps_flutter.dart';
 import 'package:stacked/stacked.dart';
@@ -32,7 +33,7 @@ class HomeViewModel extends BaseViewModel {
   );
 
   void showMapPopup(BuildContext context) {
-    print('Google Map Popup Triggered');
+    logger.info('Google Map Popup Triggered');
 
     // Create a new completer for each popup instance
     final Completer<GoogleMapController> mapController =

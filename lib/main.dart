@@ -5,6 +5,7 @@ import 'package:game_day_valet/app/app.dialogs.dart';
 import 'package:game_day_valet/app/app.locator.dart';
 import 'package:game_day_valet/app/app.router.dart';
 import 'package:game_day_valet/core/enums/snackbar_type.dart';
+import 'package:game_day_valet/services/logger_service.dart';
 // import 'package:game_day_valet/services/connectivity_service.dart';
 import 'package:game_day_valet/ui/common/app_colors.dart';
 import 'package:game_day_valet/ui/snackbars/error/error_snackbar.dart';
@@ -17,6 +18,9 @@ import 'package:flutter_dotenv/flutter_dotenv.dart';
 
 Future<void> main() async {
   WidgetsFlutterBinding.ensureInitialized();
+
+  logger.intialize();
+
   await dotenv.load(fileName: ".env");
   await setupLocator();
 

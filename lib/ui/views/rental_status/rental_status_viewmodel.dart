@@ -3,6 +3,7 @@ import 'dart:async';
 import 'package:flutter/material.dart';
 import 'package:game_day_valet/app/app.locator.dart';
 import 'package:game_day_valet/app/app.router.dart';
+import 'package:game_day_valet/services/logger_service.dart';
 import 'package:stacked/stacked.dart';
 import 'package:stacked_services/stacked_services.dart';
 
@@ -40,12 +41,13 @@ class RentalStatusViewModel extends BaseViewModel {
     timer = Timer.periodic(const Duration(minutes: 1), (timer) {
       if (timeRemaining > 0) {
         timeRemaining--;
-        print('Time remaining: $timeRemaining');
+
+        logger.info('Time remaining: $timeRemaining');
         rebuildUi();
         // Update UI (e.g., using setState)
       } else {
         timer.cancel();
-        print('Countdown finished!');
+        logger.info('Countdown finished!');
         this.timer = null;
         isRunning = false;
         rebuildUi();

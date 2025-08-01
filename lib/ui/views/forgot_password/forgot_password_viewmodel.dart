@@ -4,6 +4,7 @@ import 'package:game_day_valet/app/app.router.dart';
 import 'package:game_day_valet/core/enums/snackbar_type.dart';
 import 'package:game_day_valet/services/api_exception.dart';
 import 'package:game_day_valet/services/auth_service.dart';
+import 'package:game_day_valet/services/logger_service.dart';
 import 'package:stacked/stacked.dart';
 import 'package:stacked_services/stacked_services.dart';
 
@@ -17,7 +18,7 @@ class ForgotPasswordViewModel extends BaseViewModel {
   String? emailError;
   String? generalError;
 
-  void clearErrors() {
+  void clearAllErrors() {
     emailError = null;
     generalError = null;
   }
@@ -27,11 +28,11 @@ class ForgotPasswordViewModel extends BaseViewModel {
   }
 
   Future<void> onForgotPassword() async {
-    clearErrors();
+    clearAllErrors();
     setBusy(true);
     try {
       final response = await _authService.forgotPassword(emailController.text);
-      print("Forgot Password Response: $response");
+      logger.info("Forgot Password Response: $response");
 
       if (response.containsKey('errors')) {
         if (response['message'] != null) {
@@ -53,9 +54,11 @@ class ForgotPasswordViewModel extends BaseViewModel {
       clearController();
     } catch (e) {
       if (e is ApiException) {
-        print("Error: ${e.message}");
+        logger.error(
+            "Forgot Password failed from ViewModel - API Exception", e);
       } else {
-        print("Error: $e");
+        logger.error(
+            "Forgot Password failed from ViewModel - Unknown error", e);
       }
     } finally {
       rebuildUi();
