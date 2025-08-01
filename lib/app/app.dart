@@ -30,6 +30,7 @@ import 'package:game_day_valet/ui/dialogs/success/success_dialog.dart';
 import 'package:game_day_valet/ui/views/otp/otp_view.dart';
 import 'package:game_day_valet/services/connectivity_service.dart';
 import 'package:game_day_valet/services/logger_service.dart';
+import 'package:game_day_valet/services/google_sign_in_service.dart';
 // @stacked-import
 
 @StackedApp(
@@ -73,6 +74,7 @@ import 'package:game_day_valet/services/logger_service.dart';
     LazySingleton(classType: UserService),
     LazySingleton(classType: ConnectivityService),
     LazySingleton(classType: LoggerService),
+    LazySingleton(classType: GoogleSignInService),
 // @stacked-service
   ],
   bottomsheets: [

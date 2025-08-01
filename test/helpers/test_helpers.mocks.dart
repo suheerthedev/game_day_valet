@@ -12,6 +12,7 @@ import 'package:game_day_valet/models/user_model.dart' as _i12;
 import 'package:game_day_valet/services/api_service.dart' as _i7;
 import 'package:game_day_valet/services/auth_service.dart' as _i10;
 import 'package:game_day_valet/services/connectivity_service.dart' as _i13;
+import 'package:game_day_valet/services/google_sign_in_service.dart' as _i15;
 import 'package:game_day_valet/services/logger_service.dart' as _i14;
 import 'package:game_day_valet/services/secure_storage_service.dart' as _i9;
 import 'package:game_day_valet/services/user_service.dart' as _i11;
@@ -977,4 +978,110 @@ class MockConnectivityService extends _i1.Mock
 /// A class which mocks [LoggerService].
 ///
 /// See the documentation for Mockito's code generation for more information.
-class MockLoggerService extends _i1.Mock implements _i14.LoggerService {}
+class MockLoggerService extends _i1.Mock implements _i14.LoggerService {
+  @override
+  void intialize({bool? isProduction = false}) => super.noSuchMethod(
+        Invocation.method(
+          #intialize,
+          [],
+          {#isProduction: isProduction},
+        ),
+        returnValueForMissingStub: null,
+      );
+
+  @override
+  void debug(
+    String? message, [
+    dynamic error,
+    StackTrace? stackTrace,
+  ]) =>
+      super.noSuchMethod(
+        Invocation.method(
+          #debug,
+          [
+            message,
+            error,
+            stackTrace,
+          ],
+        ),
+        returnValueForMissingStub: null,
+      );
+
+  @override
+  void info(
+    String? message, [
+    dynamic error,
+    StackTrace? stackTrace,
+  ]) =>
+      super.noSuchMethod(
+        Invocation.method(
+          #info,
+          [
+            message,
+            error,
+            stackTrace,
+          ],
+        ),
+        returnValueForMissingStub: null,
+      );
+
+  @override
+  void warning(
+    String? message, [
+    dynamic error,
+    StackTrace? stackTrace,
+  ]) =>
+      super.noSuchMethod(
+        Invocation.method(
+          #warning,
+          [
+            message,
+            error,
+            stackTrace,
+          ],
+        ),
+        returnValueForMissingStub: null,
+      );
+
+  @override
+  void error(
+    String? message, [
+    dynamic error,
+    StackTrace? stackTrace,
+  ]) =>
+      super.noSuchMethod(
+        Invocation.method(
+          #error,
+          [
+            message,
+            error,
+            stackTrace,
+          ],
+        ),
+        returnValueForMissingStub: null,
+      );
+
+  @override
+  void wtf(
+    String? message, [
+    dynamic error,
+    StackTrace? stackTrace,
+  ]) =>
+      super.noSuchMethod(
+        Invocation.method(
+          #wtf,
+          [
+            message,
+            error,
+            stackTrace,
+          ],
+        ),
+        returnValueForMissingStub: null,
+      );
+}
+
+/// A class which mocks [GoogleSignInService].
+///
+/// See the documentation for Mockito's code generation for more information.
+class MockGoogleSignInService extends _i1.Mock
+    implements _i15.GoogleSignInService {}
