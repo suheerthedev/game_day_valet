@@ -1,4 +1,3 @@
-import 'package:connectivity_plus/connectivity_plus.dart';
 import 'package:game_day_valet/app/app.locator.dart';
 import 'package:game_day_valet/config/api_config.dart';
 import 'package:game_day_valet/services/api_exception.dart';
@@ -101,16 +100,6 @@ class AuthService {
   }
 
   Future<dynamic> signInWithGoogle({required String idToken}) async {
-    final List<ConnectivityResult> connectivityResult =
-        await (Connectivity().checkConnectivity());
-
-    if (connectivityResult.contains(ConnectivityResult.wifi)) {
-      logger.info("Wi-fi is available.");
-    } else {
-      logger.info("No internet connection");
-      throw NoInternetException();
-    }
-
     final url = ApiConfig.baseUrl + ApiConfig.googleSignInEndPoint;
 
     try {
@@ -119,6 +108,7 @@ class AuthService {
       });
 
       logger.info("Google Sign In successful for idToken: $idToken");
+      logger.info("Google Sign In Response: $response");
       return response;
     } on ApiException catch (e) {
       logger.error("Google Sign In failed - API Exception", e);

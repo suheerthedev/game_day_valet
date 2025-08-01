@@ -8,7 +8,7 @@ class GoogleSignInService {
   final _authService = locator<AuthService>();
   final GoogleSignIn _googleSignIn = GoogleSignIn.instance;
 
-  Future<void> signIn() async {
+  Future<dynamic> signIn() async {
     logger.info("🔄 Google Sign In Called");
 
     try {
@@ -36,7 +36,8 @@ class GoogleSignInService {
       logger.info("ID Token: $idToken");
 
       if (idToken != null) {
-        await _authService.signInWithGoogle(idToken: idToken);
+        final response = await _authService.signInWithGoogle(idToken: idToken);
+        return response;
       } else {
         logger.error("❌ Google Sign-In Error: No ID Token");
       }

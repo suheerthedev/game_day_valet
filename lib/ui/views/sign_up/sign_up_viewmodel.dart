@@ -4,7 +4,10 @@ import 'package:game_day_valet/app/app.router.dart';
 import 'package:game_day_valet/core/enums/snackbar_type.dart';
 import 'package:game_day_valet/services/api_exception.dart';
 import 'package:game_day_valet/services/auth_service.dart';
+import 'package:game_day_valet/services/google_sign_in_service.dart';
 import 'package:game_day_valet/services/logger_service.dart';
+import 'package:game_day_valet/services/secure_storage_service.dart';
+import 'package:game_day_valet/services/user_service.dart';
 import 'package:stacked/stacked.dart';
 import 'package:stacked_services/stacked_services.dart';
 
@@ -12,6 +15,9 @@ class SignUpViewModel extends BaseViewModel {
   final _navigationService = locator<NavigationService>();
   final _authService = locator<AuthService>();
   final _snackbarService = locator<SnackbarService>();
+  final _googleSignInService = locator<GoogleSignInService>();
+  final _secureStorageService = locator<SecureStorageService>();
+  final _userService = locator<UserService>();
 
   final TextEditingController emailController = TextEditingController();
   final TextEditingController nameController = TextEditingController();
@@ -147,8 +153,60 @@ class SignUpViewModel extends BaseViewModel {
     }
   }
 
-  void onGoogleSignUp() {
-    logger.info("Google Sign Up");
+  void onGoogleSignUp() async {
+    try {
+      final response = await _googleSignInService.signIn();
+
+      if (response.containsKey('errors')) {
+        if (response['message'] != null) {
+          _snackbarService.showCustomSnackBar(
+            variant: SnackbarType.error,
+            message: response['message'],
+          );
+        }
+      } else {
+        setBusy(true);
+        await _snackbarService.showCustomSnackBar(
+          variant: SnackbarType.success,
+          title: 'Success',
+          message: response['message'],
+          duration: const Duration(seconds: 3),
+        );
+
+        if (!response.containsKey('token')) {
+          throw ApiException("Token not found in response", 500);
+        }
+
+        final tokenParts = response['token'].split('|');
+        if (tokenParts.length != 2) {
+          throw ApiException("Invalid token format", 500);
+        }
+
+        final token = tokenParts[1];
+        await _secureStorageService.saveToken(token);
+
+        await _userService.fetchCurrentUser();
+
+        await _navigationService.clearStackAndShow(Routes.mainView);
+      }
+
+      logger.info("Google Sign In Response: $response");
+    } on ApiException catch (e) {
+      logger.error("Google Sign In failed from ViewModel - API Exception", e);
+      _snackbarService.showCustomSnackBar(
+        variant: SnackbarType.error,
+        message: e.message,
+      );
+    } catch (e) {
+      logger.error("Google Sign In failed from ViewModel - Unknown error", e);
+      _snackbarService.showCustomSnackBar(
+        variant: SnackbarType.error,
+        message: e.toString(),
+      );
+    } finally {
+      setBusy(false);
+      rebuildUi();
+    }
   }
 
   void onAppleSignUp() {

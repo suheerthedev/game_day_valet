@@ -116,8 +116,58 @@ class SignInViewModel extends BaseViewModel {
   }
 
   void onGoogleSignIn() async {
-    logger.info("Google Sign In");
-    await _googleSignInService.signIn();
+    try {
+      final response = await _googleSignInService.signIn();
+
+      if (response.containsKey('errors')) {
+        if (response['message'] != null) {
+          _snackbarService.showCustomSnackBar(
+            variant: SnackbarType.error,
+            message: response['message'],
+          );
+        }
+      } else {
+        setBusy(true);
+        await _snackbarService.showCustomSnackBar(
+          variant: SnackbarType.success,
+          title: 'Success',
+          message: response['message'],
+        );
+
+        if (!response.containsKey('token')) {
+          throw ApiException("Token not found in response", 500);
+        }
+
+        final tokenParts = response['token'].split('|');
+        if (tokenParts.length != 2) {
+          throw ApiException("Invalid token format", 500);
+        }
+
+        final token = tokenParts[1];
+        await _secureStorageService.saveToken(token);
+
+        await _userService.fetchCurrentUser();
+
+        await _navigationService.clearStackAndShow(Routes.mainView);
+      }
+
+      logger.info("Google Sign In Response: $response");
+    } on ApiException catch (e) {
+      logger.error("Google Sign In failed from ViewModel - API Exception", e);
+      _snackbarService.showCustomSnackBar(
+        variant: SnackbarType.error,
+        message: e.message,
+      );
+    } catch (e) {
+      logger.error("Google Sign In failed from ViewModel - Unknown error", e);
+      _snackbarService.showCustomSnackBar(
+        variant: SnackbarType.error,
+        message: e.toString(),
+      );
+    } finally {
+      setBusy(false);
+      rebuildUi();
+    }
   }
 
   void onAppleSignIn() {
