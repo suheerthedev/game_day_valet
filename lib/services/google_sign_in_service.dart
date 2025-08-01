@@ -1,8 +1,11 @@
 import 'package:flutter_dotenv/flutter_dotenv.dart';
+import 'package:game_day_valet/app/app.locator.dart';
+import 'package:game_day_valet/services/auth_service.dart';
 import 'package:game_day_valet/services/logger_service.dart';
 import 'package:google_sign_in/google_sign_in.dart';
 
 class GoogleSignInService {
+  final _authService = locator<AuthService>();
   final GoogleSignIn _googleSignIn = GoogleSignIn.instance;
 
   Future<void> signIn() async {
@@ -31,6 +34,12 @@ class GoogleSignInService {
       logger.info("Name: $accountName");
       logger.info("Email: $accountEmail");
       logger.info("ID Token: $idToken");
+
+      if (idToken != null) {
+        await _authService.signInWithGoogle(idToken: idToken);
+      } else {
+        logger.error("❌ Google Sign-In Error: No ID Token");
+      }
 
       // You can now send idToken to Laravel backend if needed
     } catch (e) {

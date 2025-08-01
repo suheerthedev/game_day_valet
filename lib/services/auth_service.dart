@@ -1,3 +1,4 @@
+import 'package:connectivity_plus/connectivity_plus.dart';
 import 'package:game_day_valet/app/app.locator.dart';
 import 'package:game_day_valet/config/api_config.dart';
 import 'package:game_day_valet/services/api_exception.dart';
@@ -96,6 +97,35 @@ class AuthService {
     } catch (e) {
       logger.error("OTP Verification failed - Unknown error", e);
       throw ApiException("OTP Verification Failed. $e");
+    }
+  }
+
+  Future<dynamic> signInWithGoogle({required String idToken}) async {
+    final List<ConnectivityResult> connectivityResult =
+        await (Connectivity().checkConnectivity());
+
+    if (connectivityResult.contains(ConnectivityResult.wifi)) {
+      logger.info("Wi-fi is available.");
+    } else {
+      logger.info("No internet connection");
+      throw NoInternetException();
+    }
+
+    final url = ApiConfig.baseUrl + ApiConfig.googleSignInEndPoint;
+
+    try {
+      final response = await _apiService.post(url, {
+        'id_token': idToken,
+      });
+
+      logger.info("Google Sign In successful for idToken: $idToken");
+      return response;
+    } on ApiException catch (e) {
+      logger.error("Google Sign In failed - API Exception", e);
+      rethrow;
+    } catch (e) {
+      logger.error("Google Sign In failed - Unknown error", e);
+      throw ApiException("Google Sign In Failed. $e");
     }
   }
 }
