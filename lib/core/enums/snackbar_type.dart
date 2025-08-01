@@ -3,5 +3,5 @@ enum SnackbarType {
   error,
   warning,
   info,
-  noInernet,
+  noInternet,
 }

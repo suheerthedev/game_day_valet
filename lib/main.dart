@@ -5,7 +5,7 @@ import 'package:game_day_valet/app/app.dialogs.dart';
 import 'package:game_day_valet/app/app.locator.dart';
 import 'package:game_day_valet/app/app.router.dart';
 import 'package:game_day_valet/core/enums/snackbar_type.dart';
-import 'package:game_day_valet/services/connectivity_service.dart';
+// import 'package:game_day_valet/services/connectivity_service.dart';
 import 'package:game_day_valet/ui/common/app_colors.dart';
 import 'package:game_day_valet/ui/snackbars/error/error_snackbar.dart';
 import 'package:game_day_valet/ui/snackbars/info/info_snackbar.dart';
@@ -20,7 +20,7 @@ Future<void> main() async {
   await dotenv.load(fileName: ".env");
   await setupLocator();
 
-  await locator<ConnectivityService>().initialize();
+  // await locator<ConnectivityService>().initialize();
 
   // Register snackbar configs
   locator<SnackbarService>().registerCustomSnackbarConfig(
