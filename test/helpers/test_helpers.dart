@@ -7,6 +7,7 @@ import 'package:game_day_valet/services/secure_storage_service.dart';
 import 'package:game_day_valet/services/auth_service.dart';
 import 'package:game_day_valet/services/user_service.dart';
 import 'package:game_day_valet/services/connectivity_service.dart';
+import 'package:game_day_valet/services/logger_service.dart';
 // @stacked-import
 
 import 'test_helpers.mocks.dart';
@@ -22,6 +23,7 @@ import 'test_helpers.mocks.dart';
     MockSpec<AuthService>(onMissingStub: OnMissingStub.returnDefault),
     MockSpec<UserService>(onMissingStub: OnMissingStub.returnDefault),
     MockSpec<ConnectivityService>(onMissingStub: OnMissingStub.returnDefault),
+    MockSpec<LoggerService>(onMissingStub: OnMissingStub.returnDefault),
 // @stacked-mock-spec
   ],
 )
@@ -34,6 +36,7 @@ void registerServices() {
   getAndRegisterAuthService();
   getAndRegisterUserService();
   getAndRegisterConnectivityService();
+  getAndRegisterLoggerService();
 // @stacked-mock-register
 }
 
@@ -123,6 +126,13 @@ MockConnectivityService getAndRegisterConnectivityService() {
   _removeRegistrationIfExists<ConnectivityService>();
   final service = MockConnectivityService();
   locator.registerSingleton<ConnectivityService>(service);
+  return service;
+}
+
+MockLoggerService getAndRegisterLoggerService() {
+  _removeRegistrationIfExists<LoggerService>();
+  final service = MockLoggerService();
+  locator.registerSingleton<LoggerService>(service);
   return service;
 }
 // @stacked-mock-create

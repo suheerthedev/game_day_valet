@@ -12,6 +12,7 @@ import 'package:game_day_valet/models/user_model.dart' as _i12;
 import 'package:game_day_valet/services/api_service.dart' as _i7;
 import 'package:game_day_valet/services/auth_service.dart' as _i10;
 import 'package:game_day_valet/services/connectivity_service.dart' as _i13;
+import 'package:game_day_valet/services/logger_service.dart' as _i14;
 import 'package:game_day_valet/services/secure_storage_service.dart' as _i9;
 import 'package:game_day_valet/services/user_service.dart' as _i11;
 import 'package:mockito/mockito.dart' as _i1;
@@ -972,3 +973,8 @@ class MockUserService extends _i1.Mock implements _i11.UserService {
 /// See the documentation for Mockito's code generation for more information.
 class MockConnectivityService extends _i1.Mock
     implements _i13.ConnectivityService {}
+
+/// A class which mocks [LoggerService].
+///
+/// See the documentation for Mockito's code generation for more information.
+class MockLoggerService extends _i1.Mock implements _i14.LoggerService {}
