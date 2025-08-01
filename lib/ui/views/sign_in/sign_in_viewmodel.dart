@@ -1,16 +1,13 @@
-import 'dart:async';
-
 import 'package:flutter/material.dart';
-import 'package:flutter_dotenv/flutter_dotenv.dart';
 import 'package:game_day_valet/app/app.locator.dart';
 import 'package:game_day_valet/app/app.router.dart';
 import 'package:game_day_valet/core/enums/snackbar_type.dart';
 import 'package:game_day_valet/services/api_exception.dart';
 import 'package:game_day_valet/services/auth_service.dart';
+import 'package:game_day_valet/services/google_sign_in_service.dart';
 import 'package:game_day_valet/services/logger_service.dart';
 import 'package:game_day_valet/services/secure_storage_service.dart';
 import 'package:game_day_valet/services/user_service.dart';
-import 'package:google_sign_in/google_sign_in.dart';
 import 'package:stacked/stacked.dart';
 import 'package:stacked_services/stacked_services.dart';
 
@@ -20,6 +17,7 @@ class SignInViewModel extends BaseViewModel {
   final _secureStorageService = locator<SecureStorageService>();
   final _userService = locator<UserService>();
   final _snackbarService = locator<SnackbarService>();
+  final _googleSignInService = locator<GoogleSignInService>();
 
   final TextEditingController emailController = TextEditingController();
   final TextEditingController passwordController = TextEditingController();
@@ -117,30 +115,9 @@ class SignInViewModel extends BaseViewModel {
     }
   }
 
-  void onGoogleSignIn() {
+  void onGoogleSignIn() async {
     logger.info("Google Sign In");
-    final GoogleSignIn signIn = GoogleSignIn.instance;
-
-    unawaited(signIn
-        .initialize(
-            clientId: dotenv.env['GOOGLE_CLIENT_ID'] ?? '',
-            serverClientId: dotenv.env['GOOGLE_SERVER_CLIENT_ID'] ?? '')
-        .then((_) {
-      signIn.authenticationEvents
-          .listen(_handleAuthenticationEvent)
-          .onError(_handleAuthenticationError);
-
-      signIn.attemptLightweightAuthentication();
-    }));
-  }
-
-  void _handleAuthenticationEvent(GoogleSignInAuthenticationEvent event) {
-    logger.info("Google Sign In Event: $event");
-  }
-
-  void _handleAuthenticationError(Object error) {
-    logger.error(
-        "Google Sign In failed from ViewModel - Authentication Error", error);
+    await _googleSignInService.signIn();
   }
 
   void onAppleSignIn() {
