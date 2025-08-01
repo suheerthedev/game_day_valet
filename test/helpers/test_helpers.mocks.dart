@@ -11,6 +11,7 @@ import 'package:flutter/material.dart' as _i4;
 import 'package:game_day_valet/models/user_model.dart' as _i12;
 import 'package:game_day_valet/services/api_service.dart' as _i7;
 import 'package:game_day_valet/services/auth_service.dart' as _i10;
+import 'package:game_day_valet/services/connectivity_service.dart' as _i13;
 import 'package:game_day_valet/services/secure_storage_service.dart' as _i9;
 import 'package:game_day_valet/services/user_service.dart' as _i11;
 import 'package:mockito/mockito.dart' as _i1;
@@ -870,6 +871,23 @@ class MockAuthService extends _i1.Mock implements _i10.AuthService {
         returnValue: _i5.Future<dynamic>.value(),
         returnValueForMissingStub: _i5.Future<dynamic>.value(),
       ) as _i5.Future<dynamic>);
+
+  @override
+  _i5.Future<dynamic> verifyOtp(
+    String? email,
+    String? otp,
+  ) =>
+      (super.noSuchMethod(
+        Invocation.method(
+          #verifyOtp,
+          [
+            email,
+            otp,
+          ],
+        ),
+        returnValue: _i5.Future<dynamic>.value(),
+        returnValueForMissingStub: _i5.Future<dynamic>.value(),
+      ) as _i5.Future<dynamic>);
 }
 
 /// A class which mocks [UserService].
@@ -948,3 +966,9 @@ class MockUserService extends _i1.Mock implements _i11.UserService {
         returnValueForMissingStub: null,
       );
 }
+
+/// A class which mocks [ConnectivityService].
+///
+/// See the documentation for Mockito's code generation for more information.
+class MockConnectivityService extends _i1.Mock
+    implements _i13.ConnectivityService {}
