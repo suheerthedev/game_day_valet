@@ -5,9 +5,13 @@ import 'package:game_day_valet/app/app.dialogs.dart';
 import 'package:game_day_valet/app/app.locator.dart';
 import 'package:game_day_valet/app/app.router.dart';
 import 'package:game_day_valet/core/enums/snackbar_type.dart';
+import 'package:game_day_valet/services/connectivity_service.dart';
 import 'package:game_day_valet/ui/common/app_colors.dart';
 import 'package:game_day_valet/ui/snackbars/error/error_snackbar.dart';
+import 'package:game_day_valet/ui/snackbars/info/info_snackbar.dart';
+import 'package:game_day_valet/ui/snackbars/no_internet/no_internet_snackbar.dart';
 import 'package:game_day_valet/ui/snackbars/success/success_snackbar.dart';
+import 'package:game_day_valet/ui/snackbars/warning/warning_snackbar.dart';
 import 'package:stacked_services/stacked_services.dart';
 import 'package:flutter_dotenv/flutter_dotenv.dart';
 
@@ -16,6 +20,9 @@ Future<void> main() async {
   await dotenv.load(fileName: ".env");
   await setupLocator();
 
+  await locator<ConnectivityService>().initialize();
+
+  // Register snackbar configs
   locator<SnackbarService>().registerCustomSnackbarConfig(
     variant: SnackbarType.success,
     config: getSuccessSnackbarConfig(),
@@ -24,6 +31,21 @@ Future<void> main() async {
   locator<SnackbarService>().registerCustomSnackbarConfig(
     variant: SnackbarType.error,
     config: getErrorSnackbarConfig(),
+  );
+
+  locator<SnackbarService>().registerCustomSnackbarConfig(
+    variant: SnackbarType.warning,
+    config: getWarningSnackbarConfig(),
+  );
+
+  locator<SnackbarService>().registerCustomSnackbarConfig(
+    variant: SnackbarType.info,
+    config: getInfoSnackbarConfig(),
+  );
+
+  locator<SnackbarService>().registerCustomSnackbarConfig(
+    variant: SnackbarType.noInternet,
+    config: getNoInternetSnackbarConfig(),
   );
 
   setupDialogUi();
