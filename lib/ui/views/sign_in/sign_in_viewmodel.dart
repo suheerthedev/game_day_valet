@@ -94,7 +94,6 @@ class SignInViewModel extends BaseViewModel {
         await _userService.fetchCurrentUser();
 
         await _navigationService.clearStackAndShow(Routes.mainView);
-        setBusy(false);
       }
     } on ApiException catch (e) {
       logger.error("Login failed from ViewModel - API Exception", e);

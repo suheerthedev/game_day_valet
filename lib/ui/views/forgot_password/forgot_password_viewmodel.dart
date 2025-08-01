@@ -35,31 +35,27 @@ class ForgotPasswordViewModel extends BaseViewModel {
       logger.info("Forgot Password Response: $response");
 
       if (response.containsKey('errors')) {
-        if (response['message'] != null) {
-          generalError = response['message'];
-        }
+        await _snackbarService.showCustomSnackBar(
+          variant: SnackbarType.error,
+          message: response['message'],
+        );
         if (response['errors'].containsKey('email')) {
           emailError = response['errors']['email'][0];
         }
       } else {
-        _snackbarService.showCustomSnackBar(
+        await _snackbarService.showCustomSnackBar(
             message: response['message'], variant: SnackbarType.success);
 
+        await _navigationService.navigateToOtpView(email: emailController.text);
         clearController();
-
-        _navigationService.navigateToOtpView(email: emailController.text);
       }
 
-      _navigationService.navigateToOtpView(email: emailController.text);
-      clearController();
+      // _navigationService.navigateToOtpView(email: emailController.text);
+      // clearController();
+    } on ApiException catch (e) {
+      logger.error("Forgot Password failed from ViewModel - API Exception", e);
     } catch (e) {
-      if (e is ApiException) {
-        logger.error(
-            "Forgot Password failed from ViewModel - API Exception", e);
-      } else {
-        logger.error(
-            "Forgot Password failed from ViewModel - Unknown error", e);
-      }
+      logger.error("Forgot Password failed from ViewModel - Unknown error", e);
     } finally {
       rebuildUi();
       setBusy(false);

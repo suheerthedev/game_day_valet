@@ -21,7 +21,7 @@ class ProfileViewModel extends BaseViewModel {
     await Future.delayed(const Duration(seconds: 2));
     await _secureStorageService.deleteToken();
     _userService.clearUser();
-    await _navigationService.clearStackAndShow(Routes.signInView);
+    await _navigationService.clearStackAndShow(Routes.signUpView);
     isLoggingOut = false;
   }
 

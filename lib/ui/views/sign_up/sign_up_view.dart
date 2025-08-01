@@ -188,19 +188,22 @@ Account""",
                                   ),
                                 ),
                                 SizedBox(width: 10.w),
-                                FloatingActionButton(
-                                  elevation: 0,
-                                  onPressed: viewModel.validateReferralCode,
-                                  backgroundColor: AppColors.primary,
-                                  shape: RoundedRectangleBorder(
-                                      borderRadius:
-                                          BorderRadius.circular(10.r)),
-                                  child: Text(
-                                    "Apply",
-                                    style: GoogleFonts.poppins(
-                                      color: AppColors.white,
-                                      fontSize: 14.sp,
-                                      fontWeight: FontWeight.w500,
+                                SizedBox(
+                                  height: 52.h,
+                                  child: FloatingActionButton(
+                                    elevation: 0,
+                                    onPressed: viewModel.validateReferralCode,
+                                    backgroundColor: AppColors.primary,
+                                    shape: RoundedRectangleBorder(
+                                        borderRadius:
+                                            BorderRadius.circular(10.r)),
+                                    child: Text(
+                                      "Apply",
+                                      style: GoogleFonts.poppins(
+                                        color: AppColors.white,
+                                        fontSize: 14.sp,
+                                        fontWeight: FontWeight.w500,
+                                      ),
                                     ),
                                   ),
                                 )

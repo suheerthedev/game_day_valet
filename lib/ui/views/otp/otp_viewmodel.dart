@@ -47,7 +47,7 @@ class OtpViewModel extends BaseViewModel {
         message: response['message'],
       );
 
-      _navigationService.replaceWithSignInView();
+      await _navigationService.replaceWithSignInView();
     } on ApiException catch (e) {
       logger.error("OTP Verification failed from ViewModel - API Exception", e);
       _snackbarService.showCustomSnackBar(
