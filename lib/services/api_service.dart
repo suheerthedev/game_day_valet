@@ -4,11 +4,13 @@ import 'dart:io';
 
 import 'package:game_day_valet/app/app.locator.dart';
 import 'package:game_day_valet/services/api_exception.dart';
+import 'package:game_day_valet/services/connectivity_service.dart';
 import 'package:game_day_valet/services/secure_storage_service.dart';
 import 'package:http/http.dart' as http;
 
 class ApiService {
   final _secureStorageService = locator<SecureStorageService>();
+  final _connectivityService = locator<ConnectivityService>();
 
   Future<Map<String, String>> _getHeaders({bool isMultiPart = false}) async {
     final token = await _secureStorageService.getToken();
@@ -19,10 +21,19 @@ class ApiService {
     };
   }
 
+  Future<void> _checkConnectivity() async {
+    if (!await _connectivityService.hasInternetConnection()) {
+      throw NoInternetException();
+    }
+  }
+
   Future<dynamic> get(String url) async {
+    await _checkConnectivity();
     try {
       final headers = await _getHeaders();
-      final response = await http.get(Uri.parse(url), headers: headers);
+      final response = await http
+          .get(Uri.parse(url), headers: headers)
+          .timeout(const Duration(seconds: 30));
       return _handleResponse(response);
     } on SocketException {
       throw NoInternetException();
@@ -32,10 +43,12 @@ class ApiService {
   }
 
   Future<dynamic> post(String url, Map<String, dynamic> body) async {
+    await _checkConnectivity();
     try {
       final headers = await _getHeaders();
-      final response =
-          await http.post(Uri.parse(url), headers: headers, body: body);
+      final response = await http
+          .post(Uri.parse(url), headers: headers, body: body)
+          .timeout(const Duration(seconds: 30));
 
       return _handleResponse(response);
     } on SocketException {
@@ -46,10 +59,12 @@ class ApiService {
   }
 
   Future<dynamic> put(String url, Map<String, dynamic> body) async {
+    await _checkConnectivity();
     try {
       final headers = await _getHeaders();
-      final response =
-          await http.put(Uri.parse(url), body: body, headers: headers);
+      final response = await http
+          .put(Uri.parse(url), body: body, headers: headers)
+          .timeout(const Duration(seconds: 30));
       return _handleResponse(response);
     } on SocketException {
       throw NoInternetException();
@@ -59,10 +74,12 @@ class ApiService {
   }
 
   Future<dynamic> delete(String url, {Map<String, dynamic>? body}) async {
+    await _checkConnectivity();
     try {
       final headers = await _getHeaders();
-      final response = await http.delete(Uri.parse(url),
-          headers: headers, body: jsonEncode(body));
+      final response = await http
+          .delete(Uri.parse(url), headers: headers, body: jsonEncode(body))
+          .timeout(const Duration(seconds: 30));
       return _handleResponse(response);
     } on SocketException {
       throw NoInternetException();
@@ -72,6 +89,7 @@ class ApiService {
   }
 
   Future<dynamic> postMultiPart(String url, List<File> files) async {
+    await _checkConnectivity();
     try {
       final headers = await _getHeaders(isMultiPart: true);
       final request = http.MultipartRequest('POST', Uri.parse(url));
@@ -82,7 +100,8 @@ class ApiService {
             .add(await http.MultipartFile.fromPath('attachment[]', file.path));
       }
 
-      final response = await request.send();
+      final response =
+          await request.send().timeout(const Duration(seconds: 30));
       final responseBody = await response.stream.bytesToString();
       return _handleMultiPartResponse(response.statusCode, responseBody);
     } on SocketException {
