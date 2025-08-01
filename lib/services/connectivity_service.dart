@@ -9,7 +9,7 @@ class ConnectivityService {
   final Connectivity _connectivity = Connectivity();
   final _snackbarService = locator<SnackbarService>();
 
-  StreamSubscription<ConnectivityResult>? _connectivitySubscription;
+  StreamSubscription<List<ConnectivityResult>>? _connectivitySubscription;
   bool _isOnline = true;
   bool _hasShownOfflineMessage = false;
 
@@ -22,17 +22,18 @@ class ConnectivityService {
 
   Future<void> initialize() async {
     // Check initial connectivity
-    // final result = await _connectivity.checkConnectivity();
-    // _updateConnectionStatus(result);
+    final results = await _connectivity.checkConnectivity();
+    _updateConnectionStatus(results);
 
-    // // Listen to connectivity changes
-    // _connectivitySubscription = _connectivity.onConnectivityChanged.listen(
-    //   _updateConnectionStatus,
-    // );
+    // Listen to connectivity changes
+    _connectivitySubscription = _connectivity.onConnectivityChanged.listen(
+      _updateConnectionStatus,
+    );
   }
 
-  void _updateConnectionStatus(ConnectivityResult result) {
-    final isConnected = result != ConnectivityResult.none;
+  void _updateConnectionStatus(List<ConnectivityResult> results) {
+    final isConnected =
+        results.any((result) => result != ConnectivityResult.none);
 
     if (_isOnline != isConnected) {
       _isOnline = isConnected;
@@ -68,8 +69,8 @@ class ConnectivityService {
 
   Future<bool> hasInternetConnection() async {
     try {
-      final result = await _connectivity.checkConnectivity();
-      return result != ConnectivityResult.none;
+      final results = await _connectivity.checkConnectivity();
+      return results.any((result) => result != ConnectivityResult.none);
     } catch (e) {
       return false;
     }
