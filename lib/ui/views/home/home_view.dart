@@ -639,61 +639,64 @@ class HomeView extends StackedView<HomeViewModel> {
                           ),
                         ),
                         SizedBox(height: 20.h),
-                        Expanded(
-                          child: ListView.builder(
-                            controller: scrollController,
-                            itemCount: viewModel.sportsList.length,
-                            itemBuilder: (context, index) {
-                              final sport = viewModel.sportsList[index];
-                              final isSelected =
-                                  viewModel.selectedSport == sport.name;
+                        viewModel.isBusy
+                            ? const Center(child: CircularProgressIndicator())
+                            : Expanded(
+                                child: ListView.builder(
+                                  controller: scrollController,
+                                  itemCount: viewModel.sportsList.length,
+                                  itemBuilder: (context, index) {
+                                    final sport = viewModel.sportsList[index];
+                                    final isSelected =
+                                        viewModel.selectedSport == sport.name;
 
-                              return InkWell(
-                                onTap: () {
-                                  viewModel.selectedSport = sport.name;
-                                  Navigator.pop(context);
-                                  viewModel.getTournamentsBySport(sport.id);
-                                  viewModel.rebuildUi();
-                                },
-                                child: Container(
-                                  padding: EdgeInsets.symmetric(
-                                      horizontal: 16.w, vertical: 16.h),
-                                  margin: EdgeInsets.only(bottom: 8.h),
-                                  decoration: BoxDecoration(
-                                    color: AppColors.white,
-                                    border: Border(
-                                      top: BorderSide(
-                                        color:
-                                            AppColors.textHint.withOpacity(0.1),
-                                        width: 1,
-                                      ),
-                                    ),
-                                  ),
-                                  child: Row(
-                                    mainAxisAlignment:
-                                        MainAxisAlignment.spaceBetween,
-                                    children: [
-                                      Text(
-                                        sport.name,
-                                        style: GoogleFonts.poppins(
-                                          fontSize: 16.sp,
-                                          fontWeight: FontWeight.w500,
-                                          color: AppColors.textPrimary,
+                                    return InkWell(
+                                      onTap: () {
+                                        viewModel.selectedSport = sport.name;
+                                        Navigator.pop(context);
+                                        viewModel
+                                            .getTournamentsBySport(sport.id);
+                                        viewModel.rebuildUi();
+                                      },
+                                      child: Container(
+                                        padding: EdgeInsets.symmetric(
+                                            horizontal: 16.w, vertical: 16.h),
+                                        margin: EdgeInsets.only(bottom: 8.h),
+                                        decoration: BoxDecoration(
+                                          color: AppColors.white,
+                                          border: Border(
+                                            top: BorderSide(
+                                              color: AppColors.textHint
+                                                  .withOpacity(0.1),
+                                              width: 1,
+                                            ),
+                                          ),
+                                        ),
+                                        child: Row(
+                                          mainAxisAlignment:
+                                              MainAxisAlignment.spaceBetween,
+                                          children: [
+                                            Text(
+                                              sport.name,
+                                              style: GoogleFonts.poppins(
+                                                fontSize: 16.sp,
+                                                fontWeight: FontWeight.w500,
+                                                color: AppColors.textPrimary,
+                                              ),
+                                            ),
+                                            if (isSelected)
+                                              Icon(
+                                                Icons.check,
+                                                color: AppColors.primary,
+                                                size: 20.sp,
+                                              ),
+                                          ],
                                         ),
                                       ),
-                                      if (isSelected)
-                                        Icon(
-                                          Icons.check,
-                                          color: AppColors.primary,
-                                          size: 20.sp,
-                                        ),
-                                    ],
-                                  ),
+                                    );
+                                  },
                                 ),
-                              );
-                            },
-                          ),
-                        ),
+                              ),
                       ],
                     ),
                   ),

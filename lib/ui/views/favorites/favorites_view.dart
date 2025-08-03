@@ -32,110 +32,142 @@ class FavoritesView extends StackedView<FavoritesViewModel> {
         body: SafeArea(
             child: Padding(
           padding: EdgeInsets.symmetric(horizontal: 25.w, vertical: 20.h),
-          child: Stack(
-            children: [
-              SingleChildScrollView(
-                child: Column(
-                  children: [
-                    ListView.builder(
-                      shrinkWrap: true,
-                      physics: const NeverScrollableScrollPhysics(),
-                      itemCount: 2,
-                      itemBuilder: (context, index) {
-                        return Container(
-                          width: 338.w,
-                          height: 110.h,
-                          margin: EdgeInsets.only(bottom: 10.h),
-                          padding: EdgeInsets.symmetric(
-                              horizontal: 16.w, vertical: 14.h),
-                          decoration: BoxDecoration(
-                            color: AppColors.grey900,
-                            borderRadius: BorderRadius.circular(16.r),
-                          ),
-                          child: Stack(
+          child: viewModel.isBusy
+              ? const Center(child: CircularProgressIndicator())
+              : viewModel.favorites.isEmpty
+                  ? _buildEmptyState()
+                  : Stack(
+                      children: [
+                        SingleChildScrollView(
+                          child: Column(
                             children: [
-                              Column(
-                                crossAxisAlignment: CrossAxisAlignment.start,
-                                children: [
-                                  Text("Tournament Name",
-                                      style: GoogleFonts.poppins(
-                                          fontSize: 14.sp,
-                                          fontWeight: FontWeight.w700,
-                                          color: AppColors.textPrimary)),
-                                  SizedBox(height: 5.h),
-                                  Text(
-                                    '100 Chairs . 20 Lights . 4 Speakers',
-                                    style: GoogleFonts.poppins(
-                                        fontSize: 14.sp,
-                                        fontWeight: FontWeight.w500,
-                                        color: AppColors.textHint),
-                                  )
-                                ],
-                              ),
-                              Align(
-                                alignment: Alignment.topRight,
-                                child: Icon(Iconsax.heart,
-                                    size: 24.w, color: AppColors.secondary),
-                              ),
-                              Align(
-                                alignment: Alignment.bottomRight,
-                                child: InkWell(
-                                  onTap: () {},
-                                  child: Container(
-                                      width: 121.w,
-                                      height: 33.h,
-                                      decoration: BoxDecoration(
-                                        color: AppColors.secondary,
-                                        borderRadius:
-                                            BorderRadius.circular(10.r),
-                                      ),
-                                      child: Center(
-                                        child: Text(
-                                          'Order Again',
-                                          style: GoogleFonts.poppins(
-                                              fontSize: 16.sp,
-                                              fontWeight: FontWeight.w500,
-                                              color: AppColors.white),
+                              ListView.builder(
+                                shrinkWrap: true,
+                                physics: const NeverScrollableScrollPhysics(),
+                                itemCount: viewModel.favorites.length,
+                                itemBuilder: (context, index) {
+                                  return Container(
+                                    width: 338.w,
+                                    height: 110.h,
+                                    margin: EdgeInsets.only(bottom: 10.h),
+                                    padding: EdgeInsets.symmetric(
+                                        horizontal: 16.w, vertical: 14.h),
+                                    decoration: BoxDecoration(
+                                      color: AppColors.grey900,
+                                      borderRadius: BorderRadius.circular(16.r),
+                                    ),
+                                    child: Stack(
+                                      children: [
+                                        Column(
+                                          crossAxisAlignment:
+                                              CrossAxisAlignment.start,
+                                          children: [
+                                            Text(
+                                                viewModel.favorites[index]
+                                                    .tournament.name,
+                                                style: GoogleFonts.poppins(
+                                                    fontSize: 14.sp,
+                                                    fontWeight: FontWeight.w700,
+                                                    color:
+                                                        AppColors.textPrimary)),
+                                            SizedBox(height: 5.h),
+                                            Text(
+                                              '100 Chairs . 20 Lights . 4 Speakers',
+                                              style: GoogleFonts.poppins(
+                                                  fontSize: 14.sp,
+                                                  fontWeight: FontWeight.w500,
+                                                  color: AppColors.textHint),
+                                            )
+                                          ],
                                         ),
-                                      )),
-                                ),
+                                        Align(
+                                          alignment: Alignment.topRight,
+                                          child: Icon(Iconsax.heart,
+                                              size: 24.w,
+                                              color: AppColors.secondary),
+                                        ),
+                                        Align(
+                                          alignment: Alignment.bottomRight,
+                                          child: InkWell(
+                                            onTap: () {},
+                                            child: Container(
+                                                width: 121.w,
+                                                height: 33.h,
+                                                decoration: BoxDecoration(
+                                                  color: AppColors.secondary,
+                                                  borderRadius:
+                                                      BorderRadius.circular(
+                                                          10.r),
+                                                ),
+                                                child: Center(
+                                                  child: Text(
+                                                    'Order Again',
+                                                    style: GoogleFonts.poppins(
+                                                        fontSize: 16.sp,
+                                                        fontWeight:
+                                                            FontWeight.w500,
+                                                        color: AppColors.white),
+                                                  ),
+                                                )),
+                                          ),
+                                        )
+                                      ],
+                                    ),
+                                  );
+                                },
                               )
                             ],
                           ),
-                        );
-                      },
-                    )
-                  ],
-                ),
-              ),
-              FloatingChatButton(
-                onTap: (_) {
-                  viewModel.onChatTap();
-                },
-                chatIconWidget: const Padding(
-                  padding: EdgeInsets.all(14.0),
-                  child: Icon(
-                    Iconsax.message_2_copy,
-                    color: AppColors.white,
-                    size: 24,
-                  ),
-                ),
-                messageBackgroundColor: AppColors.secondary,
-                chatIconBorderColor: AppColors.secondary,
-                chatIconBackgroundColor: AppColors.secondary,
-                messageBorderWidth: 2,
-                messageText: "You've received a message!",
-                messageTextStyle: GoogleFonts.poppins(
-                    fontSize: 14.sp,
-                    fontWeight: FontWeight.w400,
-                    color: AppColors.white),
-                showMessageParameters: ShowMessageParameters(
-                    delayDuration: const Duration(seconds: 2),
-                    durationToShowMessage: const Duration(seconds: 5)),
-              )
-            ],
-          ),
+                        ),
+                        FloatingChatButton(
+                          onTap: (_) {
+                            viewModel.onChatTap();
+                          },
+                          chatIconWidget: const Padding(
+                            padding: EdgeInsets.all(14.0),
+                            child: Icon(
+                              Iconsax.message_2_copy,
+                              color: AppColors.white,
+                              size: 24,
+                            ),
+                          ),
+                          messageBackgroundColor: AppColors.secondary,
+                          chatIconBorderColor: AppColors.secondary,
+                          chatIconBackgroundColor: AppColors.secondary,
+                          messageBorderWidth: 2,
+                          messageText: "You've received a message!",
+                          messageTextStyle: GoogleFonts.poppins(
+                              fontSize: 14.sp,
+                              fontWeight: FontWeight.w400,
+                              color: AppColors.white),
+                          showMessageParameters: ShowMessageParameters(
+                              delayDuration: const Duration(seconds: 2),
+                              durationToShowMessage:
+                                  const Duration(seconds: 5)),
+                        )
+                      ],
+                    ),
         )));
+  }
+
+  Widget _buildEmptyState() {
+    return Center(
+      child: Column(
+        mainAxisAlignment: MainAxisAlignment.center,
+        children: [
+          Icon(Iconsax.heart, size: 40.w, color: AppColors.secondary),
+          SizedBox(height: 10.h),
+          Text(
+            'No favorites yet',
+            style: GoogleFonts.poppins(
+                fontSize: 16.sp,
+                fontWeight: FontWeight.w500,
+                color: AppColors.textPrimary),
+          ),
+          SizedBox(height: 10.h),
+        ],
+      ),
+    );
   }
 
   @override
@@ -143,4 +175,10 @@ class FavoritesView extends StackedView<FavoritesViewModel> {
     BuildContext context,
   ) =>
       FavoritesViewModel();
+
+  @override
+  void onViewModelReady(FavoritesViewModel viewModel) {
+    viewModel.getFavorites();
+    super.onViewModelReady(viewModel);
+  }
 }

@@ -15,5 +15,7 @@ class ApiConfig {
 
   static const sportsEndPoint = '/api/sports';
   static const tournamentsBySportEndPoint = '/api/sports/tournaments';
+
+  static const favoriteEndPoint = '/api/favorites';
   // Add more as needed
 }
