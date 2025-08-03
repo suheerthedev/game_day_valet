@@ -54,8 +54,16 @@ class ForgotPasswordViewModel extends BaseViewModel {
       // clearController();
     } on ApiException catch (e) {
       logger.error("Forgot Password failed from ViewModel - API Exception", e);
+      _snackbarService.showCustomSnackBar(
+        variant: SnackbarType.error,
+        message: e.message,
+      );
     } catch (e) {
       logger.error("Forgot Password failed from ViewModel - Unknown error", e);
+      _snackbarService.showCustomSnackBar(
+        variant: SnackbarType.error,
+        message: e.toString(),
+      );
     } finally {
       rebuildUi();
       setBusy(false);

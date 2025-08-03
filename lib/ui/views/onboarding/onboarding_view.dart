@@ -28,25 +28,30 @@ class OnboardingView extends StackedView<OnboardingViewModel> {
               fit: BoxFit.cover,
             ),
           ),
-          child: Column(
-            mainAxisAlignment: MainAxisAlignment.end,
-            spacing: 20.h,
-            children: [
-              Text(
-                  'Lorem Ipsum has been the industry\'s standard dummy text ever since the 1500s, when an unknown',
-                  textAlign: TextAlign.center,
-                  style: GoogleFonts.poppins(
-                      fontSize: 16.sp,
-                      fontWeight: FontWeight.w600,
-                      color: AppColors.white)),
-              MainButton(
-                  text: "Get Started",
-                  onTap: viewModel.onGetStarted,
-                  hasBorder: true,
-                  color: AppColors.secondary,
-                  borderColor: AppColors.white,
-                  textColor: AppColors.white)
-            ],
+          child: SafeArea(
+            child: Padding(
+              padding: EdgeInsets.symmetric(horizontal: 10.w),
+              child: Column(
+                mainAxisAlignment: MainAxisAlignment.end,
+                spacing: 20.h,
+                children: [
+                  Text(
+                      'Lorem Ipsum has been the industry\'s standard dummy text ever since the 1500s, when an unknown',
+                      textAlign: TextAlign.center,
+                      style: GoogleFonts.poppins(
+                          fontSize: 16.sp,
+                          fontWeight: FontWeight.w600,
+                          color: AppColors.white)),
+                  MainButton(
+                      text: "Get Started",
+                      onTap: viewModel.onGetStarted,
+                      hasBorder: true,
+                      color: AppColors.secondary,
+                      borderColor: AppColors.white,
+                      textColor: AppColors.white)
+                ],
+              ),
+            ),
           )),
     );
   }

@@ -40,7 +40,7 @@ Password""",
                               )),
                           SizedBox(height: 5.h),
                           Text(
-                            "Email your email to get code ",
+                            "Enter your email to get code ",
                             style: GoogleFonts.poppins(
                               fontSize: 14.sp,
                               fontWeight: FontWeight.w400,
