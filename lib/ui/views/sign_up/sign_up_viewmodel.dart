@@ -157,37 +157,39 @@ class SignUpViewModel extends BaseViewModel {
     try {
       final response = await _googleSignInService.signIn();
 
-      if (response.containsKey('errors')) {
-        if (response['message'] != null) {
-          _snackbarService.showCustomSnackBar(
-            variant: SnackbarType.error,
+      if (response != null) {
+        if (response.containsKey('errors')) {
+          if (response['message'] != null) {
+            _snackbarService.showCustomSnackBar(
+              variant: SnackbarType.error,
+              message: response['message'],
+            );
+          }
+        } else {
+          setBusy(true);
+          await _snackbarService.showCustomSnackBar(
+            variant: SnackbarType.success,
+            title: 'Success',
             message: response['message'],
+            duration: const Duration(seconds: 3),
           );
+
+          if (!response.containsKey('token')) {
+            throw ApiException("Token not found in response", 500);
+          }
+
+          final tokenParts = response['token'].split('|');
+          if (tokenParts.length != 2) {
+            throw ApiException("Invalid token format", 500);
+          }
+
+          final token = tokenParts[1];
+          await _secureStorageService.saveToken(token);
+
+          await _userService.fetchCurrentUser();
+
+          await _navigationService.clearStackAndShow(Routes.mainView);
         }
-      } else {
-        setBusy(true);
-        await _snackbarService.showCustomSnackBar(
-          variant: SnackbarType.success,
-          title: 'Success',
-          message: response['message'],
-          duration: const Duration(seconds: 3),
-        );
-
-        if (!response.containsKey('token')) {
-          throw ApiException("Token not found in response", 500);
-        }
-
-        final tokenParts = response['token'].split('|');
-        if (tokenParts.length != 2) {
-          throw ApiException("Invalid token format", 500);
-        }
-
-        final token = tokenParts[1];
-        await _secureStorageService.saveToken(token);
-
-        await _userService.fetchCurrentUser();
-
-        await _navigationService.clearStackAndShow(Routes.mainView);
       }
 
       logger.info("Google Sign In Response: $response");
