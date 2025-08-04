@@ -126,7 +126,8 @@ class SignUpViewModel extends BaseViewModel {
           variant: SnackbarType.success,
           message: response['message'],
         );
-        await _navigationService.navigateToOtpView(email: emailController.text);
+        await _navigationService.navigateToVerifyEmailView(
+            email: emailController.text);
 
         clearControllers();
       }

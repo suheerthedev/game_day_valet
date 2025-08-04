@@ -875,16 +875,52 @@ class MockAuthService extends _i1.Mock implements _i10.AuthService {
       ) as _i5.Future<dynamic>);
 
   @override
-  _i5.Future<dynamic> verifyOtp(
+  _i5.Future<dynamic> verifyEmail(
     String? email,
     String? otp,
   ) =>
       (super.noSuchMethod(
         Invocation.method(
-          #verifyOtp,
+          #verifyEmail,
           [
             email,
             otp,
+          ],
+        ),
+        returnValue: _i5.Future<dynamic>.value(),
+        returnValueForMissingStub: _i5.Future<dynamic>.value(),
+      ) as _i5.Future<dynamic>);
+
+  @override
+  _i5.Future<dynamic> verifyPasswordResetCode(
+    String? email,
+    String? otp,
+  ) =>
+      (super.noSuchMethod(
+        Invocation.method(
+          #verifyPasswordResetCode,
+          [
+            email,
+            otp,
+          ],
+        ),
+        returnValue: _i5.Future<dynamic>.value(),
+        returnValueForMissingStub: _i5.Future<dynamic>.value(),
+      ) as _i5.Future<dynamic>);
+
+  @override
+  _i5.Future<dynamic> resetPassword(
+    String? email,
+    String? code,
+    String? password,
+  ) =>
+      (super.noSuchMethod(
+        Invocation.method(
+          #resetPassword,
+          [
+            email,
+            code,
+            password,
           ],
         ),
         returnValue: _i5.Future<dynamic>.value(),

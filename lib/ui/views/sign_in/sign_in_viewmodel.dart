@@ -64,7 +64,7 @@ class SignInViewModel extends BaseViewModel {
               variant: SnackbarType.error,
               message: response['message'],
             );
-            await _navigationService.navigateToOtpView(
+            await _navigationService.navigateToVerifyEmailView(
                 email: emailController.text);
           } else {
             _snackbarService.showCustomSnackBar(

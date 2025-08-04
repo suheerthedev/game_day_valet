@@ -46,7 +46,8 @@ class ForgotPasswordViewModel extends BaseViewModel {
         await _snackbarService.showCustomSnackBar(
             message: response['message'], variant: SnackbarType.success);
 
-        await _navigationService.navigateToOtpView(email: emailController.text);
+        await _navigationService.navigateToVerifyPasswordResetCodeView(
+            email: emailController.text);
         clearController();
       }
 

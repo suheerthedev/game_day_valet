@@ -252,8 +252,8 @@ class StackedRouter extends _i1.RouterBase {
     _i8.ResetPasswordView: (data) {
       final args = data.getArgs<ResetPasswordViewArguments>(nullOk: false);
       return _i24.MaterialPageRoute<dynamic>(
-        builder: (context) =>
-            _i8.ResetPasswordView(key: args.key, email: args.email),
+        builder: (context) => _i8.ResetPasswordView(
+            key: args.key, email: args.email, code: args.code),
         settings: data,
       );
     },
@@ -366,26 +366,29 @@ class ResetPasswordViewArguments {
   const ResetPasswordViewArguments({
     this.key,
     required this.email,
+    required this.code,
   });
 
   final _i24.Key? key;
 
   final String email;
 
+  final String code;
+
   @override
   String toString() {
-    return '{"key": "$key", "email": "$email"}';
+    return '{"key": "$key", "email": "$email", "code": "$code"}';
   }
 
   @override
   bool operator ==(covariant ResetPasswordViewArguments other) {
     if (identical(this, other)) return true;
-    return other.key == key && other.email == email;
+    return other.key == key && other.email == email && other.code == code;
   }
 
   @override
   int get hashCode {
-    return key.hashCode ^ email.hashCode;
+    return key.hashCode ^ email.hashCode ^ code.hashCode;
   }
 }
 
@@ -558,6 +561,7 @@ extension NavigatorStateExtension on _i25.NavigationService {
   Future<dynamic> navigateToResetPasswordView({
     _i24.Key? key,
     required String email,
+    required String code,
     int? routerId,
     bool preventDuplicates = true,
     Map<String, String>? parameters,
@@ -565,7 +569,8 @@ extension NavigatorStateExtension on _i25.NavigationService {
         transition,
   }) async {
     return navigateTo<dynamic>(Routes.resetPasswordView,
-        arguments: ResetPasswordViewArguments(key: key, email: email),
+        arguments:
+            ResetPasswordViewArguments(key: key, email: email, code: code),
         id: routerId,
         preventDuplicates: preventDuplicates,
         parameters: parameters,
@@ -878,6 +883,7 @@ extension NavigatorStateExtension on _i25.NavigationService {
   Future<dynamic> replaceWithResetPasswordView({
     _i24.Key? key,
     required String email,
+    required String code,
     int? routerId,
     bool preventDuplicates = true,
     Map<String, String>? parameters,
@@ -885,7 +891,8 @@ extension NavigatorStateExtension on _i25.NavigationService {
         transition,
   }) async {
     return replaceWith<dynamic>(Routes.resetPasswordView,
-        arguments: ResetPasswordViewArguments(key: key, email: email),
+        arguments:
+            ResetPasswordViewArguments(key: key, email: email, code: code),
         id: routerId,
         preventDuplicates: preventDuplicates,
         parameters: parameters,

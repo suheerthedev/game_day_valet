@@ -120,6 +120,28 @@ class AuthService {
     }
   }
 
+  Future<dynamic> resetPassword(
+      String email, String code, String password) async {
+    final url = ApiConfig.baseUrl + ApiConfig.resetPasswordEndPoint;
+
+    try {
+      final response = await _apiService.post(url, {
+        'email': email,
+        'code': code,
+        'password': password,
+        'confirm_password': password,
+      });
+      logger.info("Password Reset successful for email: $email");
+      return response;
+    } on ApiException catch (e) {
+      logger.error("Password Reset failed - API Exception", e);
+      rethrow;
+    } catch (e) {
+      logger.error("Password Reset failed - Unknown error", e);
+      throw ApiException("Password Reset Failed. $e");
+    }
+  }
+
   Future<dynamic> signInWithGoogle({required String idToken}) async {
     final url = ApiConfig.baseUrl + ApiConfig.googleSignInEndPoint;
 

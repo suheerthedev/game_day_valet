@@ -47,7 +47,8 @@ class VerifyPasswordResetCodeViewModel extends BaseViewModel {
         message: response['message'],
       );
 
-      await _navigationService.navigateToResetPasswordView(email: email);
+      await _navigationService.navigateToResetPasswordView(
+          email: email, code: otp);
     } on ApiException catch (e) {
       logger.error("OTP Verification failed from ViewModel - API Exception", e);
       _snackbarService.showCustomSnackBar(
