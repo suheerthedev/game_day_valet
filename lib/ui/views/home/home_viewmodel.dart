@@ -5,6 +5,7 @@ import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:game_day_valet/app/app.locator.dart';
 import 'package:game_day_valet/app/app.router.dart';
 import 'package:game_day_valet/config/api_config.dart';
+import 'package:game_day_valet/core/enums/snackbar_type.dart';
 import 'package:game_day_valet/models/sports_model.dart';
 import 'package:game_day_valet/models/tournament_model.dart';
 import 'package:game_day_valet/services/api_exception.dart';
@@ -18,18 +19,11 @@ import 'package:stacked_services/stacked_services.dart';
 class HomeViewModel extends BaseViewModel {
   final _navigationService = locator<NavigationService>();
   final _apiService = locator<ApiService>();
-
+  final _snackbarService = locator<SnackbarService>();
   String selectedSport = ''; // Default selected sport
 
+  List<TournamentModel> tournamentsList = [];
   List<SportsModel> sportsList = [];
-
-  final List<String> sports = [
-    'Soccer',
-    'Baseball',
-    'Softball',
-    'Lacrosse',
-    'Football',
-  ];
 
   Future<void> getSports() async {
     final url = ApiConfig.baseUrl + ApiConfig.sportsEndPoint;
@@ -51,8 +45,6 @@ class HomeViewModel extends BaseViewModel {
     }
   }
 
-  List<TournamentModel> tournamentsList = [];
-
   Future<void> getTournamentsBySport(int sportId) async {
     final url =
         '${ApiConfig.baseUrl}${ApiConfig.tournamentsBySportEndPoint}/$sportId';
@@ -71,11 +63,49 @@ class HomeViewModel extends BaseViewModel {
       logger.info("Tournaments fetched successfully");
     } on ApiException catch (e) {
       logger.error("Error fetching tournaments", e);
+      _snackbarService.showCustomSnackBar(
+        variant: SnackbarType.error,
+        message: e.message,
+      );
     } catch (e) {
       logger.error("Error fetching tournaments", e);
+      _snackbarService.showCustomSnackBar(
+        variant: SnackbarType.error,
+        message: e.toString(),
+      );
     } finally {
       notifyListeners();
       setBusy(false);
+    }
+  }
+
+  void toggleFavorite(String tournamentId) async {
+    final url = ApiConfig.baseUrl + ApiConfig.toggleFavoriteEndPoint;
+
+    try {
+      final response = await _apiService.post(url, {
+        "tournament_id": tournamentId,
+      });
+
+      logger.info("Favorite toggled successfully. Response: $response");
+      _snackbarService.showCustomSnackBar(
+        variant: SnackbarType.success,
+        message: "Added to favorites",
+      );
+    } on ApiException catch (e) {
+      logger.error("Error toggling favorite", e);
+      _snackbarService.showCustomSnackBar(
+        variant: SnackbarType.error,
+        message: e.message,
+      );
+    } catch (e) {
+      logger.error("Error toggling favorite", e);
+      _snackbarService.showCustomSnackBar(
+        variant: SnackbarType.error,
+        message: e.toString(),
+      );
+    } finally {
+      rebuildUi();
     }
   }
 

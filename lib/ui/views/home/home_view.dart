@@ -194,19 +194,33 @@ class HomeView extends StackedView<HomeViewModel> {
                                                                       Alignment
                                                                           .topRight,
                                                                   child:
-                                                                      Padding(
-                                                                    padding: EdgeInsets.only(
-                                                                        top: 10
-                                                                            .h,
-                                                                        right: 10
-                                                                            .w),
-                                                                    child: Icon(
-                                                                        FontAwesomeIcons
-                                                                            .heart,
-                                                                        size: 20
-                                                                            .w,
-                                                                        color: AppColors
-                                                                            .white),
+                                                                      InkWell(
+                                                                    onTap: () {
+                                                                      viewModel.toggleFavorite(viewModel
+                                                                          .tournamentsList[
+                                                                              index]
+                                                                          .id
+                                                                          .toString());
+                                                                    },
+                                                                    child:
+                                                                        Padding(
+                                                                      padding: EdgeInsets.only(
+                                                                          top: 10
+                                                                              .h,
+                                                                          right:
+                                                                              10.w),
+                                                                      child: Icon(
+                                                                          viewModel.tournamentsList[index].isFavorite
+                                                                              ? FontAwesomeIcons
+                                                                                  .solidHeart
+                                                                              : FontAwesomeIcons
+                                                                                  .heart,
+                                                                          size: 20
+                                                                              .w,
+                                                                          color: viewModel.tournamentsList[index].isFavorite
+                                                                              ? AppColors.favorite
+                                                                              : AppColors.white),
+                                                                    ),
                                                                   ),
                                                                 ),
                                                                 Align(

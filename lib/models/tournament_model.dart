@@ -6,6 +6,7 @@ class TournamentModel {
   final String endDate;
   final String location;
   final String status;
+  bool isFavorite;
 
   TournamentModel({
     required this.id,
@@ -15,6 +16,7 @@ class TournamentModel {
     required this.endDate,
     required this.location,
     required this.status,
+    this.isFavorite = false,
   });
 
   factory TournamentModel.fromJson(Map<String, dynamic> json) {
@@ -26,6 +28,7 @@ class TournamentModel {
       endDate: json['end_date'],
       location: json['location'],
       status: json['status'],
+      isFavorite: json['is_favorite'],
     );
   }
 }

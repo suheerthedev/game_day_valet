@@ -45,6 +45,7 @@ class AppColors {
   static const Color error = Color(0xFFF44336);
   static const Color warning = Color(0xFFFFC107);
   static const Color info = Color(0xFF2196F3);
+  static const Color favorite = Color(0xFFC94C4C);
 
   // TRANSPARENT VARIANTS
   static const Color primaryOpacity60 = Color(0x990066FF); // 60% opacity
