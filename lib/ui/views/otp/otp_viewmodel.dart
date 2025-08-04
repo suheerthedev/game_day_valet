@@ -30,7 +30,7 @@ class OtpViewModel extends BaseViewModel {
   void onVerifyOtp(String email, String otp) async {
     setBusy(true);
     try {
-      final response = await _authService.verifyOtp(email, otp);
+      final response = await _authService.verifyEmail(email, otp);
 
       logger.info("OTP Verification Response: $response");
 

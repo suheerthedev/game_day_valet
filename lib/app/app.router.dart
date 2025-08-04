@@ -250,8 +250,10 @@ class StackedRouter extends _i1.RouterBase {
       );
     },
     _i8.ResetPasswordView: (data) {
+      final args = data.getArgs<ResetPasswordViewArguments>(nullOk: false);
       return _i24.MaterialPageRoute<dynamic>(
-        builder: (context) => const _i8.ResetPasswordView(),
+        builder: (context) =>
+            _i8.ResetPasswordView(key: args.key, email: args.email),
         settings: data,
       );
     },
@@ -335,14 +337,19 @@ class StackedRouter extends _i1.RouterBase {
       );
     },
     _i22.VerifyPasswordResetCodeView: (data) {
+      final args =
+          data.getArgs<VerifyPasswordResetCodeViewArguments>(nullOk: false);
       return _i24.MaterialPageRoute<dynamic>(
-        builder: (context) => const _i22.VerifyPasswordResetCodeView(),
+        builder: (context) =>
+            _i22.VerifyPasswordResetCodeView(key: args.key, email: args.email),
         settings: data,
       );
     },
     _i23.VerifyEmailView: (data) {
+      final args = data.getArgs<VerifyEmailViewArguments>(nullOk: false);
       return _i24.MaterialPageRoute<dynamic>(
-        builder: (context) => const _i23.VerifyEmailView(),
+        builder: (context) =>
+            _i23.VerifyEmailView(key: args.key, email: args.email),
         settings: data,
       );
     },
@@ -353,6 +360,33 @@ class StackedRouter extends _i1.RouterBase {
 
   @override
   Map<Type, _i1.StackedRouteFactory> get pagesMap => _pagesMap;
+}
+
+class ResetPasswordViewArguments {
+  const ResetPasswordViewArguments({
+    this.key,
+    required this.email,
+  });
+
+  final _i24.Key? key;
+
+  final String email;
+
+  @override
+  String toString() {
+    return '{"key": "$key", "email": "$email"}';
+  }
+
+  @override
+  bool operator ==(covariant ResetPasswordViewArguments other) {
+    if (identical(this, other)) return true;
+    return other.key == key && other.email == email;
+  }
+
+  @override
+  int get hashCode {
+    return key.hashCode ^ email.hashCode;
+  }
 }
 
 class OtpViewArguments {
@@ -372,6 +406,60 @@ class OtpViewArguments {
 
   @override
   bool operator ==(covariant OtpViewArguments other) {
+    if (identical(this, other)) return true;
+    return other.key == key && other.email == email;
+  }
+
+  @override
+  int get hashCode {
+    return key.hashCode ^ email.hashCode;
+  }
+}
+
+class VerifyPasswordResetCodeViewArguments {
+  const VerifyPasswordResetCodeViewArguments({
+    this.key,
+    required this.email,
+  });
+
+  final _i24.Key? key;
+
+  final String email;
+
+  @override
+  String toString() {
+    return '{"key": "$key", "email": "$email"}';
+  }
+
+  @override
+  bool operator ==(covariant VerifyPasswordResetCodeViewArguments other) {
+    if (identical(this, other)) return true;
+    return other.key == key && other.email == email;
+  }
+
+  @override
+  int get hashCode {
+    return key.hashCode ^ email.hashCode;
+  }
+}
+
+class VerifyEmailViewArguments {
+  const VerifyEmailViewArguments({
+    this.key,
+    required this.email,
+  });
+
+  final _i24.Key? key;
+
+  final String email;
+
+  @override
+  String toString() {
+    return '{"key": "$key", "email": "$email"}';
+  }
+
+  @override
+  bool operator ==(covariant VerifyEmailViewArguments other) {
     if (identical(this, other)) return true;
     return other.key == key && other.email == email;
   }
@@ -467,14 +555,17 @@ extension NavigatorStateExtension on _i25.NavigationService {
         transition: transition);
   }
 
-  Future<dynamic> navigateToResetPasswordView([
+  Future<dynamic> navigateToResetPasswordView({
+    _i24.Key? key,
+    required String email,
     int? routerId,
     bool preventDuplicates = true,
     Map<String, String>? parameters,
     Widget Function(BuildContext, Animation<double>, Animation<double>, Widget)?
         transition,
-  ]) async {
+  }) async {
     return navigateTo<dynamic>(Routes.resetPasswordView,
+        arguments: ResetPasswordViewArguments(key: key, email: email),
         id: routerId,
         preventDuplicates: preventDuplicates,
         parameters: parameters,
@@ -666,28 +757,34 @@ extension NavigatorStateExtension on _i25.NavigationService {
         transition: transition);
   }
 
-  Future<dynamic> navigateToVerifyPasswordResetCodeView([
+  Future<dynamic> navigateToVerifyPasswordResetCodeView({
+    _i24.Key? key,
+    required String email,
     int? routerId,
     bool preventDuplicates = true,
     Map<String, String>? parameters,
     Widget Function(BuildContext, Animation<double>, Animation<double>, Widget)?
         transition,
-  ]) async {
+  }) async {
     return navigateTo<dynamic>(Routes.verifyPasswordResetCodeView,
+        arguments: VerifyPasswordResetCodeViewArguments(key: key, email: email),
         id: routerId,
         preventDuplicates: preventDuplicates,
         parameters: parameters,
         transition: transition);
   }
 
-  Future<dynamic> navigateToVerifyEmailView([
+  Future<dynamic> navigateToVerifyEmailView({
+    _i24.Key? key,
+    required String email,
     int? routerId,
     bool preventDuplicates = true,
     Map<String, String>? parameters,
     Widget Function(BuildContext, Animation<double>, Animation<double>, Widget)?
         transition,
-  ]) async {
+  }) async {
     return navigateTo<dynamic>(Routes.verifyEmailView,
+        arguments: VerifyEmailViewArguments(key: key, email: email),
         id: routerId,
         preventDuplicates: preventDuplicates,
         parameters: parameters,
@@ -778,14 +875,17 @@ extension NavigatorStateExtension on _i25.NavigationService {
         transition: transition);
   }
 
-  Future<dynamic> replaceWithResetPasswordView([
+  Future<dynamic> replaceWithResetPasswordView({
+    _i24.Key? key,
+    required String email,
     int? routerId,
     bool preventDuplicates = true,
     Map<String, String>? parameters,
     Widget Function(BuildContext, Animation<double>, Animation<double>, Widget)?
         transition,
-  ]) async {
+  }) async {
     return replaceWith<dynamic>(Routes.resetPasswordView,
+        arguments: ResetPasswordViewArguments(key: key, email: email),
         id: routerId,
         preventDuplicates: preventDuplicates,
         parameters: parameters,
@@ -977,28 +1077,34 @@ extension NavigatorStateExtension on _i25.NavigationService {
         transition: transition);
   }
 
-  Future<dynamic> replaceWithVerifyPasswordResetCodeView([
+  Future<dynamic> replaceWithVerifyPasswordResetCodeView({
+    _i24.Key? key,
+    required String email,
     int? routerId,
     bool preventDuplicates = true,
     Map<String, String>? parameters,
     Widget Function(BuildContext, Animation<double>, Animation<double>, Widget)?
         transition,
-  ]) async {
+  }) async {
     return replaceWith<dynamic>(Routes.verifyPasswordResetCodeView,
+        arguments: VerifyPasswordResetCodeViewArguments(key: key, email: email),
         id: routerId,
         preventDuplicates: preventDuplicates,
         parameters: parameters,
         transition: transition);
   }
 
-  Future<dynamic> replaceWithVerifyEmailView([
+  Future<dynamic> replaceWithVerifyEmailView({
+    _i24.Key? key,
+    required String email,
     int? routerId,
     bool preventDuplicates = true,
     Map<String, String>? parameters,
     Widget Function(BuildContext, Animation<double>, Animation<double>, Widget)?
         transition,
-  ]) async {
+  }) async {
     return replaceWith<dynamic>(Routes.verifyEmailView,
+        arguments: VerifyEmailViewArguments(key: key, email: email),
         id: routerId,
         preventDuplicates: preventDuplicates,
         parameters: parameters,

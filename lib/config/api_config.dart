@@ -8,6 +8,7 @@ class ApiConfig {
   static const forgotPasswordEndPoint = '/api/password/reset';
   static const resetPasswordEndPoint = '/api/password/reset/confirm';
   static const verifyOtpEndPoint = '/api/email/verify-otp';
+  static const verifyPasswordResetCodeEndPoint = '/api/verify-reset-code';
   static const validateReferralCodeEndPoint = '/api/validate/referral-code';
   static const googleSignInEndPoint = '/api/auth/google/login';
 

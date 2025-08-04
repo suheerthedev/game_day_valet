@@ -81,7 +81,7 @@ class AuthService {
     }
   }
 
-  Future<dynamic> verifyOtp(String email, String otp) async {
+  Future<dynamic> verifyEmail(String email, String otp) async {
     final url = ApiConfig.baseUrl + ApiConfig.verifyOtpEndPoint;
 
     try {
@@ -95,6 +95,27 @@ class AuthService {
       rethrow;
     } catch (e) {
       logger.error("OTP Verification failed - Unknown error", e);
+      throw ApiException("OTP Verification Failed. $e");
+    }
+  }
+
+  Future<dynamic> verifyPasswordResetCode(String email, String otp) async {
+    final url = ApiConfig.baseUrl + ApiConfig.verifyPasswordResetCodeEndPoint;
+
+    try {
+      final response =
+          await _apiService.post(url, {'email': email, 'code': otp});
+
+      logger.info(
+          "Password Reset Code Verification successful for email: $email");
+      return response;
+    } on ApiException catch (e) {
+      logger.error(
+          "Password Reset Code Verification failed - API Exception", e);
+      rethrow;
+    } catch (e) {
+      logger.error(
+          "Password Reset Code Verification failed - Unknown error", e);
       throw ApiException("OTP Verification Failed. $e");
     }
   }

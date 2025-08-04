@@ -9,7 +9,8 @@ import 'package:stacked/stacked.dart';
 import 'reset_password_viewmodel.dart';
 
 class ResetPasswordView extends StackedView<ResetPasswordViewModel> {
-  const ResetPasswordView({Key? key}) : super(key: key);
+  final String email;
+  const ResetPasswordView({Key? key, required this.email}) : super(key: key);
 
   @override
   Widget builder(
