@@ -376,50 +376,46 @@ class HomeView extends StackedView<HomeViewModel> {
                                           ),
                                           //Recommended Tournaments
                                           SizedBox(height: 20.h),
-                                          Column(
-                                            crossAxisAlignment:
-                                                CrossAxisAlignment.start,
-                                            children: [
-                                              Text(
-                                                'Recommended Tournaments',
-                                                style: GoogleFonts.poppins(
-                                                    fontSize: 21,
-                                                    fontWeight: FontWeight.w600,
-                                                    color:
-                                                        AppColors.textPrimary),
-                                              ),
-                                              SizedBox(height: 10.h),
-                                              SizedBox(
-                                                width: double.infinity,
-                                                height: 201.h,
-                                                child: ListView.builder(
-                                                  itemCount: 5,
-                                                  shrinkWrap: true,
-                                                  // physics:
-                                                  //     const NeverScrollableScrollPhysics(),
-                                                  scrollDirection:
-                                                      Axis.horizontal,
-                                                  itemBuilder:
-                                                      (context, index) {
-                                                    return Container(
-                                                      width: 342.w,
+                                          viewModel.recommendedTournamentsList
+                                                  .isEmpty
+                                              ? const SizedBox.shrink()
+                                              : Column(
+                                                  crossAxisAlignment:
+                                                      CrossAxisAlignment.start,
+                                                  children: [
+                                                    Text(
+                                                      'Recommended Tournaments',
+                                                      style:
+                                                          GoogleFonts.poppins(
+                                                              fontSize: 21,
+                                                              fontWeight:
+                                                                  FontWeight
+                                                                      .w600,
+                                                              color: AppColors
+                                                                  .textPrimary),
+                                                    ),
+                                                    SizedBox(height: 10.h),
+                                                    SizedBox(
+                                                      width: double.infinity,
                                                       height: 201.h,
-                                                      margin: EdgeInsets.only(
-                                                          right: 10.w),
-                                                      decoration: BoxDecoration(
-                                                        color: AppColors.white,
-                                                        borderRadius:
-                                                            BorderRadius
-                                                                .circular(16.r),
-                                                      ),
-                                                      child: Column(
-                                                        crossAxisAlignment:
-                                                            CrossAxisAlignment
-                                                                .start,
-                                                        children: [
-                                                          Container(
+                                                      child: ListView.builder(
+                                                        itemCount: viewModel
+                                                            .recommendedTournamentsList
+                                                            .length,
+                                                        shrinkWrap: true,
+                                                        // physics:
+                                                        //     const NeverScrollableScrollPhysics(),
+                                                        scrollDirection:
+                                                            Axis.horizontal,
+                                                        itemBuilder:
+                                                            (context, index) {
+                                                          return Container(
                                                             width: 342.w,
-                                                            height: 131.h,
+                                                            height: 201.h,
+                                                            margin:
+                                                                EdgeInsets.only(
+                                                                    right:
+                                                                        10.w),
                                                             decoration:
                                                                 BoxDecoration(
                                                               color: AppColors
@@ -429,140 +425,131 @@ class HomeView extends StackedView<HomeViewModel> {
                                                                       .circular(
                                                                           16.r),
                                                             ),
-                                                            clipBehavior:
-                                                                Clip.antiAlias,
-                                                            child: Stack(
-                                                                children: [
-                                                                  Image.asset(
-                                                                    'assets/images/dummy.jpg',
-                                                                    fit: BoxFit
-                                                                        .cover,
-                                                                    width:
-                                                                        339.w,
-                                                                    height:
-                                                                        319.h,
-                                                                  ),
-                                                                  Container(
-                                                                    width:
-                                                                        339.w,
-                                                                    height:
-                                                                        319.h,
+                                                            child: Column(
+                                                              crossAxisAlignment:
+                                                                  CrossAxisAlignment
+                                                                      .start,
+                                                              children: [
+                                                                Container(
+                                                                  width: 342.w,
+                                                                  height: 131.h,
+                                                                  decoration:
+                                                                      BoxDecoration(
                                                                     color: AppColors
-                                                                        .primary
-                                                                        .withOpacity(
-                                                                            0.4),
+                                                                        .white,
+                                                                    borderRadius:
+                                                                        BorderRadius.circular(
+                                                                            16.r),
                                                                   ),
-                                                                  Center(
-                                                                    child: Container(
-                                                                        width: 133.w,
-                                                                        height: 37.h,
-                                                                        decoration: BoxDecoration(
-                                                                          color:
-                                                                              Colors.transparent,
-                                                                          borderRadius:
-                                                                              BorderRadius.circular(5.r),
-                                                                          border: BoxBorder.all(
-                                                                              width: 1.w,
-                                                                              color: AppColors.white),
+                                                                  clipBehavior:
+                                                                      Clip.antiAlias,
+                                                                  child: Stack(
+                                                                      children: [
+                                                                        Image
+                                                                            .asset(
+                                                                          'assets/images/dummy.jpg',
+                                                                          fit: BoxFit
+                                                                              .cover,
+                                                                          width:
+                                                                              339.w,
+                                                                          height:
+                                                                              319.h,
                                                                         ),
-                                                                        child: Center(
+                                                                        Container(
+                                                                          width:
+                                                                              339.w,
+                                                                          height:
+                                                                              319.h,
+                                                                          color: AppColors
+                                                                              .primary
+                                                                              .withOpacity(0.4),
+                                                                        ),
+                                                                        Center(
+                                                                          child: Container(
+                                                                              width: 133.w,
+                                                                              height: 37.h,
+                                                                              decoration: BoxDecoration(
+                                                                                color: Colors.transparent,
+                                                                                borderRadius: BorderRadius.circular(5.r),
+                                                                                border: BoxBorder.all(width: 1.w, color: AppColors.white),
+                                                                              ),
+                                                                              child: Center(
+                                                                                child: Text(
+                                                                                  'Book Now',
+                                                                                  style: GoogleFonts.poppins(fontSize: 16.sp, fontWeight: FontWeight.w500, color: AppColors.white),
+                                                                                ),
+                                                                              )),
+                                                                        ),
+                                                                        Align(
+                                                                          alignment:
+                                                                              Alignment.topRight,
                                                                           child:
-                                                                              Text(
-                                                                            'Book Now',
-                                                                            style: GoogleFonts.poppins(
-                                                                                fontSize: 16.sp,
-                                                                                fontWeight: FontWeight.w500,
+                                                                              Padding(
+                                                                            padding:
+                                                                                EdgeInsets.only(top: 10.h, right: 10.w),
+                                                                            child: Icon(FontAwesomeIcons.heart,
+                                                                                size: 20.w,
                                                                                 color: AppColors.white),
                                                                           ),
-                                                                        )),
-                                                                  ),
-                                                                  Align(
-                                                                    alignment:
-                                                                        Alignment
-                                                                            .topRight,
-                                                                    child:
-                                                                        Padding(
-                                                                      padding: EdgeInsets.only(
-                                                                          top: 10
-                                                                              .h,
-                                                                          right:
-                                                                              10.w),
-                                                                      child: Icon(
-                                                                          FontAwesomeIcons
-                                                                              .heart,
-                                                                          size: 20
-                                                                              .w,
-                                                                          color:
-                                                                              AppColors.white),
+                                                                        ),
+                                                                      ]),
+                                                                ),
+                                                                SizedBox(
+                                                                    height:
+                                                                        10.h),
+                                                                Row(
+                                                                  mainAxisAlignment:
+                                                                      MainAxisAlignment
+                                                                          .spaceBetween,
+                                                                  children: [
+                                                                    Row(
+                                                                      children: [
+                                                                        Icon(
+                                                                            Iconsax
+                                                                                .location_copy,
+                                                                            size:
+                                                                                12.w,
+                                                                            color: AppColors.textPrimary),
+                                                                        SizedBox(
+                                                                            width:
+                                                                                4.w),
+                                                                        Text(viewModel.recommendedTournamentsList[index].name,
+                                                                            style: GoogleFonts.poppins(
+                                                                                fontSize: 14.sp,
+                                                                                fontWeight: FontWeight.w500,
+                                                                                color: AppColors.textPrimary)),
+                                                                      ],
                                                                     ),
-                                                                  ),
-                                                                ]),
-                                                          ),
-                                                          SizedBox(
-                                                              height: 10.h),
-                                                          Row(
-                                                            mainAxisAlignment:
-                                                                MainAxisAlignment
-                                                                    .spaceBetween,
-                                                            children: [
-                                                              Row(
-                                                                children: [
-                                                                  Icon(
-                                                                      Iconsax
-                                                                          .location_copy,
-                                                                      size:
-                                                                          12.w,
-                                                                      color: AppColors
-                                                                          .textPrimary),
-                                                                  SizedBox(
-                                                                      width:
-                                                                          4.w),
-                                                                  Text(
-                                                                      'Racquetball Weekend with Jane',
-                                                                      style: GoogleFonts.poppins(
-                                                                          fontSize: 14
-                                                                              .sp,
-                                                                          fontWeight: FontWeight
-                                                                              .w500,
-                                                                          color:
-                                                                              AppColors.textPrimary)),
-                                                                ],
-                                                              ),
-                                                              Row(
-                                                                children: [
-                                                                  Text(
-                                                                    '4.8',
-                                                                    style: GoogleFonts.poppins(
-                                                                        fontSize: 12
-                                                                            .sp,
-                                                                        fontWeight:
-                                                                            FontWeight
-                                                                                .w500,
-                                                                        color: AppColors
-                                                                            .textPrimary),
-                                                                  ),
-                                                                  SizedBox(
-                                                                      width:
-                                                                          2.w),
-                                                                  Icon(
-                                                                      Icons
-                                                                          .star,
-                                                                      size:
-                                                                          16.w,
-                                                                      color: AppColors
-                                                                          .primary)
-                                                                ],
-                                                              )
-                                                            ],
-                                                          ),
-                                                        ],
+                                                                    Row(
+                                                                      children: [
+                                                                        Text(
+                                                                          '4.8',
+                                                                          style: GoogleFonts.poppins(
+                                                                              fontSize: 12.sp,
+                                                                              fontWeight: FontWeight.w500,
+                                                                              color: AppColors.textPrimary),
+                                                                        ),
+                                                                        SizedBox(
+                                                                            width:
+                                                                                2.w),
+                                                                        Icon(
+                                                                            Icons
+                                                                                .star,
+                                                                            size:
+                                                                                16.w,
+                                                                            color: AppColors.primary)
+                                                                      ],
+                                                                    )
+                                                                  ],
+                                                                ),
+                                                              ],
+                                                            ),
+                                                          );
+                                                        },
                                                       ),
-                                                    );
-                                                  },
-                                                ),
-                                              )
-                                            ],
-                                          )
+                                                    )
+                                                  ],
+                                                )
                                         ],
                                       ),
                                     ),
@@ -670,7 +657,7 @@ class HomeView extends StackedView<HomeViewModel> {
                                         Navigator.pop(context);
                                         viewModel
                                             .getTournamentsBySport(sport.id);
-                                        viewModel.rebuildUi();
+                                        viewModel.getRecommendedTournaments();
                                       },
                                       child: Container(
                                         padding: EdgeInsets.symmetric(

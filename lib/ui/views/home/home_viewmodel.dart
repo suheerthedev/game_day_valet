@@ -24,6 +24,7 @@ class HomeViewModel extends BaseViewModel {
 
   List<TournamentModel> tournamentsList = [];
   List<SportsModel> sportsList = [];
+  List<TournamentModel> recommendedTournamentsList = [];
 
   Future<void> getSports() async {
     final url = ApiConfig.baseUrl + ApiConfig.sportsEndPoint;
@@ -69,6 +70,35 @@ class HomeViewModel extends BaseViewModel {
       );
     } catch (e) {
       logger.error("Error fetching tournaments", e);
+      _snackbarService.showCustomSnackBar(
+        variant: SnackbarType.error,
+        message: e.toString(),
+      );
+    } finally {
+      notifyListeners();
+      setBusy(false);
+    }
+  }
+
+  void getRecommendedTournaments() async {
+    final url = ApiConfig.baseUrl + ApiConfig.recommendedTournamentsEndPoint;
+
+    setBusy(true);
+
+    try {
+      final response = await _apiService.get(url);
+
+      for (var tournament in response['data']) {
+        recommendedTournamentsList.add(TournamentModel.fromJson(tournament));
+      }
+    } on ApiException catch (e) {
+      logger.error("Error fetching recommended tournaments", e);
+      _snackbarService.showCustomSnackBar(
+        variant: SnackbarType.error,
+        message: e.message,
+      );
+    } catch (e) {
+      logger.error("Error fetching recommended tournaments", e);
       _snackbarService.showCustomSnackBar(
         variant: SnackbarType.error,
         message: e.toString(),
