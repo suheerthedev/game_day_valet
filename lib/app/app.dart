@@ -31,6 +31,7 @@ import 'package:game_day_valet/ui/views/otp/otp_view.dart';
 import 'package:game_day_valet/services/connectivity_service.dart';
 import 'package:game_day_valet/services/logger_service.dart';
 import 'package:game_day_valet/services/google_sign_in_service.dart';
+import 'package:game_day_valet/ui/views/verify_password_reset_code/verify_password_reset_code_view.dart';
 // @stacked-import
 
 @StackedApp(
@@ -61,6 +62,7 @@ import 'package:game_day_valet/services/google_sign_in_service.dart';
     MaterialRoute(page: NotificationView),
     MaterialRoute(page: ChatView),
     MaterialRoute(page: OtpView),
+    MaterialRoute(page: VerifyPasswordResetCodeView),
 // @stacked-route
   ],
   dependencies: [

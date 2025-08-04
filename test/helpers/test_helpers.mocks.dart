@@ -890,6 +890,18 @@ class MockAuthService extends _i1.Mock implements _i10.AuthService {
         returnValue: _i5.Future<dynamic>.value(),
         returnValueForMissingStub: _i5.Future<dynamic>.value(),
       ) as _i5.Future<dynamic>);
+
+  @override
+  _i5.Future<dynamic> signInWithGoogle({required String? idToken}) =>
+      (super.noSuchMethod(
+        Invocation.method(
+          #signInWithGoogle,
+          [],
+          {#idToken: idToken},
+        ),
+        returnValue: _i5.Future<dynamic>.value(),
+        returnValueForMissingStub: _i5.Future<dynamic>.value(),
+      ) as _i5.Future<dynamic>);
 }
 
 /// A class which mocks [UserService].
@@ -1084,4 +1096,24 @@ class MockLoggerService extends _i1.Mock implements _i14.LoggerService {
 ///
 /// See the documentation for Mockito's code generation for more information.
 class MockGoogleSignInService extends _i1.Mock
-    implements _i15.GoogleSignInService {}
+    implements _i15.GoogleSignInService {
+  @override
+  _i5.Future<dynamic> signIn() => (super.noSuchMethod(
+        Invocation.method(
+          #signIn,
+          [],
+        ),
+        returnValue: _i5.Future<dynamic>.value(),
+        returnValueForMissingStub: _i5.Future<dynamic>.value(),
+      ) as _i5.Future<dynamic>);
+
+  @override
+  _i5.Future<void> signOut() => (super.noSuchMethod(
+        Invocation.method(
+          #signOut,
+          [],
+        ),
+        returnValue: _i5.Future<void>.value(),
+        returnValueForMissingStub: _i5.Future<void>.value(),
+      ) as _i5.Future<void>);
+}
