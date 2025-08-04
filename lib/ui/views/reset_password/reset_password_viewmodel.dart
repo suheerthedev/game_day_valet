@@ -65,6 +65,8 @@ class ResetPasswordViewModel extends BaseViewModel {
       final response = await _authService.resetPassword(
           email, code, passwordController.text);
 
+      logger.info("Reset Password Response: $response");
+
       if (response.containsKey('errors')) {
         _snackbarService.showCustomSnackBar(
           message: response['message'],
@@ -80,11 +82,13 @@ class ResetPasswordViewModel extends BaseViewModel {
         _navigationService.back();
       }
     } on ApiException catch (e) {
+      logger.error("Reset Password failed from ViewModel - API Exception", e);
       _snackbarService.showCustomSnackBar(
         message: e.message,
         variant: SnackbarType.error,
       );
     } catch (e) {
+      logger.error("Reset Password failed from ViewModel - Unknown error", e);
       _snackbarService.showCustomSnackBar(
         message: e.toString(),
         variant: SnackbarType.error,
