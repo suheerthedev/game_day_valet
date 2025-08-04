@@ -19,5 +19,7 @@ class ApiConfig {
 
   static const favoriteEndPoint = '/api/favorites';
   static const toggleFavoriteEndPoint = '/api/favorites/toggle';
+
+  static const rentalHistoryEndPoint = '/api/rentals/user';
   // Add more as needed
 }
