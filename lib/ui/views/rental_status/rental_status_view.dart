@@ -33,242 +33,248 @@ class RentalStatusView extends StackedView<RentalStatusViewModel> {
           ),
         ),
         body: SafeArea(
-            child: Padding(
-                padding: EdgeInsets.symmetric(horizontal: 25.w, vertical: 20.h),
-                child: Stack(
-                  children: [
-                    viewModel.isRentalActive
-                        ? _buildRentalActiveState(context, viewModel)
-                        : _buildNoRentalState(context),
-                    FloatingChatButton(
-                      onTap: (_) {
-                        viewModel.onChatTap();
-                      },
-                      chatIconWidget: const Padding(
-                        padding: EdgeInsets.all(14.0),
-                        child: Icon(
-                          Iconsax.message_2_copy,
-                          color: AppColors.white,
-                          size: 24,
-                        ),
-                      ),
-                      messageBackgroundColor: AppColors.secondary,
-                      chatIconBorderColor: AppColors.secondary,
-                      chatIconBackgroundColor: AppColors.secondary,
-                      messageBorderWidth: 2,
-                      messageText: "You've received a message!",
-                      messageTextStyle: GoogleFonts.poppins(
-                          fontSize: 14.sp,
-                          fontWeight: FontWeight.w400,
-                          color: AppColors.white),
-                      showMessageParameters: ShowMessageParameters(
-                          delayDuration: const Duration(seconds: 2),
-                          durationToShowMessage: const Duration(seconds: 5)),
-                    )
-                  ],
-                ))));
+            child: Stack(
+          children: [
+            viewModel.isRentalActive
+                ? _buildRentalActiveState(context, viewModel)
+                : _buildNoRentalState(context),
+            FloatingChatButton(
+              onTap: (_) {
+                viewModel.onChatTap();
+              },
+              chatIconWidget: const Padding(
+                padding: EdgeInsets.all(14.0),
+                child: Icon(
+                  Iconsax.message_2_copy,
+                  color: AppColors.white,
+                  size: 24,
+                ),
+              ),
+              messageBackgroundColor: AppColors.secondary,
+              chatIconBorderColor: AppColors.secondary,
+              chatIconBackgroundColor: AppColors.secondary,
+              messageBorderWidth: 2,
+              messageText: "You've received a message!",
+              messageTextStyle: GoogleFonts.poppins(
+                  fontSize: 14.sp,
+                  fontWeight: FontWeight.w400,
+                  color: AppColors.white),
+              showMessageParameters: ShowMessageParameters(
+                  delayDuration: const Duration(seconds: 2),
+                  durationToShowMessage: const Duration(seconds: 5)),
+            )
+          ],
+        )));
   }
 
   Widget _buildNoRentalState(BuildContext context) {
-    return Center(
-      child: Column(
-        mainAxisAlignment: MainAxisAlignment.center,
-        children: [
-          Image.asset(
-            'assets/images/mascot.png',
-            width: 162.w,
-            height: 242.h,
-          ),
-          Text(
-            'Oops!',
-            style: GoogleFonts.poppins(
-                fontSize: 18.sp,
-                fontWeight: FontWeight.w700,
-                color: AppColors.textPrimary),
-          ),
-          SizedBox(height: 5.h),
-          Text(
-            'There are no rentals',
-            style: GoogleFonts.poppins(
-                fontSize: 14.sp,
-                fontWeight: FontWeight.w400,
-                color: AppColors.textHint),
-          ),
-        ],
+    return Padding(
+      padding: EdgeInsets.symmetric(horizontal: 25.w, vertical: 20.h),
+      child: Center(
+        child: Column(
+          mainAxisAlignment: MainAxisAlignment.center,
+          children: [
+            Image.asset(
+              'assets/images/mascot.png',
+              width: 162.w,
+              height: 242.h,
+            ),
+            Text(
+              'Oops!',
+              style: GoogleFonts.poppins(
+                  fontSize: 18.sp,
+                  fontWeight: FontWeight.w700,
+                  color: AppColors.textPrimary),
+            ),
+            SizedBox(height: 5.h),
+            Text(
+              'There are no rentals',
+              style: GoogleFonts.poppins(
+                  fontSize: 14.sp,
+                  fontWeight: FontWeight.w400,
+                  color: AppColors.textHint),
+            ),
+          ],
+        ),
       ),
     );
   }
 
   Widget _buildRentalActiveState(
       BuildContext context, RentalStatusViewModel viewModel) {
-    return Center(
-      child: SingleChildScrollView(
-        child: Column(
-          crossAxisAlignment: CrossAxisAlignment.start,
-          children: [
-            Row(
-              mainAxisAlignment: MainAxisAlignment.center,
-              crossAxisAlignment: CrossAxisAlignment.start,
-              children: [
-                Column(
-                  mainAxisAlignment: MainAxisAlignment.center,
-                  children: [
-                    Text(
-                      "00",
-                      style: GoogleFonts.poppins(
-                          fontSize: 40.sp,
-                          fontWeight: FontWeight.w600,
-                          color: AppColors.textHint),
-                    ),
-                    Text(
-                      'hours',
-                      style: GoogleFonts.poppins(
-                          fontSize: 14.sp,
-                          fontWeight: FontWeight.w400,
-                          color: AppColors.textHint),
-                    ),
-                  ],
-                ),
-                Text(
-                  " : ",
-                  style: GoogleFonts.poppins(
-                      fontSize: 40.sp,
-                      fontWeight: FontWeight.w600,
-                      color: AppColors.textHint),
-                ),
-                Column(
-                  mainAxisAlignment: MainAxisAlignment.center,
-                  children: [
-                    Text(
-                      '${viewModel.timeRemaining}',
-                      style: GoogleFonts.poppins(
-                          fontSize: 40.sp,
-                          fontWeight: FontWeight.w600,
-                          color: AppColors.textSecondary),
-                    ),
-                    Text(
-                      'minutes',
-                      style: GoogleFonts.poppins(
-                          fontSize: 14.sp,
-                          fontWeight: FontWeight.w400,
-                          color: AppColors.textHint),
-                    ),
-                  ],
-                ),
-              ],
-            ),
-            SizedBox(height: 20.h),
-            Row(
-              mainAxisAlignment: MainAxisAlignment.center,
-              children: [
-                Text(
-                  "time left for delivery",
-                  style: GoogleFonts.poppins(
-                      fontSize: 14.sp,
-                      fontWeight: FontWeight.w500,
-                      color: AppColors.textHint),
-                ),
-              ],
-            ),
+    return Padding(
+      padding: EdgeInsets.symmetric(horizontal: 25.w, vertical: 20.h),
+      child: Center(
+        child: SingleChildScrollView(
+          child: Column(
+            crossAxisAlignment: CrossAxisAlignment.start,
+            children: [
+              Row(
+                mainAxisAlignment: MainAxisAlignment.center,
+                crossAxisAlignment: CrossAxisAlignment.start,
+                children: [
+                  Column(
+                    mainAxisAlignment: MainAxisAlignment.center,
+                    children: [
+                      Text(
+                        "00",
+                        style: GoogleFonts.poppins(
+                            fontSize: 40.sp,
+                            fontWeight: FontWeight.w600,
+                            color: AppColors.textHint),
+                      ),
+                      Text(
+                        'hours',
+                        style: GoogleFonts.poppins(
+                            fontSize: 14.sp,
+                            fontWeight: FontWeight.w400,
+                            color: AppColors.textHint),
+                      ),
+                    ],
+                  ),
+                  Text(
+                    " : ",
+                    style: GoogleFonts.poppins(
+                        fontSize: 40.sp,
+                        fontWeight: FontWeight.w600,
+                        color: AppColors.textHint),
+                  ),
+                  Column(
+                    mainAxisAlignment: MainAxisAlignment.center,
+                    children: [
+                      Text(
+                        '${viewModel.timeRemaining}',
+                        style: GoogleFonts.poppins(
+                            fontSize: 40.sp,
+                            fontWeight: FontWeight.w600,
+                            color: AppColors.textSecondary),
+                      ),
+                      Text(
+                        'minutes',
+                        style: GoogleFonts.poppins(
+                            fontSize: 14.sp,
+                            fontWeight: FontWeight.w400,
+                            color: AppColors.textHint),
+                      ),
+                    ],
+                  ),
+                ],
+              ),
+              SizedBox(height: 20.h),
+              Row(
+                mainAxisAlignment: MainAxisAlignment.center,
+                children: [
+                  Text(
+                    "time left for delivery",
+                    style: GoogleFonts.poppins(
+                        fontSize: 14.sp,
+                        fontWeight: FontWeight.w500,
+                        color: AppColors.textHint),
+                  ),
+                ],
+              ),
 
-            SizedBox(height: 30.h),
-            // Order tracking timeline
-            ListView.builder(
-              shrinkWrap: true,
-              physics: const NeverScrollableScrollPhysics(),
-              itemCount: viewModel.trackingSteps.length,
-              itemBuilder: (context, index) {
-                final step = viewModel.trackingSteps[index];
-                final isLastItem = index == viewModel.trackingSteps.length - 1;
-
-                return _buildTimelineItem(
-                  title: step.title,
-                  timestamp: step.timestamp,
-                  isCompleted: step.isCompleted,
-                  isSecondLastItem: index == viewModel.trackingSteps.length - 2,
-                  isLastItem: isLastItem,
-                );
-              },
-            ),
-            SizedBox(height: 20.h),
-            Text(
-              'Return Instructions',
-              style: GoogleFonts.poppins(
-                  fontSize: 18.sp,
-                  fontWeight: FontWeight.w600,
-                  color: AppColors.primary),
-            ),
-            SizedBox(height: 10.h),
-            MainTextField(
-                label: 'Special Instructions',
-                controller: viewModel.specialInstructionsController),
-            SizedBox(height: 10.h),
-            Text(
-              'Delivery Photos',
-              style: GoogleFonts.poppins(
-                  fontSize: 18.sp,
-                  fontWeight: FontWeight.w600,
-                  color: AppColors.primary),
-            ),
-
-            SizedBox(height: 10.h),
-            SizedBox(
-              width: double.infinity,
-              height: 106.h,
-              child: GridView.builder(
-                scrollDirection: Axis.horizontal,
-                gridDelegate: SliverGridDelegateWithMaxCrossAxisExtent(
-                    maxCrossAxisExtent: 123.w,
-                    childAspectRatio: 123.w / 106.h,
-                    crossAxisSpacing: 10.w,
-                    mainAxisSpacing: 10.h,
-                    mainAxisExtent: 106.h),
-                itemCount: 2,
+              SizedBox(height: 30.h),
+              // Order tracking timeline
+              ListView.builder(
+                shrinkWrap: true,
+                physics: const NeverScrollableScrollPhysics(),
+                itemCount: viewModel.trackingSteps.length,
                 itemBuilder: (context, index) {
-                  return Container(
-                    width: 123.w,
-                    height: 106.h,
-                    decoration: const BoxDecoration(
-                      image: DecorationImage(
-                          image:
-                              AssetImage('assets/images/delivery_photo_2.png')),
-                    ),
+                  final step = viewModel.trackingSteps[index];
+                  final isLastItem =
+                      index == viewModel.trackingSteps.length - 1;
+
+                  return _buildTimelineItem(
+                    title: step.title,
+                    timestamp: step.timestamp,
+                    isCompleted: step.isCompleted,
+                    isSecondLastItem:
+                        index == viewModel.trackingSteps.length - 2,
+                    isLastItem: isLastItem,
                   );
                 },
               ),
-            ),
-            SizedBox(height: 10.h),
-            Text(
-              'Give Review',
-              style: GoogleFonts.poppins(
-                  fontSize: 18.sp,
-                  fontWeight: FontWeight.w600,
-                  color: AppColors.primary),
-            ),
-            SizedBox(height: 10.h),
-            MainTextField(
-                label: 'Write Google Review Here',
-                controller: viewModel.googleReviewController),
-
-            Align(
-              alignment: Alignment.centerRight,
-              child: Text(
-                'Need Help?',
+              SizedBox(height: 20.h),
+              Text(
+                'Return Instructions',
                 style: GoogleFonts.poppins(
-                    fontSize: 14.sp,
-                    fontWeight: FontWeight.w500,
-                    color: AppColors.textSecondary),
+                    fontSize: 18.sp,
+                    fontWeight: FontWeight.w600,
+                    color: AppColors.primary),
               ),
-            ),
-            SizedBox(height: 20.h),
-            MainButton(
-              onTap: () {},
-              text: 'Order More',
-              color: AppColors.secondary,
-              borderColor: AppColors.secondary,
-              textColor: AppColors.white,
-            )
-          ],
+              SizedBox(height: 10.h),
+              MainTextField(
+                  label: 'Special Instructions',
+                  controller: viewModel.specialInstructionsController),
+              SizedBox(height: 10.h),
+              Text(
+                'Delivery Photos',
+                style: GoogleFonts.poppins(
+                    fontSize: 18.sp,
+                    fontWeight: FontWeight.w600,
+                    color: AppColors.primary),
+              ),
+
+              SizedBox(height: 10.h),
+              SizedBox(
+                width: double.infinity,
+                height: 106.h,
+                child: GridView.builder(
+                  scrollDirection: Axis.horizontal,
+                  gridDelegate: SliverGridDelegateWithMaxCrossAxisExtent(
+                      maxCrossAxisExtent: 123.w,
+                      childAspectRatio: 123.w / 106.h,
+                      crossAxisSpacing: 10.w,
+                      mainAxisSpacing: 10.h,
+                      mainAxisExtent: 106.h),
+                  itemCount: 2,
+                  itemBuilder: (context, index) {
+                    return Container(
+                      width: 123.w,
+                      height: 106.h,
+                      decoration: const BoxDecoration(
+                        image: DecorationImage(
+                            image: AssetImage(
+                                'assets/images/delivery_photo_2.png')),
+                      ),
+                    );
+                  },
+                ),
+              ),
+              SizedBox(height: 10.h),
+              Text(
+                'Give Review',
+                style: GoogleFonts.poppins(
+                    fontSize: 18.sp,
+                    fontWeight: FontWeight.w600,
+                    color: AppColors.primary),
+              ),
+              SizedBox(height: 10.h),
+              MainTextField(
+                  label: 'Write Google Review Here',
+                  controller: viewModel.googleReviewController),
+
+              Align(
+                alignment: Alignment.centerRight,
+                child: Text(
+                  'Need Help?',
+                  style: GoogleFonts.poppins(
+                      fontSize: 14.sp,
+                      fontWeight: FontWeight.w500,
+                      color: AppColors.textSecondary),
+                ),
+              ),
+              SizedBox(height: 20.h),
+              MainButton(
+                onTap: () {},
+                text: 'Order More',
+                color: AppColors.secondary,
+                borderColor: AppColors.secondary,
+                textColor: AppColors.white,
+              )
+            ],
+          ),
         ),
       ),
     );
