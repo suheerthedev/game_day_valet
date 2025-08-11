@@ -28,5 +28,6 @@ class ApiConfig {
   static const faqsEndPoint = '/api/faqs';
 
   static const items = '/api/items';
+  static const bundles = '/api/bundles';
   // Add more as needed
 }

@@ -1,6 +1,7 @@
 import 'package:game_day_valet/app/app.locator.dart';
 import 'package:game_day_valet/config/api_config.dart';
 import 'package:game_day_valet/core/enums/snackbar_type.dart';
+import 'package:game_day_valet/models/bundle_model.dart';
 import 'package:game_day_valet/models/item_model.dart';
 import 'package:game_day_valet/services/api_exception.dart';
 import 'package:game_day_valet/services/api_service.dart';
@@ -13,10 +14,35 @@ class AddRentalsViewModel extends BaseViewModel {
   final _snackbarService = locator<SnackbarService>();
 
   List<ItemModel> items = [];
+  List<BundleModel> bundles = [];
+
+  bool viewSmartSuggestions = false;
+
+  void toggleViewSmartSuggestions() {
+    viewSmartSuggestions = !viewSmartSuggestions;
+    rebuildUi();
+  }
+
+  void init() async {
+    setBusy(true);
+    try {
+      await getItems();
+      await getBundles();
+    } catch (e) {
+      logger.error("Error initializing: $e");
+      _snackbarService.showCustomSnackBar(
+        message: "Something went wrong",
+        variant: SnackbarType.error,
+      );
+    } finally {
+      rebuildUi();
+      setBusy(false);
+    }
+  }
 
   Future<void> getItems() async {
     final url = ApiConfig.baseUrl + ApiConfig.items;
-    setBusy(true);
+
     try {
       final response = await _apiService.get(url);
       items =
@@ -34,9 +60,30 @@ class AddRentalsViewModel extends BaseViewModel {
         message: "Something went wrong",
         variant: SnackbarType.error,
       );
-    } finally {
-      rebuildUi();
-      setBusy(false);
+    }
+  }
+
+  Future<void> getBundles() async {
+    final url = ApiConfig.baseUrl + ApiConfig.bundles;
+
+    try {
+      final response = await _apiService.get(url);
+      logger.info("Bundles: $response");
+      bundles = (response['data'] as List)
+          .map((e) => BundleModel.fromJson(e))
+          .toList();
+    } on ApiException catch (e) {
+      logger.error("Error getting bundles: ${e.message}");
+      _snackbarService.showCustomSnackBar(
+        message: e.message,
+        variant: SnackbarType.error,
+      );
+    } catch (e) {
+      logger.error("Error getting bundles: ${e.toString()}");
+      _snackbarService.showCustomSnackBar(
+        message: "Something went wrong",
+        variant: SnackbarType.error,
+      );
     }
   }
 }
