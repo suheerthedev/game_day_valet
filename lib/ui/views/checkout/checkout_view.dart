@@ -464,7 +464,9 @@ class CheckoutView extends StackedView<CheckoutViewModel> {
                 SizedBox(height: 20.h),
                 MainButton(
                     text: 'Book Now',
-                    onTap: () {},
+                    onTap: () {
+                      viewModel.onStripePayment(context);
+                    },
                     textColor: AppColors.white,
                     color: AppColors.secondary,
                     borderColor: AppColors.secondary)

@@ -20,13 +20,16 @@ import 'package:flutter_dotenv/flutter_dotenv.dart';
 Future<void> main() async {
   WidgetsFlutterBinding.ensureInitialized();
 
-  Stripe.publishableKey = dotenv.env['STRIPE_PUBLISHABLE_KEY'] ?? '';
-
-  await Stripe.instance.applySettings();
   logger.intialize();
 
   await dotenv.load(fileName: ".env");
   await setupLocator();
+
+  print(dotenv.env['STRIPE_PUBLISHABLE_KEY']);
+
+  Stripe.publishableKey = dotenv.env['STRIPE_PUBLISHABLE_KEY'] ?? '';
+
+  print(Stripe.publishableKey);
 
   // await locator<ConnectivityService>().initialize();
 
@@ -58,6 +61,9 @@ Future<void> main() async {
 
   setupDialogUi();
   setupBottomSheetUi();
+
+  await Stripe.instance.applySettings();
+
   runApp(const MainApp());
 }
 
