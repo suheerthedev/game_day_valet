@@ -51,11 +51,12 @@ class ProfileView extends StackedView<ProfileViewModel> {
               ),
             ),
             body: SafeArea(
-                child: Padding(
-              padding: EdgeInsets.symmetric(horizontal: 25.w, vertical: 20.h),
-              child: Stack(
-                children: [
-                  SingleChildScrollView(
+                child: Stack(
+              children: [
+                Padding(
+                  padding:
+                      EdgeInsets.symmetric(horizontal: 25.w, vertical: 20.h),
+                  child: SingleChildScrollView(
                     child: Column(
                       children: [
                         ListTile(
@@ -179,7 +180,10 @@ class ProfileView extends StackedView<ProfileViewModel> {
                       ],
                     ),
                   ),
-                  Align(
+                ),
+                Padding(
+                  padding: EdgeInsets.symmetric(vertical: 20.h),
+                  child: Align(
                     alignment: Alignment.bottomCenter,
                     child: MainButton(
                       text: 'Logout',
@@ -189,33 +193,33 @@ class ProfileView extends StackedView<ProfileViewModel> {
                       borderColor: AppColors.secondary,
                     ),
                   ),
-                  FloatingChatButton(
-                    onTap: (_) {
-                      viewModel.onChatTap();
-                    },
-                    chatIconWidget: const Padding(
-                      padding: EdgeInsets.all(14.0),
-                      child: Icon(
-                        Iconsax.message_2_copy,
-                        color: AppColors.white,
-                        size: 24,
-                      ),
+                ),
+                FloatingChatButton(
+                  onTap: (_) {
+                    viewModel.onChatTap();
+                  },
+                  chatIconWidget: const Padding(
+                    padding: EdgeInsets.all(14.0),
+                    child: Icon(
+                      Iconsax.message_2_copy,
+                      color: AppColors.white,
+                      size: 24,
                     ),
-                    messageBackgroundColor: AppColors.secondary,
-                    chatIconBorderColor: AppColors.secondary,
-                    chatIconBackgroundColor: AppColors.secondary,
-                    messageBorderWidth: 2,
-                    messageText: "You've received a message!",
-                    messageTextStyle: GoogleFonts.poppins(
-                        fontSize: 14.sp,
-                        fontWeight: FontWeight.w400,
-                        color: AppColors.white),
-                    showMessageParameters: ShowMessageParameters(
-                        delayDuration: const Duration(seconds: 2),
-                        durationToShowMessage: const Duration(seconds: 5)),
-                  )
-                ],
-              ),
+                  ),
+                  messageBackgroundColor: AppColors.secondary,
+                  chatIconBorderColor: AppColors.secondary,
+                  chatIconBackgroundColor: AppColors.secondary,
+                  messageBorderWidth: 2,
+                  messageText: "You've received a message!",
+                  messageTextStyle: GoogleFonts.poppins(
+                      fontSize: 14.sp,
+                      fontWeight: FontWeight.w400,
+                      color: AppColors.white),
+                  showMessageParameters: ShowMessageParameters(
+                      delayDuration: const Duration(seconds: 2),
+                      durationToShowMessage: const Duration(seconds: 5)),
+                )
+              ],
             ))),
         if (viewModel.isLoggingOut)
           Container(
