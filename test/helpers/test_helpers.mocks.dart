@@ -15,6 +15,7 @@ import 'package:game_day_valet/services/connectivity_service.dart' as _i13;
 import 'package:game_day_valet/services/google_sign_in_service.dart' as _i15;
 import 'package:game_day_valet/services/logger_service.dart' as _i14;
 import 'package:game_day_valet/services/secure_storage_service.dart' as _i9;
+import 'package:game_day_valet/services/stripe_service.dart' as _i16;
 import 'package:game_day_valet/services/user_service.dart' as _i11;
 import 'package:mockito/mockito.dart' as _i1;
 import 'package:mockito/src/dummies.dart' as _i3;
@@ -1153,3 +1154,8 @@ class MockGoogleSignInService extends _i1.Mock
         returnValueForMissingStub: _i5.Future<void>.value(),
       ) as _i5.Future<void>);
 }
+
+/// A class which mocks [StripeService].
+///
+/// See the documentation for Mockito's code generation for more information.
+class MockStripeService extends _i1.Mock implements _i16.StripeService {}

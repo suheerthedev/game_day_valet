@@ -35,6 +35,7 @@ import 'package:game_day_valet/ui/views/verify_password_reset_code/verify_passwo
 import 'package:game_day_valet/ui/views/verify_email/verify_email_view.dart';
 import 'package:game_day_valet/ui/views/add_rentals/add_rentals_view.dart';
 import 'package:game_day_valet/ui/views/checkout/checkout_view.dart';
+import 'package:game_day_valet/services/stripe_service.dart';
 // @stacked-import
 
 @StackedApp(
@@ -83,6 +84,7 @@ import 'package:game_day_valet/ui/views/checkout/checkout_view.dart';
     LazySingleton(classType: ConnectivityService),
     LazySingleton(classType: LoggerService),
     LazySingleton(classType: GoogleSignInService),
+    LazySingleton(classType: StripeService),
 // @stacked-service
   ],
   bottomsheets: [

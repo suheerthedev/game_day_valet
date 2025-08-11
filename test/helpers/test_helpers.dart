@@ -9,6 +9,7 @@ import 'package:game_day_valet/services/user_service.dart';
 import 'package:game_day_valet/services/connectivity_service.dart';
 import 'package:game_day_valet/services/logger_service.dart';
 import 'package:game_day_valet/services/google_sign_in_service.dart';
+import 'package:game_day_valet/services/stripe_service.dart';
 // @stacked-import
 
 import 'test_helpers.mocks.dart';
@@ -26,6 +27,7 @@ import 'test_helpers.mocks.dart';
     MockSpec<ConnectivityService>(onMissingStub: OnMissingStub.returnDefault),
     MockSpec<LoggerService>(onMissingStub: OnMissingStub.returnDefault),
     MockSpec<GoogleSignInService>(onMissingStub: OnMissingStub.returnDefault),
+    MockSpec<StripeService>(onMissingStub: OnMissingStub.returnDefault),
 // @stacked-mock-spec
   ],
 )
@@ -40,6 +42,7 @@ void registerServices() {
   getAndRegisterConnectivityService();
   getAndRegisterLoggerService();
   getAndRegisterGoogleSignInService();
+  getAndRegisterStripeService();
 // @stacked-mock-register
 }
 
@@ -143,6 +146,13 @@ MockGoogleSignInService getAndRegisterGoogleSignInService() {
   _removeRegistrationIfExists<GoogleSignInService>();
   final service = MockGoogleSignInService();
   locator.registerSingleton<GoogleSignInService>(service);
+  return service;
+}
+
+MockStripeService getAndRegisterStripeService() {
+  _removeRegistrationIfExists<StripeService>();
+  final service = MockStripeService();
+  locator.registerSingleton<StripeService>(service);
   return service;
 }
 // @stacked-mock-create
