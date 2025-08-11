@@ -30,71 +30,72 @@ class NotificationView extends StackedView<NotificationViewModel> {
           ),
         ),
         body: SafeArea(
-            child: Padding(
-                padding: EdgeInsets.symmetric(horizontal: 25.w),
-                child: Stack(
-                  children: [
-                    ListView.builder(
-                      shrinkWrap: true,
-                      physics: const NeverScrollableScrollPhysics(),
-                      itemCount: 2,
-                      itemBuilder: (context, index) {
-                        return ListTile(
-                          contentPadding: EdgeInsets.zero,
-                          leading: CircleAvatar(
-                            radius: 21.r,
-                            backgroundColor: AppColors.secondary,
-                            child: Text(
-                                viewModel.notifications[index]['title']
-                                    .toString()
-                                    .toUpperCase()
-                                    .substring(0, 1),
-                                style: GoogleFonts.poppins(
-                                    fontSize: 24.sp,
-                                    fontWeight: FontWeight.w400,
-                                    color: AppColors.white)),
-                          ),
-                          title: Text(viewModel.notifications[index]['title'],
-                              style: GoogleFonts.poppins(
-                                  fontSize: 14.sp,
-                                  fontWeight: FontWeight.w600,
-                                  color: AppColors.textPrimary)),
-                          subtitle: Text(
-                              viewModel.notifications[index]['description'],
-                              style: GoogleFonts.poppins(
-                                  fontSize: 12.sp,
-                                  fontWeight: FontWeight.w400,
-                                  color: AppColors.textHint)),
-                        );
-                      },
+            child: Stack(
+          children: [
+            Padding(
+              padding: EdgeInsets.symmetric(horizontal: 25.w),
+              child: ListView.builder(
+                shrinkWrap: true,
+                physics: const NeverScrollableScrollPhysics(),
+                itemCount: 2,
+                itemBuilder: (context, index) {
+                  return ListTile(
+                    contentPadding: EdgeInsets.zero,
+                    leading: CircleAvatar(
+                      radius: 21.r,
+                      backgroundColor: AppColors.secondary,
+                      child: Text(
+                          viewModel.notifications[index]['title']
+                              .toString()
+                              .toUpperCase()
+                              .substring(0, 1),
+                          style: GoogleFonts.poppins(
+                              fontSize: 24.sp,
+                              fontWeight: FontWeight.w400,
+                              color: AppColors.white)),
                     ),
-                    FloatingChatButton(
-                      onTap: (_) {
-                        viewModel.onChatTap();
-                      },
-                      chatIconWidget: const Padding(
-                        padding: EdgeInsets.all(14.0),
-                        child: Icon(
-                          Iconsax.message_2_copy,
-                          color: AppColors.white,
-                          size: 24,
-                        ),
-                      ),
-                      messageBackgroundColor: AppColors.secondary,
-                      chatIconBorderColor: AppColors.secondary,
-                      chatIconBackgroundColor: AppColors.secondary,
-                      messageBorderWidth: 2,
-                      messageText: "You've received a message!",
-                      messageTextStyle: GoogleFonts.poppins(
-                          fontSize: 14.sp,
-                          fontWeight: FontWeight.w400,
-                          color: AppColors.white),
-                      showMessageParameters: ShowMessageParameters(
-                          delayDuration: const Duration(seconds: 2),
-                          durationToShowMessage: const Duration(seconds: 5)),
-                    )
-                  ],
-                ))));
+                    title: Text(viewModel.notifications[index]['title'],
+                        style: GoogleFonts.poppins(
+                            fontSize: 14.sp,
+                            fontWeight: FontWeight.w600,
+                            color: AppColors.textPrimary)),
+                    subtitle: Text(
+                        viewModel.notifications[index]['description'],
+                        style: GoogleFonts.poppins(
+                            fontSize: 12.sp,
+                            fontWeight: FontWeight.w400,
+                            color: AppColors.textHint)),
+                  );
+                },
+              ),
+            ),
+            FloatingChatButton(
+              onTap: (_) {
+                viewModel.onChatTap();
+              },
+              chatIconWidget: const Padding(
+                padding: EdgeInsets.all(14.0),
+                child: Icon(
+                  Iconsax.message_2_copy,
+                  color: AppColors.white,
+                  size: 24,
+                ),
+              ),
+              messageBackgroundColor: AppColors.secondary,
+              chatIconBorderColor: AppColors.secondary,
+              chatIconBackgroundColor: AppColors.secondary,
+              messageBorderWidth: 2,
+              messageText: "You've received a message!",
+              messageTextStyle: GoogleFonts.poppins(
+                  fontSize: 14.sp,
+                  fontWeight: FontWeight.w400,
+                  color: AppColors.white),
+              showMessageParameters: ShowMessageParameters(
+                  delayDuration: const Duration(seconds: 2),
+                  durationToShowMessage: const Duration(seconds: 5)),
+            )
+          ],
+        )));
   }
 
   @override
