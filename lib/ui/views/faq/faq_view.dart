@@ -103,7 +103,7 @@ class FaqView extends StackedView<FaqViewModel> {
                 children: [
                   Expanded(
                     child: Text(
-                      faqItem.title,
+                      faqItem.title ?? '',
                       style: GoogleFonts.poppins(
                         fontSize: 14.sp,
                         fontWeight: FontWeight.w600,
@@ -131,7 +131,7 @@ class FaqView extends StackedView<FaqViewModel> {
             secondChild: Padding(
               padding: const EdgeInsets.only(bottom: 12.0),
               child: Text(
-                faqItem.description,
+                faqItem.description ?? '',
                 style: GoogleFonts.poppins(
                   fontSize: 12.sp,
                   color: AppColors.textHint,

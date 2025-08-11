@@ -272,9 +272,10 @@ class HomeView extends StackedView<HomeViewModel> {
                                                                     width: 4.w),
                                                                 Text(
                                                                     viewModel
-                                                                        .tournamentsList[
-                                                                            index]
-                                                                        .name,
+                                                                            .tournamentsList[
+                                                                                index]
+                                                                            .name ??
+                                                                        '',
                                                                     style: GoogleFonts.poppins(
                                                                         fontSize: 14
                                                                             .sp,
@@ -311,9 +312,10 @@ class HomeView extends StackedView<HomeViewModel> {
                                                         SizedBox(height: 2.h),
                                                         Text(
                                                           viewModel
-                                                              .tournamentsList[
-                                                                  index]
-                                                              .location,
+                                                                  .tournamentsList[
+                                                                      index]
+                                                                  .location ??
+                                                              '',
                                                           style: GoogleFonts
                                                               .poppins(
                                                                   fontSize:
@@ -325,7 +327,7 @@ class HomeView extends StackedView<HomeViewModel> {
                                                                       .lightText),
                                                         ),
                                                         Text(
-                                                          '${DateFormat('MMM d').format(DateTime.parse(viewModel.tournamentsList[index].startDate))} - ${DateFormat('MMM d').format(DateTime.parse(viewModel.tournamentsList[index].endDate))}',
+                                                          '${DateFormat('MMM d').format(DateTime.parse(viewModel.tournamentsList[index].startDate ?? ''))} - ${DateFormat('MMM d').format(DateTime.parse(viewModel.tournamentsList[index].endDate ?? ''))}',
                                                           style: GoogleFonts
                                                               .poppins(
                                                                   fontSize:
@@ -514,7 +516,9 @@ class HomeView extends StackedView<HomeViewModel> {
                                                                         SizedBox(
                                                                             width:
                                                                                 4.w),
-                                                                        Text(viewModel.recommendedTournamentsList[index].name,
+                                                                        Text(
+                                                                            viewModel.recommendedTournamentsList[index].name ??
+                                                                                '',
                                                                             style: GoogleFonts.poppins(
                                                                                 fontSize: 14.sp,
                                                                                 fontWeight: FontWeight.w500,
@@ -654,7 +658,8 @@ class HomeView extends StackedView<HomeViewModel> {
 
                                     return InkWell(
                                       onTap: () {
-                                        viewModel.selectedSport = sport.name;
+                                        viewModel.selectedSport =
+                                            sport.name ?? '';
                                         Navigator.pop(context);
                                         viewModel
                                             .getTournamentsBySport(sport.id);
@@ -679,7 +684,7 @@ class HomeView extends StackedView<HomeViewModel> {
                                               MainAxisAlignment.spaceBetween,
                                           children: [
                                             Text(
-                                              sport.name,
+                                              sport.name ?? '',
                                               style: GoogleFonts.poppins(
                                                 fontSize: 16.sp,
                                                 fontWeight: FontWeight.w500,

@@ -33,7 +33,7 @@ class PrivacyPolicyView extends StackedView<PrivacyPolicyViewModel> {
           ),
           subtitle: viewModel.privacyPolicies.isNotEmpty
               ? Text(
-                  'Last Updated: ${DateFormat('MMM dd, yyyy').format(DateTime.parse(viewModel.privacyPolicies.first.updatedAt))}',
+                  'Last Updated: ${DateFormat('MMM dd, yyyy').format(DateTime.parse(viewModel.privacyPolicies.first.updatedAt ?? ''))}',
                   style: GoogleFonts.poppins(
                       fontSize: 14.sp,
                       fontWeight: FontWeight.w400,

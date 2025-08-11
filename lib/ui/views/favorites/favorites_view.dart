@@ -64,7 +64,8 @@ class FavoritesView extends StackedView<FavoritesViewModel> {
                                           children: [
                                             Text(
                                                 viewModel.favorites[index]
-                                                    .tournament.name,
+                                                        .tournament?.name ??
+                                                    '',
                                                 style: GoogleFonts.poppins(
                                                     fontSize: 14.sp,
                                                     fontWeight: FontWeight.w700,

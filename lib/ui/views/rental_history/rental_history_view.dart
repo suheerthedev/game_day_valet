@@ -65,8 +65,10 @@ class RentalHistoryView extends StackedView<RentalHistoryViewModel> {
                                           children: [
                                             Text(
                                                 viewModel
-                                                    .rentalHistoryList[index]
-                                                    .tournamentName,
+                                                        .rentalHistoryList[
+                                                            index]
+                                                        .tournamentName ??
+                                                    '',
                                                 style: GoogleFonts.poppins(
                                                     fontSize: 14.sp,
                                                     fontWeight: FontWeight.w700,
@@ -75,9 +77,10 @@ class RentalHistoryView extends StackedView<RentalHistoryViewModel> {
                                             Text(
                                                 DateFormat('dd-MM-yyyy').format(
                                                     DateTime.parse(viewModel
-                                                        .rentalHistoryList[
-                                                            index]
-                                                        .dropoffTime)),
+                                                            .rentalHistoryList[
+                                                                index]
+                                                            .dropoffTime ??
+                                                        '')),
                                                 style: GoogleFonts.poppins(
                                                     fontSize: 12.sp,
                                                     fontWeight: FontWeight.w600,
@@ -85,8 +88,10 @@ class RentalHistoryView extends StackedView<RentalHistoryViewModel> {
                                                         AppColors.textPrimary)),
                                             Text(
                                                 viewModel
-                                                    .rentalHistoryList[index]
-                                                    .fieldNumber,
+                                                        .rentalHistoryList[
+                                                            index]
+                                                        .fieldNumber ??
+                                                    '',
                                                 style: GoogleFonts.poppins(
                                                     fontSize: 12.sp,
                                                     fontWeight: FontWeight.w500,
