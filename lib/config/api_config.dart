@@ -26,5 +26,7 @@ class ApiConfig {
   static const privacyPolicyEndPoint = '/api/privacy-policies';
 
   static const faqsEndPoint = '/api/faqs';
+
+  static const items = '/api/items';
   // Add more as needed
 }
