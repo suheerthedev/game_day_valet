@@ -18,6 +18,8 @@ class UserService with ListenableServiceMixin {
     try {
       final response = await _apiService.get(url);
       _currentUser = UserModel.fromJson(response['user']);
+
+      logger.info("Fetch User: $response");
       logger.info("Fetch User Status: ${response['message']}");
     } on ApiException catch (e) {
       logger.error("Fetch User Status failed - API Exception", e);
