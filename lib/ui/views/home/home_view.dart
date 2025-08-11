@@ -46,12 +46,12 @@ class HomeView extends StackedView<HomeViewModel> {
         body: SafeArea(
           child: viewModel.isBusy
               ? const Center(child: CircularProgressIndicator())
-              : Padding(
-                  padding:
-                      EdgeInsets.symmetric(horizontal: 25.w, vertical: 20.h),
-                  child: Stack(
-                    children: [
-                      Column(
+              : Stack(
+                  children: [
+                    Padding(
+                      padding: EdgeInsets.symmetric(
+                          horizontal: 25.w, vertical: 20.h),
+                      child: Column(
                         children: [
                           SizedBox(
                             height: 40.h,
@@ -557,33 +557,33 @@ class HomeView extends StackedView<HomeViewModel> {
                           ),
                         ],
                       ),
-                      FloatingChatButton(
-                        onTap: (_) {
-                          viewModel.onChatTap();
-                        },
-                        chatIconWidget: const Padding(
-                          padding: EdgeInsets.all(14.0),
-                          child: Icon(
-                            Iconsax.message_2_copy,
-                            color: AppColors.white,
-                            size: 24,
-                          ),
+                    ),
+                    FloatingChatButton(
+                      onTap: (_) {
+                        viewModel.onChatTap();
+                      },
+                      chatIconWidget: const Padding(
+                        padding: EdgeInsets.all(14.0),
+                        child: Icon(
+                          Iconsax.message_2_copy,
+                          color: AppColors.white,
+                          size: 24,
                         ),
-                        messageBackgroundColor: AppColors.secondary,
-                        chatIconBorderColor: AppColors.secondary,
-                        chatIconBackgroundColor: AppColors.secondary,
-                        messageBorderWidth: 2,
-                        messageText: "You've received a message!",
-                        messageTextStyle: GoogleFonts.poppins(
-                            fontSize: 14.sp,
-                            fontWeight: FontWeight.w400,
-                            color: AppColors.white),
-                        showMessageParameters: ShowMessageParameters(
-                            delayDuration: const Duration(seconds: 2),
-                            durationToShowMessage: const Duration(seconds: 5)),
-                      )
-                    ],
-                  ),
+                      ),
+                      messageBackgroundColor: AppColors.secondary,
+                      chatIconBorderColor: AppColors.secondary,
+                      chatIconBackgroundColor: AppColors.secondary,
+                      messageBorderWidth: 2,
+                      messageText: "You've received a message!",
+                      messageTextStyle: GoogleFonts.poppins(
+                          fontSize: 14.sp,
+                          fontWeight: FontWeight.w400,
+                          color: AppColors.white),
+                      showMessageParameters: ShowMessageParameters(
+                          delayDuration: const Duration(seconds: 2),
+                          durationToShowMessage: const Duration(seconds: 5)),
+                    )
+                  ],
                 ),
         ));
   }
