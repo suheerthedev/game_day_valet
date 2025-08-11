@@ -1,31 +1,33 @@
-class ItemModel {
+import 'package:game_day_valet/models/item_model.dart';
+
+class BundleModel {
   final int id;
   final String? name;
   final String? description;
   final String? price;
-  final int? stock;
-  final String? image;
   final String? status;
+  final List<ItemModel>? items;
 
-  ItemModel({
+  BundleModel({
     required this.id,
     this.name,
     this.description,
     this.price,
-    this.stock,
-    this.image,
     this.status,
+    this.items,
   });
 
-  factory ItemModel.fromJson(Map<String, dynamic> json) {
-    return ItemModel(
+  factory BundleModel.fromJson(Map<String, dynamic> json) {
+    return BundleModel(
       id: json['id'],
       name: json['name'],
       description: json['description'],
       price: json['price'],
-      stock: json['stock'],
-      image: json['image'],
       status: json['status'],
+      items: json['items']
+          .map((e) => ItemModel.fromJson(e))
+          .toList()
+          .cast<ItemModel>(),
     );
   }
 }

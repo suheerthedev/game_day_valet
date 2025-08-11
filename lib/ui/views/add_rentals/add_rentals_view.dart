@@ -119,7 +119,7 @@ class AddRentalsView extends StackedView<AddRentalsViewModel> {
                                       MainAxisAlignment.spaceBetween,
                                   children: [
                                     Text(
-                                      viewModel.items[index].name,
+                                      viewModel.items[index].name ?? '',
                                       maxLines: 1,
                                       overflow: TextOverflow.ellipsis,
                                       style: GoogleFonts.poppins(
