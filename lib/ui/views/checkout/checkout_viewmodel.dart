@@ -28,6 +28,7 @@ class CheckoutViewModel extends BaseViewModel {
   }
 
   void onStripePayment(BuildContext context) async {
+    print('onStripePayment');
     await _stripeService.payWithPaymentSheet(
       amountCents: 1000,
       currency: 'usd',
