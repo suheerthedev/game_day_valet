@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:game_day_valet/ui/common/app_colors.dart';
 import 'package:stacked/stacked.dart';
 
 import 'checkout_viewmodel.dart';
@@ -13,7 +14,7 @@ class CheckoutView extends StackedView<CheckoutViewModel> {
     Widget? child,
   ) {
     return Scaffold(
-      backgroundColor: Theme.of(context).colorScheme.background,
+      backgroundColor: AppColors.white,
       body: Container(
         padding: const EdgeInsets.only(left: 25.0, right: 25.0),
         child: const Center(child: Text("CheckoutView")),
