@@ -33,6 +33,7 @@ import 'package:game_day_valet/services/logger_service.dart';
 import 'package:game_day_valet/services/google_sign_in_service.dart';
 import 'package:game_day_valet/ui/views/verify_password_reset_code/verify_password_reset_code_view.dart';
 import 'package:game_day_valet/ui/views/verify_email/verify_email_view.dart';
+import 'package:game_day_valet/ui/views/add_rentals/add_rentals_view.dart';
 // @stacked-import
 
 @StackedApp(
@@ -65,6 +66,7 @@ import 'package:game_day_valet/ui/views/verify_email/verify_email_view.dart';
     MaterialRoute(page: OtpView),
     MaterialRoute(page: VerifyPasswordResetCodeView),
     MaterialRoute(page: VerifyEmailView),
+    MaterialRoute(page: AddRentalsView),
 // @stacked-route
   ],
   dependencies: [
