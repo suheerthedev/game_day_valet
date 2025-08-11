@@ -194,13 +194,14 @@ class HomeView extends StackedView<HomeViewModel> {
                                                                       Alignment
                                                                           .topRight,
                                                                   child:
-                                                                      InkWell(
+                                                                      GestureDetector(
                                                                     onTap: () {
-                                                                      viewModel.toggleFavorite(viewModel
-                                                                          .tournamentsList[
-                                                                              index]
-                                                                          .id
-                                                                          .toString());
+                                                                      viewModel.toggleFavorite(
+                                                                          viewModel
+                                                                              .tournamentsList[index]
+                                                                              .id
+                                                                              .toString(),
+                                                                          index);
                                                                     },
                                                                     child:
                                                                         Padding(

@@ -109,8 +109,13 @@ class HomeViewModel extends BaseViewModel {
     }
   }
 
-  void toggleFavorite(String tournamentId) async {
+  void toggleFavorite(String tournamentId, int index) async {
     final url = ApiConfig.baseUrl + ApiConfig.toggleFavoriteEndPoint;
+
+    logger.info("Is Favorite: ${tournamentsList[index].isFavorite}");
+    tournamentsList[index].isFavorite = !tournamentsList[index].isFavorite;
+    logger.info("Is Favorite: ${tournamentsList[index].isFavorite}");
+    rebuildUi();
 
     try {
       final response = await _apiService.post(url, {
@@ -120,7 +125,7 @@ class HomeViewModel extends BaseViewModel {
       logger.info("Favorite toggled successfully. Response: $response");
       _snackbarService.showCustomSnackBar(
         variant: SnackbarType.success,
-        message: "Added to favorites",
+        message: response['message'],
       );
     } on ApiException catch (e) {
       logger.error("Error toggling favorite", e);
