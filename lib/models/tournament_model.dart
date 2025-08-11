@@ -1,9 +1,8 @@
-import 'package:game_day_valet/models/sports_model.dart';
-
 class TournamentModel {
   final int id;
-  final SportsModel sport;
+  // final SportsModel sport;
   final String name;
+  final String image;
   final String startDate;
   final String endDate;
   final String location;
@@ -12,8 +11,9 @@ class TournamentModel {
 
   TournamentModel({
     required this.id,
-    required this.sport,
+    // required this.sport,
     required this.name,
+    required this.image,
     required this.startDate,
     required this.endDate,
     required this.location,
@@ -24,8 +24,9 @@ class TournamentModel {
   factory TournamentModel.fromJson(Map<String, dynamic> json) {
     return TournamentModel(
       id: json['id'],
-      sport: SportsModel.fromJson(json['sport']),
+      // sport: SportsModel.fromJson(json['sport']),
       name: json['name'],
+      image: json['image'],
       startDate: json['start_date'],
       endDate: json['end_date'],
       location: json['location'],
