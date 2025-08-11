@@ -2,43 +2,43 @@ class RentalHistoryModel {
   final int id;
   final int userId;
   final int tournamentId;
-  final String tournamentName;
-  final String teamName;
-  final String coachName;
-  final String fieldNumber;
-  final String instructions;
-  final String dropoffTime;
-  final String promoCode;
-  final String insuranceOption;
-  final bool damageWaiver;
-  final String rentalData;
+  final String? tournamentName;
+  final String? teamName;
+  final String? coachName;
+  final String? fieldNumber;
+  final String? instructions;
+  final String? dropoffTime;
+  final String? promoCode;
+  final String? insuranceOption;
+  final bool? damageWaiver;
+  final String? rentalData;
   final String? deliveryAssignedTo;
-  final String paymentMethod;
-  final String paymentStatus;
-  final String totalAmount;
-  final String status;
+  final String? paymentMethod;
+  final String? paymentStatus;
+  final String? totalAmount;
+  final String? status;
   final String? returnInstructions;
 
   RentalHistoryModel({
     required this.id,
     required this.userId,
     required this.tournamentId,
-    required this.tournamentName,
-    required this.teamName,
-    required this.coachName,
-    required this.fieldNumber,
-    required this.instructions,
-    required this.dropoffTime,
-    required this.promoCode,
-    required this.insuranceOption,
-    required this.damageWaiver,
-    required this.rentalData,
-    required this.deliveryAssignedTo,
-    required this.paymentMethod,
-    required this.paymentStatus,
-    required this.totalAmount,
-    required this.status,
-    required this.returnInstructions,
+    this.tournamentName,
+    this.teamName,
+    this.coachName,
+    this.fieldNumber,
+    this.instructions,
+    this.dropoffTime,
+    this.promoCode,
+    this.insuranceOption,
+    this.damageWaiver,
+    this.rentalData,
+    this.deliveryAssignedTo,
+    this.paymentMethod,
+    this.paymentStatus,
+    this.totalAmount,
+    this.status,
+    this.returnInstructions,
   });
 
   factory RentalHistoryModel.fromJson(Map<String, dynamic> json) {

@@ -2,21 +2,21 @@ import 'package:game_day_valet/models/address_model.dart';
 
 class UserModel {
   final int id;
-  final String name;
-  final String email;
+  final String? name;
+  final String? email;
   final String? referralCode;
   final AddressModel? address;
-  final List<String> roles;
-  final List<String> permissions;
+  final List<String>? roles;
+  final List<String>? permissions;
 
   UserModel({
     required this.id,
-    required this.name,
-    required this.email,
+    this.name,
+    this.email,
     this.referralCode,
     this.address,
-    required this.roles,
-    required this.permissions,
+    this.roles,
+    this.permissions,
   });
 
   factory UserModel.fromJson(Map<String, dynamic> json) {

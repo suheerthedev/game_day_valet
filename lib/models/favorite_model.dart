@@ -3,14 +3,14 @@ import 'package:game_day_valet/models/tournament_model.dart';
 class FavoriteModel {
   final int id;
   final int userId;
-  final TournamentModel tournament;
-  final String createdAt;
+  final TournamentModel? tournament;
+  final String? createdAt;
 
   FavoriteModel({
     required this.id,
     required this.userId,
-    required this.tournament,
-    required this.createdAt,
+    this.tournament,
+    this.createdAt,
   });
 
   factory FavoriteModel.fromJson(Map<String, dynamic> json) {

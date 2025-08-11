@@ -1,19 +1,19 @@
 class FaqItemModel {
   final int id;
-  final String title;
-  final String description;
-  final bool status;
-  final String createdAt;
-  final String updatedAt;
+  final String? title;
+  final String? description;
+  final bool? status;
+  final String? createdAt;
+  final String? updatedAt;
   bool isExpanded;
 
   FaqItemModel({
     required this.id,
-    required this.title,
-    required this.description,
-    required this.status,
-    required this.createdAt,
-    required this.updatedAt,
+    this.title,
+    this.description,
+    this.status,
+    this.createdAt,
+    this.updatedAt,
     this.isExpanded = false,
   });
 
