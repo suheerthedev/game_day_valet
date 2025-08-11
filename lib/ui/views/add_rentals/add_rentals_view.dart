@@ -247,7 +247,7 @@ class AddRentalsView extends StackedView<AddRentalsViewModel> {
                       SizedBox(height: 20.h),
                       MainButton(
                         text: 'Proceed to Checkout',
-                        onTap: () {},
+                        onTap: viewModel.proceedToCheckout,
                       ),
                       //View Smart Suggestions
                     ],

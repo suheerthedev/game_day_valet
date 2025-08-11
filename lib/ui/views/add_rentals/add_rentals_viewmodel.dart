@@ -1,4 +1,5 @@
 import 'package:game_day_valet/app/app.locator.dart';
+import 'package:game_day_valet/app/app.router.dart';
 import 'package:game_day_valet/config/api_config.dart';
 import 'package:game_day_valet/core/enums/snackbar_type.dart';
 import 'package:game_day_valet/models/bundle_model.dart';
@@ -11,6 +12,7 @@ import 'package:stacked_services/stacked_services.dart';
 
 class AddRentalsViewModel extends BaseViewModel {
   final _apiService = locator<ApiService>();
+  final _navigationService = locator<NavigationService>();
   final _snackbarService = locator<SnackbarService>();
 
   List<ItemModel> items = [];
@@ -21,6 +23,10 @@ class AddRentalsViewModel extends BaseViewModel {
   void toggleViewSmartSuggestions() {
     viewSmartSuggestions = !viewSmartSuggestions;
     rebuildUi();
+  }
+
+  void proceedToCheckout() {
+    _navigationService.navigateToCheckoutView();
   }
 
   void init() async {
