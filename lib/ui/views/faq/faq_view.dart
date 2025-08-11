@@ -30,53 +30,48 @@ class FaqView extends StackedView<FaqViewModel> {
           ),
         ),
         body: SafeArea(
-            child: Padding(
-                padding: EdgeInsets.symmetric(horizontal: 25.w, vertical: 20.h),
-                child: Stack(
-                  children: [
-                    Column(
-                      children: [
-                        ListView.separated(
-                          shrinkWrap: true,
-                          physics: const NeverScrollableScrollPhysics(),
-                          itemCount: viewModel.faqItems.length,
-                          itemBuilder: (context, index) {
-                            return _buildFAQItem(context, viewModel, index,
-                                viewModel.faqItems[index]);
-                          },
-                          separatorBuilder: (context, index) {
-                            return SizedBox(height: 10.h);
-                          },
-                        ),
-                      ],
-                    ),
-                    FloatingChatButton(
-                      onTap: (_) {
-                        viewModel.onChatTap();
-                      },
-                      chatIconWidget: const Padding(
-                        padding: EdgeInsets.all(14.0),
-                        child: Icon(
-                          Iconsax.message_2_copy,
-                          color: AppColors.white,
-                          size: 24,
-                        ),
-                      ),
-                      messageBackgroundColor: AppColors.secondary,
-                      chatIconBorderColor: AppColors.secondary,
-                      chatIconBackgroundColor: AppColors.secondary,
-                      messageBorderWidth: 2,
-                      messageText: "You've received a message!",
-                      messageTextStyle: GoogleFonts.poppins(
-                          fontSize: 14.sp,
-                          fontWeight: FontWeight.w400,
-                          color: AppColors.white),
-                      showMessageParameters: ShowMessageParameters(
-                          delayDuration: const Duration(seconds: 2),
-                          durationToShowMessage: const Duration(seconds: 5)),
-                    )
-                  ],
-                ))));
+            child: Stack(
+          children: [
+            Padding(
+              padding: EdgeInsets.symmetric(horizontal: 25.w, vertical: 20.h),
+              child: ListView.separated(
+                itemCount: viewModel.faqItems.length,
+                itemBuilder: (context, index) {
+                  return _buildFAQItem(
+                      context, viewModel, index, viewModel.faqItems[index]);
+                },
+                separatorBuilder: (context, index) {
+                  return SizedBox(height: 10.h);
+                },
+              ),
+            ),
+            FloatingChatButton(
+              onTap: (_) {
+                viewModel.onChatTap();
+              },
+              chatIconWidget: const Padding(
+                padding: EdgeInsets.all(14.0),
+                child: Icon(
+                  Iconsax.message_2_copy,
+                  color: AppColors.white,
+                  size: 24,
+                ),
+              ),
+              messageBackgroundColor: AppColors.secondary,
+              chatIconBorderColor: AppColors.secondary,
+              chatIconBackgroundColor: AppColors.secondary,
+              messageBorderWidth: 2,
+              messageText: "You've received a message!",
+              messageTextStyle: GoogleFonts.poppins(
+                  fontSize: 14.sp,
+                  fontWeight: FontWeight.w400,
+                  color: AppColors.white),
+              showMessageParameters: ShowMessageParameters(
+                  delayDuration: const Duration(seconds: 2),
+                  durationToShowMessage: const Duration(seconds: 5)),
+            )
+          ],
+        )));
   }
 
   Widget _buildFAQItem(
@@ -85,7 +80,7 @@ class FaqView extends StackedView<FaqViewModel> {
     int index,
     FaqItemModel faqItem,
   ) {
-    return Container(
+    return AnimatedContainer(
       width: 340.w,
       height: faqItem.isExpanded ? 115.h : 58.h,
       padding: EdgeInsets.symmetric(horizontal: 16.w),
@@ -93,6 +88,8 @@ class FaqView extends StackedView<FaqViewModel> {
         color: AppColors.grey100,
         borderRadius: BorderRadius.circular(16.r),
       ),
+      duration: const Duration(milliseconds: 250),
+      curve: Curves.easeInOut,
       child: Column(
         mainAxisAlignment: MainAxisAlignment.center,
         crossAxisAlignment: CrossAxisAlignment.start,
@@ -106,7 +103,7 @@ class FaqView extends StackedView<FaqViewModel> {
                 children: [
                   Expanded(
                     child: Text(
-                      faqItem.question,
+                      faqItem.title,
                       style: GoogleFonts.poppins(
                         fontSize: 14.sp,
                         fontWeight: FontWeight.w600,
@@ -114,23 +111,27 @@ class FaqView extends StackedView<FaqViewModel> {
                       ),
                     ),
                   ),
-                  Icon(
-                    faqItem.isExpanded
-                        ? Icons.keyboard_arrow_up
-                        : Icons.keyboard_arrow_down,
-                    color: Colors.black54,
+                  AnimatedRotation(
+                    turns: faqItem.isExpanded ? 0.5 : 0.0,
+                    duration: const Duration(milliseconds: 200),
+                    curve: Curves.easeInOut,
+                    child: const Icon(
+                      Icons.keyboard_arrow_down,
+                      color: Colors.black54,
+                    ),
                   ),
                 ],
               ),
             ),
           ),
 
-          // Answer (only visible when expanded)
-          if (faqItem.isExpanded)
-            Padding(
+          // Answer with smooth size + fade animation
+          AnimatedCrossFade(
+            firstChild: const SizedBox.shrink(),
+            secondChild: Padding(
               padding: const EdgeInsets.only(bottom: 12.0),
               child: Text(
-                faqItem.answer,
+                faqItem.description,
                 style: GoogleFonts.poppins(
                   fontSize: 12.sp,
                   color: AppColors.textHint,
@@ -138,6 +139,12 @@ class FaqView extends StackedView<FaqViewModel> {
                 ),
               ),
             ),
+            crossFadeState: faqItem.isExpanded
+                ? CrossFadeState.showSecond
+                : CrossFadeState.showFirst,
+            duration: const Duration(milliseconds: 250),
+            sizeCurve: Curves.easeInOut,
+          ),
         ],
       ),
     );
@@ -148,4 +155,10 @@ class FaqView extends StackedView<FaqViewModel> {
     BuildContext context,
   ) =>
       FaqViewModel();
+
+  @override
+  void onViewModelReady(FaqViewModel viewModel) {
+    viewModel.getFaqs();
+    super.onViewModelReady(viewModel);
+  }
 }
