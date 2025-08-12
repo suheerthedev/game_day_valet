@@ -28,7 +28,7 @@ class SearchView extends StackedView<SearchViewModel> {
       backgroundColor: AppColors.scaffoldBackground,
       appBar: AppBar(
           backgroundColor: Colors.white,
-          automaticallyImplyLeading: false,
+          surfaceTintColor: Colors.white,
           title: MainSearchBar(
               controller: viewModel.searchController,
               isAutoFocus: true,
