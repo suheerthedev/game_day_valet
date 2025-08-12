@@ -391,9 +391,15 @@ class StackedRouter extends _i1.RouterBase {
       );
     },
     _i26.SearchView: (data) {
+      final args = data.getArgs<SearchViewArguments>(
+        orElse: () => const SearchViewArguments(),
+      );
       return _i27.PageRouteBuilder<dynamic>(
         pageBuilder: (context, animation, secondaryAnimation) =>
-            const _i26.SearchView(),
+            _i26.SearchView(
+                key: args.key,
+                isTournamentSearch: args.isTournamentSearch,
+                isItemSearch: args.isItemSearch),
         settings: data,
         transitionsBuilder: data.transition ?? _i1.TransitionsBuilders.fadeIn,
         transitionDuration: const Duration(milliseconds: 500),
@@ -516,6 +522,38 @@ class VerifyEmailViewArguments {
   @override
   int get hashCode {
     return key.hashCode ^ email.hashCode;
+  }
+}
+
+class SearchViewArguments {
+  const SearchViewArguments({
+    this.key,
+    this.isTournamentSearch = false,
+    this.isItemSearch = false,
+  });
+
+  final _i27.Key? key;
+
+  final bool isTournamentSearch;
+
+  final bool isItemSearch;
+
+  @override
+  String toString() {
+    return '{"key": "$key", "isTournamentSearch": "$isTournamentSearch", "isItemSearch": "$isItemSearch"}';
+  }
+
+  @override
+  bool operator ==(covariant SearchViewArguments other) {
+    if (identical(this, other)) return true;
+    return other.key == key &&
+        other.isTournamentSearch == isTournamentSearch &&
+        other.isItemSearch == isItemSearch;
+  }
+
+  @override
+  int get hashCode {
+    return key.hashCode ^ isTournamentSearch.hashCode ^ isItemSearch.hashCode;
   }
 }
 
@@ -870,14 +908,21 @@ extension NavigatorStateExtension on _i28.NavigationService {
         transition: transition);
   }
 
-  Future<dynamic> navigateToSearchView([
+  Future<dynamic> navigateToSearchView({
+    _i27.Key? key,
+    bool isTournamentSearch = false,
+    bool isItemSearch = false,
     int? routerId,
     bool preventDuplicates = true,
     Map<String, String>? parameters,
     Widget Function(BuildContext, Animation<double>, Animation<double>, Widget)?
         transition,
-  ]) async {
+  }) async {
     return navigateTo<dynamic>(Routes.searchView,
+        arguments: SearchViewArguments(
+            key: key,
+            isTournamentSearch: isTournamentSearch,
+            isItemSearch: isItemSearch),
         id: routerId,
         preventDuplicates: preventDuplicates,
         parameters: parameters,
@@ -1234,14 +1279,21 @@ extension NavigatorStateExtension on _i28.NavigationService {
         transition: transition);
   }
 
-  Future<dynamic> replaceWithSearchView([
+  Future<dynamic> replaceWithSearchView({
+    _i27.Key? key,
+    bool isTournamentSearch = false,
+    bool isItemSearch = false,
     int? routerId,
     bool preventDuplicates = true,
     Map<String, String>? parameters,
     Widget Function(BuildContext, Animation<double>, Animation<double>, Widget)?
         transition,
-  ]) async {
+  }) async {
     return replaceWith<dynamic>(Routes.searchView,
+        arguments: SearchViewArguments(
+            key: key,
+            isTournamentSearch: isTournamentSearch,
+            isItemSearch: isItemSearch),
         id: routerId,
         preventDuplicates: preventDuplicates,
         parameters: parameters,

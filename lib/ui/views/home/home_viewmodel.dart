@@ -29,7 +29,7 @@ class HomeViewModel extends BaseViewModel {
   List<TournamentModel> recommendedTournamentsList = [];
 
   void navigateToSearchView(String searchQuery) {
-    _navigationService.navigateToSearchView();
+    _navigationService.navigateToSearchView(isTournamentSearch: true);
   }
 
   Future<void> getSports() async {
@@ -87,7 +87,7 @@ class HomeViewModel extends BaseViewModel {
   }
 
   void getRecommendedTournaments() async {
-    final url = ApiConfig.baseUrl + ApiConfig.recommendedTournamentsEndPoint;
+    final url = ApiConfig.baseUrl + ApiConfig.tournamentsEndPoint;
 
     setBusy(true);
 

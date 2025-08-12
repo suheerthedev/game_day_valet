@@ -1,10 +1,19 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_screenutil/flutter_screenutil.dart';
+import 'package:game_day_valet/ui/common/app_colors.dart';
+import 'package:game_day_valet/ui/widgets/common/main_search_bar/main_search_bar.dart';
+import 'package:google_fonts/google_fonts.dart';
+import 'package:iconsax_plus/iconsax_plus.dart';
 import 'package:stacked/stacked.dart';
 
 import 'search_viewmodel.dart';
 
 class SearchView extends StackedView<SearchViewModel> {
-  const SearchView({Key? key}) : super(key: key);
+  final bool isTournamentSearch;
+  final bool isItemSearch;
+  const SearchView(
+      {Key? key, this.isTournamentSearch = false, this.isItemSearch = false})
+      : super(key: key);
 
   @override
   Widget builder(
@@ -13,10 +22,102 @@ class SearchView extends StackedView<SearchViewModel> {
     Widget? child,
   ) {
     return Scaffold(
-      backgroundColor: Theme.of(context).colorScheme.background,
-      body: Container(
-        padding: const EdgeInsets.only(left: 25.0, right: 25.0),
-        child: const Center(child: Text("SearchView")),
+      backgroundColor: AppColors.scaffoldBackground,
+      appBar: AppBar(
+          backgroundColor: Colors.white,
+          automaticallyImplyLeading: false,
+          title: MainSearchBar(
+              controller: viewModel.searchController,
+              isAutoFocus: true,
+              onSubmitted: (value) {
+                if (isTournamentSearch) {
+                  viewModel.searchTournaments(value);
+                }
+              })),
+      body: Padding(
+        padding: const EdgeInsets.symmetric(horizontal: 16.0, vertical: 16.0),
+        child: viewModel.isBusy
+            ? const Center(child: CircularProgressIndicator())
+            : viewModel.tournaments.isEmpty
+                ? _buildEmptyView()
+                : SingleChildScrollView(
+                    child: Column(
+                      children: [
+                        ListView.builder(
+                          shrinkWrap: true,
+                          physics: const NeverScrollableScrollPhysics(),
+                          itemCount: viewModel.tournaments.length,
+                          itemBuilder: (context, index) {
+                            return Container();
+                          },
+                        ),
+                        SizedBox(height: 20.h),
+                        // if (viewModel.hasMoreProducts)
+                        //   Center(
+                        //     child: Padding(
+                        //       padding: const EdgeInsets.symmetric(horizontal: 32),
+                        //       child: SmallButton(
+                        //         title: 'Show More',
+                        //         onTap: () {
+                        //           if (viewModel.isBrandSearch == true) {
+                        //             viewModel.loadMoreProductsByBrand(brand!.id);
+                        //           } else if (viewModel.isCountrySearch == true) {
+                        //             viewModel.loadMoreProductsByCountry(country!);
+                        //           } else {
+                        //             viewModel.loadMoreProducts();
+                        //           }
+                        //         },
+                        //         bgColor: AppColors.white,
+                        //         textColor: AppColors.secondary,
+                        //         borderColor: AppColors.secondary,
+                        //         isLoading: viewModel.isLoading,
+                        //       ),
+                        //     ),
+                        //   ),
+                      ],
+                    ),
+                  ),
+      ),
+    );
+  }
+
+  Widget _buildEmptyView() {
+    return Center(
+      child: Padding(
+        padding: const EdgeInsets.all(16.0),
+        child: Column(
+          mainAxisAlignment: MainAxisAlignment.center,
+          children: [
+            const Icon(
+              IconsaxPlusLinear.search_normal,
+              size: 48,
+              color: AppColors.textHint,
+            ),
+            const SizedBox(height: 15),
+            Text(
+              "No Tournament Found",
+              textAlign: TextAlign.center,
+              style: GoogleFonts.poppins(
+                fontSize: 20,
+                color: AppColors.textPrimary,
+                fontWeight: FontWeight.w600,
+              ),
+            ),
+            const SizedBox(height: 10),
+            Padding(
+              padding: const EdgeInsets.symmetric(horizontal: 26.0),
+              child: Text(
+                "When you search for tournaments, they'll appear here.",
+                textAlign: TextAlign.center,
+                style: GoogleFonts.poppins(
+                  fontSize: 16,
+                  color: AppColors.textHint,
+                  fontWeight: FontWeight.w400,
+                ),
+              ),
+            ),
+          ],
+        ),
       ),
     );
   }
@@ -25,5 +126,6 @@ class SearchView extends StackedView<SearchViewModel> {
   SearchViewModel viewModelBuilder(
     BuildContext context,
   ) =>
-      SearchViewModel();
+      SearchViewModel(
+          isTournamentSearch: isTournamentSearch, isItemSearch: isItemSearch);
 }
