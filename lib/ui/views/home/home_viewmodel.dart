@@ -33,7 +33,7 @@ class HomeViewModel extends BaseViewModel {
   }
 
   void navigateToRentalBook(int tournamentId) {
-    _navigationService.navigateToRentalBookingView();
+    _navigationService.navigateToAddRentalsView();
   }
 
   Future<void> getSports() async {
