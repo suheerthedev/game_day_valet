@@ -18,5 +18,6 @@ class MainItemCard extends StackedView<MainItemCardModel> {
   @override
   MainItemCardModel viewModelBuilder(
     BuildContext context,
-  ) => MainItemCardModel();
+  ) =>
+      MainItemCardModel();
 }
