@@ -25,11 +25,7 @@ Future<void> main() async {
   await dotenv.load(fileName: ".env");
   await setupLocator();
 
-  print(dotenv.env['STRIPE_PUBLISHABLE_KEY']);
-
   Stripe.publishableKey = dotenv.env['STRIPE_PUBLISHABLE_KEY'] ?? '';
-
-  print(Stripe.publishableKey);
 
   // await locator<ConnectivityService>().initialize();
 

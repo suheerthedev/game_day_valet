@@ -29,5 +29,9 @@ class ApiConfig {
 
   static const items = '/api/items';
   static const bundles = '/api/bundles';
+
+  //Payment
+  static const createPaymentIntent = '/api/create-payment-intent';
+
   // Add more as needed
 }

@@ -4,6 +4,7 @@ import 'dart:io';
 
 import 'package:game_day_valet/app/app.locator.dart';
 import 'package:game_day_valet/services/api_exception.dart';
+import 'package:game_day_valet/services/logger_service.dart';
 // import 'package:game_day_valet/services/connectivity_service.dart';
 import 'package:game_day_valet/services/secure_storage_service.dart';
 import 'package:http/http.dart' as http;
@@ -17,6 +18,15 @@ class ApiService {
     return {
       'Accept': 'application/json',
       // if (!isMultiPart) 'Content-Type': 'application/json',
+      if (token != null) 'Authorization': 'Bearer $token',
+    };
+  }
+
+  Future<Map<String, String>> _getPaymentHeaders() async {
+    final token = await _secureStorageService.getToken();
+    return {
+      'Accept': 'application/json',
+      'Content-Type': 'application/json',
       if (token != null) 'Authorization': 'Bearer $token',
     };
   }
@@ -45,10 +55,13 @@ class ApiService {
   Future<dynamic> post(String url, Map<String, dynamic> body) async {
     // await _checkConnectivity();
     try {
-      final headers = await _getHeaders();
+      final headers = await _getPaymentHeaders();
+      logger.info('Headers: $headers');
       final response = await http
-          .post(Uri.parse(url), headers: headers, body: body)
+          .post(Uri.parse(url), headers: headers, body: jsonEncode(body))
           .timeout(const Duration(seconds: 30));
+
+      logger.info('Response: ${response.body}');
 
       return _handleResponse(response);
     } on SocketException {
