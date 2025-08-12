@@ -17,15 +17,6 @@ class ApiService {
     final token = await _secureStorageService.getToken();
     return {
       'Accept': 'application/json',
-      // if (!isMultiPart) 'Content-Type': 'application/json',
-      if (token != null) 'Authorization': 'Bearer $token',
-    };
-  }
-
-  Future<Map<String, String>> _getPaymentHeaders() async {
-    final token = await _secureStorageService.getToken();
-    return {
-      'Accept': 'application/json',
       'Content-Type': 'application/json',
       if (token != null) 'Authorization': 'Bearer $token',
     };
@@ -55,7 +46,7 @@ class ApiService {
   Future<dynamic> post(String url, Map<String, dynamic> body) async {
     // await _checkConnectivity();
     try {
-      final headers = await _getPaymentHeaders();
+      final headers = await _getHeaders();
       logger.info('Headers: $headers');
       final response = await http
           .post(Uri.parse(url), headers: headers, body: jsonEncode(body))
