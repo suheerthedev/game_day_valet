@@ -71,7 +71,10 @@ import 'package:game_day_valet/ui/views/search/search_view.dart';
     MaterialRoute(page: VerifyEmailView),
     MaterialRoute(page: AddRentalsView),
     MaterialRoute(page: CheckoutView),
-    MaterialRoute(page: SearchView),
+    CustomRoute(
+        page: SearchView,
+        transitionsBuilder: TransitionsBuilders.fadeIn,
+        durationInMilliseconds: 500),
 // @stacked-route
   ],
   dependencies: [
