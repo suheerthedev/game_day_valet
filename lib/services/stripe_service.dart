@@ -18,10 +18,6 @@ class StripeService {
       String currency = 'usd',
       required BuildContext context}) async {
     final url = ApiConfig.baseUrl + ApiConfig.createPaymentIntent;
-    logger.info('Creating payment intent');
-    logger.info('Amount: $amountCents');
-    logger.info('Currency: $currency');
-    logger.info('Url: $url');
 
     try {
       final response = await _apiService.post(url, {

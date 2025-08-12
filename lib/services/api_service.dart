@@ -47,7 +47,6 @@ class ApiService {
     // await _checkConnectivity();
     try {
       final headers = await _getHeaders();
-      logger.info('Headers: $headers');
       final response = await http
           .post(Uri.parse(url), headers: headers, body: jsonEncode(body))
           .timeout(const Duration(seconds: 30));
