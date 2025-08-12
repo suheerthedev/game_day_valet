@@ -54,8 +54,7 @@ class ProfileView extends StackedView<ProfileViewModel> {
                 child: Stack(
               children: [
                 Padding(
-                  padding:
-                      EdgeInsets.symmetric(horizontal: 25.w, vertical: 20.h),
+                  padding: EdgeInsets.symmetric(horizontal: 25.w),
                   child: SingleChildScrollView(
                     child: Column(
                       children: [

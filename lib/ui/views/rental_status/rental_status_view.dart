@@ -69,7 +69,7 @@ class RentalStatusView extends StackedView<RentalStatusViewModel> {
 
   Widget _buildNoRentalState(BuildContext context) {
     return Padding(
-      padding: EdgeInsets.symmetric(horizontal: 25.w, vertical: 20.h),
+      padding: EdgeInsets.symmetric(horizontal: 25.w),
       child: Center(
         child: Column(
           mainAxisAlignment: MainAxisAlignment.center,
@@ -103,7 +103,7 @@ class RentalStatusView extends StackedView<RentalStatusViewModel> {
   Widget _buildRentalActiveState(
       BuildContext context, RentalStatusViewModel viewModel) {
     return Padding(
-      padding: EdgeInsets.symmetric(horizontal: 25.w, vertical: 20.h),
+      padding: EdgeInsets.symmetric(horizontal: 25.w),
       child: Center(
         child: SingleChildScrollView(
           child: Column(
