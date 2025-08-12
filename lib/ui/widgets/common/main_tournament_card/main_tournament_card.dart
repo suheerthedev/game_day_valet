@@ -1,6 +1,5 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
-import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import 'package:game_day_valet/models/tournament_model.dart';
 import 'package:game_day_valet/ui/common/app_colors.dart';
 import 'package:google_fonts/google_fonts.dart';
@@ -87,8 +86,8 @@ class MainTournamentCard extends StackedView<MainTournamentCardModel> {
                     padding: EdgeInsets.only(top: 10.h, right: 10.w),
                     child: Icon(
                         tournament.isFavorite
-                            ? FontAwesomeIcons.solidHeart
-                            : FontAwesomeIcons.heart,
+                            ? IconsaxPlusBold.heart
+                            : IconsaxPlusLinear.heart,
                         size: 20.w,
                         color: tournament.isFavorite
                             ? AppColors.favorite

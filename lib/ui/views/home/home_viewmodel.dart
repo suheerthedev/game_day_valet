@@ -119,12 +119,22 @@ class HomeViewModel extends BaseViewModel {
     }
   }
 
-  void toggleFavorite(String tournamentId, int index) async {
+  void toggleFavorite(int tournamentId) async {
     final url = ApiConfig.baseUrl + ApiConfig.toggleFavoriteEndPoint;
+
+    int index =
+        tournamentsList.indexWhere((element) => element.id == tournamentId);
+
+    int indexRecommended = recommendedTournamentsList
+        .indexWhere((element) => element.id == tournamentId);
 
     logger.info("Is Favorite: ${tournamentsList[index].isFavorite}");
     tournamentsList[index].isFavorite = !tournamentsList[index].isFavorite;
+    recommendedTournamentsList[indexRecommended].isFavorite =
+        !recommendedTournamentsList[indexRecommended].isFavorite;
     logger.info("Is Favorite: ${tournamentsList[index].isFavorite}");
+    logger.info(
+        "Is Favorite: ${recommendedTournamentsList[indexRecommended].isFavorite}");
     rebuildUi();
 
     try {
@@ -153,6 +163,43 @@ class HomeViewModel extends BaseViewModel {
       rebuildUi();
     }
   }
+
+  // void toggleFavoriteRecommendedTournaments(
+  //     String tournamentId, int index) async {
+  //   final url = ApiConfig.baseUrl + ApiConfig.toggleFavoriteEndPoint;
+
+  //   logger.info("Is Favorite: ${recommendedTournamentsList[index].isFavorite}");
+  //   recommendedTournamentsList[index].isFavorite =
+  //       !recommendedTournamentsList[index].isFavorite;
+  //   logger.info("Is Favorite: ${recommendedTournamentsList[index].isFavorite}");
+  //   rebuildUi();
+
+  //   try {
+  //     final response = await _apiService.post(url, {
+  //       "tournament_id": tournamentId,
+  //     });
+
+  //     logger.info("Favorite toggled successfully. Response: $response");
+  //     _snackbarService.showCustomSnackBar(
+  //       variant: SnackbarType.success,
+  //       message: response['message'],
+  //     );
+  //   } on ApiException catch (e) {
+  //     logger.error("Error toggling favorite", e);
+  //     _snackbarService.showCustomSnackBar(
+  //       variant: SnackbarType.error,
+  //       message: e.message,
+  //     );
+  //   } catch (e) {
+  //     logger.error("Error toggling favorite", e);
+  //     _snackbarService.showCustomSnackBar(
+  //       variant: SnackbarType.error,
+  //       message: e.toString(),
+  //     );
+  //   } finally {
+  //     rebuildUi();
+  //   }
+  // }
 
   void onChatTap() {
     _navigationService.navigateToChatView();
