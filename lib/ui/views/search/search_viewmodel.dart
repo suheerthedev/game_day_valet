@@ -74,10 +74,15 @@ class SearchViewModel extends BaseViewModel {
         }
       }
 
-      tournaments.addAll(response['data']
-          .map((tournament) => TournamentModel.fromJson(tournament)));
+      final responseTournaments = (response['data'] as List)
+          .map((tournament) => TournamentModel.fromJson(tournament))
+          .toList();
 
-      tournaments.length >= 10 ? hasMoreResults = false : hasMoreResults = true;
+      responseTournaments.length >= 10
+          ? hasMoreResults = true
+          : hasMoreResults = false;
+
+      tournaments.addAll(responseTournaments);
 
       logger.info("Tournaments length: ${tournaments.length.toString()}");
     } on ApiException catch (e) {
@@ -107,7 +112,7 @@ class SearchViewModel extends BaseViewModel {
     try {
       final response = await _apiService.get(url);
 
-      final newTournaments = response['data']
+      final newTournaments = (response['data'] as List)
           .map((tournament) => TournamentModel.fromJson(tournament))
           .toList();
 
@@ -117,9 +122,8 @@ class SearchViewModel extends BaseViewModel {
 
       tournaments.addAll(newTournaments);
 
-      tournaments.length >= 10 ? hasMoreResults = false : hasMoreResults = true;
-
       logger.info("Tournaments length: ${tournaments.length.toString()}");
+      isLoading = false;
     } on ApiException catch (e) {
       logger.error("Error loading more tournaments: ${e.message}");
       _snackbarService.showCustomSnackBar(
@@ -153,9 +157,15 @@ class SearchViewModel extends BaseViewModel {
         }
       }
 
-      items.addAll(response['data'].map((item) => ItemModel.fromJson(item)));
+      final responseItems = (response['data'] as List)
+          .map((item) => ItemModel.fromJson(item))
+          .toList();
 
-      items.length >= 10 ? hasMoreResults = false : hasMoreResults = true;
+      responseItems.length >= 10
+          ? hasMoreResults = true
+          : hasMoreResults = false;
+
+      items.addAll(responseItems);
 
       logger.info("Items length: ${items.length.toString()}");
     } on ApiException catch (e) {
@@ -185,12 +195,14 @@ class SearchViewModel extends BaseViewModel {
     try {
       final response = await _apiService.get(url);
 
-      final newItems =
-          response['data'].map((item) => ItemModel.fromJson(item)).toList();
+      final newItems = (response['data'] as List)
+          .map((item) => ItemModel.fromJson(item))
+          .toList();
 
       newItems.length >= 10 ? hasMoreResults = true : hasMoreResults = false;
 
       items.addAll(newItems);
+      isLoading = false;
     } on ApiException catch (e) {
       logger.error("Error loading more items: ${e.message}");
       _snackbarService.showCustomSnackBar(

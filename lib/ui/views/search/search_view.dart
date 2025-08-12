@@ -3,7 +3,7 @@ import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:game_day_valet/ui/common/app_colors.dart';
 import 'package:game_day_valet/ui/widgets/common/main_item_card/main_item_card.dart';
 import 'package:game_day_valet/ui/widgets/common/main_search_bar/main_search_bar.dart';
-import 'package:game_day_valet/ui/widgets/common/secondary_tournament_card/secondary_tournament_card.dart';
+import 'package:game_day_valet/ui/widgets/common/main_tournament_card/main_tournament_card.dart';
 import 'package:game_day_valet/ui/widgets/common/small_button/small_button.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:iconsax_plus/iconsax_plus.dart';
@@ -41,7 +41,9 @@ class SearchView extends StackedView<SearchViewModel> {
                 }
               })),
       body: Padding(
-        padding: const EdgeInsets.symmetric(horizontal: 16.0, vertical: 16.0),
+        padding: EdgeInsets.symmetric(
+          horizontal: 25.w,
+        ),
         child: viewModel.isBusy
             ? const Center(child: CircularProgressIndicator())
             : viewModel.tournaments.isEmpty && viewModel.items.isEmpty
@@ -55,8 +57,9 @@ class SearchView extends StackedView<SearchViewModel> {
                                 physics: const NeverScrollableScrollPhysics(),
                                 itemCount: viewModel.tournaments.length,
                                 itemBuilder: (context, index) {
-                                  return SecondaryTournamentCard(
+                                  return MainTournamentCard(
                                     tournament: viewModel.tournaments[index],
+                                    onTapMap: () {},
                                     onBookNowTap: () {},
                                     onTapFavorite: () {},
                                   );
@@ -90,8 +93,7 @@ class SearchView extends StackedView<SearchViewModel> {
                         if (viewModel.hasMoreResults)
                           Center(
                             child: Padding(
-                              padding:
-                                  const EdgeInsets.symmetric(horizontal: 32),
+                              padding: const EdgeInsets.only(bottom: 16.0),
                               child: SmallButton(
                                 title: 'Show More',
                                 onTap: () {
