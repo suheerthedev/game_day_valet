@@ -22,9 +22,15 @@ class HomeViewModel extends BaseViewModel {
   final _snackbarService = locator<SnackbarService>();
   String selectedSport = ''; // Default selected sport
 
+  TextEditingController searchController = TextEditingController();
+
   List<TournamentModel> tournamentsList = [];
   List<SportsModel> sportsList = [];
   List<TournamentModel> recommendedTournamentsList = [];
+
+  void navigateToSearchView(String searchQuery) {
+    _navigationService.navigateToSearchView();
+  }
 
   Future<void> getSports() async {
     final url = ApiConfig.baseUrl + ApiConfig.sportsEndPoint;

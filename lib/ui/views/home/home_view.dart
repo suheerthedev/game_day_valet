@@ -4,6 +4,7 @@ import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import 'package:game_day_valet/ui/common/app_colors.dart';
 import 'package:game_day_valet/ui/widgets/common/main_app_bar/main_app_bar.dart';
+import 'package:game_day_valet/ui/widgets/common/main_search_bar/main_search_bar.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:iconsax_flutter/iconsax_flutter.dart';
 import 'package:intl/intl.dart';
@@ -53,43 +54,19 @@ class HomeView extends StackedView<HomeViewModel> {
                           horizontal: 25.w, vertical: 20.h),
                       child: Column(
                         children: [
-                          SizedBox(
-                            height: 40.h,
-                            child: TextField(
-                              cursorColor: AppColors.primary,
-                              decoration: InputDecoration(
-                                hintText:
-                                    'Search tournament by name, date, location, host',
-                                hintStyle: GoogleFonts.poppins(
-                                  fontSize: 14.sp,
-                                  fontWeight: FontWeight.w400,
-                                  color: AppColors.textHint,
-                                ),
-                                prefixIconConstraints: BoxConstraints(
-                                  minWidth: 40.w,
-                                  minHeight: 40.h,
-                                ),
-                                prefixIcon: Icon(
-                                    FontAwesomeIcons.magnifyingGlass,
-                                    size: 20.w,
-                                    color: AppColors.textHint),
-                                border: InputBorder.none,
-                                contentPadding: EdgeInsets.symmetric(
-                                  horizontal: 16.w,
-                                  vertical: 14.h,
-                                ),
-                                enabledBorder: OutlineInputBorder(
-                                  borderSide: const BorderSide(
-                                      color: AppColors.grey100),
-                                  borderRadius: BorderRadius.circular(10.r),
-                                ),
-                                focusedBorder: OutlineInputBorder(
-                                  borderSide: const BorderSide(
-                                      color: AppColors.grey500),
-                                  borderRadius: BorderRadius.circular(10.r),
-                                ),
-                              ),
-                            ),
+                          MainSearchBar(
+                            controller: viewModel.searchController,
+                            hintText:
+                                'Search tournament by name, date, and etc',
+                            isAutoFocus: false,
+                            isReadOnly: true,
+                            onTextFieldTap: () {
+                              viewModel.navigateToSearchView(
+                                  viewModel.searchController.text);
+                            },
+                            onSubmitted: (value) {
+                              viewModel.navigateToSearchView(value);
+                            },
                           ),
                           SizedBox(height: 20.h),
                           Expanded(
