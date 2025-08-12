@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:game_day_valet/app/app.locator.dart';
 import 'package:game_day_valet/config/api_config.dart';
 import 'package:game_day_valet/core/enums/snackbar_type.dart';
+import 'package:game_day_valet/models/item_model.dart';
 import 'package:game_day_valet/models/tournament_model.dart';
 import 'package:game_day_valet/services/api_exception.dart';
 import 'package:game_day_valet/services/api_service.dart';
@@ -21,6 +22,18 @@ class SearchViewModel extends BaseViewModel {
       {required this.isTournamentSearch, required this.isItemSearch});
 
   List<TournamentModel> tournaments = [];
+  List<ItemModel> items = [];
+
+  void addItem(ItemModel item) {
+    item.quantity++;
+    rebuildUi();
+  }
+
+  void removeItem(ItemModel item) {
+    if (item.quantity <= 0) return;
+    item.quantity--;
+    rebuildUi();
+  }
 
   Future<void> searchTournaments(String searchQuery) async {
     final url =
@@ -40,6 +53,31 @@ class SearchViewModel extends BaseViewModel {
           message: e.message, variant: SnackbarType.error);
     } catch (e) {
       logger.error("Error searching tournaments: ${e.toString()}");
+      _snackbarService.showCustomSnackBar(
+          message: e.toString(), variant: SnackbarType.error);
+    } finally {
+      rebuildUi();
+      setBusy(false);
+    }
+  }
+
+  Future<void> searchItems(String searchQuery) async {
+    final url = '${ApiConfig.baseUrl}${ApiConfig.items}?search=$searchQuery';
+    setBusy(true);
+    rebuildUi();
+    try {
+      final response = await _apiService.get(url);
+
+      for (var item in response['data']) {
+        items.add(ItemModel.fromJson(item));
+      }
+      logger.info("Items length: ${items.length.toString()}");
+    } on ApiException catch (e) {
+      logger.error("Error searching items: ${e.message}");
+      _snackbarService.showCustomSnackBar(
+          message: e.message, variant: SnackbarType.error);
+    } catch (e) {
+      logger.error("Error searching items: ${e.toString()}");
       _snackbarService.showCustomSnackBar(
           message: e.toString(), variant: SnackbarType.error);
     } finally {

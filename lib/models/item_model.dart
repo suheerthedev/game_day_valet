@@ -6,6 +6,7 @@ class ItemModel {
   final int? stock;
   final String? image;
   final String? status;
+  int quantity;
 
   ItemModel({
     required this.id,
@@ -15,6 +16,7 @@ class ItemModel {
     this.stock,
     this.image,
     this.status,
+    this.quantity = 0,
   });
 
   factory ItemModel.fromJson(Map<String, dynamic> json) {

@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:game_day_valet/ui/common/app_colors.dart';
+import 'package:game_day_valet/ui/widgets/common/main_item_card/main_item_card.dart';
 import 'package:game_day_valet/ui/widgets/common/main_search_bar/main_search_bar.dart';
 import 'package:game_day_valet/ui/widgets/common/secondary_tournament_card/secondary_tournament_card.dart';
 import 'package:google_fonts/google_fonts.dart';
@@ -34,28 +35,56 @@ class SearchView extends StackedView<SearchViewModel> {
                 if (isTournamentSearch) {
                   viewModel.searchTournaments(value);
                 }
+                if (isItemSearch) {
+                  viewModel.searchItems(value);
+                }
               })),
       body: Padding(
         padding: const EdgeInsets.symmetric(horizontal: 16.0, vertical: 16.0),
         child: viewModel.isBusy
             ? const Center(child: CircularProgressIndicator())
-            : viewModel.tournaments.isEmpty
+            : viewModel.tournaments.isEmpty && viewModel.items.isEmpty
                 ? _buildEmptyView()
                 : SingleChildScrollView(
                     child: Column(
                       children: [
-                        ListView.builder(
-                          shrinkWrap: true,
-                          physics: const NeverScrollableScrollPhysics(),
-                          itemCount: viewModel.tournaments.length,
-                          itemBuilder: (context, index) {
-                            return SecondaryTournamentCard(
-                              tournament: viewModel.tournaments[index],
-                              onBookNowTap: () {},
-                              onTapFavorite: () {},
-                            );
-                          },
-                        ),
+                        isTournamentSearch
+                            ? ListView.builder(
+                                shrinkWrap: true,
+                                physics: const NeverScrollableScrollPhysics(),
+                                itemCount: viewModel.tournaments.length,
+                                itemBuilder: (context, index) {
+                                  return SecondaryTournamentCard(
+                                    tournament: viewModel.tournaments[index],
+                                    onBookNowTap: () {},
+                                    onTapFavorite: () {},
+                                  );
+                                },
+                              )
+                            : GridView.builder(
+                                shrinkWrap: true,
+                                physics: const NeverScrollableScrollPhysics(),
+                                itemCount: viewModel.items.length,
+                                gridDelegate:
+                                    SliverGridDelegateWithFixedCrossAxisCount(
+                                  crossAxisCount: 2,
+                                  childAspectRatio: 0.7,
+                                  mainAxisSpacing: 10.h,
+                                  crossAxisSpacing: 20.w,
+                                ),
+                                itemBuilder: (context, index) {
+                                  return MainItemCard(
+                                    item: viewModel.items[index],
+                                    onTapAdd: () {
+                                      viewModel.addItem(viewModel.items[index]);
+                                    },
+                                    onTapRemove: () {
+                                      viewModel
+                                          .removeItem(viewModel.items[index]);
+                                    },
+                                  );
+                                },
+                              ),
                         SizedBox(height: 20.h),
                         // if (viewModel.hasMoreProducts)
                         //   Center(

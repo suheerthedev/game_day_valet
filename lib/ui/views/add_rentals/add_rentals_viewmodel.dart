@@ -28,6 +28,17 @@ class AddRentalsViewModel extends BaseViewModel {
         isTournamentSearch: false, isItemSearch: true);
   }
 
+  void addItem(ItemModel item) {
+    item.quantity++;
+    rebuildUi();
+  }
+
+  void removeItem(ItemModel item) {
+    if (item.quantity <= 0) return;
+    item.quantity--;
+    rebuildUi();
+  }
+
   void toggleViewSmartSuggestions() {
     viewSmartSuggestions = !viewSmartSuggestions;
     rebuildUi();
