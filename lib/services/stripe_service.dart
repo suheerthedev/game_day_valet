@@ -14,14 +14,14 @@ class StripeService {
   final _apiService = locator<ApiService>();
 
   Future<void> payWithPaymentSheet(
-      {required int amountCents,
+      {required int amount,
       String currency = 'usd',
       required BuildContext context}) async {
     final url = ApiConfig.baseUrl + ApiConfig.createPaymentIntent;
 
     try {
       final response = await _apiService.post(url, {
-        'amount': amountCents,
+        'amount': amount,
         'currency': currency,
       });
 

@@ -31,7 +31,7 @@ class CheckoutViewModel extends BaseViewModel {
   void _handleStripePayment(BuildContext context) async {
     logger.info('Stripe');
     await _stripeService.payWithPaymentSheet(
-      amountCents: 100,
+      amount: 10,
       currency: 'usd',
       context: context,
     );
