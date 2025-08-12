@@ -26,7 +26,6 @@ class SecondaryTournamentCard
     Widget? child,
   ) {
     return Container(
-      width: 330.w,
       height: 201.h,
       margin: EdgeInsets.only(right: 10.w),
       decoration: BoxDecoration(
@@ -36,67 +35,70 @@ class SecondaryTournamentCard
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
-          Container(
-            width: 350.w,
-            height: 131.h,
-            decoration: BoxDecoration(
-              color: AppColors.white,
-              borderRadius: BorderRadius.circular(16.r),
-            ),
-            clipBehavior: Clip.antiAlias,
-            child: Stack(children: [
-              Image.asset(
-                'assets/images/dummy.jpg',
-                fit: BoxFit.cover,
-                width: 339.w,
-                height: 319.h,
+          GestureDetector(
+            onTap: onBookNowTap,
+            child: Container(
+              width: 335.w,
+              height: 131.h,
+              decoration: BoxDecoration(
+                color: AppColors.white,
+                borderRadius: BorderRadius.circular(16.r),
               ),
-              Container(
-                width: 339.w,
-                height: 319.h,
-                color: AppColors.primary.withOpacity(0.4),
-              ),
-              Center(
-                child: InkWell(
-                  onTap: onBookNowTap,
-                  child: Container(
-                      width: 133.w,
-                      height: 37.h,
-                      decoration: BoxDecoration(
-                        color: Colors.transparent,
-                        borderRadius: BorderRadius.circular(5.r),
-                        border:
-                            BoxBorder.all(width: 1.w, color: AppColors.white),
-                      ),
-                      child: Center(
-                        child: Text(
-                          'Book Now',
-                          style: GoogleFonts.poppins(
-                              fontSize: 16.sp,
-                              fontWeight: FontWeight.w500,
-                              color: AppColors.white),
-                        ),
-                      )),
+              clipBehavior: Clip.antiAlias,
+              child: Stack(children: [
+                Image.asset(
+                  'assets/images/dummy.jpg',
+                  fit: BoxFit.cover,
+                  width: 339.w,
+                  height: 319.h,
                 ),
-              ),
-              Align(
-                alignment: Alignment.topRight,
-                child: GestureDetector(
-                  onTap: onTapFavorite,
-                  child: Padding(
-                    padding: EdgeInsets.only(top: 10.h, right: 10.w),
-                    child: Icon(
-                        tournament.isFavorite
-                            ? IconsaxPlusBold.heart
-                            : IconsaxPlusLinear.heart,
-                        size: 20.w,
-                        color: tournament.isFavorite
-                            ? AppColors.favorite
-                            : AppColors.white),
+                Container(
+                  width: 339.w,
+                  height: 319.h,
+                  color: AppColors.primary.withOpacity(0.4),
+                ),
+                Center(
+                  child: InkWell(
+                    onTap: onBookNowTap,
+                    child: Container(
+                        width: 133.w,
+                        height: 37.h,
+                        decoration: BoxDecoration(
+                          color: Colors.transparent,
+                          borderRadius: BorderRadius.circular(5.r),
+                          border:
+                              BoxBorder.all(width: 1.w, color: AppColors.white),
+                        ),
+                        child: Center(
+                          child: Text(
+                            'Book Now',
+                            style: GoogleFonts.poppins(
+                                fontSize: 16.sp,
+                                fontWeight: FontWeight.w500,
+                                color: AppColors.white),
+                          ),
+                        )),
                   ),
                 ),
-              ),
-            ]),
+                Align(
+                  alignment: Alignment.topRight,
+                  child: GestureDetector(
+                    onTap: onTapFavorite,
+                    child: Padding(
+                      padding: EdgeInsets.only(top: 10.h, right: 10.w),
+                      child: Icon(
+                          tournament.isFavorite
+                              ? IconsaxPlusBold.heart
+                              : IconsaxPlusLinear.heart,
+                          size: 20.w,
+                          color: tournament.isFavorite
+                              ? AppColors.favorite
+                              : AppColors.white),
+                    ),
+                  ),
+                ),
+              ]),
+            ),
           ),
           SizedBox(height: 10.h),
           Row(

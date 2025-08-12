@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:game_day_valet/ui/common/app_colors.dart';
 import 'package:game_day_valet/ui/widgets/common/main_search_bar/main_search_bar.dart';
+import 'package:game_day_valet/ui/widgets/common/secondary_tournament_card/secondary_tournament_card.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:iconsax_plus/iconsax_plus.dart';
 import 'package:stacked/stacked.dart';
@@ -48,7 +49,11 @@ class SearchView extends StackedView<SearchViewModel> {
                           physics: const NeverScrollableScrollPhysics(),
                           itemCount: viewModel.tournaments.length,
                           itemBuilder: (context, index) {
-                            return Container();
+                            return SecondaryTournamentCard(
+                              tournament: viewModel.tournaments[index],
+                              onBookNowTap: () {},
+                              onTapFavorite: () {},
+                            );
                           },
                         ),
                         SizedBox(height: 20.h),
