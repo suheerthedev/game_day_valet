@@ -1,3 +1,4 @@
+import 'package:flutter/material.dart';
 import 'package:game_day_valet/app/app.locator.dart';
 import 'package:game_day_valet/app/app.router.dart';
 import 'package:game_day_valet/config/api_config.dart';
@@ -15,10 +16,17 @@ class AddRentalsViewModel extends BaseViewModel {
   final _navigationService = locator<NavigationService>();
   final _snackbarService = locator<SnackbarService>();
 
+  TextEditingController searchController = TextEditingController();
+
   List<ItemModel> items = [];
   List<BundleModel> bundles = [];
 
   bool viewSmartSuggestions = false;
+
+  void navigateToSearch(String searchQuery) {
+    _navigationService.navigateToSearchView(
+        isTournamentSearch: false, isItemSearch: true);
+  }
 
   void toggleViewSmartSuggestions() {
     viewSmartSuggestions = !viewSmartSuggestions;

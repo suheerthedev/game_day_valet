@@ -1,10 +1,10 @@
 import 'package:cached_network_image/cached_network_image.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
-import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import 'package:game_day_valet/ui/common/app_colors.dart';
 import 'package:game_day_valet/ui/widgets/common/main_app_bar/main_app_bar.dart';
 import 'package:game_day_valet/ui/widgets/common/main_button/main_button.dart';
+import 'package:game_day_valet/ui/widgets/common/main_search_bar/main_search_bar.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:iconsax_plus/iconsax_plus.dart';
 import 'package:stacked/stacked.dart';
@@ -40,40 +40,14 @@ class AddRentalsView extends StackedView<AddRentalsViewModel> {
                   physics: const AlwaysScrollableScrollPhysics(),
                   child: Column(
                     children: [
-                      SizedBox(
-                        height: 40.h,
-                        child: TextField(
-                          cursorColor: AppColors.primary,
-                          decoration: InputDecoration(
-                            contentPadding: EdgeInsets.symmetric(
-                              horizontal: 18.w,
-                              vertical: 14.h,
-                            ),
-                            hintText: 'Search here...',
-                            hintStyle: GoogleFonts.poppins(
-                              fontSize: 14.sp,
-                              fontWeight: FontWeight.w400,
-                              color: AppColors.textHint,
-                            ),
-                            prefixIconConstraints: BoxConstraints(
-                              minWidth: 40.w,
-                              minHeight: 40.h,
-                            ),
-                            prefixIcon: Icon(FontAwesomeIcons.magnifyingGlass,
-                                size: 20.w, color: AppColors.textHint),
-                            border: InputBorder.none,
-                            enabledBorder: OutlineInputBorder(
-                              borderSide:
-                                  const BorderSide(color: AppColors.grey300),
-                              borderRadius: BorderRadius.circular(10.r),
-                            ),
-                            focusedBorder: OutlineInputBorder(
-                              borderSide:
-                                  const BorderSide(color: AppColors.grey500),
-                              borderRadius: BorderRadius.circular(10.r),
-                            ),
-                          ),
-                        ),
+                      MainSearchBar(
+                        isAutoFocus: false,
+                        isReadOnly: true,
+                        controller: viewModel.searchController,
+                        onTextFieldTap: () {
+                          viewModel.navigateToSearch(
+                              viewModel.searchController.text);
+                        },
                       ),
                       SizedBox(height: 20.h),
 
