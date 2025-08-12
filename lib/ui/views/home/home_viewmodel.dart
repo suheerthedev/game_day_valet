@@ -32,6 +32,10 @@ class HomeViewModel extends BaseViewModel {
     _navigationService.navigateToSearchView(isTournamentSearch: true);
   }
 
+  void navigateToRentalBook(int tournamentId) {
+    _navigationService.navigateToRentalBookingView();
+  }
+
   Future<void> getSports() async {
     final url = ApiConfig.baseUrl + ApiConfig.sportsEndPoint;
 
