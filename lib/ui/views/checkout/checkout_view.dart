@@ -363,9 +363,7 @@ class CheckoutView extends StackedView<CheckoutViewModel> {
                                   BorderRadius.all(Radius.circular(2.r))),
                           value: viewModel.stripe,
                           onChanged: (value) {
-                            if (viewModel.applePay == true ||
-                                viewModel.googlePay == true) {
-                              viewModel.applePay = false;
+                            if (viewModel.googlePay == true) {
                               viewModel.googlePay = false;
                             }
                             viewModel.stripe = value ?? false;
@@ -381,46 +379,46 @@ class CheckoutView extends StackedView<CheckoutViewModel> {
                     ],
                   ),
                 ),
-                SizedBox(height: 10.h),
-                Container(
-                  width: 340.w,
-                  height: 32.h,
-                  decoration: BoxDecoration(
-                    color: AppColors.grey50,
-                    borderRadius: BorderRadius.circular(10.r),
-                    border: Border.all(color: AppColors.grey100, width: 1.w),
-                  ),
-                  child: Row(
-                    children: [
-                      Checkbox(
-                          activeColor: AppColors.secondary,
-                          checkColor: AppColors.white,
-                          splashRadius: 0,
-                          side:
-                              BorderSide(color: AppColors.textHint, width: 1.w),
-                          shape: RoundedRectangleBorder(
-                              borderRadius:
-                                  BorderRadius.all(Radius.circular(2.r))),
-                          value: viewModel.applePay,
-                          onChanged: (value) {
-                            if (viewModel.stripe == true ||
-                                viewModel.googlePay == true) {
-                              viewModel.stripe = false;
-                              viewModel.googlePay = false;
-                            }
-                            viewModel.applePay = value ?? false;
-                            viewModel.notifyListeners();
-                          }),
-                      Text(
-                        "ApplePay",
-                        style: GoogleFonts.poppins(
-                            fontSize: 14.sp,
-                            fontWeight: FontWeight.w500,
-                            color: AppColors.textHint),
-                      ),
-                    ],
-                  ),
-                ),
+                // SizedBox(height: 10.h),
+                // Container(
+                //   width: 340.w,
+                //   height: 32.h,
+                //   decoration: BoxDecoration(
+                //     color: AppColors.grey50,
+                //     borderRadius: BorderRadius.circular(10.r),
+                //     border: Border.all(color: AppColors.grey100, width: 1.w),
+                //   ),
+                //   child: Row(
+                //     children: [
+                //       Checkbox(
+                //           activeColor: AppColors.secondary,
+                //           checkColor: AppColors.white,
+                //           splashRadius: 0,
+                //           side:
+                //               BorderSide(color: AppColors.textHint, width: 1.w),
+                //           shape: RoundedRectangleBorder(
+                //               borderRadius:
+                //                   BorderRadius.all(Radius.circular(2.r))),
+                //           value: viewModel.applePay,
+                //           onChanged: (value) {
+                //             if (viewModel.stripe == true ||
+                //                 viewModel.googlePay == true) {
+                //               viewModel.stripe = false;
+                //               viewModel.googlePay = false;
+                //             }
+                //             viewModel.applePay = value ?? false;
+                //             viewModel.notifyListeners();
+                //           }),
+                //       Text(
+                //         "ApplePay",
+                //         style: GoogleFonts.poppins(
+                //             fontSize: 14.sp,
+                //             fontWeight: FontWeight.w500,
+                //             color: AppColors.textHint),
+                //       ),
+                //     ],
+                //   ),
+                // ),
                 SizedBox(height: 10.h),
                 Container(
                   width: 340.w,
@@ -443,10 +441,8 @@ class CheckoutView extends StackedView<CheckoutViewModel> {
                                   BorderRadius.all(Radius.circular(2.r))),
                           value: viewModel.googlePay,
                           onChanged: (value) {
-                            if (viewModel.stripe == true ||
-                                viewModel.applePay == true) {
+                            if (viewModel.stripe == true) {
                               viewModel.stripe = false;
-                              viewModel.applePay = false;
                             }
                             viewModel.googlePay = value ?? false;
                             viewModel.notifyListeners();
@@ -465,7 +461,7 @@ class CheckoutView extends StackedView<CheckoutViewModel> {
                 MainButton(
                     text: 'Book Now',
                     onTap: () {
-                      viewModel.onStripePayment(context);
+                      viewModel.checkOut(context);
                     },
                     textColor: AppColors.white,
                     color: AppColors.secondary,

@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:game_day_valet/app/app.locator.dart';
+import 'package:game_day_valet/services/logger_service.dart';
 import 'package:game_day_valet/services/stripe_service.dart';
 import 'package:stacked/stacked.dart';
 
@@ -19,7 +20,7 @@ class CheckoutViewModel extends BaseViewModel {
   bool insuranceTwo = false;
   bool damageWaiver = false;
   bool stripe = false;
-  bool applePay = false;
+  // bool applePay = false;
   bool googlePay = false;
 
   void toggleDropOffExpanded() {
@@ -27,11 +28,29 @@ class CheckoutViewModel extends BaseViewModel {
     rebuildUi();
   }
 
-  void onStripePayment(BuildContext context) async {
+  void _handleStripePayment(BuildContext context) async {
+    logger.info('Stripe');
     await _stripeService.payWithPaymentSheet(
       amountCents: 100,
       currency: 'usd',
       context: context,
     );
+  }
+
+  void _handleGooglePayPayment(BuildContext context) async {
+    logger.info('Google Pay');
+    // await _stripeService.payWithGooglePay(
+    //   amountCents: 100,
+    //   currency: 'usd',
+    //   context: context,
+    // );
+  }
+
+  void checkOut(BuildContext context) {
+    if (stripe) {
+      _handleStripePayment(context);
+    } else if (googlePay) {
+      _handleGooglePayPayment(context);
+    }
   }
 }
