@@ -28,6 +28,7 @@ class MainView extends StackedView<MainViewModel> {
         backgroundColor: AppColors.scaffoldBackground,
         indicatorColor: Colors.transparent,
         shadowColor: AppColors.primary,
+        elevation: 1,
         selectedIndex: viewModel.currentIndex,
         onDestinationSelected: viewModel.onTabTapped,
         labelTextStyle: WidgetStatePropertyAll(GoogleFonts.poppins(
