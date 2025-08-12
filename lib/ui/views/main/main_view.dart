@@ -1,10 +1,9 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:game_day_valet/ui/common/app_colors.dart';
-import 'package:game_day_valet/ui/views/add_rentals/add_rentals_view.dart';
 import 'package:game_day_valet/ui/views/home/home_view.dart';
-import 'package:game_day_valet/ui/views/profile/profile_view.dart';
-import 'package:game_day_valet/ui/views/rental_status/rental_status_view.dart';
-import 'package:iconsax_flutter/iconsax_flutter.dart';
+import 'package:google_fonts/google_fonts.dart';
+import 'package:iconsax_plus/iconsax_plus.dart';
 import 'package:stacked/stacked.dart';
 
 import 'main_viewmodel.dart';
@@ -22,53 +21,37 @@ class MainView extends StackedView<MainViewModel> {
       backgroundColor: AppColors.scaffoldBackground,
       body: IndexedStack(
         index: viewModel.currentIndex,
-        children: const [
-          HomeView(),
-          AddRentalsView(),
-          RentalStatusView(),
-          ProfileView(),
-        ],
+        children: List.generate(viewModel.screens.length,
+            (index) => viewModel.screens[index] ?? const SizedBox.shrink()),
       ),
-      bottomNavigationBar: BottomNavigationBar(
-        type: BottomNavigationBarType.fixed,
+      bottomNavigationBar: NavigationBar(
         backgroundColor: AppColors.scaffoldBackground,
-        selectedItemColor: AppColors.secondary,
-        unselectedItemColor: AppColors.primary,
-        currentIndex: viewModel.currentIndex,
-        onTap: (index) => viewModel.setCurrentIndex(index),
-        items: const [
-          BottomNavigationBarItem(
-              activeIcon: Icon(
-                Iconsax.home_2,
-              ),
-              icon: Icon(
-                Iconsax.home_2_copy,
-              ),
-              label: 'Home'),
-          BottomNavigationBarItem(
-              activeIcon: Icon(
-                Iconsax.calendar_2,
-              ),
-              icon: Icon(
-                Iconsax.calendar_2_copy,
-              ),
-              label: 'Rental Booking'),
-          BottomNavigationBarItem(
-              activeIcon: Icon(
-                Iconsax.box_tick,
-              ),
-              icon: Icon(
-                Iconsax.box_tick_copy,
-              ),
-              label: 'Rental Status'),
-          BottomNavigationBarItem(
-              activeIcon: Icon(
-                Iconsax.user,
-              ),
-              icon: Icon(
-                Iconsax.user_copy,
-              ),
-              label: 'Profile'),
+        indicatorColor: Colors.transparent,
+        // selectedItemColor: AppColors.secondary,
+        // unselectedItemColor: AppColors.primary,
+        selectedIndex: viewModel.currentIndex,
+        onDestinationSelected: viewModel.onTabTapped,
+        labelTextStyle: WidgetStatePropertyAll(GoogleFonts.poppins(
+          fontSize: 12.sp,
+          fontWeight: FontWeight.w400,
+          color: AppColors.textPrimary,
+        )),
+        destinations: const [
+          NavigationDestination(
+            selectedIcon: Icon(IconsaxPlusBold.home_2),
+            icon: Icon(IconsaxPlusLinear.home_2),
+            label: "Home",
+          ),
+          NavigationDestination(
+            selectedIcon: Icon(IconsaxPlusBold.status),
+            icon: Icon(IconsaxPlusLinear.status),
+            label: "Status",
+          ),
+          NavigationDestination(
+            selectedIcon: Icon(IconsaxPlusBold.user),
+            icon: Icon(IconsaxPlusLinear.user),
+            label: "Profile",
+          ),
         ],
       ),
     );
@@ -79,4 +62,15 @@ class MainView extends StackedView<MainViewModel> {
     BuildContext context,
   ) =>
       MainViewModel();
+
+  @override
+  void onViewModelReady(MainViewModel viewModel) {
+    viewModel.screens = [
+      const HomeView(),
+      null,
+      null,
+      null,
+    ];
+    super.onViewModelReady(viewModel);
+  }
 }
