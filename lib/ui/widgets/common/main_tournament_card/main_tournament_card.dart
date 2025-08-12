@@ -35,82 +35,85 @@ class MainTournamentCard extends StackedView<MainTournamentCardModel> {
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
-          Container(
-            width: 339.w,
-            height: 319.h,
-            decoration: BoxDecoration(
-              color: AppColors.white,
-              borderRadius: BorderRadius.circular(16.r),
-            ),
-            clipBehavior: Clip.antiAlias,
-            child: Stack(children: [
-              Image.asset(
-                'assets/images/dummy.jpg',
-                fit: BoxFit.cover,
-                width: 339.w,
-                height: 319.h,
+          GestureDetector(
+            onTap: onBookNowTap,
+            child: Container(
+              width: 339.w,
+              height: 319.h,
+              decoration: BoxDecoration(
+                color: AppColors.white,
+                borderRadius: BorderRadius.circular(16.r),
               ),
-              Container(
-                width: 339.w,
-                height: 319.h,
-                color: AppColors.primary.withOpacity(0.4),
-              ),
-              Center(
-                child: InkWell(
-                  onTap: onBookNowTap,
-                  child: Container(
-                      width: 133.w,
-                      height: 37.h,
-                      decoration: BoxDecoration(
-                        color: Colors.transparent,
-                        borderRadius: BorderRadius.circular(5.r),
-                        border:
-                            BoxBorder.all(width: 1.w, color: AppColors.white),
-                      ),
-                      child: Center(
-                        child: Text(
-                          'Book Now',
-                          style: GoogleFonts.poppins(
-                              fontSize: 16.sp,
-                              fontWeight: FontWeight.w500,
-                              color: AppColors.white),
-                        ),
-                      )),
+              clipBehavior: Clip.antiAlias,
+              child: Stack(children: [
+                Image.asset(
+                  'assets/images/dummy.jpg',
+                  fit: BoxFit.cover,
+                  width: 339.w,
+                  height: 319.h,
                 ),
-              ),
-              Align(
-                alignment: Alignment.topRight,
-                child: GestureDetector(
-                  onTap: onTapFavorite,
-                  child: Padding(
-                    padding: EdgeInsets.only(top: 10.h, right: 10.w),
-                    child: Icon(
-                        tournament.isFavorite
-                            ? IconsaxPlusBold.heart
-                            : IconsaxPlusLinear.heart,
-                        size: 20.w,
-                        color: tournament.isFavorite
-                            ? AppColors.favorite
-                            : AppColors.white),
+                Container(
+                  width: 339.w,
+                  height: 319.h,
+                  color: AppColors.primary.withOpacity(0.4),
+                ),
+                Center(
+                  child: InkWell(
+                    onTap: onBookNowTap,
+                    child: Container(
+                        width: 133.w,
+                        height: 37.h,
+                        decoration: BoxDecoration(
+                          color: Colors.transparent,
+                          borderRadius: BorderRadius.circular(5.r),
+                          border:
+                              BoxBorder.all(width: 1.w, color: AppColors.white),
+                        ),
+                        child: Center(
+                          child: Text(
+                            'Book Now',
+                            style: GoogleFonts.poppins(
+                                fontSize: 16.sp,
+                                fontWeight: FontWeight.w500,
+                                color: AppColors.white),
+                          ),
+                        )),
                   ),
                 ),
-              ),
-              Align(
-                alignment: Alignment.bottomRight,
-                child: GestureDetector(
-                  onTap: onTapMap,
-                  child: Padding(
-                    padding: EdgeInsets.only(bottom: 10.h, right: 10.w),
-                    child: Text(
-                      'Field Map View',
-                      style: GoogleFonts.poppins(
-                        color: const Color(0xFFFFE168),
-                      ),
+                Align(
+                  alignment: Alignment.topRight,
+                  child: GestureDetector(
+                    onTap: onTapFavorite,
+                    child: Padding(
+                      padding: EdgeInsets.only(top: 10.h, right: 10.w),
+                      child: Icon(
+                          tournament.isFavorite
+                              ? IconsaxPlusBold.heart
+                              : IconsaxPlusLinear.heart,
+                          size: 20.w,
+                          color: tournament.isFavorite
+                              ? AppColors.favorite
+                              : AppColors.white),
                     ),
                   ),
                 ),
-              )
-            ]),
+                Align(
+                  alignment: Alignment.bottomRight,
+                  child: GestureDetector(
+                    onTap: onTapMap,
+                    child: Padding(
+                      padding: EdgeInsets.only(bottom: 10.h, right: 10.w),
+                      child: Text(
+                        'Field Map View',
+                        style: GoogleFonts.poppins(
+                          color: const Color(0xFFFFE168),
+                        ),
+                      ),
+                    ),
+                  ),
+                )
+              ]),
+            ),
           ),
           SizedBox(height: 10.h),
           Row(
