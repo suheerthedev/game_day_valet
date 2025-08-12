@@ -27,8 +27,7 @@ class MainView extends StackedView<MainViewModel> {
       bottomNavigationBar: NavigationBar(
         backgroundColor: AppColors.scaffoldBackground,
         indicatorColor: Colors.transparent,
-        // selectedItemColor: AppColors.secondary,
-        // unselectedItemColor: AppColors.primary,
+        shadowColor: AppColors.primary,
         selectedIndex: viewModel.currentIndex,
         onDestinationSelected: viewModel.onTabTapped,
         labelTextStyle: WidgetStatePropertyAll(GoogleFonts.poppins(
@@ -43,8 +42,8 @@ class MainView extends StackedView<MainViewModel> {
             label: "Home",
           ),
           NavigationDestination(
-            selectedIcon: Icon(IconsaxPlusBold.status),
-            icon: Icon(IconsaxPlusLinear.status),
+            selectedIcon: Icon(IconsaxPlusBold.box_tick),
+            icon: Icon(IconsaxPlusLinear.box_tick),
             label: "Status",
           ),
           NavigationDestination(
