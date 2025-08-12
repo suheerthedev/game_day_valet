@@ -58,6 +58,7 @@ class ProfileView extends StackedView<ProfileViewModel> {
                   child: SingleChildScrollView(
                     child: Column(
                       children: [
+                        SizedBox(height: 20.h),
                         ListTile(
                           onTap: viewModel.onEditProfileTap,
                           tileColor: AppColors.grey600,
