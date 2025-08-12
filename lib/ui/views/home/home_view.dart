@@ -64,9 +64,6 @@ class HomeView extends StackedView<HomeViewModel> {
                               viewModel.navigateToSearchView(
                                   viewModel.searchController.text);
                             },
-                            onSubmitted: (value) {
-                              viewModel.navigateToSearchView(value);
-                            },
                           ),
                           SizedBox(height: 20.h),
                           Expanded(
