@@ -4,6 +4,7 @@ import 'package:game_day_valet/ui/common/app_colors.dart';
 import 'package:game_day_valet/ui/widgets/common/main_item_card/main_item_card.dart';
 import 'package:game_day_valet/ui/widgets/common/main_search_bar/main_search_bar.dart';
 import 'package:game_day_valet/ui/widgets/common/secondary_tournament_card/secondary_tournament_card.dart';
+import 'package:game_day_valet/ui/widgets/common/small_button/small_button.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:iconsax_plus/iconsax_plus.dart';
 import 'package:stacked/stacked.dart';
@@ -86,28 +87,28 @@ class SearchView extends StackedView<SearchViewModel> {
                                 },
                               ),
                         SizedBox(height: 20.h),
-                        // if (viewModel.hasMoreProducts)
-                        //   Center(
-                        //     child: Padding(
-                        //       padding: const EdgeInsets.symmetric(horizontal: 32),
-                        //       child: SmallButton(
-                        //         title: 'Show More',
-                        //         onTap: () {
-                        //           if (viewModel.isBrandSearch == true) {
-                        //             viewModel.loadMoreProductsByBrand(brand!.id);
-                        //           } else if (viewModel.isCountrySearch == true) {
-                        //             viewModel.loadMoreProductsByCountry(country!);
-                        //           } else {
-                        //             viewModel.loadMoreProducts();
-                        //           }
-                        //         },
-                        //         bgColor: AppColors.white,
-                        //         textColor: AppColors.secondary,
-                        //         borderColor: AppColors.secondary,
-                        //         isLoading: viewModel.isLoading,
-                        //       ),
-                        //     ),
-                        //   ),
+                        if (viewModel.hasMoreResults)
+                          Center(
+                            child: Padding(
+                              padding:
+                                  const EdgeInsets.symmetric(horizontal: 32),
+                              child: SmallButton(
+                                title: 'Show More',
+                                onTap: () {
+                                  if (viewModel.isTournamentSearch == true) {
+                                    viewModel.loadMoreTournaments();
+                                  }
+                                  if (viewModel.isItemSearch == true) {
+                                    viewModel.loadMoreItems();
+                                  }
+                                },
+                                bgColor: AppColors.white,
+                                textColor: AppColors.secondary,
+                                borderColor: AppColors.secondary,
+                                isLoading: viewModel.isLoading,
+                              ),
+                            ),
+                          ),
                       ],
                     ),
                   ),

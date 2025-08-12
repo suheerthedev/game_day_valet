@@ -24,6 +24,16 @@ class SearchViewModel extends BaseViewModel {
   List<TournamentModel> tournaments = [];
   List<ItemModel> items = [];
 
+  String searchQuery = '';
+
+  int currentPage = 1;
+
+  bool hasMoreResults = false;
+
+  bool isLoading = false;
+
+  int? lastPage;
+
   void addItem(ItemModel item) {
     item.quantity++;
     rebuildUi();
@@ -35,17 +45,40 @@ class SearchViewModel extends BaseViewModel {
     rebuildUi();
   }
 
-  Future<void> searchTournaments(String searchQuery) async {
+  void init() {
+    currentPage = 1;
+    isLoading = false;
+    hasMoreResults = false;
+    searchQuery = '';
+    tournaments = [];
+    items = [];
+    lastPage = null;
+  }
+
+  Future<void> searchTournaments(String query) async {
     final url =
-        '${ApiConfig.baseUrl}${ApiConfig.tournamentsEndPoint}?search=$searchQuery';
+        '${ApiConfig.baseUrl}${ApiConfig.tournamentsEndPoint}?search=$query&limit=10&page=$currentPage';
     setBusy(true);
     rebuildUi();
+
+    currentPage = 1;
+    isLoading = false;
+    hasMoreResults = true;
+    searchQuery = query;
     try {
       final response = await _apiService.get(url);
 
-      for (var tournament in response['data']) {
-        tournaments.add(TournamentModel.fromJson(tournament));
+      if (response.containsKey('meta')) {
+        if (response['meta'].containsKey('last_page')) {
+          lastPage = response['meta']['last_page'];
+        }
       }
+
+      tournaments.addAll(response['data']
+          .map((tournament) => TournamentModel.fromJson(tournament)));
+
+      tournaments.length >= 10 ? hasMoreResults = false : hasMoreResults = true;
+
       logger.info("Tournaments length: ${tournaments.length.toString()}");
     } on ApiException catch (e) {
       logger.error("Error searching tournaments: ${e.message}");
@@ -54,23 +87,76 @@ class SearchViewModel extends BaseViewModel {
     } catch (e) {
       logger.error("Error searching tournaments: ${e.toString()}");
       _snackbarService.showCustomSnackBar(
-          message: e.toString(), variant: SnackbarType.error);
+          message: 'Something went wrong', variant: SnackbarType.error);
     } finally {
       rebuildUi();
       setBusy(false);
     }
   }
 
-  Future<void> searchItems(String searchQuery) async {
-    final url = '${ApiConfig.baseUrl}${ApiConfig.items}?search=$searchQuery';
-    setBusy(true);
+  void loadMoreTournaments() async {
+    if (!hasMoreResults && isLoading) return;
+
+    isLoading = true;
     rebuildUi();
+    currentPage++;
+
+    final url =
+        '${ApiConfig.baseUrl}${ApiConfig.tournamentsEndPoint}?search=$searchQuery&limit=10&page=$currentPage';
+
     try {
       final response = await _apiService.get(url);
 
-      for (var item in response['data']) {
-        items.add(ItemModel.fromJson(item));
+      final newTournaments = response['data']
+          .map((tournament) => TournamentModel.fromJson(tournament))
+          .toList();
+
+      newTournaments.length >= 10
+          ? hasMoreResults = true
+          : hasMoreResults = false;
+
+      tournaments.addAll(newTournaments);
+
+      tournaments.length >= 10 ? hasMoreResults = false : hasMoreResults = true;
+
+      logger.info("Tournaments length: ${tournaments.length.toString()}");
+    } on ApiException catch (e) {
+      logger.error("Error loading more tournaments: ${e.message}");
+      _snackbarService.showCustomSnackBar(
+          message: e.message, variant: SnackbarType.error);
+    } catch (e) {
+      logger.error("Error loading more tournaments: ${e.toString()}");
+      _snackbarService.showCustomSnackBar(
+          message: 'Something went wrong', variant: SnackbarType.error);
+    } finally {
+      rebuildUi();
+      setBusy(false);
+    }
+  }
+
+  Future<void> searchItems(String query) async {
+    final url =
+        '${ApiConfig.baseUrl}${ApiConfig.items}?search=$query&limit=10&page=$currentPage';
+    setBusy(true);
+    rebuildUi();
+
+    currentPage = 1;
+    isLoading = false;
+    hasMoreResults = true;
+    searchQuery = query;
+    try {
+      final response = await _apiService.get(url);
+
+      if (response.containsKey('meta')) {
+        if (response['meta'].containsKey('last_page')) {
+          lastPage = response['meta']['last_page'];
+        }
       }
+
+      items.addAll(response['data'].map((item) => ItemModel.fromJson(item)));
+
+      items.length >= 10 ? hasMoreResults = false : hasMoreResults = true;
+
       logger.info("Items length: ${items.length.toString()}");
     } on ApiException catch (e) {
       logger.error("Error searching items: ${e.message}");
@@ -80,6 +166,39 @@ class SearchViewModel extends BaseViewModel {
       logger.error("Error searching items: ${e.toString()}");
       _snackbarService.showCustomSnackBar(
           message: e.toString(), variant: SnackbarType.error);
+    } finally {
+      rebuildUi();
+      setBusy(false);
+    }
+  }
+
+  void loadMoreItems() async {
+    if (!hasMoreResults && isLoading) return;
+
+    isLoading = true;
+    rebuildUi();
+    currentPage++;
+
+    final url =
+        '${ApiConfig.baseUrl}${ApiConfig.items}?search=$searchQuery&limit=10&page=$currentPage';
+
+    try {
+      final response = await _apiService.get(url);
+
+      final newItems =
+          response['data'].map((item) => ItemModel.fromJson(item)).toList();
+
+      newItems.length >= 10 ? hasMoreResults = true : hasMoreResults = false;
+
+      items.addAll(newItems);
+    } on ApiException catch (e) {
+      logger.error("Error loading more items: ${e.message}");
+      _snackbarService.showCustomSnackBar(
+          message: e.message, variant: SnackbarType.error);
+    } catch (e) {
+      logger.error("Error loading more items: ${e.toString()}");
+      _snackbarService.showCustomSnackBar(
+          message: 'Something went wrong', variant: SnackbarType.error);
     } finally {
       rebuildUi();
       setBusy(false);
