@@ -1158,4 +1158,24 @@ class MockGoogleSignInService extends _i1.Mock
 /// A class which mocks [StripeService].
 ///
 /// See the documentation for Mockito's code generation for more information.
-class MockStripeService extends _i1.Mock implements _i16.StripeService {}
+class MockStripeService extends _i1.Mock implements _i16.StripeService {
+  @override
+  _i5.Future<void> payWithPaymentSheet({
+    required int? amount,
+    String? currency = 'usd',
+    required _i4.BuildContext? context,
+  }) =>
+      (super.noSuchMethod(
+        Invocation.method(
+          #payWithPaymentSheet,
+          [],
+          {
+            #amount: amount,
+            #currency: currency,
+            #context: context,
+          },
+        ),
+        returnValue: _i5.Future<void>.value(),
+        returnValueForMissingStub: _i5.Future<void>.value(),
+      ) as _i5.Future<void>);
+}
