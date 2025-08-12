@@ -100,7 +100,7 @@ class SearchView extends StackedView<SearchViewModel> {
             ),
             const SizedBox(height: 15),
             Text(
-              "No Tournament Found",
+              isTournamentSearch ? "No Tournament Found" : "No Item Found",
               textAlign: TextAlign.center,
               style: GoogleFonts.poppins(
                 fontSize: 20,
@@ -112,7 +112,9 @@ class SearchView extends StackedView<SearchViewModel> {
             Padding(
               padding: const EdgeInsets.symmetric(horizontal: 26.0),
               child: Text(
-                "When you search for tournaments, they'll appear here.",
+                isTournamentSearch
+                    ? "When you search for tournaments, they'll appear here."
+                    : "When you search for items, they'll appear here.",
                 textAlign: TextAlign.center,
                 style: GoogleFonts.poppins(
                   fontSize: 16,
