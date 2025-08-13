@@ -366,7 +366,7 @@ class HomeView extends StackedView<HomeViewModel> {
 
   @override
   void onViewModelReady(HomeViewModel viewModel) async {
-    await viewModel.getSports();
+    await viewModel.init();
     super.onViewModelReady(viewModel);
   }
 }

@@ -11,6 +11,7 @@ import 'package:game_day_valet/models/tournament_model.dart';
 import 'package:game_day_valet/services/api_exception.dart';
 import 'package:game_day_valet/services/api_service.dart';
 import 'package:game_day_valet/services/logger_service.dart';
+import 'package:game_day_valet/services/pusher_service.dart';
 import 'package:game_day_valet/ui/common/app_colors.dart';
 import 'package:google_maps_flutter/google_maps_flutter.dart';
 import 'package:stacked/stacked.dart';
@@ -20,6 +21,8 @@ class HomeViewModel extends BaseViewModel {
   final _navigationService = locator<NavigationService>();
   final _apiService = locator<ApiService>();
   final _snackbarService = locator<SnackbarService>();
+  final _pusherService = locator<PusherService>();
+
   String selectedSport = ''; // Default selected sport
 
   TextEditingController searchController = TextEditingController();
@@ -34,6 +37,11 @@ class HomeViewModel extends BaseViewModel {
 
   void navigateToRentalBook(int tournamentId) {
     _navigationService.navigateToAddRentalsView();
+  }
+
+  Future<void> init() async {
+    await _pusherService.initialize();
+    await getSports();
   }
 
   Future<void> getSports() async {

@@ -22,6 +22,15 @@ class ApiService {
     };
   }
 
+  Future<Map<String, String>> getPusherHeaders() async {
+    final token = await _secureStorageService.getToken();
+    return {
+      'Content-Type': 'application/x-www-form-urlencoded',
+      if (token != null) 'Authorization': 'Bearer $token',
+      'Accept': 'application/json',
+    };
+  }
+
   Future<Map<String, String>> _getPaymentHeaders() async {
     final token = await _secureStorageService.getToken();
     return {
