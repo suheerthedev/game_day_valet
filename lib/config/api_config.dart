@@ -34,5 +34,8 @@ class ApiConfig {
   //Payment
   static const createPaymentIntent = '/api/create-payment-intent';
 
+  //Chat
+  static const conversationsEndPoint = '/api/chat/conversations';
+
   // Add more as needed
 }
