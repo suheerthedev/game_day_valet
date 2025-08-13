@@ -16,6 +16,8 @@ class InboxViewModel extends ReactiveViewModel {
   List<ChatModel> get conversations => _chatService.conversations;
 
   void getUserConversations() async {
+    setBusy(true);
+    rebuildUi();
     try {
       await _chatService.getUserConversations();
     } on ApiException catch (e) {
@@ -26,6 +28,9 @@ class InboxViewModel extends ReactiveViewModel {
       logger.error("Error getting user conversations: $e");
       _snackbarService.showCustomSnackBar(
           message: "Something went wrong", variant: SnackbarType.error);
+    } finally {
+      rebuildUi();
+      setBusy(false);
     }
   }
 
