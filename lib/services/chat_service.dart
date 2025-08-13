@@ -35,4 +35,15 @@ class ChatService with ListenableServiceMixin {
       rethrow;
     }
   }
+
+  Future<void> sendMessage(String message, int conversationId) async {}
+
+  Future<void> startConversation(String message) async {
+    final url = ApiConfig.baseUrl + ApiConfig.sendMessageEndPoint;
+
+    try {
+      final response = await _apiService.get(url);
+    } on ApiException catch (e) {
+    } catch (e) {}
+  }
 }

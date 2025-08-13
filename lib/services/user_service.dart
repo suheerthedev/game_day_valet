@@ -28,8 +28,10 @@ class UserService with ListenableServiceMixin {
       logger.info("Fetch User Status: ${response['message']}");
     } on ApiException catch (e) {
       logger.error("Fetch User Status failed - API Exception", e);
+      rethrow;
     } catch (e) {
       logger.error("Fetch User Status failed - Unknown error", e);
+      throw ApiException("Fetch User Status failed - Unknown error");
     }
     notifyListeners();
   }
