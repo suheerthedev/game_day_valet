@@ -8,6 +8,7 @@ import 'package:game_day_valet/ui/widgets/common/main_button/main_button.dart';
 import 'package:game_day_valet/ui/widgets/common/main_text_field/main_text_field.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:iconsax_flutter/iconsax_flutter.dart';
+import 'package:iconsax_plus/iconsax_plus.dart';
 import 'package:stacked/stacked.dart';
 
 import 'edit_profile_viewmodel.dart';
@@ -50,20 +51,20 @@ class EditProfileView extends StackedView<EditProfileViewModel> {
                               child: Stack(children: [
                                 Align(
                                   alignment: Alignment.center,
-                                  child: viewModel.imagePath == null
-                                      ? Icon(Iconsax.user_copy,
-                                          size: 24.w, color: AppColors.white)
-                                      : ClipRRect(
-                                          clipBehavior: Clip.hardEdge,
-                                          borderRadius:
-                                              BorderRadius.circular(50.r),
-                                          child: Image.file(
-                                            File(viewModel.imagePath!),
-                                            fit: BoxFit.cover,
-                                            width: 100.w,
-                                            height: 100.h,
-                                          ),
-                                        ),
+                                  child: ClipRRect(
+                                      clipBehavior: Clip.hardEdge,
+                                      borderRadius: BorderRadius.circular(50.r),
+                                      child: Image(
+                                        image: viewModel.profileImageProvider,
+                                        fit: BoxFit.cover,
+                                        errorBuilder:
+                                            (context, error, stackTrace) =>
+                                                Icon(IconsaxPlusLinear.user,
+                                                    size: 24.w,
+                                                    color: AppColors.white),
+                                        width: 100.w,
+                                        height: 100.h,
+                                      )),
                                 ),
                                 Align(
                                   alignment: Alignment.bottomRight,

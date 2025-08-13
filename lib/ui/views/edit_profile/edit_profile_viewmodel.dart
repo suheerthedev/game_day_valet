@@ -1,5 +1,6 @@
 import 'dart:io';
 
+import 'package:cached_network_image/cached_network_image.dart';
 import 'package:flutter/material.dart';
 import 'package:game_day_valet/app/app.locator.dart';
 import 'package:game_day_valet/config/api_config.dart';
@@ -42,6 +43,19 @@ class EditProfileViewModel extends BaseViewModel {
   final TextEditingController emailController = TextEditingController();
   final TextEditingController phoneController = TextEditingController();
   final TextEditingController addressController = TextEditingController();
+
+  String? get profileImage => currentUser?.profileImage;
+
+  ImageProvider get profileImageProvider {
+    if (imageFile != null) {
+      return FileImage(imageFile!);
+    } else if (profileImage?.isNotEmpty == true) {
+      return CachedNetworkImageProvider(
+          "${ApiConfig.baseUrl}/storage/$profileImage");
+    } else {
+      return const AssetImage('assets/images/default_avatar.png'); // fallback
+    }
+  }
 
   void init() {
     nameController.text = currentUser?.name ?? '';
