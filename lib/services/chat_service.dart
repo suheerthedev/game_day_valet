@@ -23,14 +23,16 @@ class ChatService with ListenableServiceMixin {
     try {
       final response = await _apiService.get(url);
 
+      logger.info("User conversations: $response");
+
       _conversations.value =
-          response.map((e) => ChatModel.fromJson(e)).toList();
+          (response as List).map((e) => ChatModel.fromJson(e)).toList();
     } on ApiException catch (e) {
       logger.error("Error getting user conversations: ${e.message}");
       rethrow;
     } catch (e) {
       logger.error("Error getting user conversations: $e");
-      throw ApiException("Getting user conversations failed: $e");
+      rethrow;
     }
   }
 }

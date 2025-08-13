@@ -4,8 +4,8 @@ class MessageModel {
   final int id;
   final int conversationId;
   final int senderId;
-  final String content;
-  final int isRead;
+  final String? content;
+  final int? isRead;
   final String? createdAt;
   final String? updatedAt;
   final UserModel? sender;

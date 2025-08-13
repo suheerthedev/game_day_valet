@@ -1,19 +1,20 @@
+import 'package:game_day_valet/models/message_model.dart';
 import 'package:game_day_valet/models/user_model.dart';
 
 class ChatModel {
   final int id;
   final int userId;
-  final int responderId;
+  final int? responderId;
   final String? status;
   final String? createdAt;
   final String? updatedAt;
-  final List<String>? messages;
+  final List<MessageModel>? messages;
   final UserModel? responder;
 
   ChatModel({
     required this.id,
     required this.userId,
-    required this.responderId,
+    this.responderId,
     this.status,
     this.createdAt,
     this.updatedAt,
@@ -29,8 +30,13 @@ class ChatModel {
       status: json['status'],
       createdAt: json['created_at'],
       updatedAt: json['updated_at'],
-      messages: json['messages'],
-      responder: UserModel.fromJson(json['responder']),
+      messages: json['messages']
+          .map((e) => MessageModel.fromJson(e))
+          .toList()
+          .cast<MessageModel>(),
+      responder: json['responder'] != null
+          ? UserModel.fromJson(json['responder'])
+          : null,
     );
   }
 

@@ -8,6 +8,7 @@ import 'dart:io' as _i8;
 import 'dart:ui' as _i6;
 
 import 'package:flutter/material.dart' as _i4;
+import 'package:game_day_valet/models/chat_model.dart' as _i18;
 import 'package:game_day_valet/models/user_model.dart' as _i12;
 import 'package:game_day_valet/services/api_service.dart' as _i7;
 import 'package:game_day_valet/services/auth_service.dart' as _i10;
@@ -1220,4 +1221,65 @@ class MockStripeService extends _i1.Mock implements _i16.StripeService {
 /// A class which mocks [ChatService].
 ///
 /// See the documentation for Mockito's code generation for more information.
-class MockChatService extends _i1.Mock implements _i17.ChatService {}
+class MockChatService extends _i1.Mock implements _i17.ChatService {
+  @override
+  List<_i18.ChatModel> get conversations => (super.noSuchMethod(
+        Invocation.getter(#conversations),
+        returnValue: <_i18.ChatModel>[],
+        returnValueForMissingStub: <_i18.ChatModel>[],
+      ) as List<_i18.ChatModel>);
+
+  @override
+  int get listenersCount => (super.noSuchMethod(
+        Invocation.getter(#listenersCount),
+        returnValue: 0,
+        returnValueForMissingStub: 0,
+      ) as int);
+
+  @override
+  _i5.Future<void> getUserConversations() => (super.noSuchMethod(
+        Invocation.method(
+          #getUserConversations,
+          [],
+        ),
+        returnValue: _i5.Future<void>.value(),
+        returnValueForMissingStub: _i5.Future<void>.value(),
+      ) as _i5.Future<void>);
+
+  @override
+  void listenToReactiveValues(List<dynamic>? reactiveValues) =>
+      super.noSuchMethod(
+        Invocation.method(
+          #listenToReactiveValues,
+          [reactiveValues],
+        ),
+        returnValueForMissingStub: null,
+      );
+
+  @override
+  void addListener(void Function()? listener) => super.noSuchMethod(
+        Invocation.method(
+          #addListener,
+          [listener],
+        ),
+        returnValueForMissingStub: null,
+      );
+
+  @override
+  void removeListener(void Function()? listener) => super.noSuchMethod(
+        Invocation.method(
+          #removeListener,
+          [listener],
+        ),
+        returnValueForMissingStub: null,
+      );
+
+  @override
+  void notifyListeners() => super.noSuchMethod(
+        Invocation.method(
+          #notifyListeners,
+          [],
+        ),
+        returnValueForMissingStub: null,
+      );
+}
