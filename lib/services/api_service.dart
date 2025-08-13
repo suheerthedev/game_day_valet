@@ -70,6 +70,36 @@ class ApiService {
     }
   }
 
+  Future<dynamic> postTextAndMultiPart(
+      String url, Map<String, String> body, List<File> files) async {
+    // await _checkConnectivity();
+    try {
+      final headers = await _getHeaders(isMultiPart: true);
+
+      final request = http.MultipartRequest('POST', Uri.parse(url));
+
+      request.headers.addAll(headers);
+
+      request.fields.addAll(body);
+
+      for (File file in files) {
+        request.files
+            .add(await http.MultipartFile.fromPath('profile_image', file.path));
+      }
+
+      final streamedResponse = await request.send();
+      final response = await http.Response.fromStream(streamedResponse);
+
+      logger.info('Response: ${response.body}');
+
+      return _handleMultiPartResponse(response.statusCode, response.body);
+    } on SocketException {
+      throw NoInternetException();
+    } on TimeoutException {
+      throw RequestTimeoutException();
+    }
+  }
+
   Future<dynamic> postPayment(String url, Map<String, dynamic> body) async {
     // await _checkConnectivity();
     try {

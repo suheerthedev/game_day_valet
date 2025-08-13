@@ -1,3 +1,5 @@
+import 'dart:io';
+
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:game_day_valet/ui/common/app_colors.dart';
@@ -40,34 +42,50 @@ class EditProfileView extends StackedView<EditProfileViewModel> {
                     child: Center(
                       child: Column(
                         children: [
-                          CircleAvatar(
-                            radius: 50.r,
-                            backgroundColor: AppColors.secondary,
-                            child: Stack(children: [
-                              Align(
-                                alignment: Alignment.center,
-                                child: Icon(Iconsax.user_copy,
-                                    size: 24.w, color: AppColors.white),
-                              ),
-                              Align(
-                                alignment: Alignment.bottomRight,
-                                child: Container(
-                                  decoration: BoxDecoration(
-                                    shape: BoxShape.circle,
-                                    border: Border.all(
-                                      color: AppColors.secondary,
-                                      width: 2.w,
+                          GestureDetector(
+                            onTap: viewModel.pickImage,
+                            child: CircleAvatar(
+                              radius: 50.r,
+                              backgroundColor: AppColors.secondary,
+                              child: Stack(children: [
+                                Align(
+                                  alignment: Alignment.center,
+                                  child: viewModel.imagePath == null
+                                      ? Icon(Iconsax.user_copy,
+                                          size: 24.w, color: AppColors.white)
+                                      : ClipRRect(
+                                          clipBehavior: Clip.hardEdge,
+                                          borderRadius:
+                                              BorderRadius.circular(50.r),
+                                          child: Image.file(
+                                            File(viewModel.imagePath!),
+                                            fit: BoxFit.cover,
+                                            width: 100.w,
+                                            height: 100.h,
+                                          ),
+                                        ),
+                                ),
+                                Align(
+                                  alignment: Alignment.bottomRight,
+                                  child: Container(
+                                    decoration: BoxDecoration(
+                                      shape: BoxShape.circle,
+                                      border: Border.all(
+                                        color: AppColors.secondary,
+                                        width: 2.w,
+                                      ),
+                                    ),
+                                    child: CircleAvatar(
+                                      radius: 15.r,
+                                      backgroundColor: AppColors.white,
+                                      child: Icon(Icons.edit,
+                                          size: 20.w,
+                                          color: AppColors.secondary),
                                     ),
                                   ),
-                                  child: CircleAvatar(
-                                    radius: 15.r,
-                                    backgroundColor: AppColors.white,
-                                    child: Icon(Icons.edit,
-                                        size: 20.w, color: AppColors.secondary),
-                                  ),
                                 ),
-                              ),
-                            ]),
+                              ]),
+                            ),
                           ),
                           SizedBox(height: 40.h),
                           MainTextField(

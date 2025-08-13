@@ -1,3 +1,5 @@
+import 'dart:io';
+
 import 'package:flutter/material.dart';
 import 'package:game_day_valet/app/app.locator.dart';
 import 'package:game_day_valet/config/api_config.dart';
@@ -7,6 +9,7 @@ import 'package:game_day_valet/services/api_exception.dart';
 import 'package:game_day_valet/services/api_service.dart';
 import 'package:game_day_valet/services/logger_service.dart';
 import 'package:game_day_valet/services/user_service.dart';
+import 'package:image_picker/image_picker.dart';
 import 'package:stacked/stacked.dart';
 import 'package:stacked_services/stacked_services.dart';
 
@@ -15,6 +18,23 @@ class EditProfileViewModel extends BaseViewModel {
   final _navigationService = locator<NavigationService>();
   final _snackbarService = locator<SnackbarService>();
   final _userService = locator<UserService>();
+
+  final _imagePicker = ImagePicker();
+  File? imageFile;
+  String? get imagePath => imageFile?.path;
+
+  void pickImage() async {
+    final image = await _imagePicker.pickImage(source: ImageSource.gallery);
+
+    if (image == null) return;
+
+    imageFile = File(image.path);
+
+    print(imageFile);
+    print(imagePath);
+
+    rebuildUi();
+  }
 
   UserModel? get currentUser => _userService.currentUser;
 
@@ -38,13 +58,17 @@ class EditProfileViewModel extends BaseViewModel {
     rebuildUi();
 
     try {
-      final body = {
+      final body = <String, String>{
         "name": nameController.text,
         "contact_number": phoneController.text,
         "address": addressController.text,
       };
 
-      final response = await _apiService.put(url, body);
+      final response = await _apiService.postTextAndMultiPart(
+        url,
+        body,
+        [imageFile!],
+      );
 
       await _userService.fetchCurrentUser();
 
