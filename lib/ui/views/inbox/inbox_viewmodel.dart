@@ -1,4 +1,5 @@
 import 'package:game_day_valet/app/app.locator.dart';
+import 'package:game_day_valet/app/app.router.dart';
 import 'package:game_day_valet/core/enums/snackbar_type.dart';
 import 'package:game_day_valet/models/chat_model.dart';
 import 'package:game_day_valet/services/api_exception.dart';
@@ -9,6 +10,7 @@ import 'package:stacked_services/stacked_services.dart';
 
 class InboxViewModel extends ReactiveViewModel {
   final _chatService = locator<ChatService>();
+  final _navigationService = locator<NavigationService>();
   final _snackbarService = locator<SnackbarService>();
 
   List<ChatModel> get conversations => _chatService.conversations;
@@ -25,6 +27,10 @@ class InboxViewModel extends ReactiveViewModel {
       _snackbarService.showCustomSnackBar(
           message: "Something went wrong", variant: SnackbarType.error);
     }
+  }
+
+  void startNewConversation() {
+    _navigationService.navigateToChatView();
   }
 
   @override

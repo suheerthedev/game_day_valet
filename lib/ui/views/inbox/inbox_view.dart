@@ -82,7 +82,9 @@ class InboxView extends StackedView<InboxViewModel> {
             )),
       ),
       floatingActionButton: FloatingActionButton(
-        onPressed: () {},
+        onPressed: () {
+          viewModel.startNewConversation();
+        },
         backgroundColor: AppColors.secondary,
         shape: RoundedRectangleBorder(
           borderRadius: BorderRadius.circular(10.r),
