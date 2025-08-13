@@ -20,7 +20,7 @@ class StripeService {
     final url = ApiConfig.baseUrl + ApiConfig.createPaymentIntent;
 
     try {
-      final response = await _apiService.post(url, {
+      final response = await _apiService.postPayment(url, {
         'amount': amount,
         'currency': currency,
       });
