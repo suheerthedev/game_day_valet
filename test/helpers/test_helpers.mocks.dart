@@ -726,6 +726,42 @@ class MockApiService extends _i1.Mock implements _i7.ApiService {
       ) as _i5.Future<dynamic>);
 
   @override
+  _i5.Future<dynamic> postTextAndMultiPart(
+    String? url,
+    Map<String, String>? body,
+    List<_i8.File>? files,
+  ) =>
+      (super.noSuchMethod(
+        Invocation.method(
+          #postTextAndMultiPart,
+          [
+            url,
+            body,
+            files,
+          ],
+        ),
+        returnValue: _i5.Future<dynamic>.value(),
+        returnValueForMissingStub: _i5.Future<dynamic>.value(),
+      ) as _i5.Future<dynamic>);
+
+  @override
+  _i5.Future<dynamic> postPayment(
+    String? url,
+    Map<String, dynamic>? body,
+  ) =>
+      (super.noSuchMethod(
+        Invocation.method(
+          #postPayment,
+          [
+            url,
+            body,
+          ],
+        ),
+        returnValue: _i5.Future<dynamic>.value(),
+        returnValueForMissingStub: _i5.Future<dynamic>.value(),
+      ) as _i5.Future<dynamic>);
+
+  @override
   _i5.Future<dynamic> put(
     String? url,
     Map<String, dynamic>? body,

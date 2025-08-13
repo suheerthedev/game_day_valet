@@ -37,6 +37,7 @@ import 'package:game_day_valet/ui/views/add_rentals/add_rentals_view.dart';
 import 'package:game_day_valet/ui/views/checkout/checkout_view.dart';
 import 'package:game_day_valet/services/stripe_service.dart';
 import 'package:game_day_valet/ui/views/search/search_view.dart';
+import 'package:game_day_valet/ui/views/inbox/inbox_view.dart';
 // @stacked-import
 
 @StackedApp(
@@ -75,6 +76,7 @@ import 'package:game_day_valet/ui/views/search/search_view.dart';
         page: SearchView,
         transitionsBuilder: TransitionsBuilders.fadeIn,
         durationInMilliseconds: 500),
+    MaterialRoute(page: InboxView),
 // @stacked-route
   ],
   dependencies: [
