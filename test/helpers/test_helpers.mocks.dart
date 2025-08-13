@@ -17,6 +17,7 @@ import 'package:game_day_valet/services/chat_service.dart' as _i18;
 import 'package:game_day_valet/services/connectivity_service.dart' as _i14;
 import 'package:game_day_valet/services/google_sign_in_service.dart' as _i16;
 import 'package:game_day_valet/services/logger_service.dart' as _i15;
+import 'package:game_day_valet/services/pusher_service.dart' as _i20;
 import 'package:game_day_valet/services/secure_storage_service.dart' as _i10;
 import 'package:game_day_valet/services/stripe_service.dart' as _i17;
 import 'package:game_day_valet/services/user_service.dart' as _i12;
@@ -1285,7 +1286,7 @@ class MockChatService extends _i1.Mock implements _i18.ChatService {
       );
 
   @override
-  _i6.Future<void> sendMessage(
+  _i6.Future<_i2.MessageModel> sendMessage(
     String? message,
     int? conversationId,
   ) =>
@@ -1297,9 +1298,28 @@ class MockChatService extends _i1.Mock implements _i18.ChatService {
             conversationId,
           ],
         ),
-        returnValue: _i6.Future<void>.value(),
-        returnValueForMissingStub: _i6.Future<void>.value(),
-      ) as _i6.Future<void>);
+        returnValue: _i6.Future<_i2.MessageModel>.value(_FakeMessageModel_0(
+          this,
+          Invocation.method(
+            #sendMessage,
+            [
+              message,
+              conversationId,
+            ],
+          ),
+        )),
+        returnValueForMissingStub:
+            _i6.Future<_i2.MessageModel>.value(_FakeMessageModel_0(
+          this,
+          Invocation.method(
+            #sendMessage,
+            [
+              message,
+              conversationId,
+            ],
+          ),
+        )),
+      ) as _i6.Future<_i2.MessageModel>);
 
   @override
   _i6.Future<_i2.MessageModel> startConversation(String? message) =>
@@ -1362,3 +1382,8 @@ class MockChatService extends _i1.Mock implements _i18.ChatService {
         returnValueForMissingStub: null,
       );
 }
+
+/// A class which mocks [PusherService].
+///
+/// See the documentation for Mockito's code generation for more information.
+class MockPusherService extends _i1.Mock implements _i20.PusherService {}

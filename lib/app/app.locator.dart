@@ -18,6 +18,7 @@ import '../services/chat_service.dart';
 import '../services/connectivity_service.dart';
 import '../services/google_sign_in_service.dart';
 import '../services/logger_service.dart';
+import '../services/pusher_service.dart';
 import '../services/secure_storage_service.dart';
 import '../services/stripe_service.dart';
 import '../services/user_service.dart';
@@ -46,4 +47,5 @@ Future<void> setupLocator({
   locator.registerLazySingleton(() => GoogleSignInService());
   locator.registerLazySingleton(() => StripeService());
   locator.registerLazySingleton(() => ChatService());
+  locator.registerLazySingleton(() => PusherService());
 }
