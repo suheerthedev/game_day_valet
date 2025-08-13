@@ -15,6 +15,8 @@ dependencies:
   floating_chat_button: ^1.1.0
   flutter:
     sdk: flutter
+  flutter_chat_core: ^0.0.9
+  flutter_chat_ui: ^1.6.15
   flutter_dotenv: ^5.2.1
   flutter_html: ^3.0.0
   flutter_screenutil: ^5.9.3
