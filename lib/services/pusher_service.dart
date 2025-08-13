@@ -76,7 +76,7 @@ class PusherService {
     }
 
     final myChannel = await _pusher!.subscribe(
-      channelName: 'support',
+      channelName: 'conversation.$userId',
       onEvent: (event) {
         print("New message received: ${event.eventName} - ${event.data}");
 
