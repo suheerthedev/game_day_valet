@@ -22,7 +22,7 @@ class FaqViewModel extends BaseViewModel {
   }
 
   void onChatTap() {
-    _navigationService.navigateToChatView();
+    _navigationService.navigateToInboxView();
   }
 
   void getFaqs() async {

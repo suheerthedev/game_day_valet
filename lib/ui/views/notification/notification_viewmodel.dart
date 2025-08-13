@@ -21,6 +21,6 @@ class NotificationViewModel extends BaseViewModel {
   ];
 
   void onChatTap() {
-    _navigationService.navigateToChatView();
+    _navigationService.navigateToInboxView();
   }
 }

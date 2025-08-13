@@ -202,7 +202,7 @@ class HomeViewModel extends BaseViewModel {
   // }
 
   void onChatTap() {
-    _navigationService.navigateToChatView();
+    _navigationService.navigateToInboxView();
   }
 
   static const CameraPosition _kGooglePlex = CameraPosition(

@@ -32,7 +32,7 @@ class RentalStatusViewModel extends BaseViewModel {
   bool isRunning = false;
 
   void onChatTap() {
-    _navigationService.navigateToChatView();
+    _navigationService.navigateToInboxView();
   }
 
   void startPeriodicTimer() {

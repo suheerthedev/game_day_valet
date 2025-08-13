@@ -56,7 +56,7 @@ class ProfileViewModel extends ReactiveViewModel {
   void onNotificationsTap() {}
 
   void onChatTap() {
-    _navigationService.navigateToChatView();
+    _navigationService.navigateToInboxView();
   }
 
   @override
