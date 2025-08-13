@@ -63,5 +63,41 @@ class PusherService {
     );
     await _pusher!.connect();
     _isInitialized = true;
+
+    await subscribeToChannel('support', (data) {
+      logger.info('New message received: $data');
+    });
+  }
+
+  Future<void> subscribeToChannel(
+      String userId, Function(dynamic) onMessageReceived) async {
+    if (_isInitialized) {
+      await initialize();
+    }
+
+    final myChannel = await _pusher!.subscribe(
+      channelName: 'support',
+      onEvent: (event) {
+        print("New message received: ${event.eventName} - ${event.data}");
+
+        onMessageReceived(event.data);
+      },
+      // onSubscriptionSucceeded: (channelName, data) {
+      //   logger.info('Successfully subscribed to: $channelName');
+      // },
+      // onSubscriptionError: (message, error) {
+      //   logger.error('Subscription error: $message');
+      // },
+    );
+
+    print("My Channel: ${myChannel.channelName}");
+  }
+
+  Future<void> unsubscribeFromChannel(String userId) async {
+    if (_pusher != null) {
+      await _pusher!
+          .unsubscribe(channelName: 'private-message.created.$userId');
+      print('Unsubscribed from: private-message.created.$userId');
+    }
   }
 }
