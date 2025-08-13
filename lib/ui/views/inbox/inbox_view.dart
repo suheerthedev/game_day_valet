@@ -1,3 +1,4 @@
+import 'package:cached_network_image/cached_network_image.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:game_day_valet/ui/common/app_colors.dart';
@@ -38,6 +39,7 @@ class InboxView extends StackedView<InboxViewModel> {
                 color: AppColors.grey200,
               ),
               itemBuilder: (context, index) {
+                final conversation = viewModel.conversations[index];
                 if (viewModel.conversations.isEmpty) {
                   return _buildEmptyState();
                 }
@@ -48,17 +50,29 @@ class InboxView extends StackedView<InboxViewModel> {
                     radius: 22.r,
                     backgroundColor: AppColors.secondary,
                     child: ClipRRect(
-                      borderRadius: BorderRadius.circular(22.r),
-                      clipBehavior: Clip.hardEdge,
-                      child: Image.asset('assets/images/pfp.png'),
-                    ),
+                        borderRadius: BorderRadius.circular(22.r),
+                        clipBehavior: Clip.hardEdge,
+                        child: CachedNetworkImage(
+                          imageUrl: conversation.responder?.profileImage ??
+                              "https://ui-avatars.com/api/?name=${conversation.responder?.name}",
+                          placeholder: (context, url) => const Center(
+                            child: CircularProgressIndicator(
+                              color: AppColors.white,
+                            ),
+                          ),
+                          errorWidget: (context, url, error) => Icon(
+                              IconsaxPlusLinear.user,
+                              color: AppColors.white,
+                              size: 20.r),
+                        )),
                   ),
-                  title: Text("Katie",
+                  title: Text(conversation.responder?.name ?? "Unknown",
                       style: GoogleFonts.poppins(
                           fontSize: 16.sp,
                           fontWeight: FontWeight.w600,
                           color: AppColors.textPrimary)),
-                  subtitle: Text("Hello, how are you?",
+                  subtitle: Text(
+                      conversation.messages?.last.content ?? "No messages",
                       style: GoogleFonts.poppins(
                           fontSize: 12.sp,
                           fontWeight: FontWeight.w400,
