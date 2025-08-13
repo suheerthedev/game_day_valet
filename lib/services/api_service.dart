@@ -17,6 +17,15 @@ class ApiService {
     final token = await _secureStorageService.getToken();
     return {
       'Accept': 'application/json',
+      // 'Content-Type': 'application/json',
+      if (token != null) 'Authorization': 'Bearer $token',
+    };
+  }
+
+  Future<Map<String, String>> _getPaymentHeaders() async {
+    final token = await _secureStorageService.getToken();
+    return {
+      'Accept': 'application/json',
       'Content-Type': 'application/json',
       if (token != null) 'Authorization': 'Bearer $token',
     };
@@ -47,6 +56,24 @@ class ApiService {
     // await _checkConnectivity();
     try {
       final headers = await _getHeaders();
+      final response = await http
+          .post(Uri.parse(url), headers: headers, body: body)
+          .timeout(const Duration(seconds: 30));
+
+      logger.info('Response: ${response.body}');
+
+      return _handleResponse(response);
+    } on SocketException {
+      throw NoInternetException();
+    } on TimeoutException {
+      throw RequestTimeoutException();
+    }
+  }
+
+  Future<dynamic> postPayment(String url, Map<String, dynamic> body) async {
+    // await _checkConnectivity();
+    try {
+      final headers = await _getPaymentHeaders();
       final response = await http
           .post(Uri.parse(url), headers: headers, body: jsonEncode(body))
           .timeout(const Duration(seconds: 30));

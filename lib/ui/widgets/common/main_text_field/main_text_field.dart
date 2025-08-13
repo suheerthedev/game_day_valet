@@ -20,6 +20,7 @@ class MainTextField extends StackedView<MainTextFieldModel> {
   final Widget? suffixIcon;
   final bool obscureText;
   final BorderRadius? borderRadius;
+  final bool readOnly;
   const MainTextField({
     super.key,
     required this.label,
@@ -35,6 +36,7 @@ class MainTextField extends StackedView<MainTextFieldModel> {
     this.hasSuffixIcon = false,
     this.obscureText = false,
     this.borderRadius,
+    this.readOnly = false,
   });
 
   @override
@@ -47,6 +49,7 @@ class MainTextField extends StackedView<MainTextFieldModel> {
       width: 340.w,
       height: 58.h,
       child: TextField(
+        readOnly: readOnly,
         obscureText: obscureText,
         controller: controller,
         cursorColor: cursorColor ?? AppColors.primary,

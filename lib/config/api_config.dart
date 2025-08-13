@@ -13,6 +13,7 @@ class ApiConfig {
   static const googleSignInEndPoint = '/api/auth/google/login';
 
   static const meEndPoint = '/api/me';
+  static const profileEndPoint = '/api/profile';
 
   static const sportsEndPoint = '/api/sports';
   static const tournamentsBySportEndPoint = '/api/sports/tournaments';

@@ -86,6 +86,7 @@ class EditProfileView extends StackedView<EditProfileViewModel> {
                     SizedBox(height: 10.h),
                     MainTextField(
                       label: 'Email',
+                      readOnly: true,
                       controller: viewModel.emailController,
                       labelColor: AppColors.textHint,
                       cursorColor: AppColors.primary,
