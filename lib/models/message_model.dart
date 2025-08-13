@@ -17,7 +17,7 @@ class MessageModel {
     required this.conversationId,
     required this.senderId,
     required this.content,
-    required this.isRead,
+    this.isRead,
     this.createdAt,
     this.updatedAt,
     this.conversation,

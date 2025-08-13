@@ -86,7 +86,7 @@ class ChatView extends StackedView<ChatViewModel> {
       ),
       child: Container(
         decoration: BoxDecoration(
-          color: isCurrentUser ? AppColors.grey300 : AppColors.secondary,
+          color: isCurrentUser ? AppColors.secondary : AppColors.grey300,
           borderRadius: BorderRadius.circular(16.r),
           boxShadow: [
             BoxShadow(

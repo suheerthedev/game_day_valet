@@ -87,18 +87,20 @@ class ChatService with ListenableServiceMixin {
   }
 
   Future<MessageModel> startConversation(String message) async {
+    logger.info("Starting conversation: $message");
     final url = ApiConfig.baseUrl + ApiConfig.sendMessageEndPoint;
 
     try {
       final response = await _apiService.post(url, {
         'content': message,
-        'conversation_id': null,
+        // 'conversation_id': null,
       });
 
       logger.info("Conversation started: $response");
 
-      _messages.value.add(MessageModel.fromJson(response));
-      return MessageModel.fromJson(response);
+      _messages.value.add(MessageModel.fromJson(response['message']));
+      getUserConversations();
+      return MessageModel.fromJson(response['message']);
     } on ApiException catch (e) {
       logger.error("Error sending message: ${e.message}");
       rethrow;
