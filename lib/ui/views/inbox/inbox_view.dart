@@ -45,7 +45,9 @@ class InboxView extends StackedView<InboxViewModel> {
                 }
                 return ListTile(
                   contentPadding: EdgeInsets.zero,
-                  onTap: () {},
+                  onTap: () {
+                    viewModel.navigateToChatView(conversation.id);
+                  },
                   leading: CircleAvatar(
                     radius: 22.r,
                     backgroundColor: AppColors.secondary,

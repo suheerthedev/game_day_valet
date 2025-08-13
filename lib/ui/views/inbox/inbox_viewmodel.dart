@@ -29,6 +29,12 @@ class InboxViewModel extends ReactiveViewModel {
     }
   }
 
+  void navigateToChatView(int conversationId) {
+    logger
+        .info("Navigating to chat view with conversation id: $conversationId");
+    _navigationService.navigateToChatView(conversationId: conversationId);
+  }
+
   void startNewConversation() {
     _navigationService.navigateToChatView();
   }

@@ -357,8 +357,12 @@ class StackedRouter extends _i1.RouterBase {
       );
     },
     _i20.ChatView: (data) {
+      final args = data.getArgs<ChatViewArguments>(
+        orElse: () => const ChatViewArguments(),
+      );
       return _i28.MaterialPageRoute<dynamic>(
-        builder: (context) => const _i20.ChatView(),
+        builder: (context) =>
+            _i20.ChatView(key: args.key, conversationId: args.conversationId),
         settings: data,
       );
     },
@@ -455,6 +459,33 @@ class ResetPasswordViewArguments {
   @override
   int get hashCode {
     return key.hashCode ^ email.hashCode ^ code.hashCode;
+  }
+}
+
+class ChatViewArguments {
+  const ChatViewArguments({
+    this.key,
+    this.conversationId,
+  });
+
+  final _i28.Key? key;
+
+  final int? conversationId;
+
+  @override
+  String toString() {
+    return '{"key": "$key", "conversationId": "$conversationId"}';
+  }
+
+  @override
+  bool operator ==(covariant ChatViewArguments other) {
+    if (identical(this, other)) return true;
+    return other.key == key && other.conversationId == conversationId;
+  }
+
+  @override
+  int get hashCode {
+    return key.hashCode ^ conversationId.hashCode;
   }
 }
 
@@ -829,14 +860,17 @@ extension NavigatorStateExtension on _i29.NavigationService {
         transition: transition);
   }
 
-  Future<dynamic> navigateToChatView([
+  Future<dynamic> navigateToChatView({
+    _i28.Key? key,
+    int? conversationId,
     int? routerId,
     bool preventDuplicates = true,
     Map<String, String>? parameters,
     Widget Function(BuildContext, Animation<double>, Animation<double>, Widget)?
         transition,
-  ]) async {
+  }) async {
     return navigateTo<dynamic>(Routes.chatView,
+        arguments: ChatViewArguments(key: key, conversationId: conversationId),
         id: routerId,
         preventDuplicates: preventDuplicates,
         parameters: parameters,
@@ -1214,14 +1248,17 @@ extension NavigatorStateExtension on _i29.NavigationService {
         transition: transition);
   }
 
-  Future<dynamic> replaceWithChatView([
+  Future<dynamic> replaceWithChatView({
+    _i28.Key? key,
+    int? conversationId,
     int? routerId,
     bool preventDuplicates = true,
     Map<String, String>? parameters,
     Widget Function(BuildContext, Animation<double>, Animation<double>, Widget)?
         transition,
-  ]) async {
+  }) async {
     return replaceWith<dynamic>(Routes.chatView,
+        arguments: ChatViewArguments(key: key, conversationId: conversationId),
         id: routerId,
         preventDuplicates: preventDuplicates,
         parameters: parameters,

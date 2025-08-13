@@ -36,6 +36,8 @@ class ApiConfig {
 
   //Chat
   static const conversationsEndPoint = '/api/chat/conversations';
+  static const conversationMessagesEndPoint =
+      '/api/chat/conversations/messages';
   static const sendMessageEndPoint = '/api/chat/send';
 
   // Add more as needed

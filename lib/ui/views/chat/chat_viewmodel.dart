@@ -1,6 +1,101 @@
 import 'package:flutter/material.dart';
+// ignore: depend_on_referenced_packages
+import 'package:flutter_chat_types/flutter_chat_types.dart' as types;
+import 'package:game_day_valet/app/app.locator.dart';
+import 'package:game_day_valet/core/enums/snackbar_type.dart';
+import 'package:game_day_valet/models/message_model.dart';
+import 'package:game_day_valet/models/user_model.dart';
+import 'package:game_day_valet/services/api_exception.dart';
+import 'package:game_day_valet/services/chat_service.dart';
+import 'package:game_day_valet/services/logger_service.dart';
+import 'package:game_day_valet/services/user_service.dart';
 import 'package:stacked/stacked.dart';
+import 'package:stacked_services/stacked_services.dart';
 
 class ChatViewModel extends BaseViewModel {
+  final _chatService = locator<ChatService>();
+  final _snackbarService = locator<SnackbarService>();
+  final _userService = locator<UserService>();
+
+  UserModel? get currentUser => _userService.currentUser;
+
+  List<MessageModel> get messages => _chatService.messages;
+
+  List<types.Message> get chatMessages {
+    // final serviceMessages = _chatService.activeConversationMessages;
+    return convertToChatMessages(messages);
+  }
+
+  List<types.Message> convertToChatMessages(List<MessageModel> messages) {
+    return messages.map((message) {
+      return types.TextMessage(
+        id: message.id.toString(),
+        text: message.content ?? '',
+        createdAt:
+            DateTime.parse(message.createdAt ?? '').millisecondsSinceEpoch,
+        author: types.User(
+          id: message.senderId.toString(),
+          firstName: message.sender?.name ?? '',
+        ),
+      );
+    }).toList();
+  }
+
+  types.User? get currentUserForChat => types.User(
+        id: currentUser?.id.toString() ?? '',
+        firstName: currentUser?.name ?? '',
+      );
+
+  // void handleSendPressed(types.PartialText message) async {
+  //   try {
+  //     final sent =
+  //         await _chatService.sendMessage(conversationId!, message.text);
+  //     print("Sent: $sent");
+
+  //     _chatService.addMessageToActiveConversation(sent);
+
+  //     // final newMessage = types.TextMessage(
+  //     //     author: types.User(
+  //     //       id: currentUser!.id.toString(),
+  //     //       firstName: currentUser!.fullName,
+  //     //     ),
+  //     //     id: sent.id.toString(),
+  //     //     text: sent.body,
+  //     //     createdAt: DateTime.parse(sent.createdAt).millisecondsSinceEpoch);
+
+  //     // _chatMessages.insert(0, newMessage);
+  //   } on ApiException catch (e) {
+  //     print('Error sending message: $e');
+  //     // _setState(ViewState.error, errorMessage: e.toString());
+  //   } finally {
+  //     rebuildUi();
+  //   }
+  // }
+
+  void getConversationMessages(int conversationId) async {
+    setBusy(true);
+    rebuildUi();
+    try {
+      await _chatService.getConversationMessages(conversationId);
+
+      logger.info("Conversation messages: ${messages.length}");
+    } on ApiException catch (e) {
+      logger.error("Error getting user conversations: ${e.message}");
+      _snackbarService.showCustomSnackBar(
+          message: e.message, variant: SnackbarType.error);
+    } catch (e) {
+      logger.error("Error getting user conversations: $e");
+      _snackbarService.showCustomSnackBar(
+          message: "Something went wrong", variant: SnackbarType.error);
+    } finally {
+      rebuildUi();
+      setBusy(false);
+    }
+  }
+
+  void clearMessages() {
+    _chatService.clearMessages();
+  }
+
   TextEditingController messageController = TextEditingController();
 }

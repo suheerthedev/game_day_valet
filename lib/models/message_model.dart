@@ -1,3 +1,4 @@
+import 'package:game_day_valet/models/conversation_model.dart';
 import 'package:game_day_valet/models/user_model.dart';
 
 class MessageModel {
@@ -8,6 +9,7 @@ class MessageModel {
   final int? isRead;
   final String? createdAt;
   final String? updatedAt;
+  final ConversationModel? conversation;
   final UserModel? sender;
 
   MessageModel({
@@ -18,6 +20,7 @@ class MessageModel {
     required this.isRead,
     this.createdAt,
     this.updatedAt,
+    this.conversation,
     this.sender,
   });
 
@@ -30,7 +33,11 @@ class MessageModel {
       isRead: json['is_read'],
       createdAt: json['created_at'],
       updatedAt: json['updated_at'],
-      sender: UserModel.fromJson(json['sender']),
+      conversation: json['conversation'] != null
+          ? ConversationModel.fromJson(json['conversation'])
+          : null,
+      sender:
+          json['sender'] != null ? UserModel.fromJson(json['sender']) : null,
     );
   }
 }
