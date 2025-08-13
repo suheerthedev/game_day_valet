@@ -77,7 +77,7 @@ class ChatView extends StackedView<ChatViewModel> {
     required bool nextMessageInGroup,
   }) {
     final isCurrentUser =
-        message.author.id == _viewModel.messages.first.senderId.toString();
+        message.author.id == _viewModel.currentUserForChat!.id;
 
     return Container(
       margin: EdgeInsets.symmetric(
