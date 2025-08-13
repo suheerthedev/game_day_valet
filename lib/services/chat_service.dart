@@ -46,8 +46,9 @@ class ChatService with ListenableServiceMixin {
     try {
       final response = await _apiService.get(url);
 
-      _messages.value =
-          (response as List).map((e) => MessageModel.fromJson(e)).toList();
+      for (var message in response) {
+        _messages.value.insert(0, MessageModel.fromJson(message));
+      }
     } on ApiException catch (e) {
       logger.error("Error getting conversation messages: ${e.message}");
       rethrow;
@@ -61,16 +62,21 @@ class ChatService with ListenableServiceMixin {
     _messages.value = [];
   }
 
-  Future<void> sendMessage(String message, int conversationId) async {
+  Future<MessageModel> sendMessage(String message, int conversationId) async {
     final url = ApiConfig.baseUrl + ApiConfig.sendMessageEndPoint;
 
-    try {
-      final response = await _apiService.post(url, {
-        'content': message,
-        'conversationId': conversationId,
-      });
+    final body = {
+      'content': message,
+      'conversation_id': conversationId.toString(),
+    };
 
-      _messages.value.add(MessageModel.fromJson(response));
+    try {
+      final response = await _apiService.post(url, body);
+
+      logger.info("Sent message: $response");
+
+      _messages.value.insert(0, MessageModel.fromJson(response['message']));
+      return MessageModel.fromJson(response['message']);
     } on ApiException catch (e) {
       logger.error("Error sending message: ${e.message}");
       rethrow;
@@ -80,16 +86,19 @@ class ChatService with ListenableServiceMixin {
     }
   }
 
-  Future<void> startConversation(String message) async {
+  Future<MessageModel> startConversation(String message) async {
     final url = ApiConfig.baseUrl + ApiConfig.sendMessageEndPoint;
 
     try {
       final response = await _apiService.post(url, {
         'content': message,
-        'conversationId': null,
+        'conversation_id': null,
       });
 
+      logger.info("Conversation started: $response");
+
       _messages.value.add(MessageModel.fromJson(response));
+      return MessageModel.fromJson(response);
     } on ApiException catch (e) {
       logger.error("Error sending message: ${e.message}");
       rethrow;

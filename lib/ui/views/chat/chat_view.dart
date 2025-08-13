@@ -43,7 +43,9 @@ class ChatView extends StackedView<ChatViewModel> {
               theme: _buildChatTheme(),
               bubbleBuilder: _bubbleBuilder,
               messages: viewModel.chatMessages,
-              onSendPressed: (types.PartialText text) {},
+              onSendPressed: (types.PartialText text) {
+                viewModel.handleSendPressed(text);
+              },
               user: viewModel.currentUserForChat!,
             ),
     );
@@ -51,6 +53,10 @@ class ChatView extends StackedView<ChatViewModel> {
 
   ChatTheme _buildChatTheme() {
     return DefaultChatTheme(
+      deliveredIcon: const Icon(
+        Icons.check,
+        color: AppColors.white,
+      ),
       backgroundColor: AppColors.scaffoldBackground,
       primaryColor: AppColors.secondary,
       secondaryColor: const Color(0xfff5f5f7),
@@ -80,7 +86,7 @@ class ChatView extends StackedView<ChatViewModel> {
       ),
       child: Container(
         decoration: BoxDecoration(
-          color: isCurrentUser ? AppColors.secondary : AppColors.primary,
+          color: isCurrentUser ? AppColors.grey300 : AppColors.secondary,
           borderRadius: BorderRadius.circular(16.r),
           boxShadow: [
             BoxShadow(
@@ -99,7 +105,7 @@ class ChatView extends StackedView<ChatViewModel> {
   ChatViewModel viewModelBuilder(
     BuildContext context,
   ) =>
-      ChatViewModel();
+      ChatViewModel(conversationId: conversationId);
 
   @override
   void onViewModelReady(ChatViewModel viewModel) {

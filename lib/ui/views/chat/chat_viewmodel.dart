@@ -17,12 +17,14 @@ class ChatViewModel extends BaseViewModel {
   final _snackbarService = locator<SnackbarService>();
   final _userService = locator<UserService>();
 
+  int? conversationId;
+  ChatViewModel({this.conversationId});
+
   UserModel? get currentUser => _userService.currentUser;
 
   List<MessageModel> get messages => _chatService.messages;
 
   List<types.Message> get chatMessages {
-    // final serviceMessages = _chatService.activeConversationMessages;
     return convertToChatMessages(messages);
   }
 
@@ -46,31 +48,72 @@ class ChatViewModel extends BaseViewModel {
         firstName: currentUser?.name ?? '',
       );
 
-  // void handleSendPressed(types.PartialText message) async {
-  //   try {
-  //     final sent =
-  //         await _chatService.sendMessage(conversationId!, message.text);
-  //     print("Sent: $sent");
+  void handleSendPressed(types.PartialText message) async {
+    if (conversationId != null) {
+      _handleSendMessage(message);
+    } else {
+      _handleStartConversation(message);
+    }
+  }
 
-  //     _chatService.addMessageToActiveConversation(sent);
+  void _handleStartConversation(types.PartialText message) async {
+    try {
+      final sent = await _chatService.startConversation(message.text);
+      logger.info("Sent: $sent");
 
-  //     // final newMessage = types.TextMessage(
-  //     //     author: types.User(
-  //     //       id: currentUser!.id.toString(),
-  //     //       firstName: currentUser!.fullName,
-  //     //     ),
-  //     //     id: sent.id.toString(),
-  //     //     text: sent.body,
-  //     //     createdAt: DateTime.parse(sent.createdAt).millisecondsSinceEpoch);
+      conversationId = sent.conversationId;
 
-  //     // _chatMessages.insert(0, newMessage);
-  //   } on ApiException catch (e) {
-  //     print('Error sending message: $e');
-  //     // _setState(ViewState.error, errorMessage: e.toString());
-  //   } finally {
-  //     rebuildUi();
-  //   }
-  // }
+      // _chatService.addMessageToActiveConversation(sent);
+
+      final newMessage = types.TextMessage(
+          author: types.User(
+            id: currentUser!.id.toString(),
+            firstName: currentUser!.name,
+          ),
+          id: sent.id.toString(),
+          text: sent.content ?? '',
+          createdAt:
+              DateTime.parse(sent.createdAt ?? '').millisecondsSinceEpoch);
+
+      chatMessages.insert(0, newMessage);
+    } on ApiException catch (e) {
+      logger.error("Error sending message: $e");
+      // _setState(ViewState.error, errorMessage: e.toString());
+    } catch (e) {
+      logger.error("Error sending message: $e");
+    } finally {
+      rebuildUi();
+    }
+  }
+
+  void _handleSendMessage(types.PartialText message) async {
+    try {
+      final sent =
+          await _chatService.sendMessage(message.text, conversationId!);
+      logger.info("Sent: $sent");
+
+      // _chatService.addMessageToActiveConversation(sent);
+
+      // final newMessage = types.TextMessage(
+      //     author: types.User(
+      //       id: currentUser?.id.toString() ?? '',
+      //       firstName: currentUser?.name ?? '',
+      //     ),
+      //     id: sent.id.toString(),
+      //     text: sent.content ?? '',
+      //     createdAt:
+      //         DateTime.parse(sent.createdAt ?? '').millisecondsSinceEpoch);
+
+      // chatMessages.insert(0, newMessage);
+    } on ApiException catch (e) {
+      logger.error("Error sending message: $e");
+      // _setState(ViewState.error, errorMessage: e.toString());
+    } catch (e) {
+      logger.error("Error sending message: $e");
+    } finally {
+      rebuildUi();
+    }
+  }
 
   void getConversationMessages(int conversationId) async {
     setBusy(true);
@@ -78,7 +121,7 @@ class ChatViewModel extends BaseViewModel {
     try {
       await _chatService.getConversationMessages(conversationId);
 
-      logger.info("Conversation messages: ${messages.length}");
+      logger.info("Conversation messages: ${messages.last.content}");
     } on ApiException catch (e) {
       logger.error("Error getting user conversations: ${e.message}");
       _snackbarService.showCustomSnackBar(
