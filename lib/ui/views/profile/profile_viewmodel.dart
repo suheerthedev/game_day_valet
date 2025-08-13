@@ -6,12 +6,16 @@ import 'package:game_day_valet/services/user_service.dart';
 import 'package:stacked/stacked.dart';
 import 'package:stacked_services/stacked_services.dart';
 
-class ProfileViewModel extends BaseViewModel {
+class ProfileViewModel extends ReactiveViewModel {
   final _navigationService = locator<NavigationService>();
   final _userService = locator<UserService>();
   final _secureStorageService = locator<SecureStorageService>();
 
   UserModel? get currentUser => _userService.currentUser;
+
+  // ProfileViewModel() {
+  //   _userService.addListener(notifyListeners);
+  // }
 
   bool isLoggingOut = false;
 
@@ -54,4 +58,7 @@ class ProfileViewModel extends BaseViewModel {
   void onChatTap() {
     _navigationService.navigateToChatView();
   }
+
+  @override
+  List<ListenableServiceMixin> get listenableServices => [_userService];
 }

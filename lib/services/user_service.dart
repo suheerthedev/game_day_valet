@@ -9,15 +9,20 @@ import 'package:stacked/stacked.dart';
 class UserService with ListenableServiceMixin {
   final _apiService = locator<ApiService>();
 
-  UserModel? _currentUser;
-  UserModel? get currentUser => _currentUser;
+  final ReactiveValue<UserModel?> _currentUser =
+      ReactiveValue<UserModel?>(null);
+  UserModel? get currentUser => _currentUser.value;
+
+  UserService() {
+    listenToReactiveValues([_currentUser]);
+  }
 
   Future<void> fetchCurrentUser() async {
     final url = ApiConfig.baseUrl + ApiConfig.meEndPoint;
 
     try {
       final response = await _apiService.get(url);
-      _currentUser = UserModel.fromJson(response['user']);
+      _currentUser.value = UserModel.fromJson(response['user']);
 
       logger.info("Fetch User: $response");
       logger.info("Fetch User Status: ${response['message']}");
@@ -30,12 +35,12 @@ class UserService with ListenableServiceMixin {
   }
 
   void clearUser() {
-    _currentUser = null;
+    _currentUser.value = null;
     notifyListeners();
   }
 
   void updateUser(UserModel user) {
-    _currentUser = user;
+    _currentUser.value = user;
     notifyListeners();
   }
 }
