@@ -1,5 +1,3 @@
-import 'package:game_day_valet/models/address_model.dart';
-
 class UserModel {
   final int id;
   final String? name;
@@ -7,7 +5,7 @@ class UserModel {
   final String? email;
   final String? contactNumber;
   final String? referralCode;
-  final AddressModel? address;
+  final String? address;
   final List<String>? roles;
   final List<String>? permissions;
 
@@ -31,9 +29,7 @@ class UserModel {
       email: json['email'],
       contactNumber: json['contact_number'],
       referralCode: json['referral_code'],
-      address: json['address'] != null
-          ? AddressModel.fromJson(json['address'])
-          : null,
+      address: json['address'],
       roles: json['roles'] != null ? List<String>.from(json['roles']) : [],
       permissions: json['permissions'] != null
           ? List<String>.from(json['permissions'])

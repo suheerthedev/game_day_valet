@@ -1,5 +1,4 @@
 import 'package:flutter/material.dart';
-import 'package:game_day_valet/app/app.dialogs.dart';
 import 'package:game_day_valet/app/app.locator.dart';
 import 'package:game_day_valet/config/api_config.dart';
 import 'package:game_day_valet/core/enums/snackbar_type.dart';
@@ -27,8 +26,8 @@ class EditProfileViewModel extends BaseViewModel {
   void init() {
     nameController.text = currentUser?.name ?? '';
     emailController.text = currentUser?.email ?? '';
-    // phoneController.text = currentUser?.phone ?? '';
-    addressController.text = currentUser?.address?.streetAddress ?? '';
+    phoneController.text = currentUser?.contactNumber ?? '';
+    addressController.text = currentUser?.address ?? '';
     notifyListeners();
   }
 
@@ -47,13 +46,15 @@ class EditProfileViewModel extends BaseViewModel {
 
       final response = await _apiService.put(url, body);
 
+      await _userService.fetchCurrentUser();
+
+      _navigationService.back();
+
       await _snackbarService.showCustomSnackBar(
         variant: SnackbarType.success,
         title: 'Success',
         message: response['message'],
       );
-
-      _navigationService.back();
 
       logger.info("Update User: $response");
       logger.info("Update User Status: ${response['message']}");
