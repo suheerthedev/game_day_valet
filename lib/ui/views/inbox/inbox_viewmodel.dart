@@ -1,3 +1,32 @@
+import 'package:game_day_valet/app/app.locator.dart';
+import 'package:game_day_valet/core/enums/snackbar_type.dart';
+import 'package:game_day_valet/models/chat_model.dart';
+import 'package:game_day_valet/services/api_exception.dart';
+import 'package:game_day_valet/services/chat_service.dart';
+import 'package:game_day_valet/services/logger_service.dart';
 import 'package:stacked/stacked.dart';
+import 'package:stacked_services/stacked_services.dart';
 
-class InboxViewModel extends BaseViewModel {}
+class InboxViewModel extends ReactiveViewModel {
+  final _chatService = locator<ChatService>();
+  final _snackbarService = locator<SnackbarService>();
+
+  List<ChatModel> get conversations => _chatService.conversations;
+
+  void getUserConversations() async {
+    try {
+      await _chatService.getUserConversations();
+    } on ApiException catch (e) {
+      logger.error("Error getting user conversations: ${e.message}");
+      _snackbarService.showCustomSnackBar(
+          message: e.message, variant: SnackbarType.error);
+    } catch (e) {
+      logger.error("Error getting user conversations: $e");
+      _snackbarService.showCustomSnackBar(
+          message: "Something went wrong", variant: SnackbarType.error);
+    }
+  }
+
+  @override
+  List<ListenableServiceMixin> get listenableServices => [_chatService];
+}

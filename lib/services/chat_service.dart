@@ -11,6 +11,8 @@ class ChatService with ListenableServiceMixin {
 
   final ReactiveValue<List<ChatModel>> _conversations = ReactiveValue([]);
 
+  List<ChatModel> get conversations => _conversations.value;
+
   ChatService() {
     listenToReactiveValues([_conversations]);
   }

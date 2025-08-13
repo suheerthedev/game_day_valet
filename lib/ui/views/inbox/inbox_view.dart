@@ -32,12 +32,15 @@ class InboxView extends StackedView<InboxViewModel> {
         child: Padding(
             padding: EdgeInsets.symmetric(horizontal: 25.w),
             child: ListView.separated(
-              itemCount: 5,
+              itemCount: viewModel.conversations.length,
               separatorBuilder: (context, index) => Divider(
                 height: 1.h,
                 color: AppColors.grey200,
               ),
               itemBuilder: (context, index) {
+                if (viewModel.conversations.isEmpty) {
+                  return _buildEmptyState();
+                }
                 return ListTile(
                   contentPadding: EdgeInsets.zero,
                   onTap: () {},
@@ -75,9 +78,36 @@ class InboxView extends StackedView<InboxViewModel> {
     );
   }
 
+  Widget _buildEmptyState() {
+    return Center(
+      child: Column(
+        mainAxisAlignment: MainAxisAlignment.center,
+        children: [
+          Icon(IconsaxPlusLinear.message,
+              size: 40.w, color: AppColors.secondary),
+          SizedBox(height: 10.h),
+          Text(
+            'No conversations yet',
+            style: GoogleFonts.poppins(
+                fontSize: 16.sp,
+                fontWeight: FontWeight.w500,
+                color: AppColors.textPrimary),
+          ),
+          SizedBox(height: 10.h),
+        ],
+      ),
+    );
+  }
+
   @override
   InboxViewModel viewModelBuilder(
     BuildContext context,
   ) =>
       InboxViewModel();
+
+  @override
+  void onViewModelReady(InboxViewModel viewModel) {
+    viewModel.getUserConversations();
+    super.onViewModelReady(viewModel);
+  }
 }
