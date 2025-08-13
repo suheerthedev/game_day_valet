@@ -38,6 +38,7 @@ import 'package:game_day_valet/ui/views/checkout/checkout_view.dart';
 import 'package:game_day_valet/services/stripe_service.dart';
 import 'package:game_day_valet/ui/views/search/search_view.dart';
 import 'package:game_day_valet/ui/views/inbox/inbox_view.dart';
+import 'package:game_day_valet/services/chat_service.dart';
 // @stacked-import
 
 @StackedApp(
@@ -92,6 +93,7 @@ import 'package:game_day_valet/ui/views/inbox/inbox_view.dart';
     LazySingleton(classType: LoggerService),
     LazySingleton(classType: GoogleSignInService),
     LazySingleton(classType: StripeService),
+    LazySingleton(classType: ChatService),
 // @stacked-service
   ],
   bottomsheets: [

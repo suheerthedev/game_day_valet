@@ -11,6 +11,7 @@ import 'package:flutter/material.dart' as _i4;
 import 'package:game_day_valet/models/user_model.dart' as _i12;
 import 'package:game_day_valet/services/api_service.dart' as _i7;
 import 'package:game_day_valet/services/auth_service.dart' as _i10;
+import 'package:game_day_valet/services/chat_service.dart' as _i17;
 import 'package:game_day_valet/services/connectivity_service.dart' as _i13;
 import 'package:game_day_valet/services/google_sign_in_service.dart' as _i15;
 import 'package:game_day_valet/services/logger_service.dart' as _i14;
@@ -1215,3 +1216,8 @@ class MockStripeService extends _i1.Mock implements _i16.StripeService {
         returnValueForMissingStub: _i5.Future<void>.value(),
       ) as _i5.Future<void>);
 }
+
+/// A class which mocks [ChatService].
+///
+/// See the documentation for Mockito's code generation for more information.
+class MockChatService extends _i1.Mock implements _i17.ChatService {}

@@ -14,6 +14,7 @@ import 'package:stacked_shared/stacked_shared.dart';
 
 import '../services/api_service.dart';
 import '../services/auth_service.dart';
+import '../services/chat_service.dart';
 import '../services/connectivity_service.dart';
 import '../services/google_sign_in_service.dart';
 import '../services/logger_service.dart';
@@ -44,4 +45,5 @@ Future<void> setupLocator({
   locator.registerLazySingleton(() => LoggerService());
   locator.registerLazySingleton(() => GoogleSignInService());
   locator.registerLazySingleton(() => StripeService());
+  locator.registerLazySingleton(() => ChatService());
 }
