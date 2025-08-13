@@ -1,11 +1,14 @@
+import 'package:cached_network_image/cached_network_image.dart';
 import 'package:floating_chat_button/floating_chat_button.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
+import 'package:game_day_valet/config/api_config.dart';
 import 'package:game_day_valet/ui/common/app_colors.dart';
 import 'package:game_day_valet/ui/widgets/common/main_app_bar/main_app_bar.dart';
 import 'package:game_day_valet/ui/widgets/common/main_button/main_button.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:iconsax_flutter/iconsax_flutter.dart';
+import 'package:iconsax_plus/iconsax_plus.dart';
 import 'package:stacked/stacked.dart';
 
 import 'profile_viewmodel.dart';
@@ -29,8 +32,26 @@ class ProfileView extends StackedView<ProfileViewModel> {
               leading: Row(
                 children: [
                   CircleAvatar(
-                    child: Image.asset('assets/images/pfp.png',
-                        width: 50.w, height: 50.h),
+                    radius: 22.r,
+                    backgroundColor: AppColors.secondary,
+                    child: ClipRRect(
+                      borderRadius: BorderRadius.circular(22.r),
+                      clipBehavior: Clip.hardEdge,
+                      child: CachedNetworkImage(
+                        imageUrl:
+                            "${ApiConfig.baseUrl}/storage/${viewModel.currentUser?.profileImage}",
+                        width: 100.w,
+                        height: 100.h,
+                        fit: BoxFit.cover,
+                        placeholder: (context, url) => const Center(
+                          child: CircularProgressIndicator(),
+                        ),
+                        errorWidget: (context, url, error) => Icon(
+                          IconsaxPlusLinear.user,
+                          size: 12.sp,
+                        ),
+                      ),
+                    ),
                   ),
                   SizedBox(width: 10.w),
                 ],
