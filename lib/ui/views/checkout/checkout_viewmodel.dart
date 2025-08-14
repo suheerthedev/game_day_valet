@@ -61,6 +61,16 @@ class CheckoutViewModel extends BaseViewModel {
     notifyListeners();
   }
 
+  void removeBundleFromSummary(BundleModel bundle) {
+    bundles.removeWhere((i) => i.id == bundle.id);
+    notifyListeners();
+  }
+
+  void toggleBundle(BundleModel bundle) {
+    bundle.isSelected = !bundle.isSelected;
+    notifyListeners();
+  }
+
   void _handleStripePayment(BuildContext context) async {
     logger.info('Stripe');
     await _stripeService.payWithPaymentSheet(

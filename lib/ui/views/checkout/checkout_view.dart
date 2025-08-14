@@ -1,9 +1,9 @@
-import 'package:cached_network_image/cached_network_image.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:game_day_valet/models/bundle_model.dart';
 import 'package:game_day_valet/models/item_model.dart';
 import 'package:game_day_valet/ui/common/app_colors.dart';
+import 'package:game_day_valet/ui/widgets/common/bundles_summary_item/bundles_summary_item.dart';
 import 'package:game_day_valet/ui/widgets/common/main_app_bar/main_app_bar.dart';
 import 'package:game_day_valet/ui/widgets/common/main_button/main_button.dart';
 import 'package:game_day_valet/ui/widgets/common/main_text_field/main_text_field.dart';
@@ -159,7 +159,16 @@ class CheckoutView extends StackedView<CheckoutViewModel> {
                               horizontal: 12.w, vertical: 12.h),
                           child: Column(
                             mainAxisSize: MainAxisSize.min,
+                            crossAxisAlignment: CrossAxisAlignment.start,
                             children: [
+                              Text(
+                                'Items',
+                                style: GoogleFonts.poppins(
+                                    fontSize: 14.sp,
+                                    fontWeight: FontWeight.w600,
+                                    color: AppColors.textPrimary),
+                              ),
+                              SizedBox(height: 10.h),
                               ListView.builder(
                                 shrinkWrap: true,
                                 physics: const NeverScrollableScrollPhysics(),
@@ -178,6 +187,34 @@ class CheckoutView extends StackedView<CheckoutViewModel> {
                                         viewModel.decrementItemQuantity(item),
                                     onPlus: () =>
                                         viewModel.incrementItemQuantity(item),
+                                  );
+                                },
+                              ),
+                              SizedBox(height: 10.h),
+                              Text(
+                                'Bundles',
+                                style: GoogleFonts.poppins(
+                                    fontSize: 14.sp,
+                                    fontWeight: FontWeight.w600,
+                                    color: AppColors.textPrimary),
+                              ),
+                              SizedBox(height: 10.h),
+                              ListView.builder(
+                                shrinkWrap: true,
+                                physics: const NeverScrollableScrollPhysics(),
+                                itemCount: viewModel.bundles.length,
+                                itemBuilder: (context, index) {
+                                  final bundle = viewModel.bundles[index];
+                                  return BundlesSummaryItem(
+                                    name: bundle.name ?? '',
+                                    totalItems:
+                                        'Total Items: ${bundle.totalItems}',
+                                    isSelected: bundle.isSelected,
+                                    onToggle: (value) {
+                                      viewModel.toggleBundle(bundle);
+                                    },
+                                    onRemove: () => viewModel
+                                        .removeBundleFromSummary(bundle),
                                   );
                                 },
                               )
