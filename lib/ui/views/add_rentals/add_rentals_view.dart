@@ -101,6 +101,7 @@ class AddRentalsView extends StackedView<AddRentalsViewModel> {
                               physics: const NeverScrollableScrollPhysics(),
                               itemCount: viewModel.bundles.length,
                               itemBuilder: (context, index) {
+                                final bundle = viewModel.bundles[index];
                                 return Container(
                                   width: 340.w,
                                   height: 58.h,
@@ -112,29 +113,48 @@ class AddRentalsView extends StackedView<AddRentalsViewModel> {
                                           width: 1.w)),
                                   child: Row(
                                     children: [
-                                      Checkbox(
-                                          activeColor: AppColors.secondary,
-                                          checkColor: AppColors.white,
-                                          splashRadius: 0,
-                                          side: BorderSide(
-                                              color: AppColors.textHint,
-                                              width: 1.w),
-                                          shape: RoundedRectangleBorder(
-                                              borderRadius: BorderRadius.all(
-                                                  Radius.circular(2.r))),
-                                          value: viewModel
-                                              .bundles[index].isSelected,
-                                          onChanged: (value) {
-                                            viewModel.toggleBundle(
-                                                viewModel.bundles[index]);
-                                          }),
-                                      Text(
-                                        viewModel.bundles[index].totalItems ??
-                                            '',
-                                        style: GoogleFonts.poppins(
-                                            fontSize: 14.sp,
-                                            fontWeight: FontWeight.w500,
-                                            color: AppColors.textPrimary),
+                                      Expanded(
+                                        child: Row(
+                                          children: [
+                                            Checkbox(
+                                                activeColor: AppColors
+                                                    .secondary,
+                                                checkColor: AppColors.white,
+                                                splashRadius: 0,
+                                                side: BorderSide(
+                                                    color: AppColors.textHint,
+                                                    width: 1.w),
+                                                shape: RoundedRectangleBorder(
+                                                    borderRadius:
+                                                        BorderRadius.all(
+                                                            Radius.circular(
+                                                                2.r))),
+                                                value: bundle.isSelected,
+                                                onChanged: (value) {
+                                                  viewModel
+                                                      .toggleBundle(bundle);
+                                                }),
+                                            Text(
+                                              bundle.totalItems ?? '',
+                                              style: GoogleFonts.poppins(
+                                                  fontSize: 14.sp,
+                                                  fontWeight: FontWeight.w500,
+                                                  color: AppColors.textPrimary),
+                                            ),
+                                          ],
+                                        ),
+                                      ),
+                                      Padding(
+                                        padding: EdgeInsets.only(right: 10.w),
+                                        child: Text(
+                                          "\$ ${bundle.price}",
+                                          maxLines: 1,
+                                          overflow: TextOverflow.ellipsis,
+                                          style: GoogleFonts.poppins(
+                                              fontSize: 15.sp,
+                                              fontWeight: FontWeight.w500,
+                                              color: AppColors.secondary),
+                                        ),
                                       ),
                                     ],
                                   ),
