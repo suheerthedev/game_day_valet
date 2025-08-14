@@ -391,8 +391,10 @@ class StackedRouter extends _i1.RouterBase {
       );
     },
     _i24.AddRentalsView: (data) {
+      final args = data.getArgs<AddRentalsViewArguments>(nullOk: false);
       return _i28.MaterialPageRoute<dynamic>(
-        builder: (context) => const _i24.AddRentalsView(),
+        builder: (context) =>
+            _i24.AddRentalsView(key: args.key, tournamentId: args.tournamentId),
         settings: data,
       );
     },
@@ -567,6 +569,33 @@ class VerifyEmailViewArguments {
   @override
   int get hashCode {
     return key.hashCode ^ email.hashCode;
+  }
+}
+
+class AddRentalsViewArguments {
+  const AddRentalsViewArguments({
+    this.key,
+    required this.tournamentId,
+  });
+
+  final _i28.Key? key;
+
+  final int tournamentId;
+
+  @override
+  String toString() {
+    return '{"key": "$key", "tournamentId": "$tournamentId"}';
+  }
+
+  @override
+  bool operator ==(covariant AddRentalsViewArguments other) {
+    if (identical(this, other)) return true;
+    return other.key == key && other.tournamentId == tournamentId;
+  }
+
+  @override
+  int get hashCode {
+    return key.hashCode ^ tournamentId.hashCode;
   }
 }
 
@@ -928,14 +957,18 @@ extension NavigatorStateExtension on _i29.NavigationService {
         transition: transition);
   }
 
-  Future<dynamic> navigateToAddRentalsView([
+  Future<dynamic> navigateToAddRentalsView({
+    _i28.Key? key,
+    required int tournamentId,
     int? routerId,
     bool preventDuplicates = true,
     Map<String, String>? parameters,
     Widget Function(BuildContext, Animation<double>, Animation<double>, Widget)?
         transition,
-  ]) async {
+  }) async {
     return navigateTo<dynamic>(Routes.addRentalsView,
+        arguments:
+            AddRentalsViewArguments(key: key, tournamentId: tournamentId),
         id: routerId,
         preventDuplicates: preventDuplicates,
         parameters: parameters,
@@ -1316,14 +1349,18 @@ extension NavigatorStateExtension on _i29.NavigationService {
         transition: transition);
   }
 
-  Future<dynamic> replaceWithAddRentalsView([
+  Future<dynamic> replaceWithAddRentalsView({
+    _i28.Key? key,
+    required int tournamentId,
     int? routerId,
     bool preventDuplicates = true,
     Map<String, String>? parameters,
     Widget Function(BuildContext, Animation<double>, Animation<double>, Widget)?
         transition,
-  ]) async {
+  }) async {
     return replaceWith<dynamic>(Routes.addRentalsView,
+        arguments:
+            AddRentalsViewArguments(key: key, tournamentId: tournamentId),
         id: routerId,
         preventDuplicates: preventDuplicates,
         parameters: parameters,

@@ -10,6 +10,7 @@ import 'dart:ui' as _i7;
 import 'package:flutter/material.dart' as _i5;
 import 'package:game_day_valet/models/chat_model.dart' as _i19;
 import 'package:game_day_valet/models/message_model.dart' as _i2;
+import 'package:game_day_valet/models/tournament_model.dart' as _i22;
 import 'package:game_day_valet/models/user_model.dart' as _i13;
 import 'package:game_day_valet/services/api_service.dart' as _i8;
 import 'package:game_day_valet/services/auth_service.dart' as _i11;
@@ -1441,5 +1442,101 @@ class MockPusherService extends _i1.Mock implements _i20.PusherService {
 /// A class which mocks [TournamentService].
 ///
 /// See the documentation for Mockito's code generation for more information.
-class MockTournamentService extends _i1.Mock
-    implements _i21.TournamentService {}
+class MockTournamentService extends _i1.Mock implements _i21.TournamentService {
+  @override
+  List<_i22.TournamentModel> get tournamentsBySport => (super.noSuchMethod(
+        Invocation.getter(#tournamentsBySport),
+        returnValue: <_i22.TournamentModel>[],
+        returnValueForMissingStub: <_i22.TournamentModel>[],
+      ) as List<_i22.TournamentModel>);
+
+  @override
+  set tournamentsBySport(List<_i22.TournamentModel>? _tournamentsBySport) =>
+      super.noSuchMethod(
+        Invocation.setter(
+          #tournamentsBySport,
+          _tournamentsBySport,
+        ),
+        returnValueForMissingStub: null,
+      );
+
+  @override
+  List<_i22.TournamentModel> get recommendedTournaments => (super.noSuchMethod(
+        Invocation.getter(#recommendedTournaments),
+        returnValue: <_i22.TournamentModel>[],
+        returnValueForMissingStub: <_i22.TournamentModel>[],
+      ) as List<_i22.TournamentModel>);
+
+  @override
+  set recommendedTournaments(
+          List<_i22.TournamentModel>? _recommendedTournaments) =>
+      super.noSuchMethod(
+        Invocation.setter(
+          #recommendedTournaments,
+          _recommendedTournaments,
+        ),
+        returnValueForMissingStub: null,
+      );
+
+  @override
+  int get lastPageForRecommendedTournaments => (super.noSuchMethod(
+        Invocation.getter(#lastPageForRecommendedTournaments),
+        returnValue: 0,
+        returnValueForMissingStub: 0,
+      ) as int);
+
+  @override
+  set lastPageForRecommendedTournaments(
+          int? _lastPageForRecommendedTournaments) =>
+      super.noSuchMethod(
+        Invocation.setter(
+          #lastPageForRecommendedTournaments,
+          _lastPageForRecommendedTournaments,
+        ),
+        returnValueForMissingStub: null,
+      );
+
+  @override
+  int get lastPageForTournamentsBySport => (super.noSuchMethod(
+        Invocation.getter(#lastPageForTournamentsBySport),
+        returnValue: 0,
+        returnValueForMissingStub: 0,
+      ) as int);
+
+  @override
+  set lastPageForTournamentsBySport(int? _lastPageForTournamentsBySport) =>
+      super.noSuchMethod(
+        Invocation.setter(
+          #lastPageForTournamentsBySport,
+          _lastPageForTournamentsBySport,
+        ),
+        returnValueForMissingStub: null,
+      );
+
+  @override
+  _i6.Future<void> getTournamentsBySport(
+    int? sportId, {
+    int? page = 1,
+  }) =>
+      (super.noSuchMethod(
+        Invocation.method(
+          #getTournamentsBySport,
+          [sportId],
+          {#page: page},
+        ),
+        returnValue: _i6.Future<void>.value(),
+        returnValueForMissingStub: _i6.Future<void>.value(),
+      ) as _i6.Future<void>);
+
+  @override
+  _i6.Future<void> getRecommendedTournaments({int? page = 1}) =>
+      (super.noSuchMethod(
+        Invocation.method(
+          #getRecommendedTournaments,
+          [],
+          {#page: page},
+        ),
+        returnValue: _i6.Future<void>.value(),
+        returnValueForMissingStub: _i6.Future<void>.value(),
+      ) as _i6.Future<void>);
+}

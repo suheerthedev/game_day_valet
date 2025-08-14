@@ -11,7 +11,9 @@ import 'package:stacked/stacked.dart';
 import 'add_rentals_viewmodel.dart';
 
 class AddRentalsView extends StackedView<AddRentalsViewModel> {
-  const AddRentalsView({Key? key}) : super(key: key);
+  final int tournamentId;
+  const AddRentalsView({Key? key, required this.tournamentId})
+      : super(key: key);
 
   @override
   Widget builder(

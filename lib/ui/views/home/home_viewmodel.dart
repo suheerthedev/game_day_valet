@@ -57,7 +57,7 @@ class HomeViewModel extends BaseViewModel {
   }
 
   void navigateToRentalBook(int tournamentId) {
-    _navigationService.navigateToAddRentalsView();
+    _navigationService.navigateToAddRentalsView(tournamentId: tournamentId);
   }
 
   Future<void> init() async {
