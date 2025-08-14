@@ -11,18 +11,28 @@ class TournamentService {
   List<TournamentModel> tournamentsBySport = [];
   List<TournamentModel> recommendedTournaments = [];
 
-  Future<void> getTournamentsBySport(int sportId) async {
+  int lastPageForRecommendedTournaments = 0;
+
+  int lastPageForTournamentsBySport = 0;
+
+  Future<void> getTournamentsBySport(int sportId, {int page = 1}) async {
     final url =
-        '${ApiConfig.baseUrl}${ApiConfig.tournamentsBySportEndPoint}/$sportId';
+        '${ApiConfig.baseUrl}${ApiConfig.tournamentsBySportEndPoint}/$sportId?limit=2&page=$page';
 
     try {
       final response = await _apiService.get(url);
 
+      if (response.containsKey('meta')) {
+        if (response['meta'].containsKey('last_page')) {
+          lastPageForTournamentsBySport = response['meta']['last_page'];
+        }
+      }
+
       logger.info("Tournaments by sport: $response");
 
-      tournamentsBySport = (response['data'] as List)
+      tournamentsBySport.addAll((response['data'] as List)
           .map((e) => TournamentModel.fromJson(e))
-          .toList();
+          .toList());
     } on ApiException catch (e) {
       logger.error("Error fetching tournaments by sport", e);
       rethrow;
@@ -32,17 +42,23 @@ class TournamentService {
     }
   }
 
-  Future<void> getRecommendedTournaments() async {
-    final url = ApiConfig.baseUrl + ApiConfig.tournamentsEndPoint;
+  Future<void> getRecommendedTournaments({int page = 1}) async {
+    final url =
+        '${ApiConfig.baseUrl}${ApiConfig.tournamentsEndPoint}?limit=5&page=$page';
 
     try {
       final response = await _apiService.get(url);
 
+      if (response.containsKey('meta')) {
+        if (response['meta'].containsKey('last_page')) {
+          lastPageForRecommendedTournaments = response['meta']['last_page'];
+        }
+      }
       logger.info("Recommended tournaments: $response");
 
-      recommendedTournaments = (response['data'] as List)
+      recommendedTournaments.addAll((response['data'] as List)
           .map((e) => TournamentModel.fromJson(e))
-          .toList();
+          .toList());
     } on ApiException catch (e) {
       logger.error("Error fetching recommended tournaments", e);
       rethrow;

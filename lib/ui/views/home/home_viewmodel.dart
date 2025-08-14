@@ -35,6 +35,23 @@ class HomeViewModel extends BaseViewModel {
       _tournamentService.recommendedTournaments;
   List<SportsModel> sportsList = [];
 
+  // Tournaments by sport
+  int selectedSportId = 0;
+  int currentPageForTournamentsBySport = 1;
+  int get lastPageForTournamentsBySport =>
+      _tournamentService.lastPageForTournamentsBySport;
+  bool get hasMoreTournamentsBySport =>
+      currentPageForTournamentsBySport < lastPageForTournamentsBySport;
+  bool isLoadingMoreTournamentsBySport = false;
+
+  // Recommended tournaments
+  int currentPageForRecommendedTournaments = 1;
+  int get lastPageForRecommendedTournaments =>
+      _tournamentService.lastPageForRecommendedTournaments;
+  bool get hasMoreRecommendedTournaments =>
+      currentPageForRecommendedTournaments < lastPageForRecommendedTournaments;
+  bool isLoadingMoreRecommendedTournaments = false;
+
   void navigateToSearchView(String searchQuery) {
     _navigationService.navigateToSearchView(isTournamentSearch: true);
   }
@@ -69,6 +86,7 @@ class HomeViewModel extends BaseViewModel {
   }
 
   void getTournaments(int sportId) async {
+    selectedSportId = sportId;
     setBusy(true);
     rebuildUi();
     try {
@@ -87,6 +105,28 @@ class HomeViewModel extends BaseViewModel {
   Future<void> getTournamentsBySport(int sportId) async {
     try {
       await _tournamentService.getTournamentsBySport(sportId);
+    } on ApiException catch (e) {
+      logger.error("Error fetching tournaments", e);
+      _snackbarService.showCustomSnackBar(
+        variant: SnackbarType.error,
+        message: e.message,
+      );
+    } catch (e) {
+      logger.error("Error fetching tournaments", e);
+      _snackbarService.showCustomSnackBar(
+        variant: SnackbarType.error,
+        message: "Something went wrong",
+      );
+    }
+  }
+
+  Future<void> loadMoreTournamentsBySport(int sportId) async {
+    currentPageForTournamentsBySport++;
+    isLoadingMoreTournamentsBySport = true;
+    rebuildUi();
+    try {
+      await _tournamentService.getTournamentsBySport(sportId,
+          page: currentPageForTournamentsBySport);
     } on ApiException catch (e) {
       logger.error("Error fetching tournaments", e);
       _snackbarService.showCustomSnackBar(

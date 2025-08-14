@@ -6,6 +6,7 @@ import 'package:game_day_valet/ui/widgets/common/main_app_bar/main_app_bar.dart'
 import 'package:game_day_valet/ui/widgets/common/main_search_bar/main_search_bar.dart';
 import 'package:game_day_valet/ui/widgets/common/main_tournament_card/main_tournament_card.dart';
 import 'package:game_day_valet/ui/widgets/common/secondary_tournament_card/secondary_tournament_card.dart';
+import 'package:game_day_valet/ui/widgets/common/small_button/small_button.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:iconsax_flutter/iconsax_flutter.dart';
 import 'package:stacked/stacked.dart';
@@ -119,6 +120,34 @@ class HomeView extends StackedView<HomeViewModel> {
                                                       });
                                                 },
                                               ),
+                                              SizedBox(
+                                                height: 10.h,
+                                              ),
+                                              if (viewModel
+                                                  .hasMoreTournamentsBySport)
+                                                Center(
+                                                  child: Padding(
+                                                    padding:
+                                                        EdgeInsets.symmetric(
+                                                            horizontal: 32.w),
+                                                    child: SmallButton(
+                                                      title: 'Show More',
+                                                      onTap: () {
+                                                        viewModel
+                                                            .loadMoreTournamentsBySport(
+                                                                viewModel
+                                                                    .selectedSportId);
+                                                      },
+                                                      bgColor: AppColors.white,
+                                                      textColor:
+                                                          AppColors.secondary,
+                                                      borderColor:
+                                                          AppColors.secondary,
+                                                      isLoading: viewModel
+                                                          .isLoadingMoreTournamentsBySport,
+                                                    ),
+                                                  ),
+                                                ),
                                             ],
                                           ),
                                           //Recommended Tournaments
