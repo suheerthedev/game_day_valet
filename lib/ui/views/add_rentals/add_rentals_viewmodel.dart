@@ -28,6 +28,11 @@ class AddRentalsViewModel extends BaseViewModel {
         isTournamentSearch: false, isItemSearch: true);
   }
 
+  void toggleBundle(BundleModel bundle) {
+    bundle.isSelected = !bundle.isSelected;
+    rebuildUi();
+  }
+
   void addItem(ItemModel item) {
     item.quantity++;
     rebuildUi();
@@ -45,7 +50,11 @@ class AddRentalsViewModel extends BaseViewModel {
   }
 
   void proceedToCheckout() {
-    _navigationService.navigateToCheckoutView();
+    print(items[0].id);
+    print(items[1].id);
+    print(items[2].id);
+    print(bundles[0].isSelected);
+    // _navigationService.navigateToCheckoutView();
   }
 
   void init() async {
