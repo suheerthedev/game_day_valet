@@ -286,9 +286,7 @@ class HomeView extends StackedView<HomeViewModel> {
                                         viewModel.selectedSport =
                                             sport.name ?? '';
                                         Navigator.pop(context);
-                                        viewModel
-                                            .getTournamentsBySport(sport.id);
-                                        viewModel.getRecommendedTournaments();
+                                        viewModel.getTournaments(sport.id);
                                       },
                                       child: Container(
                                         padding: EdgeInsets.symmetric(

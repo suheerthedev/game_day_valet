@@ -12,6 +12,7 @@ import 'package:game_day_valet/services/api_exception.dart';
 import 'package:game_day_valet/services/api_service.dart';
 import 'package:game_day_valet/services/logger_service.dart';
 import 'package:game_day_valet/services/pusher_service.dart';
+import 'package:game_day_valet/services/tournament_service.dart';
 import 'package:game_day_valet/ui/common/app_colors.dart';
 import 'package:google_maps_flutter/google_maps_flutter.dart';
 import 'package:stacked/stacked.dart';
@@ -20,6 +21,7 @@ import 'package:stacked_services/stacked_services.dart';
 class HomeViewModel extends BaseViewModel {
   final _navigationService = locator<NavigationService>();
   final _apiService = locator<ApiService>();
+  final _tournamentService = locator<TournamentService>();
   final _snackbarService = locator<SnackbarService>();
   final _pusherService = locator<PusherService>();
 
@@ -27,9 +29,11 @@ class HomeViewModel extends BaseViewModel {
 
   TextEditingController searchController = TextEditingController();
 
-  List<TournamentModel> tournamentsList = [];
+  List<TournamentModel> get tournamentsList =>
+      _tournamentService.tournamentsBySport;
+  List<TournamentModel> get recommendedTournamentsList =>
+      _tournamentService.recommendedTournaments;
   List<SportsModel> sportsList = [];
-  List<TournamentModel> recommendedTournamentsList = [];
 
   void navigateToSearchView(String searchQuery) {
     _navigationService.navigateToSearchView(isTournamentSearch: true);
@@ -64,51 +68,43 @@ class HomeViewModel extends BaseViewModel {
     }
   }
 
-  Future<void> getTournamentsBySport(int sportId) async {
-    final url =
-        '${ApiConfig.baseUrl}${ApiConfig.tournamentsBySportEndPoint}/$sportId';
-
+  void getTournaments(int sportId) async {
     setBusy(true);
-
+    rebuildUi();
     try {
-      final response = await _apiService.get(url);
-
-      final data = response['data'];
-
-      for (var item in data) {
-        tournamentsList.add(TournamentModel.fromJson(item));
-      }
-
-      logger.info("Tournaments fetched successfully");
+      await getTournamentsBySport(sportId);
+      await getRecommendedTournaments();
     } on ApiException catch (e) {
       logger.error("Error fetching tournaments", e);
-      _snackbarService.showCustomSnackBar(
-        variant: SnackbarType.error,
-        message: e.message,
-      );
     } catch (e) {
       logger.error("Error fetching tournaments", e);
-      _snackbarService.showCustomSnackBar(
-        variant: SnackbarType.error,
-        message: e.toString(),
-      );
     } finally {
-      notifyListeners();
+      rebuildUi();
       setBusy(false);
     }
   }
 
-  void getRecommendedTournaments() async {
-    final url = ApiConfig.baseUrl + ApiConfig.tournamentsEndPoint;
-
-    setBusy(true);
-
+  Future<void> getTournamentsBySport(int sportId) async {
     try {
-      final response = await _apiService.get(url);
+      await _tournamentService.getTournamentsBySport(sportId);
+    } on ApiException catch (e) {
+      logger.error("Error fetching tournaments", e);
+      _snackbarService.showCustomSnackBar(
+        variant: SnackbarType.error,
+        message: e.message,
+      );
+    } catch (e) {
+      logger.error("Error fetching tournaments", e);
+      _snackbarService.showCustomSnackBar(
+        variant: SnackbarType.error,
+        message: "Something went wrong",
+      );
+    }
+  }
 
-      for (var tournament in response['data']) {
-        recommendedTournamentsList.add(TournamentModel.fromJson(tournament));
-      }
+  Future<void> getRecommendedTournaments() async {
+    try {
+      await _tournamentService.getRecommendedTournaments();
     } on ApiException catch (e) {
       logger.error("Error fetching recommended tournaments", e);
       _snackbarService.showCustomSnackBar(
@@ -119,11 +115,8 @@ class HomeViewModel extends BaseViewModel {
       logger.error("Error fetching recommended tournaments", e);
       _snackbarService.showCustomSnackBar(
         variant: SnackbarType.error,
-        message: e.toString(),
+        message: "Something went wrong",
       );
-    } finally {
-      notifyListeners();
-      setBusy(false);
     }
   }
 
