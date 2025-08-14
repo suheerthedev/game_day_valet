@@ -1,9 +1,7 @@
 import 'dart:convert';
 
 import 'package:game_day_valet/app/app.locator.dart';
-import 'package:game_day_valet/models/user_model.dart';
 import 'package:game_day_valet/services/logger_service.dart';
-import 'package:game_day_valet/services/user_service.dart';
 import 'package:http/http.dart' as http;
 import 'package:game_day_valet/config/api_config.dart';
 import 'package:game_day_valet/services/api_service.dart';
