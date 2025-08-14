@@ -1,14 +1,24 @@
+import 'dart:convert';
+
 import 'package:game_day_valet/app/app.locator.dart';
 import 'package:game_day_valet/config/api_config.dart';
 import 'package:game_day_valet/models/chat_model.dart';
+import 'package:game_day_valet/models/conversation_model.dart';
 import 'package:game_day_valet/models/message_model.dart';
+import 'package:game_day_valet/models/user_model.dart';
 import 'package:game_day_valet/services/api_exception.dart';
 import 'package:game_day_valet/services/api_service.dart';
 import 'package:game_day_valet/services/logger_service.dart';
+import 'package:game_day_valet/services/pusher_service.dart';
+import 'package:game_day_valet/services/user_service.dart';
 import 'package:stacked/stacked.dart';
 
 class ChatService with ListenableServiceMixin {
   final _apiService = locator<ApiService>();
+  final _pusherService = locator<PusherService>();
+  final _userService = locator<UserService>();
+
+  UserModel? get _user => _userService.currentUser;
 
   final ReactiveValue<List<ChatModel>> _conversations = ReactiveValue([]);
   final ReactiveValue<List<MessageModel>> _messages = ReactiveValue([]);
@@ -16,8 +26,11 @@ class ChatService with ListenableServiceMixin {
   List<ChatModel> get conversations => _conversations.value;
   List<MessageModel> get messages => _messages.value;
 
+  bool _isPusherInitialized = false;
+
   ChatService() {
     listenToReactiveValues([_conversations]);
+    listenToReactiveValues([_messages]);
   }
 
   Future<void> getUserConversations() async {
@@ -30,6 +43,8 @@ class ChatService with ListenableServiceMixin {
 
       _conversations.value =
           (response as List).map((e) => ChatModel.fromJson(e)).toList();
+
+      await initializePusher();
     } on ApiException catch (e) {
       logger.error("Error getting user conversations: ${e.message}");
       rethrow;
@@ -108,5 +123,69 @@ class ChatService with ListenableServiceMixin {
       logger.error("Error sending message: $e");
       rethrow;
     }
+  }
+
+  Future<void> initializePusher() async {
+    if (_isPusherInitialized) return;
+
+    try {
+      await _pusherService.initialize();
+
+      if (_user?.id != null) {
+        await subscribeToChannel(_user!.id.toString());
+      }
+      _isPusherInitialized = true;
+    } on ApiException catch (e) {
+      logger.error("Error initializing Pusher: ${e.message}");
+      rethrow;
+    } catch (e) {
+      logger.error("Error initializing Pusher: $e");
+      rethrow;
+    }
+  }
+
+  Future<void> subscribeToChannel(String userId) async {
+    await _pusherService.subscribeToChannel(userId, _handleIncomingMessage);
+  }
+
+  void _handleIncomingMessage(dynamic eventData) {
+    try {
+      logger.info("Handling incoming message: $eventData");
+
+      if (eventData.toString() == '{}') {
+        print('No data received from Pusher');
+        return;
+      }
+
+      final data = jsonDecode(eventData);
+
+      final newMessage = MessageModel(
+        id: data['id'],
+        conversationId: data['conversation_id'],
+        senderId: data['sender_id'],
+        content: data['content'],
+        createdAt: data['created_at'],
+        sender: UserModel(
+          id: data['sender']['id'],
+          name: data['sender']['name'],
+        ),
+        conversation: ConversationModel(
+            id: data['conversation_id'],
+            userId: data['user']['id'],
+            responderId: data['responder']['id']),
+      );
+
+      _messages.value.insert(0, newMessage);
+    } on ApiException catch (e) {
+      logger.error("Error handling incoming message: ${e.message}");
+      rethrow;
+    } catch (e) {
+      logger.error("Error handling incoming message: $e");
+      rethrow;
+    }
+  }
+
+  Future<void> unsubscribeFromChannel(String userId) async {
+    await _pusherService.unsubscribeFromChannel(userId);
   }
 }
