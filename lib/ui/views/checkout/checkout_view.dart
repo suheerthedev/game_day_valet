@@ -169,8 +169,7 @@ class CheckoutView extends StackedView<CheckoutViewModel> {
                                     name: item.name ?? '',
                                     quantityText:
                                         'Stock Quantity: ${item.stock ?? 0}',
-                                    count:
-                                        item.quantity == 0 ? 1 : item.quantity,
+                                    count: item.quantity,
                                     imageUrl: item.image,
                                     onRemove: () =>
                                         viewModel.removeItemFromSummary(item),

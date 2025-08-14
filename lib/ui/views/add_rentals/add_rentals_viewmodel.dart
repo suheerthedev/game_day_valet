@@ -52,16 +52,13 @@ class AddRentalsViewModel extends BaseViewModel {
     rebuildUi();
   }
 
-  void proceedToCheckout() {
-    print(items[0].id);
-    print(items[1].id);
-    print(items[2].id);
-    print(bundles[0].isSelected);
-    _navigationService.navigateToCheckoutView(
+  Future<void> proceedToCheckout() async {
+    await _navigationService.navigateToCheckoutView(
         tournamentId: tournamentId, items: items, bundles: bundles);
+    await init();
   }
 
-  void init() async {
+  Future<void> init() async {
     setBusy(true);
     try {
       await getItems();
@@ -79,7 +76,7 @@ class AddRentalsViewModel extends BaseViewModel {
   }
 
   Future<void> getItems() async {
-    final url = ApiConfig.baseUrl + ApiConfig.items;
+    final url = "${ApiConfig.baseUrl}${ApiConfig.items}?limit=1000&page=1";
 
     try {
       final response = await _apiService.get(url);
