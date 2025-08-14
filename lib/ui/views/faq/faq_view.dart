@@ -29,48 +29,51 @@ class FaqView extends StackedView<FaqViewModel> {
                 color: AppColors.textPrimary),
           ),
         ),
-        body: SafeArea(
-            child: Stack(
-          children: [
-            Padding(
-              padding: EdgeInsets.symmetric(horizontal: 25.w, vertical: 20.h),
-              child: ListView.separated(
-                itemCount: viewModel.faqItems.length,
-                itemBuilder: (context, index) {
-                  return _buildFAQItem(
-                      context, viewModel, index, viewModel.faqItems[index]);
-                },
-                separatorBuilder: (context, index) {
-                  return SizedBox(height: 10.h);
-                },
-              ),
-            ),
-            FloatingChatButton(
-              onTap: (_) {
-                viewModel.onChatTap();
-              },
-              chatIconWidget: const Padding(
-                padding: EdgeInsets.all(14.0),
-                child: Icon(
-                  Iconsax.message_2_copy,
-                  color: AppColors.white,
-                  size: 24,
-                ),
-              ),
-              messageBackgroundColor: AppColors.secondary,
-              chatIconBorderColor: AppColors.secondary,
-              chatIconBackgroundColor: AppColors.secondary,
-              messageBorderWidth: 2,
-              messageTextStyle: GoogleFonts.poppins(
-                  fontSize: 14.sp,
-                  fontWeight: FontWeight.w400,
-                  color: AppColors.white),
-              showMessageParameters: ShowMessageParameters(
-                  delayDuration: const Duration(seconds: 2),
-                  durationToShowMessage: const Duration(seconds: 5)),
-            )
-          ],
-        )));
+        body: viewModel.isBusy
+            ? const Center(child: CircularProgressIndicator())
+            : SafeArea(
+                child: Stack(
+                children: [
+                  Padding(
+                    padding:
+                        EdgeInsets.symmetric(horizontal: 25.w, vertical: 20.h),
+                    child: ListView.separated(
+                      itemCount: viewModel.faqItems.length,
+                      itemBuilder: (context, index) {
+                        return _buildFAQItem(context, viewModel, index,
+                            viewModel.faqItems[index]);
+                      },
+                      separatorBuilder: (context, index) {
+                        return SizedBox(height: 10.h);
+                      },
+                    ),
+                  ),
+                  FloatingChatButton(
+                    onTap: (_) {
+                      viewModel.onChatTap();
+                    },
+                    chatIconWidget: const Padding(
+                      padding: EdgeInsets.all(14.0),
+                      child: Icon(
+                        Iconsax.message_2_copy,
+                        color: AppColors.white,
+                        size: 24,
+                      ),
+                    ),
+                    messageBackgroundColor: AppColors.secondary,
+                    chatIconBorderColor: AppColors.secondary,
+                    chatIconBackgroundColor: AppColors.secondary,
+                    messageBorderWidth: 2,
+                    messageTextStyle: GoogleFonts.poppins(
+                        fontSize: 14.sp,
+                        fontWeight: FontWeight.w400,
+                        color: AppColors.white),
+                    showMessageParameters: ShowMessageParameters(
+                        delayDuration: const Duration(seconds: 2),
+                        durationToShowMessage: const Duration(seconds: 5)),
+                  )
+                ],
+              )));
   }
 
   Widget _buildFAQItem(
