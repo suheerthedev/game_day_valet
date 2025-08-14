@@ -17,7 +17,7 @@ class TournamentService {
 
   Future<void> getTournamentsBySport(int sportId, {int page = 1}) async {
     final url =
-        '${ApiConfig.baseUrl}${ApiConfig.tournamentsBySportEndPoint}/$sportId?limit=1&page=$page';
+        '${ApiConfig.baseUrl}${ApiConfig.tournamentsBySportEndPoint}/$sportId?limit=10&page=$page';
 
     try {
       final response = await _apiService.get(url);
@@ -44,7 +44,7 @@ class TournamentService {
 
   Future<void> getRecommendedTournaments({int page = 1}) async {
     final url =
-        '${ApiConfig.baseUrl}${ApiConfig.tournamentsEndPoint}?limit=2&page=$page';
+        '${ApiConfig.baseUrl}${ApiConfig.tournamentsEndPoint}?limit=10&page=$page';
 
     try {
       final response = await _apiService.get(url);
