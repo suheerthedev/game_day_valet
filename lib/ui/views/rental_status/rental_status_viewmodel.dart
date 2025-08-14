@@ -3,21 +3,10 @@ import 'dart:async';
 import 'package:flutter/material.dart';
 import 'package:game_day_valet/app/app.locator.dart';
 import 'package:game_day_valet/app/app.router.dart';
+import 'package:game_day_valet/models/order_tracking_step_model.dart';
 import 'package:game_day_valet/services/logger_service.dart';
 import 'package:stacked/stacked.dart';
 import 'package:stacked_services/stacked_services.dart';
-
-class OrderTrackingStep {
-  final String title;
-  final String timestamp;
-  final bool isCompleted;
-
-  OrderTrackingStep({
-    required this.title,
-    required this.timestamp,
-    required this.isCompleted,
-  });
-}
 
 class RentalStatusViewModel extends BaseViewModel {
   final _navigationService = locator<NavigationService>();
@@ -55,25 +44,25 @@ class RentalStatusViewModel extends BaseViewModel {
     });
   }
 
-  final List<OrderTrackingStep> _trackingSteps = [
-    OrderTrackingStep(
+  final List<OrderTrackingStepModel> _trackingSteps = [
+    OrderTrackingStepModel(
       title: 'Rental Confirm',
       timestamp: '05:58 PM, 31 Jan 2025',
       isCompleted: true,
     ),
-    OrderTrackingStep(
+    OrderTrackingStepModel(
       title: 'Out for Delivery',
       timestamp: '05:58 PM, 31 Jan 2025',
       isCompleted: true,
     ),
-    OrderTrackingStep(
+    OrderTrackingStepModel(
       title: 'Delivery',
       timestamp: '05:58 PM, 31 Jan 2025',
       isCompleted: false,
     ),
   ];
 
-  List<OrderTrackingStep> get trackingSteps => _trackingSteps;
+  List<OrderTrackingStepModel> get trackingSteps => _trackingSteps;
 
   String getOrderId() {
     return '#1234567890';
