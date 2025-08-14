@@ -3,14 +3,17 @@ import 'dart:convert';
 import 'dart:io';
 
 import 'package:game_day_valet/app/app.locator.dart';
+import 'package:game_day_valet/app/app.router.dart';
 import 'package:game_day_valet/services/api_exception.dart';
 import 'package:game_day_valet/services/logger_service.dart';
 // import 'package:game_day_valet/services/connectivity_service.dart';
 import 'package:game_day_valet/services/secure_storage_service.dart';
 import 'package:http/http.dart' as http;
+import 'package:stacked_services/stacked_services.dart';
 
 class ApiService {
   final _secureStorageService = locator<SecureStorageService>();
+  final _navigationService = locator<NavigationService>();
   // final _connectivityService = locator<ConnectivityService>();
 
   Future<Map<String, String>> _getHeaders({bool isMultiPart = false}) async {
@@ -180,6 +183,11 @@ class ApiService {
     }
   }
 
+  Future<void> _onUnauthorized() async {
+    await _secureStorageService.deleteToken();
+    await _navigationService.clearStackAndShow(Routes.signInView);
+  }
+
   dynamic _handleResponse(http.Response response) {
     final decoded = jsonDecode(response.body);
     switch (response.statusCode) {
@@ -192,6 +200,7 @@ class ApiService {
         throw ApiException(
             decoded['message'] ?? "Bad Request", response.statusCode);
       case 401:
+        _onUnauthorized();
         throw UnauthorizedException();
       case 404:
         throw ApiException("Resource not found", 404);
@@ -210,6 +219,7 @@ class ApiService {
       case 422:
         throw ApiException(decoded['message'] ?? "Bad Request", statusCode);
       case 401:
+        _onUnauthorized();
         throw UnauthorizedException();
       default:
         throw ApiException("Something went wrong", statusCode);
