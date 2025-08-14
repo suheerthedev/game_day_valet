@@ -41,7 +41,7 @@ class HomeViewModel extends BaseViewModel {
   int get lastPageForTournamentsBySport =>
       _tournamentService.lastPageForTournamentsBySport;
   bool get hasMoreTournamentsBySport =>
-      currentPageForTournamentsBySport < lastPageForTournamentsBySport;
+      currentPageForTournamentsBySport <= lastPageForTournamentsBySport;
   bool isLoadingMoreTournamentsBySport = false;
 
   // Recommended tournaments
@@ -49,7 +49,7 @@ class HomeViewModel extends BaseViewModel {
   int get lastPageForRecommendedTournaments =>
       _tournamentService.lastPageForRecommendedTournaments;
   bool get hasMoreRecommendedTournaments =>
-      currentPageForRecommendedTournaments < lastPageForRecommendedTournaments;
+      currentPageForRecommendedTournaments <= lastPageForRecommendedTournaments;
   bool isLoadingMoreRecommendedTournaments = false;
 
   void navigateToSearchView(String searchQuery) {
@@ -121,12 +121,11 @@ class HomeViewModel extends BaseViewModel {
   }
 
   Future<void> loadMoreTournamentsBySport(int sportId) async {
-    currentPageForTournamentsBySport++;
     isLoadingMoreTournamentsBySport = true;
     rebuildUi();
     try {
       await _tournamentService.getTournamentsBySport(sportId,
-          page: currentPageForTournamentsBySport);
+          page: ++currentPageForTournamentsBySport);
     } on ApiException catch (e) {
       logger.error("Error fetching tournaments", e);
       _snackbarService.showCustomSnackBar(
@@ -139,6 +138,9 @@ class HomeViewModel extends BaseViewModel {
         variant: SnackbarType.error,
         message: "Something went wrong",
       );
+    } finally {
+      isLoadingMoreTournamentsBySport = false;
+      rebuildUi();
     }
   }
 
@@ -157,6 +159,30 @@ class HomeViewModel extends BaseViewModel {
         variant: SnackbarType.error,
         message: "Something went wrong",
       );
+    }
+  }
+
+  Future<void> loadMoreRecommendedTournaments() async {
+    isLoadingMoreRecommendedTournaments = true;
+    rebuildUi();
+    try {
+      await _tournamentService.getRecommendedTournaments(
+          page: ++currentPageForRecommendedTournaments);
+    } on ApiException catch (e) {
+      logger.error("Error fetching tournaments", e);
+      _snackbarService.showCustomSnackBar(
+        variant: SnackbarType.error,
+        message: e.message,
+      );
+    } catch (e) {
+      logger.error("Error fetching tournaments", e);
+      _snackbarService.showCustomSnackBar(
+        variant: SnackbarType.error,
+        message: "Something went wrong",
+      );
+    } finally {
+      isLoadingMoreRecommendedTournaments = false;
+      rebuildUi();
     }
   }
 

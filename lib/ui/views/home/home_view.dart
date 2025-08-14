@@ -174,37 +174,83 @@ class HomeView extends StackedView<HomeViewModel> {
                                                     SizedBox(
                                                       width: double.infinity,
                                                       height: 201.h,
-                                                      child: ListView.builder(
-                                                        itemCount: viewModel
-                                                            .recommendedTournamentsList
-                                                            .length,
-                                                        shrinkWrap: true,
-                                                        // physics:
-                                                        //     const NeverScrollableScrollPhysics(),
+                                                      child:
+                                                          SingleChildScrollView(
                                                         scrollDirection:
                                                             Axis.horizontal,
-                                                        itemBuilder:
-                                                            (context, index) {
-                                                          return SecondaryTournamentCard(
-                                                              tournament: viewModel
-                                                                      .recommendedTournamentsList[
-                                                                  index],
-                                                              onBookNowTap: () {
-                                                                viewModel.navigateToRentalBook(
-                                                                    viewModel
-                                                                        .recommendedTournamentsList[
-                                                                            index]
-                                                                        .id);
+                                                        child: Row(
+                                                          children: [
+                                                            ListView.builder(
+                                                              itemCount: viewModel
+                                                                  .recommendedTournamentsList
+                                                                  .length,
+                                                              shrinkWrap: true,
+                                                              physics:
+                                                                  const NeverScrollableScrollPhysics(),
+                                                              scrollDirection:
+                                                                  Axis.horizontal,
+                                                              itemBuilder:
+                                                                  (context,
+                                                                      index) {
+                                                                return SecondaryTournamentCard(
+                                                                    tournament:
+                                                                        viewModel.recommendedTournamentsList[
+                                                                            index],
+                                                                    onBookNowTap:
+                                                                        () {
+                                                                      viewModel.navigateToRentalBook(viewModel
+                                                                          .recommendedTournamentsList[
+                                                                              index]
+                                                                          .id);
+                                                                    },
+                                                                    onTapFavorite:
+                                                                        () {
+                                                                      viewModel.toggleFavorite(viewModel
+                                                                          .recommendedTournamentsList[
+                                                                              index]
+                                                                          .id);
+                                                                    });
                                                               },
-                                                              onTapFavorite:
-                                                                  () {
-                                                                viewModel.toggleFavorite(
-                                                                    viewModel
-                                                                        .recommendedTournamentsList[
-                                                                            index]
-                                                                        .id);
-                                                              });
-                                                        },
+                                                            ),
+                                                            SizedBox(
+                                                              width: 10.h,
+                                                            ),
+                                                            if (viewModel
+                                                                .hasMoreRecommendedTournaments)
+                                                              Align(
+                                                                alignment:
+                                                                    Alignment
+                                                                        .center,
+                                                                child: Padding(
+                                                                  padding: EdgeInsets
+                                                                      .symmetric(
+                                                                          horizontal:
+                                                                              32.w),
+                                                                  child:
+                                                                      SmallButton(
+                                                                    title:
+                                                                        'Show More',
+                                                                    onTap: () {
+                                                                      viewModel
+                                                                          .loadMoreRecommendedTournaments();
+                                                                    },
+                                                                    bgColor:
+                                                                        AppColors
+                                                                            .white,
+                                                                    textColor:
+                                                                        AppColors
+                                                                            .secondary,
+                                                                    borderColor:
+                                                                        AppColors
+                                                                            .secondary,
+                                                                    isLoading:
+                                                                        viewModel
+                                                                            .isLoadingMoreRecommendedTournaments,
+                                                                  ),
+                                                                ),
+                                                              ),
+                                                          ],
+                                                        ),
                                                       ),
                                                     )
                                                   ],
