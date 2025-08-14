@@ -11,7 +11,7 @@ class RentalHistoryModel {
   final String? promoCode;
   final String? insuranceOption;
   final bool? damageWaiver;
-  final String? rentalData;
+  final String? rentalDate;
   final String? deliveryAssignedTo;
   final String? paymentMethod;
   final String? paymentStatus;
@@ -32,7 +32,7 @@ class RentalHistoryModel {
     this.promoCode,
     this.insuranceOption,
     this.damageWaiver,
-    this.rentalData,
+    this.rentalDate,
     this.deliveryAssignedTo,
     this.paymentMethod,
     this.paymentStatus,
@@ -55,7 +55,7 @@ class RentalHistoryModel {
       promoCode: json['promo_code'],
       insuranceOption: json['insurance_option'],
       damageWaiver: json['damage_waiver'],
-      rentalData: json['rental_data'],
+      rentalDate: json['rental_date'],
       deliveryAssignedTo: json['delivery_assigned_to'],
       paymentMethod: json['payment_method'],
       paymentStatus: json['payment_status'],
