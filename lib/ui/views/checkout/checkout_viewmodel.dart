@@ -1,7 +1,9 @@
 import 'package:flutter/material.dart';
 import 'package:game_day_valet/app/app.locator.dart';
+import 'package:game_day_valet/config/api_config.dart';
 import 'package:game_day_valet/models/bundle_model.dart';
 import 'package:game_day_valet/models/item_model.dart';
+import 'package:game_day_valet/services/api_exception.dart';
 import 'package:game_day_valet/services/logger_service.dart';
 import 'package:game_day_valet/services/stripe_service.dart';
 import 'package:stacked/stacked.dart';
@@ -16,6 +18,8 @@ class CheckoutViewModel extends BaseViewModel {
   TextEditingController specialInstructionController = TextEditingController();
   TextEditingController promoCodeController = TextEditingController();
 
+  double totalAmount = 0;
+
   bool isDropOffExpanded = false;
   bool isRentalSummaryExpanded = false;
 
@@ -24,11 +28,13 @@ class CheckoutViewModel extends BaseViewModel {
   bool damageWaiver = false;
   bool stripe = false;
   // bool applePay = false;
-  bool googlePay = false;
+  // bool googlePay = false;
 
+  final int tournamentId;
   List<ItemModel> items = [];
   List<BundleModel> bundles = [];
-  CheckoutViewModel({required this.items, required this.bundles});
+  CheckoutViewModel(
+      {required this.items, required this.bundles, required this.tournamentId});
 
   void toggleDropOffExpanded() {
     isDropOffExpanded = !isDropOffExpanded;
@@ -90,10 +96,49 @@ class CheckoutViewModel extends BaseViewModel {
   }
 
   void checkOut(BuildContext context) {
-    if (stripe) {
-      _handleStripePayment(context);
-    } else if (googlePay) {
-      _handleGooglePayPayment(context);
+    _handleStripePayment(context);
+    // if (stripe) {
+    //   _handleStripePayment(context);
+    // } else if (googlePay) {
+    //   _handleGooglePayPayment(context);
+    // }
+  }
+
+  Future<void> bookRental() async {
+    final url = ApiConfig.baseUrl + ApiConfig.bookRentalEndPoint;
+
+    final body = {
+      "tournament_id": tournamentId,
+      "team_name": teamNameController.text,
+      "coach_name": coachNameController.text,
+      "field_number": fieldNumberController.text,
+      "items": items
+          .map((item) => {
+                "id": item.id,
+                "quantity": item.quantity,
+              })
+          .toList(),
+      "bundles": bundles
+          .map((bundle) => {
+                "id": bundle.id,
+              })
+          .toList(),
+      // "rental_date": "Date here",
+      "drop_off_time": dropOffTimeController.text,
+      "instructions": specialInstructionController.text,
+      "promo_code": promoCodeController.text,
+      // "insurance_option": ,
+      "damage_waiver": damageWaiver,
+      "payment_method": "stripe",
+      "total_amount": totalAmount,
+    };
+
+    try {
+      // final response = await http.post(Uri.parse(url), body: body);
+    } on ApiException catch (e) {
+      logger.error(e.message);
+    } catch (e) {
+      logger.error(e.toString());
     }
   }
 }

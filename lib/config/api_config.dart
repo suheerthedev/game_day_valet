@@ -40,5 +40,8 @@ class ApiConfig {
       '/api/chat/conversations/messages';
   static const sendMessageEndPoint = '/api/chat/send';
 
+  // Rental
+  static const bookRentalEndPoint = '/api/rentals';
+
   // Add more as needed
 }
