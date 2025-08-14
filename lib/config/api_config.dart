@@ -6,7 +6,7 @@ class ApiConfig {
   static const loginEndPoint = '/api/login';
   static const registerEndPoint = '/api/register';
   static const forgotPasswordEndPoint = '/api/password/reset';
-  static const resetPasswordEndPoint = '/api/password/reset/confirm';
+  static const resetPasswordEndPoint = '/api/reset-password';
   static const verifyOtpEndPoint = '/api/email/verify-otp';
   static const verifyPasswordResetCodeEndPoint = '/api/verify-reset-code';
   static const validateReferralCodeEndPoint = '/api/validate/referral-code';

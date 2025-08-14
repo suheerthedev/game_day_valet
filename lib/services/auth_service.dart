@@ -129,9 +129,9 @@ class AuthService {
         'email': email,
         'code': code,
         'password': password,
-        'confirm_password': password,
+        'password_confirmation': password,
       });
-      logger.info("Password Reset successful for email: $email");
+
       return response;
     } on ApiException catch (e) {
       logger.error("Password Reset failed - API Exception", e);

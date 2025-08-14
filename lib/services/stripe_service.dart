@@ -33,6 +33,11 @@ class StripeService {
           paymentSheetParameters: SetupPaymentSheetParameters(
         paymentIntentClientSecret: clientSecret,
         merchantDisplayName: 'Game Day Valet',
+        googlePay: const PaymentSheetGooglePay(
+          merchantCountryCode: 'US',
+          testEnv: true,
+          buttonType: PlatformButtonType.buy,
+        ),
         appearance: const PaymentSheetAppearance(
           colors: PaymentSheetAppearanceColors(
             icon: AppColors.primary,

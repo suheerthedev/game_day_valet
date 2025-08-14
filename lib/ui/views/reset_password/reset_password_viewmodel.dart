@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:game_day_valet/app/app.locator.dart';
+import 'package:game_day_valet/app/app.router.dart';
 import 'package:game_day_valet/core/enums/snackbar_type.dart';
 import 'package:game_day_valet/services/api_exception.dart';
 import 'package:game_day_valet/services/auth_service.dart';
@@ -73,13 +74,14 @@ class ResetPasswordViewModel extends BaseViewModel {
           variant: SnackbarType.error,
         );
       } else {
+        _navigationService
+            .popUntil((route) => route.settings.name == Routes.signInView);
         await _snackbarService.showCustomSnackBar(
           message: response['message'],
           variant: SnackbarType.success,
         );
+        setBusy(false);
         clearControllers();
-        _navigationService.back();
-        _navigationService.back();
       }
     } on ApiException catch (e) {
       logger.error("Reset Password failed from ViewModel - API Exception", e);
