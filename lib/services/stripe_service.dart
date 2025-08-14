@@ -13,8 +13,8 @@ class StripeService {
   final _snackbarService = locator<SnackbarService>();
   final _apiService = locator<ApiService>();
 
-  Future<void> payWithPaymentSheet(
-      {required int amount,
+  Future<bool> payWithPaymentSheet(
+      {required num amount,
       String currency = 'usd',
       required BuildContext context}) async {
     final url = ApiConfig.baseUrl + ApiConfig.createPaymentIntent;
@@ -78,21 +78,26 @@ class StripeService {
         message: 'Payment successful!',
         variant: SnackbarType.success,
       );
+
+      return true;
     } on StripeException catch (e) {
       _snackbarService.showCustomSnackBar(
         message: e.error.localizedMessage ?? 'Payment failed!',
         variant: SnackbarType.error,
       );
+      return false;
     } on ApiException catch (e) {
       _snackbarService.showCustomSnackBar(
         message: e.message,
         variant: SnackbarType.error,
       );
+      return false;
     } catch (e) {
       _snackbarService.showCustomSnackBar(
         message: 'Payment failed!',
         variant: SnackbarType.error,
       );
+      return false;
     }
   }
 }

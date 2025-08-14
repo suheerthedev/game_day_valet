@@ -21,6 +21,7 @@ class MainTextField extends StackedView<MainTextFieldModel> {
   final bool obscureText;
   final BorderRadius? borderRadius;
   final bool readOnly;
+  final VoidCallback? onTap;
   const MainTextField({
     super.key,
     required this.label,
@@ -37,6 +38,7 @@ class MainTextField extends StackedView<MainTextFieldModel> {
     this.obscureText = false,
     this.borderRadius,
     this.readOnly = false,
+    this.onTap,
   });
 
   @override
@@ -50,6 +52,7 @@ class MainTextField extends StackedView<MainTextFieldModel> {
       height: 58.h,
       child: TextField(
         readOnly: readOnly,
+        onTap: onTap,
         obscureText: obscureText,
         controller: controller,
         cursorColor: cursorColor ?? AppColors.primary,

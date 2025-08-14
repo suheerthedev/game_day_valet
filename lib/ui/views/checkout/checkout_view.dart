@@ -168,64 +168,68 @@ class CheckoutView extends StackedView<CheckoutViewModel> {
                                     fontWeight: FontWeight.w600,
                                     color: AppColors.textPrimary),
                               ),
-                              SizedBox(height: 10.h),
-                              Text(
-                                'Items',
-                                style: GoogleFonts.poppins(
-                                    fontSize: 14.sp,
-                                    fontWeight: FontWeight.w600,
-                                    color: AppColors.textPrimary),
-                              ),
-                              SizedBox(height: 10.h),
-                              ListView.builder(
-                                shrinkWrap: true,
-                                physics: const NeverScrollableScrollPhysics(),
-                                itemCount: viewModel.items.length,
-                                itemBuilder: (context, index) {
-                                  final item = viewModel.items[index];
-                                  return RentalSummaryItem(
-                                    name: item.name ?? '',
-                                    quantityText:
-                                        'Stock Quantity: ${item.stock ?? 0}',
-                                    count: item.quantity,
-                                    imageUrl: item.image,
-                                    onRemove: () =>
-                                        viewModel.removeItemFromSummary(item),
-                                    onMinus: () =>
-                                        viewModel.decrementItemQuantity(item),
-                                    onPlus: () =>
-                                        viewModel.incrementItemQuantity(item),
-                                  );
-                                },
-                              ),
-                              SizedBox(height: 10.h),
-                              Text(
-                                'Bundles',
-                                style: GoogleFonts.poppins(
-                                    fontSize: 14.sp,
-                                    fontWeight: FontWeight.w600,
-                                    color: AppColors.textPrimary),
-                              ),
-                              SizedBox(height: 10.h),
-                              ListView.builder(
-                                shrinkWrap: true,
-                                physics: const NeverScrollableScrollPhysics(),
-                                itemCount: viewModel.bundles.length,
-                                itemBuilder: (context, index) {
-                                  final bundle = viewModel.bundles[index];
-                                  return BundlesSummaryItem(
-                                    name: bundle.name ?? '',
-                                    totalItems:
-                                        'Total Items: ${bundle.totalItems}',
-                                    isSelected: bundle.isSelected,
-                                    onToggle: (value) {
-                                      viewModel.toggleBundle(bundle);
-                                    },
-                                    onRemove: () => viewModel
-                                        .removeBundleFromSummary(bundle),
-                                  );
-                                },
-                              )
+                              if (viewModel.items.isNotEmpty) ...[
+                                SizedBox(height: 10.h),
+                                Text(
+                                  'Items',
+                                  style: GoogleFonts.poppins(
+                                      fontSize: 14.sp,
+                                      fontWeight: FontWeight.w600,
+                                      color: AppColors.textPrimary),
+                                ),
+                                SizedBox(height: 10.h),
+                                ListView.builder(
+                                  shrinkWrap: true,
+                                  physics: const NeverScrollableScrollPhysics(),
+                                  itemCount: viewModel.items.length,
+                                  itemBuilder: (context, index) {
+                                    final item = viewModel.items[index];
+                                    return RentalSummaryItem(
+                                      name: item.name ?? '',
+                                      quantityText:
+                                          'Stock Quantity: ${item.stock ?? 0}',
+                                      count: item.quantity,
+                                      imageUrl: item.image,
+                                      onRemove: () =>
+                                          viewModel.removeItemFromSummary(item),
+                                      onMinus: () =>
+                                          viewModel.decrementItemQuantity(item),
+                                      onPlus: () =>
+                                          viewModel.incrementItemQuantity(item),
+                                    );
+                                  },
+                                ),
+                              ],
+                              if (viewModel.bundles.isNotEmpty) ...[
+                                SizedBox(height: 10.h),
+                                Text(
+                                  'Bundles',
+                                  style: GoogleFonts.poppins(
+                                      fontSize: 14.sp,
+                                      fontWeight: FontWeight.w600,
+                                      color: AppColors.textPrimary),
+                                ),
+                                SizedBox(height: 10.h),
+                                ListView.builder(
+                                  shrinkWrap: true,
+                                  physics: const NeverScrollableScrollPhysics(),
+                                  itemCount: viewModel.bundles.length,
+                                  itemBuilder: (context, index) {
+                                    final bundle = viewModel.bundles[index];
+                                    return BundlesSummaryItem(
+                                      name: bundle.name ?? '',
+                                      totalItems:
+                                          'Total Items: ${bundle.totalItems}',
+                                      isSelected: bundle.isSelected,
+                                      onToggle: (value) {
+                                        viewModel.toggleBundle(bundle);
+                                      },
+                                      onRemove: () => viewModel
+                                          .removeBundleFromSummary(bundle),
+                                    );
+                                  },
+                                )
+                              ],
                               // ...viewModel.items.asMap().entries.map((entry) {
                               //   final int index = entry.key;
                               //   final item = entry.value;
@@ -292,8 +296,7 @@ class CheckoutView extends StackedView<CheckoutViewModel> {
                 ),
                 SizedBox(height: 10.h),
                 MainTextField(
-                  label: "Field Number",
-                  readOnly: true,
+                  label: "Field Number (eg. Field 5)",
                   controller: viewModel.fieldNumberController,
                   labelColor: AppColors.textHint,
                   cursorColor: AppColors.primary,
@@ -301,11 +304,6 @@ class CheckoutView extends StackedView<CheckoutViewModel> {
                   borderColor: AppColors.grey100,
                   enabledBorderColor: AppColors.grey100,
                   focusedBorderColor: AppColors.primary,
-                  hasSuffixIcon: true,
-                  suffixIcon: IconButton(
-                      onPressed: () {},
-                      icon: const Icon(IconsaxPlusLinear.arrow_down)),
-                  suffixIconColor: AppColors.textHint,
                 ),
                 SizedBox(height: 20.h),
                 Text(
@@ -325,44 +323,14 @@ class CheckoutView extends StackedView<CheckoutViewModel> {
                   fillColor: AppColors.grey50,
                   borderColor: AppColors.grey100,
                   enabledBorderColor: AppColors.grey100,
-                  focusedBorderColor: AppColors.primary,
+                  focusedBorderColor: AppColors.grey100,
                   hasSuffixIcon: true,
-                  suffixIcon: IconButton(
-                      onPressed: () {
-                        viewModel.toggleDropOffExpanded();
-                      },
-                      icon: const Icon(IconsaxPlusLinear.arrow_down)),
+                  suffixIcon: const Icon(IconsaxPlusLinear.calendar),
+                  onTap: () async {
+                    await viewModel.pickDropOffDateTime(context);
+                  },
                   suffixIconColor: AppColors.textHint,
                 ),
-                if (viewModel.isDropOffExpanded) ...[
-                  // Container(
-                  //   width: 340.w,
-                  //   height: 142.h,
-                  //   decoration: BoxDecoration(
-                  //     color: AppColors.grey50,
-                  //     borderRadius: BorderRadius.circular(10),
-                  //     border: Border.all(color: AppColors.grey100),
-                  //   ),
-                  //   child: ListView.builder(
-                  //     physics: const NeverScrollableScrollPhysics(),
-                  //     shrinkWrap: true,
-                  //     itemCount: viewModel.gears.length,
-                  //     itemBuilder: (context, index) {
-                  //       final gear = viewModel.gears[index];
-                  //       return _buildGearOption(
-                  //         context,
-                  //         // icon: network['image'],
-                  //         name: gear['name'],
-                  //         isLast: index == viewModel.gears.length - 1,
-                  //         onPreviewImage: () {
-                  //           viewModel.showMapPopup(
-                  //               context, gear['image'], gear['name']);
-                  //         },
-                  //       );
-                  //     },
-                  //   ),
-                  // ),
-                ],
 
                 SizedBox(height: 20.h),
                 Text(
@@ -641,7 +609,7 @@ class CheckoutView extends StackedView<CheckoutViewModel> {
                 MainButton(
                     text: 'Book Now',
                     onTap: () {
-                      viewModel.checkOut(context);
+                      viewModel.bookRental(context);
                     },
                     textColor: AppColors.white,
                     color: AppColors.secondary,
@@ -661,7 +629,7 @@ class CheckoutView extends StackedView<CheckoutViewModel> {
 
   @override
   void onViewModelReady(CheckoutViewModel viewModel) {
-    // viewModel.calculateTotalAmount();
+    viewModel.calculateTotalAmount();
     super.onViewModelReady(viewModel);
   }
 }
