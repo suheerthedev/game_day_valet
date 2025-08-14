@@ -121,7 +121,7 @@ class HomeView extends StackedView<HomeViewModel> {
                                                 },
                                               ),
                                               SizedBox(
-                                                height: 10.h,
+                                                height: 20.h,
                                               ),
                                               if (viewModel
                                                   .hasMoreTournamentsBySport)
