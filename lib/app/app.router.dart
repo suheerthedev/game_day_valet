@@ -7,6 +7,8 @@
 // ignore_for_file: no_leading_underscores_for_library_prefixes
 import 'package:flutter/material.dart' as _i28;
 import 'package:flutter/material.dart';
+import 'package:game_day_valet/models/bundle_model.dart' as _i30;
+import 'package:game_day_valet/models/item_model.dart' as _i29;
 import 'package:game_day_valet/ui/views/add_rentals/add_rentals_view.dart'
     as _i24;
 import 'package:game_day_valet/ui/views/chat/chat_view.dart' as _i20;
@@ -46,7 +48,7 @@ import 'package:game_day_valet/ui/views/verify_email/verify_email_view.dart'
 import 'package:game_day_valet/ui/views/verify_password_reset_code/verify_password_reset_code_view.dart'
     as _i22;
 import 'package:stacked/stacked.dart' as _i1;
-import 'package:stacked_services/stacked_services.dart' as _i29;
+import 'package:stacked_services/stacked_services.dart' as _i31;
 
 class Routes {
   static const homeView = '/home-view';
@@ -399,8 +401,13 @@ class StackedRouter extends _i1.RouterBase {
       );
     },
     _i25.CheckoutView: (data) {
+      final args = data.getArgs<CheckoutViewArguments>(nullOk: false);
       return _i28.MaterialPageRoute<dynamic>(
-        builder: (context) => const _i25.CheckoutView(),
+        builder: (context) => _i25.CheckoutView(
+            key: args.key,
+            tournamentId: args.tournamentId,
+            items: args.items,
+            bundles: args.bundles),
         settings: data,
       );
     },
@@ -599,6 +606,45 @@ class AddRentalsViewArguments {
   }
 }
 
+class CheckoutViewArguments {
+  const CheckoutViewArguments({
+    this.key,
+    required this.tournamentId,
+    required this.items,
+    required this.bundles,
+  });
+
+  final _i28.Key? key;
+
+  final int tournamentId;
+
+  final List<_i29.ItemModel> items;
+
+  final List<_i30.BundleModel> bundles;
+
+  @override
+  String toString() {
+    return '{"key": "$key", "tournamentId": "$tournamentId", "items": "$items", "bundles": "$bundles"}';
+  }
+
+  @override
+  bool operator ==(covariant CheckoutViewArguments other) {
+    if (identical(this, other)) return true;
+    return other.key == key &&
+        other.tournamentId == tournamentId &&
+        other.items == items &&
+        other.bundles == bundles;
+  }
+
+  @override
+  int get hashCode {
+    return key.hashCode ^
+        tournamentId.hashCode ^
+        items.hashCode ^
+        bundles.hashCode;
+  }
+}
+
 class SearchViewArguments {
   const SearchViewArguments({
     this.key,
@@ -631,7 +677,7 @@ class SearchViewArguments {
   }
 }
 
-extension NavigatorStateExtension on _i29.NavigationService {
+extension NavigatorStateExtension on _i31.NavigationService {
   Future<dynamic> navigateToHomeView([
     int? routerId,
     bool preventDuplicates = true,
@@ -975,14 +1021,23 @@ extension NavigatorStateExtension on _i29.NavigationService {
         transition: transition);
   }
 
-  Future<dynamic> navigateToCheckoutView([
+  Future<dynamic> navigateToCheckoutView({
+    _i28.Key? key,
+    required int tournamentId,
+    required List<_i29.ItemModel> items,
+    required List<_i30.BundleModel> bundles,
     int? routerId,
     bool preventDuplicates = true,
     Map<String, String>? parameters,
     Widget Function(BuildContext, Animation<double>, Animation<double>, Widget)?
         transition,
-  ]) async {
+  }) async {
     return navigateTo<dynamic>(Routes.checkoutView,
+        arguments: CheckoutViewArguments(
+            key: key,
+            tournamentId: tournamentId,
+            items: items,
+            bundles: bundles),
         id: routerId,
         preventDuplicates: preventDuplicates,
         parameters: parameters,
@@ -1367,14 +1422,23 @@ extension NavigatorStateExtension on _i29.NavigationService {
         transition: transition);
   }
 
-  Future<dynamic> replaceWithCheckoutView([
+  Future<dynamic> replaceWithCheckoutView({
+    _i28.Key? key,
+    required int tournamentId,
+    required List<_i29.ItemModel> items,
+    required List<_i30.BundleModel> bundles,
     int? routerId,
     bool preventDuplicates = true,
     Map<String, String>? parameters,
     Widget Function(BuildContext, Animation<double>, Animation<double>, Widget)?
         transition,
-  ]) async {
+  }) async {
     return replaceWith<dynamic>(Routes.checkoutView,
+        arguments: CheckoutViewArguments(
+            key: key,
+            tournamentId: tournamentId,
+            items: items,
+            bundles: bundles),
         id: routerId,
         preventDuplicates: preventDuplicates,
         parameters: parameters,

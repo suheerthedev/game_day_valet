@@ -1,5 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:game_day_valet/app/app.locator.dart';
+import 'package:game_day_valet/models/bundle_model.dart';
+import 'package:game_day_valet/models/item_model.dart';
 import 'package:game_day_valet/services/logger_service.dart';
 import 'package:game_day_valet/services/stripe_service.dart';
 import 'package:stacked/stacked.dart';
@@ -22,6 +24,10 @@ class CheckoutViewModel extends BaseViewModel {
   bool stripe = false;
   // bool applePay = false;
   bool googlePay = false;
+
+  List<ItemModel> items = [];
+  List<BundleModel> bundles = [];
+  CheckoutViewModel({required this.items, required this.bundles});
 
   void toggleDropOffExpanded() {
     isDropOffExpanded = !isDropOffExpanded;

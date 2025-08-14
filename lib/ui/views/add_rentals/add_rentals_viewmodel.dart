@@ -23,6 +23,9 @@ class AddRentalsViewModel extends BaseViewModel {
 
   bool viewSmartSuggestions = false;
 
+  final int tournamentId;
+  AddRentalsViewModel({required this.tournamentId});
+
   void navigateToSearch(String searchQuery) {
     _navigationService.navigateToSearchView(
         isTournamentSearch: false, isItemSearch: true);
@@ -54,7 +57,8 @@ class AddRentalsViewModel extends BaseViewModel {
     print(items[1].id);
     print(items[2].id);
     print(bundles[0].isSelected);
-    // _navigationService.navigateToCheckoutView();
+    _navigationService.navigateToCheckoutView(
+        tournamentId: tournamentId, items: items, bundles: bundles);
   }
 
   void init() async {
