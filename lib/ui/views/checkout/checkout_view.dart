@@ -1,3 +1,4 @@
+import 'package:cached_network_image/cached_network_image.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:game_day_valet/models/bundle_model.dart';
@@ -48,54 +49,176 @@ class CheckoutView extends StackedView<CheckoutViewModel> {
               crossAxisAlignment: CrossAxisAlignment.start,
               children: [
                 //DropDowns
-                Row(
-                  children: [
-                    const Spacer(),
-                    Container(
-                      width: 131.w,
-                      height: 40.h,
-                      decoration: BoxDecoration(
-                          color: const Color(0xFFF4F4F4),
-                          borderRadius: BorderRadius.circular(10.r)),
-                      child: Row(
-                        mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-                        children: [
-                          Text(
-                            "SELECT DATE",
-                            style: GoogleFonts.poppins(
-                                fontSize: 12.sp,
-                                fontWeight: FontWeight.w500,
-                                color: AppColors.textPrimary),
-                          ),
-                          Icon(IconsaxPlusLinear.arrow_down,
-                              size: 20.w, color: AppColors.textPrimary)
-                        ],
+                // Row(
+                //   children: [
+                //     const Spacer(),
+                //     Container(
+                //       width: 131.w,
+                //       height: 40.h,
+                //       decoration: BoxDecoration(
+                //           color: const Color(0xFFF4F4F4),
+                //           borderRadius: BorderRadius.circular(10.r)),
+                //       child: Row(
+                //         mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+                //         children: [
+                //           Text(
+                //             "SELECT DATE",
+                //             style: GoogleFonts.poppins(
+                //                 fontSize: 12.sp,
+                //                 fontWeight: FontWeight.w500,
+                //                 color: AppColors.textPrimary),
+                //           ),
+                //           Icon(IconsaxPlusLinear.arrow_down,
+                //               size: 20.w, color: AppColors.textPrimary)
+                //         ],
+                //       ),
+                //     ),
+                //     SizedBox(width: 10.w),
+                //     Container(
+                //       width: 131.w,
+                //       height: 40.h,
+                //       decoration: BoxDecoration(
+                //           color: const Color(0xFFF4F4F4),
+                //           borderRadius: BorderRadius.circular(10.r)),
+                //       child: Row(
+                //         mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+                //         children: [
+                //           Text(
+                //             "SPORT TYPE",
+                //             style: GoogleFonts.poppins(
+                //                 fontSize: 12.sp,
+                //                 fontWeight: FontWeight.w500,
+                //                 color: AppColors.textPrimary),
+                //           ),
+                //           Icon(IconsaxPlusLinear.arrow_down,
+                //               size: 20.w,
+                //               color: const Color.fromRGBO(25, 33, 38, 1))
+                //         ],
+                //       ),
+                //     ),
+                //   ],
+                // ),
+
+                //View Rental Summary DropDown
+                GestureDetector(
+                  onTap: () {
+                    viewModel.toggleRentalSummaryExpanded();
+                  },
+                  child: Row(
+                    mainAxisAlignment: MainAxisAlignment.start,
+                    children: [
+                      Text(
+                        "View Rental Summary",
+                        style: GoogleFonts.poppins(
+                            fontSize: 12.sp,
+                            fontWeight: FontWeight.w500,
+                            color: AppColors.textHint),
                       ),
-                    ),
-                    SizedBox(width: 10.w),
-                    Container(
-                      width: 131.w,
-                      height: 40.h,
-                      decoration: BoxDecoration(
-                          color: const Color(0xFFF4F4F4),
-                          borderRadius: BorderRadius.circular(10.r)),
-                      child: Row(
-                        mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-                        children: [
-                          Text(
-                            "SPORT TYPE",
-                            style: GoogleFonts.poppins(
-                                fontSize: 12.sp,
-                                fontWeight: FontWeight.w500,
-                                color: AppColors.textPrimary),
+                      SizedBox(width: 10.w),
+                      AnimatedRotation(
+                        turns: viewModel.isRentalSummaryExpanded ? 0.5 : 0.0,
+                        duration: const Duration(milliseconds: 200),
+                        curve: Curves.easeInOut,
+                        child: Icon(
+                          IconsaxPlusLinear.arrow_down,
+                          size: 18.w,
+                          color: AppColors.grey400,
+                        ),
+                      )
+                    ],
+                  ),
+                ),
+                AnimatedCrossFade(
+                  duration: const Duration(milliseconds: 400),
+                  crossFadeState: viewModel.isRentalSummaryExpanded
+                      ? CrossFadeState.showFirst
+                      : CrossFadeState.showSecond,
+                  firstCurve: Curves.easeInOut,
+                  secondCurve: Curves.easeInOut,
+                  firstChild: Column(
+                    children: [
+                      SizedBox(height: 10.h),
+                      Container(
+                        width: double.infinity,
+                        decoration: BoxDecoration(
+                          color: AppColors.white,
+                          borderRadius: BorderRadius.circular(10.r),
+                          border:
+                              Border.all(color: AppColors.grey200, width: 1.w),
+                          boxShadow: [
+                            BoxShadow(
+                              color: Colors.black.withOpacity(0.03),
+                              blurRadius: 6,
+                              offset: const Offset(0, 2),
+                            )
+                          ],
+                        ),
+                        child: Padding(
+                          padding: EdgeInsets.symmetric(
+                              horizontal: 12.w, vertical: 12.h),
+                          child: Column(
+                            mainAxisSize: MainAxisSize.min,
+                            children: [
+                              ListView.builder(
+                                shrinkWrap: true,
+                                physics: const NeverScrollableScrollPhysics(),
+                                itemCount: viewModel.items.length,
+                                itemBuilder: (context, index) {
+                                  final item = viewModel.items[index];
+                                  return _RentalSummaryRow(
+                                    name: item.name ?? '',
+                                    quantityText:
+                                        'Stock Quantity: ${item.stock ?? 0}',
+                                    count:
+                                        item.quantity == 0 ? 1 : item.quantity,
+                                    imageUrl: item.image,
+                                    onRemove: () =>
+                                        viewModel.removeItemFromSummary(item),
+                                    onMinus: () =>
+                                        viewModel.decrementItemQuantity(item),
+                                    onPlus: () =>
+                                        viewModel.incrementItemQuantity(item),
+                                  );
+                                },
+                              )
+                              // ...viewModel.items.asMap().entries.map((entry) {
+                              //   final int index = entry.key;
+                              //   final item = entry.value;
+                              //   return Column(
+                              //     children: [
+                              //       _RentalSummaryRow(
+                              //         name: item.name ?? '',
+                              //         quantityText:
+                              //             'Stock Quantity: ${item.stock ?? 0}',
+                              //         count: item.quantity == 0
+                              //             ? 1
+                              //             : item.quantity,
+                              //         imageUrl: item.image,
+                              //         onRemove: () =>
+                              //             viewModel.removeItemFromSummary(item),
+                              //         onMinus: () =>
+                              //             viewModel.decrementItemQuantity(item),
+                              //         onPlus: () =>
+                              //             viewModel.incrementItemQuantity(item),
+                              //       ),
+                              //       if (index != viewModel.items.length - 1)
+                              //         Padding(
+                              //           padding: EdgeInsets.symmetric(
+                              //               vertical: 10.h),
+                              //           child: const Divider(
+                              //               height: 1,
+                              //               color: AppColors.grey200),
+                              //         ),
+                              //     ],
+                              //   );
+                              // }).toList(),
+                            ],
                           ),
-                          Icon(IconsaxPlusLinear.arrow_down,
-                              size: 20.w,
-                              color: const Color.fromRGBO(25, 33, 38, 1))
-                        ],
+                        ),
                       ),
-                    ),
-                  ],
+                    ],
+                  ),
+                  secondChild: const SizedBox.shrink(),
                 ),
 
                 SizedBox(height: 20.h),
@@ -124,8 +247,9 @@ class CheckoutView extends StackedView<CheckoutViewModel> {
                 ),
                 SizedBox(height: 10.h),
                 MainTextField(
-                  label: "Age Group",
-                  controller: viewModel.ageGroupController,
+                  label: "Field Number",
+                  readOnly: true,
+                  controller: viewModel.fieldNumberController,
                   labelColor: AppColors.textHint,
                   cursorColor: AppColors.primary,
                   fillColor: AppColors.grey50,
@@ -149,6 +273,7 @@ class CheckoutView extends StackedView<CheckoutViewModel> {
                 SizedBox(height: 10.h),
                 MainTextField(
                   label: "Estimated Drop-Off Time",
+                  readOnly: true,
                   controller: viewModel.dropOffTimeController,
                   labelColor: AppColors.textHint,
                   cursorColor: AppColors.primary,
@@ -487,4 +612,121 @@ class CheckoutView extends StackedView<CheckoutViewModel> {
     BuildContext context,
   ) =>
       CheckoutViewModel(items: items, bundles: bundles);
+}
+
+class _RentalSummaryRow extends StatelessWidget {
+  final String name;
+  final String quantityText;
+  final int count;
+  final String? imageUrl;
+  final VoidCallback onRemove;
+  final VoidCallback onMinus;
+  final VoidCallback onPlus;
+
+  const _RentalSummaryRow({
+    required this.name,
+    required this.quantityText,
+    required this.count,
+    required this.imageUrl,
+    required this.onRemove,
+    required this.onMinus,
+    required this.onPlus,
+  });
+
+  @override
+  Widget build(BuildContext context) {
+    return Row(
+      crossAxisAlignment: CrossAxisAlignment.center,
+      children: [
+        Container(
+          width: 56.w,
+          height: 56.w,
+          decoration: BoxDecoration(
+            color: AppColors.grey100,
+            borderRadius: BorderRadius.circular(12.r),
+          ),
+          child: ClipRRect(
+            borderRadius: BorderRadius.circular(12.r),
+            child: CachedNetworkImage(
+                imageUrl: imageUrl ?? '',
+                fit: BoxFit.cover,
+                placeholder: (context, url) => const Center(
+                      child: CircularProgressIndicator(
+                        color: AppColors.secondary,
+                      ),
+                    ),
+                errorWidget: (context, url, error) => Icon(
+                    IconsaxPlusLinear.image,
+                    size: 24.sp,
+                    color: AppColors.grey400)),
+          ),
+        ),
+        SizedBox(width: 12.w),
+        Expanded(
+          child: Column(
+            crossAxisAlignment: CrossAxisAlignment.start,
+            children: [
+              Text(
+                name,
+                style: GoogleFonts.poppins(
+                  fontSize: 14.sp,
+                  fontWeight: FontWeight.w600,
+                  color: AppColors.textPrimary,
+                ),
+              ),
+              SizedBox(height: 2.h),
+              Text(
+                quantityText,
+                style: GoogleFonts.poppins(
+                  fontSize: 12.sp,
+                  fontWeight: FontWeight.w500,
+                  color: AppColors.textHint,
+                ),
+              ),
+              SizedBox(height: 8.h),
+              Row(
+                children: [
+                  _circleIconButton(
+                      icon: IconsaxPlusLinear.minus, onTap: onMinus),
+                  SizedBox(width: 12.w),
+                  Text(
+                    count.toString().padLeft(2, '0'),
+                    style: GoogleFonts.poppins(
+                      fontSize: 14.sp,
+                      fontWeight: FontWeight.w600,
+                      color: AppColors.textPrimary,
+                    ),
+                  ),
+                  SizedBox(width: 12.w),
+                  _circleIconButton(icon: IconsaxPlusLinear.add, onTap: onPlus),
+                ],
+              ),
+            ],
+          ),
+        ),
+        SizedBox(width: 8.w),
+        InkWell(
+          onTap: onRemove,
+          child: Icon(IconsaxPlusLinear.trash,
+              color: AppColors.secondary, size: 20.sp),
+        )
+      ],
+    );
+  }
+
+  Widget _circleIconButton(
+      {required IconData icon, required VoidCallback onTap}) {
+    return InkWell(
+      onTap: onTap,
+      child: Container(
+        width: 28.w,
+        height: 28.w,
+        decoration: BoxDecoration(
+          color: AppColors.grey100,
+          shape: BoxShape.circle,
+        ),
+        child: Icon(icon, size: 16.sp, color: AppColors.textPrimary),
+      ),
+    );
+  }
 }

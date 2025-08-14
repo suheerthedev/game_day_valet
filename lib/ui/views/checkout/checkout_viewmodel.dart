@@ -11,12 +11,13 @@ class CheckoutViewModel extends BaseViewModel {
 
   TextEditingController teamNameController = TextEditingController();
   TextEditingController coachNameController = TextEditingController();
-  TextEditingController ageGroupController = TextEditingController();
+  TextEditingController fieldNumberController = TextEditingController();
   TextEditingController dropOffTimeController = TextEditingController();
   TextEditingController specialInstructionController = TextEditingController();
   TextEditingController promoCodeController = TextEditingController();
 
   bool isDropOffExpanded = false;
+  bool isRentalSummaryExpanded = false;
 
   bool insuranceOne = false;
   bool insuranceTwo = false;
@@ -32,6 +33,32 @@ class CheckoutViewModel extends BaseViewModel {
   void toggleDropOffExpanded() {
     isDropOffExpanded = !isDropOffExpanded;
     rebuildUi();
+  }
+
+  void toggleRentalSummaryExpanded() {
+    isRentalSummaryExpanded = !isRentalSummaryExpanded;
+    rebuildUi();
+  }
+
+  // Quantity controls for rental summary
+  void incrementItemQuantity(ItemModel item) {
+    final int index = items.indexWhere((i) => i.id == item.id);
+    if (index == -1) return;
+    items[index].quantity = (items[index].quantity) + 1;
+    notifyListeners();
+  }
+
+  void decrementItemQuantity(ItemModel item) {
+    final int index = items.indexWhere((i) => i.id == item.id);
+    if (index == -1) return;
+    final int current = items[index].quantity;
+    items[index].quantity = current > 1 ? current - 1 : 1;
+    notifyListeners();
+  }
+
+  void removeItemFromSummary(ItemModel item) {
+    items.removeWhere((i) => i.id == item.id);
+    notifyListeners();
   }
 
   void _handleStripePayment(BuildContext context) async {
