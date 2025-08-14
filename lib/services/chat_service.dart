@@ -29,8 +29,7 @@ class ChatService with ListenableServiceMixin {
   bool _isPusherInitialized = false;
 
   ChatService() {
-    listenToReactiveValues([_conversations]);
-    listenToReactiveValues([_messages]);
+    listenToReactiveValues([_conversations, _messages]);
   }
 
   Future<void> getUserConversations() async {
