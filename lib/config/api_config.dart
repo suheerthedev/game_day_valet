@@ -43,5 +43,8 @@ class ApiConfig {
   // Rental
   static const bookRentalEndPoint = '/api/rentals';
 
+  //Refer and Earn
+  static const referralCodeEndPoint = '/api/user/referral-code';
+
   // Add more as needed
 }
