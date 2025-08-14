@@ -21,6 +21,7 @@ import '../services/logger_service.dart';
 import '../services/pusher_service.dart';
 import '../services/secure_storage_service.dart';
 import '../services/stripe_service.dart';
+import '../services/tournament_service.dart';
 import '../services/user_service.dart';
 
 final locator = StackedLocator.instance;
@@ -48,4 +49,5 @@ Future<void> setupLocator({
   locator.registerLazySingleton(() => StripeService());
   locator.registerLazySingleton(() => ChatService());
   locator.registerLazySingleton(() => PusherService());
+  locator.registerLazySingleton(() => TournamentService());
 }

@@ -20,6 +20,7 @@ import 'package:game_day_valet/services/logger_service.dart' as _i15;
 import 'package:game_day_valet/services/pusher_service.dart' as _i20;
 import 'package:game_day_valet/services/secure_storage_service.dart' as _i10;
 import 'package:game_day_valet/services/stripe_service.dart' as _i17;
+import 'package:game_day_valet/services/tournament_service.dart' as _i21;
 import 'package:game_day_valet/services/user_service.dart' as _i12;
 import 'package:mockito/mockito.dart' as _i1;
 import 'package:mockito/src/dummies.dart' as _i4;
@@ -713,6 +714,17 @@ class MockDialogService extends _i1.Mock implements _i3.DialogService {
 /// See the documentation for Mockito's code generation for more information.
 class MockApiService extends _i1.Mock implements _i8.ApiService {
   @override
+  _i6.Future<Map<String, String>> getPusherHeaders() => (super.noSuchMethod(
+        Invocation.method(
+          #getPusherHeaders,
+          [],
+        ),
+        returnValue: _i6.Future<Map<String, String>>.value(<String, String>{}),
+        returnValueForMissingStub:
+            _i6.Future<Map<String, String>>.value(<String, String>{}),
+      ) as _i6.Future<Map<String, String>>);
+
+  @override
   _i6.Future<dynamic> get(String? url) => (super.noSuchMethod(
         Invocation.method(
           #get,
@@ -1386,4 +1398,48 @@ class MockChatService extends _i1.Mock implements _i18.ChatService {
 /// A class which mocks [PusherService].
 ///
 /// See the documentation for Mockito's code generation for more information.
-class MockPusherService extends _i1.Mock implements _i20.PusherService {}
+class MockPusherService extends _i1.Mock implements _i20.PusherService {
+  @override
+  _i6.Future<void> initialize() => (super.noSuchMethod(
+        Invocation.method(
+          #initialize,
+          [],
+        ),
+        returnValue: _i6.Future<void>.value(),
+        returnValueForMissingStub: _i6.Future<void>.value(),
+      ) as _i6.Future<void>);
+
+  @override
+  _i6.Future<void> subscribeToChannel(
+    String? userId,
+    dynamic Function(dynamic)? onMessageReceived,
+  ) =>
+      (super.noSuchMethod(
+        Invocation.method(
+          #subscribeToChannel,
+          [
+            userId,
+            onMessageReceived,
+          ],
+        ),
+        returnValue: _i6.Future<void>.value(),
+        returnValueForMissingStub: _i6.Future<void>.value(),
+      ) as _i6.Future<void>);
+
+  @override
+  _i6.Future<void> unsubscribeFromChannel(String? userId) =>
+      (super.noSuchMethod(
+        Invocation.method(
+          #unsubscribeFromChannel,
+          [userId],
+        ),
+        returnValue: _i6.Future<void>.value(),
+        returnValueForMissingStub: _i6.Future<void>.value(),
+      ) as _i6.Future<void>);
+}
+
+/// A class which mocks [TournamentService].
+///
+/// See the documentation for Mockito's code generation for more information.
+class MockTournamentService extends _i1.Mock
+    implements _i21.TournamentService {}

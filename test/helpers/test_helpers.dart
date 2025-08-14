@@ -12,6 +12,7 @@ import 'package:game_day_valet/services/google_sign_in_service.dart';
 import 'package:game_day_valet/services/stripe_service.dart';
 import 'package:game_day_valet/services/chat_service.dart';
 import 'package:game_day_valet/services/pusher_service.dart';
+import 'package:game_day_valet/services/tournament_service.dart';
 // @stacked-import
 
 import 'test_helpers.mocks.dart';
@@ -32,6 +33,7 @@ import 'test_helpers.mocks.dart';
     MockSpec<StripeService>(onMissingStub: OnMissingStub.returnDefault),
     MockSpec<ChatService>(onMissingStub: OnMissingStub.returnDefault),
     MockSpec<PusherService>(onMissingStub: OnMissingStub.returnDefault),
+    MockSpec<TournamentService>(onMissingStub: OnMissingStub.returnDefault),
 // @stacked-mock-spec
   ],
 )
@@ -49,6 +51,7 @@ void registerServices() {
   getAndRegisterStripeService();
   getAndRegisterChatService();
   getAndRegisterPusherService();
+  getAndRegisterTournamentService();
 // @stacked-mock-register
 }
 
@@ -173,6 +176,13 @@ MockPusherService getAndRegisterPusherService() {
   _removeRegistrationIfExists<PusherService>();
   final service = MockPusherService();
   locator.registerSingleton<PusherService>(service);
+  return service;
+}
+
+MockTournamentService getAndRegisterTournamentService() {
+  _removeRegistrationIfExists<TournamentService>();
+  final service = MockTournamentService();
+  locator.registerSingleton<TournamentService>(service);
   return service;
 }
 // @stacked-mock-create
