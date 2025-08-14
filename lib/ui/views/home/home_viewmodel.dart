@@ -206,7 +206,7 @@ class HomeViewModel extends BaseViewModel {
 
     try {
       final response = await _apiService.post(url, {
-        "tournament_id": tournamentId,
+        "tournament_id": tournamentId.toString(),
       });
 
       logger.info("Favorite toggled successfully. Response: $response");

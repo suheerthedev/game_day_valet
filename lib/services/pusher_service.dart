@@ -1,7 +1,9 @@
 import 'dart:convert';
 
 import 'package:game_day_valet/app/app.locator.dart';
+import 'package:game_day_valet/models/user_model.dart';
 import 'package:game_day_valet/services/logger_service.dart';
+import 'package:game_day_valet/services/user_service.dart';
 import 'package:http/http.dart' as http;
 import 'package:game_day_valet/config/api_config.dart';
 import 'package:game_day_valet/services/api_service.dart';
@@ -63,10 +65,6 @@ class PusherService {
     );
     await _pusher!.connect();
     _isInitialized = true;
-
-    await subscribeToChannel('support', (data) {
-      logger.info('New message received: $data');
-    });
   }
 
   Future<void> subscribeToChannel(
@@ -78,26 +76,27 @@ class PusherService {
     final myChannel = await _pusher!.subscribe(
       channelName: 'conversation.$userId',
       onEvent: (event) {
-        print("New message received: ${event.eventName} - ${event.data}");
+        logger.info("New message received: ${event.eventName} - ${event.data}");
 
         onMessageReceived(event.data);
       },
-      // onSubscriptionSucceeded: (channelName, data) {
-      //   logger.info('Successfully subscribed to: $channelName');
-      // },
-      // onSubscriptionError: (message, error) {
-      //   logger.error('Subscription error: $message');
-      // },
     );
 
-    print("My Channel: ${myChannel.channelName}");
+    logger.info("My Channel: ${myChannel.channelName}");
   }
 
   Future<void> unsubscribeFromChannel(String userId) async {
     if (_pusher != null) {
       await _pusher!
           .unsubscribe(channelName: 'private-message.created.$userId');
-      print('Unsubscribed from: private-message.created.$userId');
+      logger.info('Unsubscribed from: private-message.created.$userId');
+    }
+  }
+
+  Future<void> disconnect() async {
+    if (_pusher != null) {
+      await _pusher!.disconnect();
+      _isInitialized = false;
     }
   }
 }
