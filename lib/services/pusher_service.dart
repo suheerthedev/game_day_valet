@@ -85,9 +85,8 @@ class PusherService {
 
   Future<void> unsubscribeFromChannel(String userId) async {
     if (_pusher != null) {
-      await _pusher!
-          .unsubscribe(channelName: 'private-message.created.$userId');
-      logger.info('Unsubscribed from: private-message.created.$userId');
+      await _pusher!.unsubscribe(channelName: 'conversation.$userId');
+      logger.info('Unsubscribed from: conversation.$userId');
     }
   }
 

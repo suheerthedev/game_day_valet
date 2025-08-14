@@ -3,7 +3,7 @@ class ItemModel {
   final String? name;
   final String? description;
   final String? price;
-  final int? stock;
+  final String? stock;
   final String? image;
   final String? status;
   int quantity;

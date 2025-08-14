@@ -81,7 +81,7 @@ class EditProfileViewModel extends BaseViewModel {
       final response = await _apiService.postTextAndMultiPart(
         url,
         body,
-        [imageFile!],
+        imageFile != null ? [imageFile!] : [],
       );
 
       await _userService.fetchCurrentUser();
