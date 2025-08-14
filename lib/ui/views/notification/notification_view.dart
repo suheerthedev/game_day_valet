@@ -85,7 +85,7 @@ class NotificationView extends StackedView<NotificationViewModel> {
               chatIconBorderColor: AppColors.secondary,
               chatIconBackgroundColor: AppColors.secondary,
               messageBorderWidth: 2,
-              messageText: "You've received a message!",
+              // messageText: "You've received a message!",
               messageTextStyle: GoogleFonts.poppins(
                   fontSize: 14.sp,
                   fontWeight: FontWeight.w400,
