@@ -7,6 +7,7 @@ import 'package:game_day_valet/ui/common/app_colors.dart';
 import 'package:game_day_valet/ui/widgets/common/main_app_bar/main_app_bar.dart';
 import 'package:game_day_valet/ui/widgets/common/main_button/main_button.dart';
 import 'package:game_day_valet/ui/widgets/common/main_text_field/main_text_field.dart';
+import 'package:game_day_valet/ui/widgets/common/rental_summary_item/rental_summary_item.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:iconsax_plus/iconsax_plus.dart';
 import 'package:stacked/stacked.dart';
@@ -165,7 +166,7 @@ class CheckoutView extends StackedView<CheckoutViewModel> {
                                 itemCount: viewModel.items.length,
                                 itemBuilder: (context, index) {
                                   final item = viewModel.items[index];
-                                  return _RentalSummaryRow(
+                                  return RentalSummaryItem(
                                     name: item.name ?? '',
                                     quantityText:
                                         'Stock Quantity: ${item.stock ?? 0}',
@@ -611,121 +612,4 @@ class CheckoutView extends StackedView<CheckoutViewModel> {
     BuildContext context,
   ) =>
       CheckoutViewModel(items: items, bundles: bundles);
-}
-
-class _RentalSummaryRow extends StatelessWidget {
-  final String name;
-  final String quantityText;
-  final int count;
-  final String? imageUrl;
-  final VoidCallback onRemove;
-  final VoidCallback onMinus;
-  final VoidCallback onPlus;
-
-  const _RentalSummaryRow({
-    required this.name,
-    required this.quantityText,
-    required this.count,
-    required this.imageUrl,
-    required this.onRemove,
-    required this.onMinus,
-    required this.onPlus,
-  });
-
-  @override
-  Widget build(BuildContext context) {
-    return Row(
-      crossAxisAlignment: CrossAxisAlignment.center,
-      children: [
-        Container(
-          width: 56.w,
-          height: 56.w,
-          decoration: BoxDecoration(
-            color: AppColors.grey100,
-            borderRadius: BorderRadius.circular(12.r),
-          ),
-          child: ClipRRect(
-            borderRadius: BorderRadius.circular(12.r),
-            child: CachedNetworkImage(
-                imageUrl: imageUrl ?? '',
-                fit: BoxFit.cover,
-                placeholder: (context, url) => const Center(
-                      child: CircularProgressIndicator(
-                        color: AppColors.secondary,
-                      ),
-                    ),
-                errorWidget: (context, url, error) => Icon(
-                    IconsaxPlusLinear.image,
-                    size: 24.sp,
-                    color: AppColors.grey400)),
-          ),
-        ),
-        SizedBox(width: 12.w),
-        Expanded(
-          child: Column(
-            crossAxisAlignment: CrossAxisAlignment.start,
-            children: [
-              Text(
-                name,
-                style: GoogleFonts.poppins(
-                  fontSize: 14.sp,
-                  fontWeight: FontWeight.w600,
-                  color: AppColors.textPrimary,
-                ),
-              ),
-              SizedBox(height: 2.h),
-              Text(
-                quantityText,
-                style: GoogleFonts.poppins(
-                  fontSize: 12.sp,
-                  fontWeight: FontWeight.w500,
-                  color: AppColors.textHint,
-                ),
-              ),
-              SizedBox(height: 8.h),
-              Row(
-                children: [
-                  _circleIconButton(
-                      icon: IconsaxPlusLinear.minus, onTap: onMinus),
-                  SizedBox(width: 12.w),
-                  Text(
-                    count.toString().padLeft(2, '0'),
-                    style: GoogleFonts.poppins(
-                      fontSize: 14.sp,
-                      fontWeight: FontWeight.w600,
-                      color: AppColors.textPrimary,
-                    ),
-                  ),
-                  SizedBox(width: 12.w),
-                  _circleIconButton(icon: IconsaxPlusLinear.add, onTap: onPlus),
-                ],
-              ),
-            ],
-          ),
-        ),
-        SizedBox(width: 8.w),
-        InkWell(
-          onTap: onRemove,
-          child: Icon(IconsaxPlusLinear.trash,
-              color: AppColors.secondary, size: 20.sp),
-        )
-      ],
-    );
-  }
-
-  Widget _circleIconButton(
-      {required IconData icon, required VoidCallback onTap}) {
-    return InkWell(
-      onTap: onTap,
-      child: Container(
-        width: 28.w,
-        height: 28.w,
-        decoration: BoxDecoration(
-          color: AppColors.grey100,
-          shape: BoxShape.circle,
-        ),
-        child: Icon(icon, size: 16.sp, color: AppColors.textPrimary),
-      ),
-    );
-  }
 }
