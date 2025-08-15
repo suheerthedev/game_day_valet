@@ -16,6 +16,7 @@ import 'package:game_day_valet/services/api_service.dart' as _i8;
 import 'package:game_day_valet/services/auth_service.dart' as _i11;
 import 'package:game_day_valet/services/chat_service.dart' as _i18;
 import 'package:game_day_valet/services/connectivity_service.dart' as _i14;
+import 'package:game_day_valet/services/deep_linking_service.dart' as _i23;
 import 'package:game_day_valet/services/google_sign_in_service.dart' as _i16;
 import 'package:game_day_valet/services/logger_service.dart' as _i15;
 import 'package:game_day_valet/services/pusher_service.dart' as _i20;
@@ -1223,8 +1224,8 @@ class MockGoogleSignInService extends _i1.Mock
 /// See the documentation for Mockito's code generation for more information.
 class MockStripeService extends _i1.Mock implements _i17.StripeService {
   @override
-  _i6.Future<void> payWithPaymentSheet({
-    required int? amount,
+  _i6.Future<bool> payWithPaymentSheet({
+    required num? amount,
     String? currency = 'usd',
     required _i5.BuildContext? context,
   }) =>
@@ -1238,9 +1239,9 @@ class MockStripeService extends _i1.Mock implements _i17.StripeService {
             #context: context,
           },
         ),
-        returnValue: _i6.Future<void>.value(),
-        returnValueForMissingStub: _i6.Future<void>.value(),
-      ) as _i6.Future<void>);
+        returnValue: _i6.Future<bool>.value(false),
+        returnValueForMissingStub: _i6.Future<bool>.value(false),
+      ) as _i6.Future<bool>);
 }
 
 /// A class which mocks [ChatService].
@@ -1359,6 +1360,48 @@ class MockChatService extends _i1.Mock implements _i18.ChatService {
       ) as _i6.Future<_i2.MessageModel>);
 
   @override
+  _i6.Future<void> markMessageAsRead(int? conversationId) =>
+      (super.noSuchMethod(
+        Invocation.method(
+          #markMessageAsRead,
+          [conversationId],
+        ),
+        returnValue: _i6.Future<void>.value(),
+        returnValueForMissingStub: _i6.Future<void>.value(),
+      ) as _i6.Future<void>);
+
+  @override
+  _i6.Future<void> initializePusher() => (super.noSuchMethod(
+        Invocation.method(
+          #initializePusher,
+          [],
+        ),
+        returnValue: _i6.Future<void>.value(),
+        returnValueForMissingStub: _i6.Future<void>.value(),
+      ) as _i6.Future<void>);
+
+  @override
+  _i6.Future<void> subscribeToChannel(String? userId) => (super.noSuchMethod(
+        Invocation.method(
+          #subscribeToChannel,
+          [userId],
+        ),
+        returnValue: _i6.Future<void>.value(),
+        returnValueForMissingStub: _i6.Future<void>.value(),
+      ) as _i6.Future<void>);
+
+  @override
+  _i6.Future<void> unsubscribeFromChannel(String? userId) =>
+      (super.noSuchMethod(
+        Invocation.method(
+          #unsubscribeFromChannel,
+          [userId],
+        ),
+        returnValue: _i6.Future<void>.value(),
+        returnValueForMissingStub: _i6.Future<void>.value(),
+      ) as _i6.Future<void>);
+
+  @override
   void listenToReactiveValues(List<dynamic>? reactiveValues) =>
       super.noSuchMethod(
         Invocation.method(
@@ -1433,6 +1476,16 @@ class MockPusherService extends _i1.Mock implements _i20.PusherService {
         Invocation.method(
           #unsubscribeFromChannel,
           [userId],
+        ),
+        returnValue: _i6.Future<void>.value(),
+        returnValueForMissingStub: _i6.Future<void>.value(),
+      ) as _i6.Future<void>);
+
+  @override
+  _i6.Future<void> disconnect() => (super.noSuchMethod(
+        Invocation.method(
+          #disconnect,
+          [],
         ),
         returnValue: _i6.Future<void>.value(),
         returnValueForMissingStub: _i6.Future<void>.value(),
@@ -1540,3 +1593,9 @@ class MockTournamentService extends _i1.Mock implements _i21.TournamentService {
         returnValueForMissingStub: _i6.Future<void>.value(),
       ) as _i6.Future<void>);
 }
+
+/// A class which mocks [DeepLinkingService].
+///
+/// See the documentation for Mockito's code generation for more information.
+class MockDeepLinkingService extends _i1.Mock
+    implements _i23.DeepLinkingService {}
