@@ -5,6 +5,7 @@ class RentalStatusModel {
   final String? statusLabel;
   final String? notes;
   final List<String>? imagePaths;
+  final List<String>? imageUrls;
   final String? image;
   final String? updatedBy;
   final String? createdAt;
@@ -19,6 +20,7 @@ class RentalStatusModel {
     required this.statusLabel,
     required this.notes,
     required this.imagePaths,
+    required this.imageUrls,
     required this.image,
     required this.updatedBy,
     required this.createdAt,
@@ -36,6 +38,9 @@ class RentalStatusModel {
       notes: json['notes'],
       imagePaths: json['image_paths'] != null
           ? (json['image_paths'] as List).map((e) => e.toString()).toList()
+          : null,
+      imageUrls: json['image_urls'] != null
+          ? (json['image_urls'] as List).map((e) => e.toString()).toList()
           : null,
       image: json['image'],
       updatedBy: json['updated_by'],

@@ -1,11 +1,10 @@
+import 'package:cached_network_image/cached_network_image.dart';
 import 'package:dotted_line/dotted_line.dart';
 import 'package:floating_chat_button/floating_chat_button.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:game_day_valet/ui/common/app_colors.dart';
 import 'package:game_day_valet/ui/widgets/common/main_app_bar/main_app_bar.dart';
-import 'package:game_day_valet/ui/widgets/common/main_button/main_button.dart';
-import 'package:game_day_valet/ui/widgets/common/main_text_field/main_text_field.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:iconsax_flutter/iconsax_flutter.dart';
 import 'package:iconsax_plus/iconsax_plus.dart';
@@ -34,42 +33,42 @@ class RentalStatusView extends StackedView<RentalStatusViewModel> {
           ),
         ),
         body: SafeArea(
-            child: viewModel.isBusy
+            child: Stack(
+          children: [
+            viewModel.isBusy
                 ? const Center(
                     child: CircularProgressIndicator(),
                   )
-                : Stack(
-                    children: [
-                      viewModel.rentalStatus.isNotEmpty
-                          ? _buildRentalActiveState(context, viewModel)
-                          : _buildNoRentalState(context),
-                      FloatingChatButton(
-                        onTap: (_) {
-                          viewModel.onChatTap();
-                        },
-                        chatIconWidget: const Padding(
-                          padding: EdgeInsets.all(14.0),
-                          child: Icon(
-                            Iconsax.message_2_copy,
-                            color: AppColors.white,
-                            size: 24,
-                          ),
-                        ),
-                        messageBackgroundColor: AppColors.secondary,
-                        chatIconBorderColor: AppColors.secondary,
-                        chatIconBackgroundColor: AppColors.secondary,
-                        messageBorderWidth: 2,
-                        // messageText: "You've received a message!",
-                        messageTextStyle: GoogleFonts.poppins(
-                            fontSize: 14.sp,
-                            fontWeight: FontWeight.w400,
-                            color: AppColors.white),
-                        showMessageParameters: ShowMessageParameters(
-                            delayDuration: const Duration(seconds: 2),
-                            durationToShowMessage: const Duration(seconds: 5)),
-                      )
-                    ],
-                  )));
+                : viewModel.rentalStatus.isNotEmpty
+                    ? _buildRentalActiveState(context, viewModel)
+                    : _buildNoRentalState(context),
+            FloatingChatButton(
+              onTap: (_) {
+                viewModel.onChatTap();
+              },
+              chatIconWidget: const Padding(
+                padding: EdgeInsets.all(14.0),
+                child: Icon(
+                  Iconsax.message_2_copy,
+                  color: AppColors.white,
+                  size: 24,
+                ),
+              ),
+              messageBackgroundColor: AppColors.secondary,
+              chatIconBorderColor: AppColors.secondary,
+              chatIconBackgroundColor: AppColors.secondary,
+              messageBorderWidth: 2,
+              // messageText: "You've received a message!",
+              messageTextStyle: GoogleFonts.poppins(
+                  fontSize: 14.sp,
+                  fontWeight: FontWeight.w400,
+                  color: AppColors.white),
+              showMessageParameters: ShowMessageParameters(
+                  delayDuration: const Duration(seconds: 2),
+                  durationToShowMessage: const Duration(seconds: 5)),
+            )
+          ],
+        )));
   }
 
   Widget _buildNoRentalState(BuildContext context) {
@@ -233,25 +232,22 @@ class RentalStatusView extends StackedView<RentalStatusViewModel> {
                   return _buildTimelineItem(
                     title: status.statusLabel ?? '',
                     timestamp: status.formattedCreatedAt ?? '',
-                    isCompleted: status.status == 'delivered',
-                    isSecondLastItem:
-                        index == viewModel.rentalStatus.length - 2,
                     isLastItem: isLastItem,
                   );
                 },
               ),
               SizedBox(height: 20.h),
-              Text(
-                'Return Instructions',
-                style: GoogleFonts.poppins(
-                    fontSize: 18.sp,
-                    fontWeight: FontWeight.w600,
-                    color: AppColors.primary),
-              ),
-              SizedBox(height: 10.h),
-              MainTextField(
-                  label: 'Special Instructions',
-                  controller: viewModel.specialInstructionsController),
+              // Text(
+              //   'Return Instructions',
+              //   style: GoogleFonts.poppins(
+              //       fontSize: 18.sp,
+              //       fontWeight: FontWeight.w600,
+              //       color: AppColors.primary),
+              // ),
+              // SizedBox(height: 10.h),
+              // MainTextField(
+              //     label: 'Special Instructions',
+              //     controller: viewModel.specialInstructionsController),
               SizedBox(height: 10.h),
               Text(
                 'Delivery Photos',
@@ -262,62 +258,75 @@ class RentalStatusView extends StackedView<RentalStatusViewModel> {
               ),
 
               SizedBox(height: 10.h),
-              SizedBox(
-                width: double.infinity,
-                height: 106.h,
-                child: GridView.builder(
-                  scrollDirection: Axis.horizontal,
-                  gridDelegate: SliverGridDelegateWithMaxCrossAxisExtent(
-                      maxCrossAxisExtent: 123.w,
-                      childAspectRatio: 123.w / 106.h,
-                      crossAxisSpacing: 10.w,
-                      mainAxisSpacing: 10.h,
-                      mainAxisExtent: 106.h),
-                  itemCount: 2,
-                  itemBuilder: (context, index) {
-                    return Container(
-                      width: 123.w,
-                      height: 106.h,
-                      decoration: const BoxDecoration(
-                        image: DecorationImage(
-                            image: AssetImage(
-                                'assets/images/delivery_photo_2.png')),
+              GridView.builder(
+                shrinkWrap: true,
+                physics: const NeverScrollableScrollPhysics(),
+                gridDelegate: SliverGridDelegateWithFixedCrossAxisCount(
+                    crossAxisCount: 2,
+                    childAspectRatio: 123.w / 106.h,
+                    crossAxisSpacing: 10.w,
+                    mainAxisSpacing: 10.h,
+                    mainAxisExtent: 106.h),
+                itemCount: viewModel.rentalStatus.last.imageUrls?.length ?? 10,
+                itemBuilder: (context, index) {
+                  return Container(
+                    width: 123.w,
+                    height: 106.h,
+                    decoration: BoxDecoration(
+                      borderRadius: BorderRadius.circular(10.r),
+                      border: Border.all(
+                        color: AppColors.grey300,
+                        width: 1.w,
                       ),
-                    );
-                  },
-                ),
+                    ),
+                    clipBehavior: Clip.hardEdge,
+                    child: CachedNetworkImage(
+                      imageUrl:
+                          viewModel.rentalStatus.last.imageUrls?[index] ?? '',
+                      fit: BoxFit.cover,
+                      placeholder: (context, url) => const Center(
+                        child: CircularProgressIndicator(),
+                      ),
+                      errorWidget: (context, url, error) => Icon(
+                        IconsaxPlusLinear.image,
+                        color: AppColors.textHint,
+                        size: 24.sp,
+                      ),
+                    ),
+                  );
+                },
               ),
-              SizedBox(height: 10.h),
-              Text(
-                'Give Review',
-                style: GoogleFonts.poppins(
-                    fontSize: 18.sp,
-                    fontWeight: FontWeight.w600,
-                    color: AppColors.primary),
-              ),
-              SizedBox(height: 10.h),
-              MainTextField(
-                  label: 'Write Google Review Here',
-                  controller: viewModel.googleReviewController),
+              // SizedBox(height: 10.h),
+              // Text(
+              //   'Give Review',
+              //   style: GoogleFonts.poppins(
+              //       fontSize: 18.sp,
+              //       fontWeight: FontWeight.w600,
+              //       color: AppColors.primary),
+              // ),
+              // SizedBox(height: 10.h),
+              // MainTextField(
+              //     label: 'Write Google Review Here',
+              //     controller: viewModel.googleReviewController),
 
-              Align(
-                alignment: Alignment.centerRight,
-                child: Text(
-                  'Need Help?',
-                  style: GoogleFonts.poppins(
-                      fontSize: 14.sp,
-                      fontWeight: FontWeight.w500,
-                      color: AppColors.textSecondary),
-                ),
-              ),
-              SizedBox(height: 20.h),
-              MainButton(
-                onTap: () {},
-                text: 'Order More',
-                color: AppColors.secondary,
-                borderColor: AppColors.secondary,
-                textColor: AppColors.white,
-              )
+              // Align(
+              //   alignment: Alignment.centerRight,
+              //   child: Text(
+              //     'Need Help?',
+              //     style: GoogleFonts.poppins(
+              //         fontSize: 14.sp,
+              //         fontWeight: FontWeight.w500,
+              //         color: AppColors.textSecondary),
+              //   ),
+              // ),
+              // SizedBox(height: 20.h),
+              // MainButton(
+              //   onTap: () {},
+              //   text: 'Order More',
+              //   color: AppColors.secondary,
+              //   borderColor: AppColors.secondary,
+              //   textColor: AppColors.white,
+              // )
             ],
           ),
         ),
@@ -328,8 +337,6 @@ class RentalStatusView extends StackedView<RentalStatusViewModel> {
   Widget _buildTimelineItem({
     required String title,
     required String timestamp,
-    required bool isCompleted,
-    required bool isSecondLastItem,
     required bool isLastItem,
   }) {
     return Row(
@@ -345,7 +352,7 @@ class RentalStatusView extends StackedView<RentalStatusViewModel> {
               height: 11.h,
               decoration: BoxDecoration(
                 shape: BoxShape.circle,
-                color: isCompleted ? AppColors.secondary : AppColors.grey300,
+                color: isLastItem ? AppColors.secondary : AppColors.grey300,
                 // border: Border.all(
                 //   color: isCompleted ? AppColors.secondary : AppColors.grey300,
                 //   width: 3.w,
@@ -356,8 +363,7 @@ class RentalStatusView extends StackedView<RentalStatusViewModel> {
             if (!isLastItem)
               DottedLine(
                 direction: Axis.vertical,
-                dashColor:
-                    isSecondLastItem ? AppColors.secondary : AppColors.grey300,
+                dashColor: AppColors.grey300,
                 lineLength: 70.h,
                 dashLength: 4,
                 dashGapLength: 2,
@@ -376,7 +382,7 @@ class RentalStatusView extends StackedView<RentalStatusViewModel> {
                 fontSize: 16.sp,
                 fontWeight: FontWeight.w600,
                 letterSpacing: -0.7.sp,
-                color: isCompleted ? AppColors.textPrimary : AppColors.textHint,
+                color: isLastItem ? AppColors.textPrimary : AppColors.textHint,
               ),
             ),
             Row(
