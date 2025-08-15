@@ -1598,4 +1598,32 @@ class MockTournamentService extends _i1.Mock implements _i21.TournamentService {
 ///
 /// See the documentation for Mockito's code generation for more information.
 class MockDeepLinkingService extends _i1.Mock
-    implements _i23.DeepLinkingService {}
+    implements _i23.DeepLinkingService {
+  @override
+  void init() => super.noSuchMethod(
+        Invocation.method(
+          #init,
+          [],
+        ),
+        returnValueForMissingStub: null,
+      );
+
+  @override
+  _i6.Future<bool> processPendingUri() => (super.noSuchMethod(
+        Invocation.method(
+          #processPendingUri,
+          [],
+        ),
+        returnValue: _i6.Future<bool>.value(false),
+        returnValueForMissingStub: _i6.Future<bool>.value(false),
+      ) as _i6.Future<bool>);
+
+  @override
+  void clearReferralCode() => super.noSuchMethod(
+        Invocation.method(
+          #clearReferralCode,
+          [],
+        ),
+        returnValueForMissingStub: null,
+      );
+}

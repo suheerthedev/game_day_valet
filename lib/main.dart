@@ -6,6 +6,7 @@ import 'package:game_day_valet/app/app.dialogs.dart';
 import 'package:game_day_valet/app/app.locator.dart';
 import 'package:game_day_valet/app/app.router.dart';
 import 'package:game_day_valet/core/enums/snackbar_type.dart';
+import 'package:game_day_valet/services/deep_linking_service.dart';
 import 'package:game_day_valet/services/logger_service.dart';
 // import 'package:game_day_valet/services/connectivity_service.dart';
 import 'package:game_day_valet/ui/common/app_colors.dart';
@@ -20,10 +21,14 @@ import 'package:flutter_dotenv/flutter_dotenv.dart';
 Future<void> main() async {
   WidgetsFlutterBinding.ensureInitialized();
 
+  // Initialize deep linking service
+
   logger.intialize();
 
   await dotenv.load(fileName: ".env");
   await setupLocator();
+
+  locator<DeepLinkingService>().init();
 
   Stripe.publishableKey = dotenv.env['STRIPE_PUBLISHABLE_KEY'] ?? '';
 

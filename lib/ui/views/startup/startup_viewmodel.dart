@@ -1,6 +1,7 @@
 import 'package:game_day_valet/core/enums/snackbar_type.dart';
 import 'package:game_day_valet/services/api_exception.dart';
 import 'package:game_day_valet/services/chat_service.dart';
+import 'package:game_day_valet/services/deep_linking_service.dart';
 import 'package:game_day_valet/services/logger_service.dart';
 import 'package:game_day_valet/services/secure_storage_service.dart';
 import 'package:game_day_valet/services/user_service.dart';
@@ -15,6 +16,7 @@ class StartupViewModel extends BaseViewModel {
   final _userService = locator<UserService>();
   final _chatService = locator<ChatService>();
   final _snackbarService = locator<SnackbarService>();
+  final _deepLinkingService = locator<DeepLinkingService>();
 
   // Place anything here that needs to happen before we get into the application
   Future runStartupLogic() async {
@@ -22,6 +24,12 @@ class StartupViewModel extends BaseViewModel {
 
     // This is where you can make decisions on where your app should navigate when
     // you have custom startup logic
+    final hasDeepLink = await _deepLinkingService.processPendingUri();
+    logger.info('Has deep link: $hasDeepLink');
+    if (hasDeepLink) {
+      // Deep link handled; do not perform any further navigation here.
+      return;
+    }
 
     final token = await _secureStorageService.getToken();
 
