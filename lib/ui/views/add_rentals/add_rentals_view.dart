@@ -174,6 +174,7 @@ class AddRentalsView extends StackedView<AddRentalsViewModel> {
                         child: MainButton(
                           text: 'Proceed to Checkout',
                           onTap: viewModel.proceedToCheckout,
+                          isDisabled: viewModel.isProceedToCheckoutDisabled,
                         ),
                       ),
                     ),

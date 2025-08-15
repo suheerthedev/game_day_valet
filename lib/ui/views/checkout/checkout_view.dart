@@ -282,6 +282,15 @@ class CheckoutView extends StackedView<CheckoutViewModel> {
                   focusedBorderColor: AppColors.primary,
                   hasSuffixIcon: false,
                 ),
+                if (viewModel.teamNameError.isNotEmpty) ...[
+                  Text(
+                    viewModel.teamNameError,
+                    style: GoogleFonts.poppins(
+                        fontSize: 12.sp,
+                        fontWeight: FontWeight.w500,
+                        color: AppColors.error),
+                  ),
+                ],
                 SizedBox(height: 10.h),
                 MainTextField(
                   label: "Coach Name",
@@ -294,6 +303,15 @@ class CheckoutView extends StackedView<CheckoutViewModel> {
                   focusedBorderColor: AppColors.primary,
                   hasSuffixIcon: false,
                 ),
+                if (viewModel.coachNameError.isNotEmpty) ...[
+                  Text(
+                    viewModel.coachNameError,
+                    style: GoogleFonts.poppins(
+                        fontSize: 12.sp,
+                        fontWeight: FontWeight.w500,
+                        color: AppColors.error),
+                  ),
+                ],
                 SizedBox(height: 10.h),
                 MainTextField(
                   label: "Field Number (eg. Field 5)",
@@ -305,6 +323,15 @@ class CheckoutView extends StackedView<CheckoutViewModel> {
                   enabledBorderColor: AppColors.grey100,
                   focusedBorderColor: AppColors.primary,
                 ),
+                if (viewModel.fieldNumberError.isNotEmpty) ...[
+                  Text(
+                    viewModel.fieldNumberError,
+                    style: GoogleFonts.poppins(
+                        fontSize: 12.sp,
+                        fontWeight: FontWeight.w500,
+                        color: AppColors.error),
+                  ),
+                ],
                 SizedBox(height: 20.h),
                 Text(
                   'Drop-Off',

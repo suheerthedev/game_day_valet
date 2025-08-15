@@ -33,23 +33,38 @@ class AddRentalsViewModel extends BaseViewModel {
 
   void toggleBundle(BundleModel bundle) {
     bundle.isSelected = !bundle.isSelected;
+    checkBundleQuantity();
     rebuildUi();
   }
 
   void addItem(ItemModel item) {
     item.quantity++;
+    checkItemQuantity();
     rebuildUi();
   }
 
   void removeItem(ItemModel item) {
     if (item.quantity <= 0) return;
     item.quantity--;
+    checkItemQuantity();
     rebuildUi();
   }
 
   void toggleViewSmartSuggestions() {
     viewSmartSuggestions = !viewSmartSuggestions;
     rebuildUi();
+  }
+
+  bool checkItemQuantity() {
+    return items.any((item) => item.quantity > 0);
+  }
+
+  bool checkBundleQuantity() {
+    return bundles.any((bundle) => bundle.isSelected);
+  }
+
+  bool get isProceedToCheckoutDisabled {
+    return !checkItemQuantity() && !checkBundleQuantity();
   }
 
   Future<void> proceedToCheckout() async {

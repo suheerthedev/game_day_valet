@@ -178,8 +178,9 @@ class ChatService with ListenableServiceMixin {
     }
   }
 
-  Future<void> subscribeToChannel(String userId) async {
-    await _pusherService.subscribeToChannel(userId, _handleIncomingMessage);
+  Future<void> subscribeToChannel(String channelName) async {
+    await _pusherService.subscribeToChannel(
+        channelName, _handleIncomingMessage);
     notifyListeners();
   }
 
@@ -212,8 +213,8 @@ class ChatService with ListenableServiceMixin {
     }
   }
 
-  Future<void> unsubscribeFromChannel(String userId) async {
-    await _pusherService.unsubscribeFromChannel(userId);
+  Future<void> unsubscribeFromChannel(String channelName) async {
+    await _pusherService.unsubscribeFromChannel(channelName);
     notifyListeners();
   }
 }

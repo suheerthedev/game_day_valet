@@ -8,6 +8,7 @@ import 'package:game_day_valet/ui/widgets/common/main_button/main_button.dart';
 import 'package:game_day_valet/ui/widgets/common/main_text_field/main_text_field.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:iconsax_flutter/iconsax_flutter.dart';
+import 'package:iconsax_plus/iconsax_plus.dart';
 import 'package:stacked/stacked.dart';
 
 import 'rental_status_viewmodel.dart';
@@ -33,38 +34,42 @@ class RentalStatusView extends StackedView<RentalStatusViewModel> {
           ),
         ),
         body: SafeArea(
-            child: Stack(
-          children: [
-            viewModel.isRentalActive
-                ? _buildRentalActiveState(context, viewModel)
-                : _buildNoRentalState(context),
-            FloatingChatButton(
-              onTap: (_) {
-                viewModel.onChatTap();
-              },
-              chatIconWidget: const Padding(
-                padding: EdgeInsets.all(14.0),
-                child: Icon(
-                  Iconsax.message_2_copy,
-                  color: AppColors.white,
-                  size: 24,
-                ),
-              ),
-              messageBackgroundColor: AppColors.secondary,
-              chatIconBorderColor: AppColors.secondary,
-              chatIconBackgroundColor: AppColors.secondary,
-              messageBorderWidth: 2,
-              // messageText: "You've received a message!",
-              messageTextStyle: GoogleFonts.poppins(
-                  fontSize: 14.sp,
-                  fontWeight: FontWeight.w400,
-                  color: AppColors.white),
-              showMessageParameters: ShowMessageParameters(
-                  delayDuration: const Duration(seconds: 2),
-                  durationToShowMessage: const Duration(seconds: 5)),
-            )
-          ],
-        )));
+            child: viewModel.isBusy
+                ? const Center(
+                    child: CircularProgressIndicator(),
+                  )
+                : Stack(
+                    children: [
+                      viewModel.rentalStatus.isNotEmpty
+                          ? _buildRentalActiveState(context, viewModel)
+                          : _buildNoRentalState(context),
+                      FloatingChatButton(
+                        onTap: (_) {
+                          viewModel.onChatTap();
+                        },
+                        chatIconWidget: const Padding(
+                          padding: EdgeInsets.all(14.0),
+                          child: Icon(
+                            Iconsax.message_2_copy,
+                            color: AppColors.white,
+                            size: 24,
+                          ),
+                        ),
+                        messageBackgroundColor: AppColors.secondary,
+                        chatIconBorderColor: AppColors.secondary,
+                        chatIconBackgroundColor: AppColors.secondary,
+                        messageBorderWidth: 2,
+                        // messageText: "You've received a message!",
+                        messageTextStyle: GoogleFonts.poppins(
+                            fontSize: 14.sp,
+                            fontWeight: FontWeight.w400,
+                            color: AppColors.white),
+                        showMessageParameters: ShowMessageParameters(
+                            delayDuration: const Duration(seconds: 2),
+                            durationToShowMessage: const Duration(seconds: 5)),
+                      )
+                    ],
+                  )));
   }
 
   Widget _buildNoRentalState(BuildContext context) {
@@ -109,67 +114,108 @@ class RentalStatusView extends StackedView<RentalStatusViewModel> {
           child: Column(
             crossAxisAlignment: CrossAxisAlignment.start,
             children: [
+              // Row(
+              //   mainAxisAlignment: MainAxisAlignment.center,
+              //   crossAxisAlignment: CrossAxisAlignment.start,
+              //   children: [
+              //     Column(
+              //       mainAxisAlignment: MainAxisAlignment.center,
+              //       children: [
+              //         Text(
+              //           "00",
+              //           style: GoogleFonts.poppins(
+              //               fontSize: 40.sp,
+              //               fontWeight: FontWeight.w600,
+              //               color: AppColors.textHint),
+              //         ),
+              //         Text(
+              //           'hours',
+              //           style: GoogleFonts.poppins(
+              //               fontSize: 14.sp,
+              //               fontWeight: FontWeight.w400,
+              //               color: AppColors.textHint),
+              //         ),
+              //       ],
+              //     ),
+              //     Text(
+              //       " : ",
+              //       style: GoogleFonts.poppins(
+              //           fontSize: 40.sp,
+              //           fontWeight: FontWeight.w600,
+              //           color: AppColors.textHint),
+              //     ),
+              //     Column(
+              //       mainAxisAlignment: MainAxisAlignment.center,
+              //       children: [
+              //         Text(
+              //           '${viewModel.timeRemaining}',
+              //           style: GoogleFonts.poppins(
+              //               fontSize: 40.sp,
+              //               fontWeight: FontWeight.w600,
+              //               color: AppColors.textSecondary),
+              //         ),
+              //         Text(
+              //           'minutes',
+              //           style: GoogleFonts.poppins(
+              //               fontSize: 14.sp,
+              //               fontWeight: FontWeight.w400,
+              //               color: AppColors.textHint),
+              //         ),
+              //       ],
+              //     ),
+              //   ],
+              // ),
+              // SizedBox(height: 20.h),
+              // Row(
+              //   mainAxisAlignment: MainAxisAlignment.center,
+              //   children: [
+              //     Text(
+              //       "time left for delivery",
+              //       style: GoogleFonts.poppins(
+              //           fontSize: 14.sp,
+              //           fontWeight: FontWeight.w500,
+              //           color: AppColors.textHint),
+              //     ),
+              //   ],
+              // ),
+
               Row(
                 mainAxisAlignment: MainAxisAlignment.center,
-                crossAxisAlignment: CrossAxisAlignment.start,
                 children: [
                   Column(
-                    mainAxisAlignment: MainAxisAlignment.center,
                     children: [
+                      Icon(
+                          viewModel.rentalStatus.last.status == 'pending'
+                              ? IconsaxPlusBold.clock
+                              : viewModel.rentalStatus.last.status ==
+                                      'confirmed'
+                                  ? IconsaxPlusBold.tick_circle
+                                  : viewModel.rentalStatus.last.status ==
+                                          'out_for_delivery'
+                                      ? IconsaxPlusBold.car
+                                      : viewModel.rentalStatus.last.status ==
+                                              'delivered'
+                                          ? IconsaxPlusBold.box
+                                          : IconsaxPlusBold.box_tick,
+                          size: 70.sp,
+                          color: AppColors.secondary),
+                      SizedBox(height: 10.h),
                       Text(
-                        "00",
+                        viewModel.rentalStatus.last.status == 'pending'
+                            ? 'Pending'
+                            : viewModel.rentalStatus.last.status == 'confirmed'
+                                ? 'Confirmed'
+                                : viewModel.rentalStatus.last.status ==
+                                        'out_for_delivery'
+                                    ? 'Out for Delivery'
+                                    : viewModel.rentalStatus.last.status ==
+                                            'delivered'
+                                        ? 'Delivered'
+                                        : 'Cancelled',
                         style: GoogleFonts.poppins(
-                            fontSize: 40.sp,
-                            fontWeight: FontWeight.w600,
-                            color: AppColors.textHint),
-                      ),
-                      Text(
-                        'hours',
-                        style: GoogleFonts.poppins(
-                            fontSize: 14.sp,
-                            fontWeight: FontWeight.w400,
-                            color: AppColors.textHint),
+                            fontSize: 14.sp, color: AppColors.secondary),
                       ),
                     ],
-                  ),
-                  Text(
-                    " : ",
-                    style: GoogleFonts.poppins(
-                        fontSize: 40.sp,
-                        fontWeight: FontWeight.w600,
-                        color: AppColors.textHint),
-                  ),
-                  Column(
-                    mainAxisAlignment: MainAxisAlignment.center,
-                    children: [
-                      Text(
-                        '${viewModel.timeRemaining}',
-                        style: GoogleFonts.poppins(
-                            fontSize: 40.sp,
-                            fontWeight: FontWeight.w600,
-                            color: AppColors.textSecondary),
-                      ),
-                      Text(
-                        'minutes',
-                        style: GoogleFonts.poppins(
-                            fontSize: 14.sp,
-                            fontWeight: FontWeight.w400,
-                            color: AppColors.textHint),
-                      ),
-                    ],
-                  ),
-                ],
-              ),
-              SizedBox(height: 20.h),
-              Row(
-                mainAxisAlignment: MainAxisAlignment.center,
-                children: [
-                  Text(
-                    "time left for delivery",
-                    style: GoogleFonts.poppins(
-                        fontSize: 14.sp,
-                        fontWeight: FontWeight.w500,
-                        color: AppColors.textHint),
                   ),
                 ],
               ),
@@ -179,18 +225,17 @@ class RentalStatusView extends StackedView<RentalStatusViewModel> {
               ListView.builder(
                 shrinkWrap: true,
                 physics: const NeverScrollableScrollPhysics(),
-                itemCount: viewModel.trackingSteps.length,
+                itemCount: viewModel.rentalStatus.length,
                 itemBuilder: (context, index) {
-                  final step = viewModel.trackingSteps[index];
-                  final isLastItem =
-                      index == viewModel.trackingSteps.length - 1;
+                  final status = viewModel.rentalStatus[index];
+                  final isLastItem = index == viewModel.rentalStatus.length - 1;
 
                   return _buildTimelineItem(
-                    title: step.title,
-                    timestamp: step.timestamp,
-                    isCompleted: step.isCompleted,
+                    title: status.statusLabel ?? '',
+                    timestamp: status.formattedCreatedAt ?? '',
+                    isCompleted: status.status == 'delivered',
                     isSecondLastItem:
-                        index == viewModel.trackingSteps.length - 2,
+                        index == viewModel.rentalStatus.length - 2,
                     isLastItem: isLastItem,
                   );
                 },
@@ -312,7 +357,7 @@ class RentalStatusView extends StackedView<RentalStatusViewModel> {
               DottedLine(
                 direction: Axis.vertical,
                 dashColor:
-                    isSecondLastItem ? AppColors.grey300 : AppColors.secondary,
+                    isSecondLastItem ? AppColors.secondary : AppColors.grey300,
                 lineLength: 70.h,
                 dashLength: 4,
                 dashGapLength: 2,
@@ -367,7 +412,7 @@ class RentalStatusView extends StackedView<RentalStatusViewModel> {
 
   @override
   void onViewModelReady(RentalStatusViewModel viewModel) {
-    viewModel.startPeriodicTimer();
+    viewModel.init();
     super.onViewModelReady(viewModel);
   }
 }

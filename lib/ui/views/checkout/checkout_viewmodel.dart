@@ -1,10 +1,9 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_chat_core/flutter_chat_core.dart';
 import 'package:game_day_valet/core/enums/snackbar_type.dart';
-import 'package:game_day_valet/services/api_service.dart';
+import 'package:game_day_valet/services/rental_service.dart';
 import 'package:intl/intl.dart';
 import 'package:game_day_valet/app/app.locator.dart';
-import 'package:game_day_valet/config/api_config.dart';
 import 'package:game_day_valet/models/bundle_model.dart';
 import 'package:game_day_valet/models/item_model.dart';
 import 'package:game_day_valet/services/api_exception.dart';
@@ -15,9 +14,9 @@ import 'package:stacked_services/stacked_services.dart';
 
 class CheckoutViewModel extends BaseViewModel {
   final _stripeService = locator<StripeService>();
-  final _apiService = locator<ApiService>();
   final _snackbarService = locator<SnackbarService>();
   final _navigationService = locator<NavigationService>();
+  final _rentalService = locator<RentalService>();
 
   TextEditingController teamNameController = TextEditingController();
   TextEditingController coachNameController = TextEditingController();
@@ -25,6 +24,28 @@ class CheckoutViewModel extends BaseViewModel {
   TextEditingController dropOffTimeController = TextEditingController();
   TextEditingController specialInstructionController = TextEditingController();
   TextEditingController promoCodeController = TextEditingController();
+
+  String teamNameError = '';
+  String coachNameError = '';
+  String fieldNumberError = '';
+
+  bool validateForm() {
+    bool isValid = true;
+    if (teamNameController.text.isEmpty) {
+      isValid = false;
+      teamNameError = 'Team name is required';
+    }
+    if (coachNameController.text.isEmpty) {
+      isValid = false;
+      coachNameError = 'Coach name is required';
+    }
+    if (fieldNumberController.text.isEmpty) {
+      isValid = false;
+      fieldNumberError = 'Field number is required';
+    }
+    rebuildUi();
+    return isValid;
+  }
 
   double totalAmount = 0;
 
@@ -166,7 +187,9 @@ class CheckoutViewModel extends BaseViewModel {
   // }
 
   Future<void> bookRental(BuildContext context) async {
-    final url = ApiConfig.baseUrl + ApiConfig.bookRentalEndPoint;
+    if (!validateForm()) {
+      return;
+    }
 
     final body = {
       "tournament_id": tournamentId.toString(),
@@ -174,13 +197,18 @@ class CheckoutViewModel extends BaseViewModel {
       "coach_name": coachNameController.text,
       "field_number": fieldNumberController.text,
       "items": items
+          .where((item) => item.quantity > 0)
           .map((item) => {
                 "item_id": item.id.toString(),
                 "quantity": item.quantity,
               })
           .toList()
           .toString(),
-      "bundles": bundles.map((bundle) => bundle.id).toList().toString(),
+      "bundles": bundles
+          .where((bundle) => bundle.isSelected)
+          .map((bundle) => bundle.id)
+          .toList()
+          .toString(),
       "rental_date": DateFormat('yyyy-MM-dd').format(DateTime.now()),
       "drop_off_time": dropOffTimeController.text,
       "instructions": specialInstructionController.text,
@@ -195,9 +223,7 @@ class CheckoutViewModel extends BaseViewModel {
     print(body);
 
     try {
-      final response = await _apiService.post(url, body);
-
-      logger.info("Booking Rental Response: $response");
+      await _rentalService.createRentalBooking(body);
 
       await _handleStripePayment(context, totalAmount);
     } on ApiException catch (e) {
