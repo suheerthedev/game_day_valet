@@ -1,13 +1,16 @@
 import 'package:game_day_valet/app/app.locator.dart';
 import 'package:game_day_valet/config/api_config.dart';
+import 'package:game_day_valet/core/enums/snackbar_type.dart';
 import 'package:game_day_valet/models/user_model.dart';
 import 'package:game_day_valet/services/api_exception.dart';
 import 'package:game_day_valet/services/api_service.dart';
 import 'package:game_day_valet/services/logger_service.dart';
 import 'package:stacked/stacked.dart';
+import 'package:stacked_services/stacked_services.dart';
 
 class UserService with ListenableServiceMixin {
   final _apiService = locator<ApiService>();
+  final _snackbarService = locator<SnackbarService>();
 
   final ReactiveValue<UserModel?> _currentUser =
       ReactiveValue<UserModel?>(null);
@@ -28,10 +31,18 @@ class UserService with ListenableServiceMixin {
       logger.info("Fetch User Status: ${response['message']}");
     } on ApiException catch (e) {
       logger.error("Fetch User Status failed - API Exception", e);
-      rethrow;
+      _snackbarService.showCustomSnackBar(
+        title: "Error",
+        message: e.message,
+        variant: SnackbarType.error,
+      );
     } catch (e) {
       logger.error("Fetch User Status failed - Unknown error", e);
-      throw ApiException("Fetch User Status failed - Unknown error");
+      _snackbarService.showCustomSnackBar(
+        title: "Error",
+        message: "Unknown error",
+        variant: SnackbarType.error,
+      );
     }
     notifyListeners();
   }
