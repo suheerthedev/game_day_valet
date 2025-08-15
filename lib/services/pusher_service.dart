@@ -66,15 +66,16 @@ class PusherService {
   }
 
   Future<void> subscribeToChannel(
-      String userId, Function(dynamic) onMessageReceived) async {
+      String channelName, Function(dynamic) onMessageReceived) async {
     if (_isInitialized) {
       await initialize();
     }
 
     final myChannel = await _pusher!.subscribe(
-      channelName: 'conversation.$userId',
+      channelName: channelName,
       onEvent: (event) {
-        logger.info("New message received: ${event.eventName} - ${event.data}");
+        logger.info(
+            "New event data received: ${event.eventName} - ${event.data}");
 
         onMessageReceived(event.data);
       },
@@ -83,10 +84,10 @@ class PusherService {
     logger.info("My Channel: ${myChannel.channelName}");
   }
 
-  Future<void> unsubscribeFromChannel(String userId) async {
+  Future<void> unsubscribeFromChannel(String channelName) async {
     if (_pusher != null) {
-      await _pusher!.unsubscribe(channelName: 'conversation.$userId');
-      logger.info('Unsubscribed from: conversation.$userId');
+      await _pusher!.unsubscribe(channelName: channelName);
+      logger.info('Unsubscribed from: $channelName');
     }
   }
 

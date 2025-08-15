@@ -165,7 +165,7 @@ class ChatService with ListenableServiceMixin {
       await _pusherService.initialize();
 
       if (_user?.id != null) {
-        await subscribeToChannel(_user!.id.toString());
+        await subscribeToChannel('conversation.${_user!.id.toString()}');
       }
       _isPusherInitialized = true;
       notifyListeners();
