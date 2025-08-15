@@ -1,1 +1,64 @@
-class DeepLinkingService {}
+import 'package:app_links/app_links.dart';
+import 'package:game_day_valet/app/app.locator.dart';
+import 'package:game_day_valet/app/app.router.dart';
+import 'package:game_day_valet/services/logger_service.dart';
+import 'package:stacked_services/stacked_services.dart';
+
+class DeepLinkingService {
+  final _appLinks = AppLinks();
+  final _navigationService = locator<NavigationService>();
+
+  static Uri? pendingUri;
+
+  static String? referralCode;
+
+  void init() {
+    _appLinks.uriLinkStream.listen((uri) {
+      _handleUri(uri);
+    });
+
+    _getInitialUri();
+  }
+
+  Future<void> _getInitialUri() async {
+    try {
+      final Uri? initialUri = await _appLinks.getInitialLink();
+      if (initialUri != null) {
+        logger.info('Initial URI Recieved: $initialUri');
+        pendingUri = initialUri;
+      }
+    } catch (e) {
+      logger.error("Error getting initial URI: $e");
+    }
+  }
+
+  Future<bool> processPendingUri() async {
+    if (pendingUri != null) {
+      logger.info('Processing pending URI: $pendingUri');
+      await _handleUri(pendingUri!);
+
+      pendingUri = null;
+      return true;
+    }
+    return false;
+  }
+
+  Future<void> _handleUri(Uri uri) async {
+    final path = uri.path;
+    logger.info('Handling deep link: $uri with path: $path');
+
+    final queryParams = uri.queryParameters;
+
+    if (path == '/register-referal') {
+      referralCode = queryParams['referralCode'];
+      logger.info('Referral code: $referralCode');
+      _navigationService.clearStackAndShow(Routes.signUpView);
+    }
+  }
+
+  String? getReferralCode() => referralCode;
+
+  void clearReferralCode() {
+    referralCode = null;
+  }
+}
