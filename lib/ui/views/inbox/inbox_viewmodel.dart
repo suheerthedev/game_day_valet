@@ -34,7 +34,8 @@ class InboxViewModel extends ReactiveViewModel {
     }
   }
 
-  void navigateToChatView(int conversationId) {
+  void navigateToChatView(int conversationId) async {
+    await _markMessageAsRead(conversationId);
     logger
         .info("Navigating to chat view with conversation id: $conversationId");
     _navigationService.navigateToChatView(conversationId: conversationId);
@@ -42,6 +43,20 @@ class InboxViewModel extends ReactiveViewModel {
 
   void startNewConversation() {
     _navigationService.navigateToChatView();
+  }
+
+  Future<void> _markMessageAsRead(int conversationId) async {
+    try {
+      await _chatService.markMessageAsRead(conversationId);
+    } on ApiException catch (e) {
+      logger.error("Error marking message as read: ${e.message}");
+      _snackbarService.showCustomSnackBar(
+          message: e.message, variant: SnackbarType.error);
+    } catch (e) {
+      logger.error("Error marking message as read: $e");
+      _snackbarService.showCustomSnackBar(
+          message: "Something went wrong", variant: SnackbarType.error);
+    }
   }
 
   @override

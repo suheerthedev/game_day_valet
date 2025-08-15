@@ -42,8 +42,6 @@ class ChatService with ListenableServiceMixin {
       _conversations.value =
           (response as List).map((e) => ChatModel.fromJson(e)).toList();
 
-      logger.info(_conversations.value[0].messages?.last.content ?? '');
-
       await initializePusher();
       notifyListeners();
     } on ApiException catch (e) {
@@ -77,7 +75,6 @@ class ChatService with ListenableServiceMixin {
 
   void clearMessages() {
     _messages.value = [];
-    notifyListeners();
   }
 
   Future<MessageModel> sendMessage(String message, int conversationId) async {
@@ -126,6 +123,32 @@ class ChatService with ListenableServiceMixin {
       getUserConversations();
       notifyListeners();
       return MessageModel.fromJson(response['message']);
+    } on ApiException catch (e) {
+      logger.error("Error sending message: ${e.message}");
+      rethrow;
+    } catch (e) {
+      logger.error("Error sending message: $e");
+      rethrow;
+    }
+  }
+
+  Future<void> markMessageAsRead(int conversationId) async {
+    final url =
+        "${ApiConfig.baseUrl}${ApiConfig.markMessageAsReadEndPoint}/$conversationId";
+
+    try {
+      final response = await _apiService.post(url, {});
+
+      logger.info("Marked message as read: $response");
+
+      _conversations.value
+          .where((element) => element.id == conversationId)
+          .first
+          .messages
+          ?.last
+          .isRead = 1;
+
+      notifyListeners();
     } on ApiException catch (e) {
       logger.error("Error sending message: ${e.message}");
       rethrow;

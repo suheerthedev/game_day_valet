@@ -6,7 +6,7 @@ class MessageModel {
   final int conversationId;
   final int senderId;
   final String? content;
-  final int? isRead;
+  int? isRead;
   final String? createdAt;
   final String? updatedAt;
   final ConversationModel? conversation;
