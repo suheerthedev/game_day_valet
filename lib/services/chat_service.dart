@@ -3,7 +3,6 @@ import 'dart:convert';
 import 'package:game_day_valet/app/app.locator.dart';
 import 'package:game_day_valet/config/api_config.dart';
 import 'package:game_day_valet/models/chat_model.dart';
-import 'package:game_day_valet/models/conversation_model.dart';
 import 'package:game_day_valet/models/message_model.dart';
 import 'package:game_day_valet/models/user_model.dart';
 import 'package:game_day_valet/services/api_exception.dart';
@@ -43,7 +42,10 @@ class ChatService with ListenableServiceMixin {
       _conversations.value =
           (response as List).map((e) => ChatModel.fromJson(e)).toList();
 
+      logger.info(_conversations.value[0].messages?.last.content ?? '');
+
       await initializePusher();
+      notifyListeners();
     } on ApiException catch (e) {
       logger.error("Error getting user conversations: ${e.message}");
       rethrow;
@@ -63,6 +65,7 @@ class ChatService with ListenableServiceMixin {
       for (var message in response) {
         _messages.value.insert(0, MessageModel.fromJson(message));
       }
+      notifyListeners();
     } on ApiException catch (e) {
       logger.error("Error getting conversation messages: ${e.message}");
       rethrow;
@@ -74,6 +77,7 @@ class ChatService with ListenableServiceMixin {
 
   void clearMessages() {
     _messages.value = [];
+    notifyListeners();
   }
 
   Future<MessageModel> sendMessage(String message, int conversationId) async {
@@ -88,6 +92,12 @@ class ChatService with ListenableServiceMixin {
       final response = await _apiService.post(url, body);
 
       logger.info("Sent message: $response");
+
+      _conversations.value
+          .where((element) => element.id == conversationId)
+          .first
+          .messages
+          ?.add(MessageModel.fromJson(response['message']));
 
       _messages.value.insert(0, MessageModel.fromJson(response['message']));
       return MessageModel.fromJson(response['message']);
@@ -114,6 +124,7 @@ class ChatService with ListenableServiceMixin {
 
       _messages.value.add(MessageModel.fromJson(response['message']));
       getUserConversations();
+      notifyListeners();
       return MessageModel.fromJson(response['message']);
     } on ApiException catch (e) {
       logger.error("Error sending message: ${e.message}");
@@ -134,6 +145,7 @@ class ChatService with ListenableServiceMixin {
         await subscribeToChannel(_user!.id.toString());
       }
       _isPusherInitialized = true;
+      notifyListeners();
     } on ApiException catch (e) {
       logger.error("Error initializing Pusher: ${e.message}");
       rethrow;
@@ -145,11 +157,12 @@ class ChatService with ListenableServiceMixin {
 
   Future<void> subscribeToChannel(String userId) async {
     await _pusherService.subscribeToChannel(userId, _handleIncomingMessage);
+    notifyListeners();
   }
 
   void _handleIncomingMessage(dynamic eventData) {
     try {
-      logger.info("Handling incoming message: $eventData");
+      logger.info("Handling in ChatService incoming message: $eventData");
 
       if (eventData.toString() == '{}') {
         print('No data received from Pusher');
@@ -158,23 +171,15 @@ class ChatService with ListenableServiceMixin {
 
       final data = jsonDecode(eventData);
 
-      final newMessage = MessageModel(
-        id: data['id'],
-        conversationId: data['conversation_id'],
-        senderId: data['sender_id'],
-        content: data['content'],
-        createdAt: data['created_at'],
-        sender: UserModel(
-          id: data['sender']['id'],
-          name: data['sender']['name'],
-        ),
-        conversation: ConversationModel(
-            id: data['conversation_id'],
-            userId: data['user']['id'],
-            responderId: data['responder']['id']),
-      );
+      _conversations.value
+          .where((element) => element.id == data['message']['conversation_id'])
+          .first
+          .messages
+          ?.add(MessageModel.fromJson(data['message']));
 
-      _messages.value.insert(0, newMessage);
+      _messages.value.insert(0, MessageModel.fromJson(data['message']));
+
+      notifyListeners();
     } on ApiException catch (e) {
       logger.error("Error handling incoming message: ${e.message}");
       rethrow;
@@ -186,5 +191,6 @@ class ChatService with ListenableServiceMixin {
 
   Future<void> unsubscribeFromChannel(String userId) async {
     await _pusherService.unsubscribeFromChannel(userId);
+    notifyListeners();
   }
 }

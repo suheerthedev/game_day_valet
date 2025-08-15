@@ -12,7 +12,7 @@ import 'package:game_day_valet/services/user_service.dart';
 import 'package:stacked/stacked.dart';
 import 'package:stacked_services/stacked_services.dart';
 
-class ChatViewModel extends BaseViewModel {
+class ChatViewModel extends ReactiveViewModel {
   final _chatService = locator<ChatService>();
   final _snackbarService = locator<SnackbarService>();
   final _userService = locator<UserService>();
@@ -141,4 +141,7 @@ class ChatViewModel extends BaseViewModel {
   }
 
   TextEditingController messageController = TextEditingController();
+
+  @override
+  List<ListenableServiceMixin> get listenableServices => [_chatService];
 }
