@@ -42,6 +42,7 @@ import 'package:game_day_valet/services/chat_service.dart';
 import 'package:game_day_valet/services/pusher_service.dart';
 import 'package:game_day_valet/services/tournament_service.dart';
 import 'package:game_day_valet/services/deep_linking_service.dart';
+import 'package:game_day_valet/services/rental_service.dart';
 // @stacked-import
 
 @StackedApp(
@@ -100,6 +101,7 @@ import 'package:game_day_valet/services/deep_linking_service.dart';
     LazySingleton(classType: PusherService),
     LazySingleton(classType: TournamentService),
     LazySingleton(classType: DeepLinkingService),
+    LazySingleton(classType: RentalService),
 // @stacked-service
   ],
   bottomsheets: [

@@ -14,6 +14,7 @@ import 'package:game_day_valet/services/chat_service.dart';
 import 'package:game_day_valet/services/pusher_service.dart';
 import 'package:game_day_valet/services/tournament_service.dart';
 import 'package:game_day_valet/services/deep_linking_service.dart';
+import 'package:game_day_valet/services/rental_service.dart';
 // @stacked-import
 
 import 'test_helpers.mocks.dart';
@@ -36,6 +37,7 @@ import 'test_helpers.mocks.dart';
     MockSpec<PusherService>(onMissingStub: OnMissingStub.returnDefault),
     MockSpec<TournamentService>(onMissingStub: OnMissingStub.returnDefault),
     MockSpec<DeepLinkingService>(onMissingStub: OnMissingStub.returnDefault),
+    MockSpec<RentalService>(onMissingStub: OnMissingStub.returnDefault),
 // @stacked-mock-spec
   ],
 )
@@ -55,6 +57,7 @@ void registerServices() {
   getAndRegisterPusherService();
   getAndRegisterTournamentService();
   getAndRegisterDeepLinkingService();
+  getAndRegisterRentalService();
 // @stacked-mock-register
 }
 
@@ -193,6 +196,13 @@ MockDeepLinkingService getAndRegisterDeepLinkingService() {
   _removeRegistrationIfExists<DeepLinkingService>();
   final service = MockDeepLinkingService();
   locator.registerSingleton<DeepLinkingService>(service);
+  return service;
+}
+
+MockRentalService getAndRegisterRentalService() {
+  _removeRegistrationIfExists<RentalService>();
+  final service = MockRentalService();
+  locator.registerSingleton<RentalService>(service);
   return service;
 }
 // @stacked-mock-create

@@ -20,6 +20,7 @@ import 'package:game_day_valet/services/deep_linking_service.dart' as _i23;
 import 'package:game_day_valet/services/google_sign_in_service.dart' as _i16;
 import 'package:game_day_valet/services/logger_service.dart' as _i15;
 import 'package:game_day_valet/services/pusher_service.dart' as _i20;
+import 'package:game_day_valet/services/rental_service.dart' as _i24;
 import 'package:game_day_valet/services/secure_storage_service.dart' as _i10;
 import 'package:game_day_valet/services/stripe_service.dart' as _i17;
 import 'package:game_day_valet/services/tournament_service.dart' as _i21;
@@ -1455,14 +1456,14 @@ class MockPusherService extends _i1.Mock implements _i20.PusherService {
 
   @override
   _i6.Future<void> subscribeToChannel(
-    String? userId,
+    String? channelName,
     dynamic Function(dynamic)? onMessageReceived,
   ) =>
       (super.noSuchMethod(
         Invocation.method(
           #subscribeToChannel,
           [
-            userId,
+            channelName,
             onMessageReceived,
           ],
         ),
@@ -1471,11 +1472,11 @@ class MockPusherService extends _i1.Mock implements _i20.PusherService {
       ) as _i6.Future<void>);
 
   @override
-  _i6.Future<void> unsubscribeFromChannel(String? userId) =>
+  _i6.Future<void> unsubscribeFromChannel(String? channelName) =>
       (super.noSuchMethod(
         Invocation.method(
           #unsubscribeFromChannel,
-          [userId],
+          [channelName],
         ),
         returnValue: _i6.Future<void>.value(),
         returnValueForMissingStub: _i6.Future<void>.value(),
@@ -1627,3 +1628,8 @@ class MockDeepLinkingService extends _i1.Mock
         returnValueForMissingStub: null,
       );
 }
+
+/// A class which mocks [RentalService].
+///
+/// See the documentation for Mockito's code generation for more information.
+class MockRentalService extends _i1.Mock implements _i24.RentalService {}

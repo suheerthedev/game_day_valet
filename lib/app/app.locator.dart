@@ -20,6 +20,7 @@ import '../services/deep_linking_service.dart';
 import '../services/google_sign_in_service.dart';
 import '../services/logger_service.dart';
 import '../services/pusher_service.dart';
+import '../services/rental_service.dart';
 import '../services/secure_storage_service.dart';
 import '../services/stripe_service.dart';
 import '../services/tournament_service.dart';
@@ -52,4 +53,5 @@ Future<void> setupLocator({
   locator.registerLazySingleton(() => PusherService());
   locator.registerLazySingleton(() => TournamentService());
   locator.registerLazySingleton(() => DeepLinkingService());
+  locator.registerLazySingleton(() => RentalService());
 }
