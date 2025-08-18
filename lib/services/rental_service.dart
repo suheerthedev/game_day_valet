@@ -20,7 +20,7 @@ class RentalService with ListenableServiceMixin {
       ReactiveValue<List<RentalStatusModel>>([]);
   final ReactiveValue<RentalBookingModel> _rentalBooking =
       ReactiveValue<RentalBookingModel>(RentalBookingModel(
-    id: 19,
+    id: 0,
     userId: 0,
     tournamentId: 0,
     teamName: "",
@@ -41,14 +41,17 @@ class RentalService with ListenableServiceMixin {
     try {
       final response = await _apiService.post(url, body);
 
+      print("Booking Rental Response: $response");
+
       if (response.containsKey('errors')) {
         return response;
       }
 
-      _rentalBooking.value = RentalBookingModel.fromJson(response);
+      _rentalBooking.value = RentalBookingModel.fromJson(response['data']);
 
       logger.info("Booking Rental Response: $response");
       await initializePusher();
+      notifyListeners();
     } on ApiException catch (e) {
       logger.error("Error in booking rental: ${e.message}");
       rethrow;
@@ -87,7 +90,7 @@ class RentalService with ListenableServiceMixin {
       await _pusherService.initialize();
 
       if (rentalBooking?.id != null) {
-        await subscribeToChannel('rental.${rentalBooking!.id.toString()}');
+        await subscribeToChannel('rental-${rentalBooking!.id.toString()}');
       }
       _isPusherInitialized = true;
       notifyListeners();

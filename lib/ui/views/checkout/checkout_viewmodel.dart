@@ -186,44 +186,44 @@ class CheckoutViewModel extends BaseViewModel {
   //   // }
   // }
 
+  List<Map<String, dynamic>> formatItems(List<ItemModel> items) {
+    return items
+        .where((item) => item.quantity > 0)
+        .map((item) =>
+            {"item_id": item.id.toString(), "quantity": item.quantity})
+        .toList();
+  }
+
+  List<int> formatBundles(List<BundleModel> bundles) {
+    return bundles
+        .where((bundle) => bundle.isSelected)
+        .map((bundle) => bundle.id)
+        .toList();
+  }
+
   Future<void> bookRental(BuildContext context) async {
     if (!validateForm()) {
       return;
     }
 
-    final body = {
-      "tournament_id": tournamentId.toString(),
-      "team_name": teamNameController.text,
-      "coach_name": coachNameController.text,
-      "field_number": fieldNumberController.text,
-      "items": items
-          .where((item) => item.quantity > 0)
-          .map((item) => {
-                "item_id": item.id.toString(),
-                "quantity": item.quantity,
-              })
-          .toList()
-          .toString(),
-      "bundles": bundles
-          .where((bundle) => bundle.isSelected)
-          .map((bundle) => bundle.id)
-          .toList()
-          .toString(),
-      "rental_date": DateFormat('yyyy-MM-dd').format(DateTime.now()),
-      "drop_off_time": dropOffTimeController.text,
-      "instructions": specialInstructionController.text,
-      "promo_code": promoCodeController.text,
-      "insurance_option": insuranceOne ? "3" : "7",
-      "damage_waiver": damageWaiver.toString(),
-      "payment_method": "stripe",
-      "payment_status": "pending",
-      "total_amount": totalAmount.toStringAsFixed(2),
-    };
-
-    print(body);
-
     try {
-      await _rentalService.createRentalBooking(body);
+      await _rentalService.createRentalBooking({
+        "tournament_id": tournamentId.toString(),
+        "team_name": teamNameController.text,
+        "coach_name": coachNameController.text,
+        "field_number": fieldNumberController.text,
+        "items": formatItems(items),
+        "bundles": formatBundles(bundles),
+        "rental_date": DateFormat('yyyy-MM-dd').format(DateTime.now()),
+        "drop_off_time": dropOffTimeController.text,
+        "instructions": specialInstructionController.text,
+        "promo_code": promoCodeController.text,
+        "insurance_option": insuranceOne ? "3" : "7",
+        "damage_waiver": damageWaiver,
+        "payment_method": "stripe",
+        "payment_status": "pending",
+        "total_amount": totalAmount.toStringAsFixed(2),
+      });
 
       await _handleStripePayment(context, totalAmount);
     } on ApiException catch (e) {

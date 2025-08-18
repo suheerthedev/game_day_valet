@@ -1,8 +1,7 @@
-import 'dart:async';
-
 import 'package:flutter/material.dart';
 import 'package:game_day_valet/app/app.locator.dart';
 import 'package:game_day_valet/app/app.router.dart';
+import 'package:game_day_valet/models/rental_booking_model.dart';
 import 'package:game_day_valet/models/rental_status_model.dart';
 import 'package:game_day_valet/services/api_exception.dart';
 import 'package:game_day_valet/services/logger_service.dart';
@@ -19,22 +18,22 @@ class RentalStatusViewModel extends ReactiveViewModel {
 
   List<RentalStatusModel> get rentalStatus => _rentalService.rentalStatus;
 
-  bool get isRentalActive => true;
+  RentalBookingModel? get rentalBooking => _rentalService.rentalBooking;
 
-  Timer? timer; // Declare a Timer variable
-  int timeRemaining = 25; // Example: 60 seconds
-  bool isRunning = false;
+  bool get isRentalActive => true;
 
   void onChatTap() {
     _navigationService.navigateToInboxView();
   }
 
+  RentalStatusViewModel() {
+    init();
+  }
   void init() {
     setBusy(true);
     rebuildUi();
     try {
-      _rentalService.getRentalStatus(_rentalService.rentalBooking!.id);
-      startPeriodicTimer();
+      _rentalService.getRentalStatus(rentalBooking!.id);
     } on ApiException catch (e) {
       logger.error('Error in intializing: ${e.message}');
     } catch (e) {
@@ -44,34 +43,6 @@ class RentalStatusViewModel extends ReactiveViewModel {
       rebuildUi();
       setBusy(false);
     }
-  }
-
-  void startPeriodicTimer() {
-    isRunning = true;
-    rebuildUi();
-    timer = Timer.periodic(const Duration(minutes: 1), (timer) {
-      if (timeRemaining > 0) {
-        timeRemaining--;
-
-        logger.info('Time remaining: $timeRemaining');
-        rebuildUi();
-        // Update UI (e.g., using setState)
-      } else {
-        timer.cancel();
-        logger.info('Countdown finished!');
-        this.timer = null;
-        isRunning = false;
-        rebuildUi();
-      }
-    });
-  }
-
-  String getOrderId() {
-    return '#1234567890';
-  }
-
-  String getEstimatedDeliveryTime() {
-    return '30 minutes';
   }
 
   @override
