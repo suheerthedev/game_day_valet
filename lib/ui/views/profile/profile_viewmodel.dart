@@ -19,6 +19,8 @@ class ProfileViewModel extends ReactiveViewModel {
 
   bool isLoggingOut = false;
 
+  bool isNotificationsEnabled = false;
+
   Future<void> onLogoutTap() async {
     isLoggingOut = true;
     rebuildUi();
@@ -53,11 +55,17 @@ class ProfileViewModel extends ReactiveViewModel {
     _navigationService.navigateToFaqView();
   }
 
-  void onNotificationsTap() {}
+  void onNotificationsTap() {
+    isNotificationsEnabled = !isNotificationsEnabled;
+    print(isNotificationsEnabled);
+    rebuildUi();
+  }
 
   void onChatTap() {
     _navigationService.navigateToInboxView();
   }
+
+  void toggleNotifications() {}
 
   @override
   List<ListenableServiceMixin> get listenableServices => [_userService];

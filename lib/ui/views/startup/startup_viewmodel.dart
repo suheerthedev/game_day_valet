@@ -3,7 +3,9 @@ import 'package:game_day_valet/services/api_exception.dart';
 import 'package:game_day_valet/services/chat_service.dart';
 import 'package:game_day_valet/services/deep_linking_service.dart';
 import 'package:game_day_valet/services/logger_service.dart';
+import 'package:game_day_valet/services/rental_service.dart';
 import 'package:game_day_valet/services/secure_storage_service.dart';
+import 'package:game_day_valet/services/shared_preferences_service.dart';
 import 'package:game_day_valet/services/user_service.dart';
 import 'package:stacked/stacked.dart';
 import 'package:game_day_valet/app/app.locator.dart';
@@ -17,7 +19,8 @@ class StartupViewModel extends BaseViewModel {
   final _chatService = locator<ChatService>();
   final _snackbarService = locator<SnackbarService>();
   final _deepLinkingService = locator<DeepLinkingService>();
-
+  final _rentalService = locator<RentalService>();
+  final _sharedPreferencesService = locator<SharedPreferencesService>();
   // Place anything here that needs to happen before we get into the application
   Future runStartupLogic() async {
     await Future.delayed(const Duration(seconds: 3));
@@ -34,8 +37,10 @@ class StartupViewModel extends BaseViewModel {
     final token = await _secureStorageService.getToken();
 
     if (token != null) {
+      await _sharedPreferencesService.init();
       await _userService.fetchCurrentUser();
       await getUserConversations();
+      await _rentalService.init();
       await _navigationService.replaceWithMainView();
     } else {
       _navigationService.replaceWithOnboardingView();

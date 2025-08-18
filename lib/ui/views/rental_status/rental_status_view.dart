@@ -108,227 +108,226 @@ class RentalStatusView extends StackedView<RentalStatusViewModel> {
       BuildContext context, RentalStatusViewModel viewModel) {
     return Padding(
       padding: EdgeInsets.symmetric(horizontal: 25.w),
-      child: Center(
-        child: SingleChildScrollView(
-          child: Column(
-            crossAxisAlignment: CrossAxisAlignment.start,
-            children: [
-              // Row(
-              //   mainAxisAlignment: MainAxisAlignment.center,
-              //   crossAxisAlignment: CrossAxisAlignment.start,
-              //   children: [
-              //     Column(
-              //       mainAxisAlignment: MainAxisAlignment.center,
-              //       children: [
-              //         Text(
-              //           "00",
-              //           style: GoogleFonts.poppins(
-              //               fontSize: 40.sp,
-              //               fontWeight: FontWeight.w600,
-              //               color: AppColors.textHint),
-              //         ),
-              //         Text(
-              //           'hours',
-              //           style: GoogleFonts.poppins(
-              //               fontSize: 14.sp,
-              //               fontWeight: FontWeight.w400,
-              //               color: AppColors.textHint),
-              //         ),
-              //       ],
-              //     ),
-              //     Text(
-              //       " : ",
-              //       style: GoogleFonts.poppins(
-              //           fontSize: 40.sp,
-              //           fontWeight: FontWeight.w600,
-              //           color: AppColors.textHint),
-              //     ),
-              //     Column(
-              //       mainAxisAlignment: MainAxisAlignment.center,
-              //       children: [
-              //         Text(
-              //           '${viewModel.timeRemaining}',
-              //           style: GoogleFonts.poppins(
-              //               fontSize: 40.sp,
-              //               fontWeight: FontWeight.w600,
-              //               color: AppColors.textSecondary),
-              //         ),
-              //         Text(
-              //           'minutes',
-              //           style: GoogleFonts.poppins(
-              //               fontSize: 14.sp,
-              //               fontWeight: FontWeight.w400,
-              //               color: AppColors.textHint),
-              //         ),
-              //       ],
-              //     ),
-              //   ],
-              // ),
-              // SizedBox(height: 20.h),
-              // Row(
-              //   mainAxisAlignment: MainAxisAlignment.center,
-              //   children: [
-              //     Text(
-              //       "time left for delivery",
-              //       style: GoogleFonts.poppins(
-              //           fontSize: 14.sp,
-              //           fontWeight: FontWeight.w500,
-              //           color: AppColors.textHint),
-              //     ),
-              //   ],
-              // ),
+      child: SingleChildScrollView(
+        child: Column(
+          crossAxisAlignment: CrossAxisAlignment.start,
+          children: [
+            // Row(
+            //   mainAxisAlignment: MainAxisAlignment.center,
+            //   crossAxisAlignment: CrossAxisAlignment.start,
+            //   children: [
+            //     Column(
+            //       mainAxisAlignment: MainAxisAlignment.center,
+            //       children: [
+            //         Text(
+            //           "00",
+            //           style: GoogleFonts.poppins(
+            //               fontSize: 40.sp,
+            //               fontWeight: FontWeight.w600,
+            //               color: AppColors.textHint),
+            //         ),
+            //         Text(
+            //           'hours',
+            //           style: GoogleFonts.poppins(
+            //               fontSize: 14.sp,
+            //               fontWeight: FontWeight.w400,
+            //               color: AppColors.textHint),
+            //         ),
+            //       ],
+            //     ),
+            //     Text(
+            //       " : ",
+            //       style: GoogleFonts.poppins(
+            //           fontSize: 40.sp,
+            //           fontWeight: FontWeight.w600,
+            //           color: AppColors.textHint),
+            //     ),
+            //     Column(
+            //       mainAxisAlignment: MainAxisAlignment.center,
+            //       children: [
+            //         Text(
+            //           '${viewModel.timeRemaining}',
+            //           style: GoogleFonts.poppins(
+            //               fontSize: 40.sp,
+            //               fontWeight: FontWeight.w600,
+            //               color: AppColors.textSecondary),
+            //         ),
+            //         Text(
+            //           'minutes',
+            //           style: GoogleFonts.poppins(
+            //               fontSize: 14.sp,
+            //               fontWeight: FontWeight.w400,
+            //               color: AppColors.textHint),
+            //         ),
+            //       ],
+            //     ),
+            //   ],
+            // ),
+            // SizedBox(height: 20.h),
+            // Row(
+            //   mainAxisAlignment: MainAxisAlignment.center,
+            //   children: [
+            //     Text(
+            //       "time left for delivery",
+            //       style: GoogleFonts.poppins(
+            //           fontSize: 14.sp,
+            //           fontWeight: FontWeight.w500,
+            //           color: AppColors.textHint),
+            //     ),
+            //   ],
+            // ),
 
-              Row(
-                mainAxisAlignment: MainAxisAlignment.center,
-                children: [
-                  Column(
-                    children: [
-                      Icon(
-                          viewModel.rentalStatus.last.status == 'pending'
-                              ? IconsaxPlusBold.clock
-                              : viewModel.rentalStatus.last.status ==
-                                      'confirmed'
-                                  ? IconsaxPlusBold.tick_circle
-                                  : viewModel.rentalStatus.last.status ==
-                                          'out_for_delivery'
-                                      ? IconsaxPlusBold.car
-                                      : viewModel.rentalStatus.last.status ==
-                                              'delivered'
-                                          ? IconsaxPlusBold.box
-                                          : IconsaxPlusBold.box_tick,
-                          size: 70.sp,
-                          color: AppColors.secondary),
-                      SizedBox(height: 10.h),
-                      Text(
+            Row(
+              mainAxisAlignment: MainAxisAlignment.center,
+              children: [
+                Column(
+                  children: [
+                    Icon(
                         viewModel.rentalStatus.last.status == 'pending'
-                            ? 'Pending'
+                            ? IconsaxPlusBold.clock
                             : viewModel.rentalStatus.last.status == 'confirmed'
-                                ? 'Confirmed'
+                                ? IconsaxPlusBold.tick_circle
                                 : viewModel.rentalStatus.last.status ==
                                         'out_for_delivery'
-                                    ? 'Out for Delivery'
+                                    ? IconsaxPlusBold.car
                                     : viewModel.rentalStatus.last.status ==
                                             'delivered'
-                                        ? 'Delivered'
-                                        : 'Cancelled',
-                        style: GoogleFonts.poppins(
-                            fontSize: 14.sp, color: AppColors.secondary),
-                      ),
-                    ],
+                                        ? IconsaxPlusBold.box
+                                        : IconsaxPlusBold.box_tick,
+                        size: 70.sp,
+                        color: AppColors.secondary),
+                    SizedBox(height: 10.h),
+                    Text(
+                      viewModel.rentalStatus.last.status == 'pending'
+                          ? 'Pending'
+                          : viewModel.rentalStatus.last.status == 'confirmed'
+                              ? 'Confirmed'
+                              : viewModel.rentalStatus.last.status ==
+                                      'out_for_delivery'
+                                  ? 'Out for Delivery'
+                                  : viewModel.rentalStatus.last.status ==
+                                          'delivered'
+                                      ? 'Delivered'
+                                      : 'Cancelled',
+                      style: GoogleFonts.poppins(
+                          fontSize: 14.sp, color: AppColors.secondary),
+                    ),
+                  ],
+                ),
+              ],
+            ),
+
+            SizedBox(height: 30.h),
+            // Order tracking timeline
+            ListView.builder(
+              shrinkWrap: true,
+              physics: const NeverScrollableScrollPhysics(),
+              itemCount: viewModel.rentalStatus.length,
+              itemBuilder: (context, index) {
+                final status = viewModel.rentalStatus[index];
+                final isLastItem = index == viewModel.rentalStatus.length - 1;
+
+                return _buildTimelineItem(
+                  title: status.statusLabel ?? '',
+                  timestamp: status.formattedCreatedAt ?? '',
+                  isLastItem: isLastItem,
+                );
+              },
+            ),
+            SizedBox(height: 20.h),
+            // Text(
+            //   'Return Instructions',
+            //   style: GoogleFonts.poppins(
+            //       fontSize: 18.sp,
+            //       fontWeight: FontWeight.w600,
+            //       color: AppColors.primary),
+            // ),
+            // SizedBox(height: 10.h),
+            // MainTextField(
+            //     label: 'Special Instructions',
+            //     controller: viewModel.specialInstructionsController),
+            SizedBox(height: 10.h),
+            viewModel.rentalStatus.last.status == 'delivered'
+                ? Text(
+                    'Delivery Photos',
+                    style: GoogleFonts.poppins(
+                        fontSize: 16.sp,
+                        fontWeight: FontWeight.w600,
+                        color: AppColors.primary),
+                  )
+                : const SizedBox.shrink(),
+
+            SizedBox(height: 10.h),
+            GridView.builder(
+              shrinkWrap: true,
+              physics: const NeverScrollableScrollPhysics(),
+              gridDelegate: SliverGridDelegateWithFixedCrossAxisCount(
+                  crossAxisCount: 2,
+                  childAspectRatio: 123.w / 106.h,
+                  crossAxisSpacing: 10.w,
+                  mainAxisSpacing: 10.h,
+                  mainAxisExtent: 106.h),
+              itemCount: viewModel.rentalStatus.last.imageUrls?.length ?? 10,
+              itemBuilder: (context, index) {
+                return Container(
+                  width: 123.w,
+                  height: 106.h,
+                  decoration: BoxDecoration(
+                    borderRadius: BorderRadius.circular(10.r),
+                    border: Border.all(
+                      color: AppColors.grey300,
+                      width: 1.w,
+                    ),
                   ),
-                ],
-              ),
-
-              SizedBox(height: 30.h),
-              // Order tracking timeline
-              ListView.builder(
-                shrinkWrap: true,
-                physics: const NeverScrollableScrollPhysics(),
-                itemCount: viewModel.rentalStatus.length,
-                itemBuilder: (context, index) {
-                  final status = viewModel.rentalStatus[index];
-                  final isLastItem = index == viewModel.rentalStatus.length - 1;
-
-                  return _buildTimelineItem(
-                    title: status.statusLabel ?? '',
-                    timestamp: status.formattedCreatedAt ?? '',
-                    isLastItem: isLastItem,
-                  );
-                },
-              ),
-              SizedBox(height: 20.h),
-              // Text(
-              //   'Return Instructions',
-              //   style: GoogleFonts.poppins(
-              //       fontSize: 18.sp,
-              //       fontWeight: FontWeight.w600,
-              //       color: AppColors.primary),
-              // ),
-              // SizedBox(height: 10.h),
-              // MainTextField(
-              //     label: 'Special Instructions',
-              //     controller: viewModel.specialInstructionsController),
-              SizedBox(height: 10.h),
-              Text(
-                'Delivery Photos',
-                style: GoogleFonts.poppins(
-                    fontSize: 18.sp,
-                    fontWeight: FontWeight.w600,
-                    color: AppColors.primary),
-              ),
-
-              SizedBox(height: 10.h),
-              GridView.builder(
-                shrinkWrap: true,
-                physics: const NeverScrollableScrollPhysics(),
-                gridDelegate: SliverGridDelegateWithFixedCrossAxisCount(
-                    crossAxisCount: 2,
-                    childAspectRatio: 123.w / 106.h,
-                    crossAxisSpacing: 10.w,
-                    mainAxisSpacing: 10.h,
-                    mainAxisExtent: 106.h),
-                itemCount: viewModel.rentalStatus.last.imageUrls?.length ?? 10,
-                itemBuilder: (context, index) {
-                  return Container(
-                    width: 123.w,
-                    height: 106.h,
-                    decoration: BoxDecoration(
-                      borderRadius: BorderRadius.circular(10.r),
-                      border: Border.all(
-                        color: AppColors.grey300,
-                        width: 1.w,
-                      ),
+                  clipBehavior: Clip.hardEdge,
+                  child: CachedNetworkImage(
+                    imageUrl:
+                        viewModel.rentalStatus.last.imageUrls?[index] ?? '',
+                    fit: BoxFit.cover,
+                    placeholder: (context, url) => const Center(
+                      child: CircularProgressIndicator(),
                     ),
-                    clipBehavior: Clip.hardEdge,
-                    child: CachedNetworkImage(
-                      imageUrl:
-                          viewModel.rentalStatus.last.imageUrls?[index] ?? '',
-                      fit: BoxFit.cover,
-                      placeholder: (context, url) => const Center(
-                        child: CircularProgressIndicator(),
-                      ),
-                      errorWidget: (context, url, error) => Icon(
-                        IconsaxPlusLinear.image,
-                        color: AppColors.textHint,
-                        size: 24.sp,
-                      ),
+                    errorWidget: (context, url, error) => Icon(
+                      IconsaxPlusLinear.image,
+                      color: AppColors.textHint,
+                      size: 24.sp,
                     ),
-                  );
-                },
-              ),
-              // SizedBox(height: 10.h),
-              // Text(
-              //   'Give Review',
-              //   style: GoogleFonts.poppins(
-              //       fontSize: 18.sp,
-              //       fontWeight: FontWeight.w600,
-              //       color: AppColors.primary),
-              // ),
-              // SizedBox(height: 10.h),
-              // MainTextField(
-              //     label: 'Write Google Review Here',
-              //     controller: viewModel.googleReviewController),
+                  ),
+                );
+              },
+            ),
+            // SizedBox(height: 10.h),
+            // Text(
+            //   'Give Review',
+            //   style: GoogleFonts.poppins(
+            //       fontSize: 18.sp,
+            //       fontWeight: FontWeight.w600,
+            //       color: AppColors.primary),
+            // ),
+            // SizedBox(height: 10.h),
+            // MainTextField(
+            //     label: 'Write Google Review Here',
+            //     controller: viewModel.googleReviewController),
 
-              // Align(
-              //   alignment: Alignment.centerRight,
-              //   child: Text(
-              //     'Need Help?',
-              //     style: GoogleFonts.poppins(
-              //         fontSize: 14.sp,
-              //         fontWeight: FontWeight.w500,
-              //         color: AppColors.textSecondary),
-              //   ),
-              // ),
-              // SizedBox(height: 20.h),
-              // MainButton(
-              //   onTap: () {},
-              //   text: 'Order More',
-              //   color: AppColors.secondary,
-              //   borderColor: AppColors.secondary,
-              //   textColor: AppColors.white,
-              // )
-            ],
-          ),
+            // Align(
+            //   alignment: Alignment.centerRight,
+            //   child: Text(
+            //     'Need Help?',
+            //     style: GoogleFonts.poppins(
+            //         fontSize: 14.sp,
+            //         fontWeight: FontWeight.w500,
+            //         color: AppColors.textSecondary),
+            //   ),
+            // ),
+            // SizedBox(height: 20.h),
+            // MainButton(
+            //   onTap: () {},
+            //   text: 'Order More',
+            //   color: AppColors.secondary,
+            //   borderColor: AppColors.secondary,
+            //   textColor: AppColors.white,
+            // )
+          ],
         ),
       ),
     );
@@ -415,10 +414,4 @@ class RentalStatusView extends StackedView<RentalStatusViewModel> {
     BuildContext context,
   ) =>
       RentalStatusViewModel();
-
-  @override
-  void onViewModelReady(RentalStatusViewModel viewModel) {
-    viewModel.init();
-    super.onViewModelReady(viewModel);
-  }
 }

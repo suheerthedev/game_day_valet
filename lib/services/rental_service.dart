@@ -9,6 +9,7 @@ import 'package:game_day_valet/services/api_exception.dart';
 import 'package:game_day_valet/services/api_service.dart';
 import 'package:game_day_valet/services/logger_service.dart';
 import 'package:game_day_valet/services/pusher_service.dart';
+import 'package:game_day_valet/services/shared_preferences_service.dart';
 import 'package:game_day_valet/services/stripe_service.dart';
 import 'package:stacked/stacked.dart';
 import 'package:stacked_services/stacked_services.dart';
@@ -18,8 +19,11 @@ class RentalService with ListenableServiceMixin {
   final _pusherService = locator<PusherService>();
   final _stripeService = locator<StripeService>();
   final _navigationService = locator<NavigationService>();
+  final _sharedPreferencesService = locator<SharedPreferencesService>();
 
   bool _isPusherInitialized = false;
+
+  int? rentalId;
 
   final ReactiveValue<List<RentalStatusModel>> _rentalStatus =
       ReactiveValue<List<RentalStatusModel>>([]);
@@ -39,6 +43,14 @@ class RentalService with ListenableServiceMixin {
 
   RentalBookingModel? get rentalBooking => _rentalBooking.value;
   List<RentalStatusModel> get rentalStatus => _rentalStatus.value;
+
+  Future<void> init() async {
+    rentalId = await _sharedPreferencesService.getInt('rental_id');
+    if (rentalId != null) {
+      await getRentalStatus();
+      await initializePusher();
+    }
+  }
 
   Future<dynamic> createRentalBooking(
       BuildContext context, num totalAmount, Map<String, dynamic> body) async {
@@ -61,6 +73,9 @@ class RentalService with ListenableServiceMixin {
 
       if (isPaymentSuccess) {
         await initializePusher();
+        await _sharedPreferencesService.setInt('rental_id', rentalBooking!.id);
+        rentalId = rentalBooking!.id;
+        await getRentalStatus();
       }
 
       notifyListeners();
@@ -88,12 +103,15 @@ class RentalService with ListenableServiceMixin {
     return isPaymentSuccess;
   }
 
-  Future<void> getRentalStatus(int rentalId) async {
+  Future<void> getRentalStatus() async {
+    logger.info("Getting rental status for rental ID: $rentalId");
     final url =
         "${ApiConfig.baseUrl}${ApiConfig.rentalStatusEndPoint}/$rentalId";
 
     try {
       final response = await _apiService.get(url);
+
+      print("Rental Status Response: $response");
 
       _rentalStatus.value = (response['status'] as List)
           .map((e) => RentalStatusModel.fromJson(e))
@@ -133,7 +151,7 @@ class RentalService with ListenableServiceMixin {
       await _pusherService.initialize();
 
       if (rentalBooking?.id != null) {
-        await subscribeToChannel('rental-${rentalBooking!.id.toString()}');
+        await subscribeToChannel('rental-${rentalId!.toString()}');
       }
       _isPusherInitialized = true;
       notifyListeners();

@@ -26,24 +26,24 @@ class RentalStatusViewModel extends ReactiveViewModel {
     _navigationService.navigateToInboxView();
   }
 
-  RentalStatusViewModel() {
-    init();
-  }
-  void init() {
-    setBusy(true);
-    rebuildUi();
-    try {
-      _rentalService.getRentalStatus(rentalBooking!.id);
-    } on ApiException catch (e) {
-      logger.error('Error in intializing: ${e.message}');
-    } catch (e) {
-      logger.error('Error in intializing rental status: $e');
-      rethrow;
-    } finally {
-      rebuildUi();
-      setBusy(false);
-    }
-  }
+  // RentalStatusViewModel() {
+  //   init();
+  // }
+  // void init() {
+  //   setBusy(true);
+  //   rebuildUi();
+  //   try {
+  //     _rentalService.getRentalStatus(_rentalService.rentalId!);
+  //   } on ApiException catch (e) {
+  //     logger.error('Error in intializing: ${e.message}');
+  //   } catch (e) {
+  //     logger.error('Error in intializing rental status: $e');
+  //     rethrow;
+  //   } finally {
+  //     rebuildUi();
+  //     setBusy(false);
+  //   }
+  // }
 
   @override
   List<ListenableServiceMixin> get listenableServices => [_rentalService];

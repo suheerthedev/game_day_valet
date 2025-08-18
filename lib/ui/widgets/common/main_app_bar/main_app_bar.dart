@@ -13,6 +13,7 @@ class MainAppBar extends StackedView<MainAppBarModel>
   final Widget? leading;
   final bool hasLeading;
   final bool hasSubtitle;
+  final bool hasNotification;
 
   const MainAppBar(
       {super.key,
@@ -20,7 +21,8 @@ class MainAppBar extends StackedView<MainAppBarModel>
       this.subtitle,
       this.leading,
       this.hasLeading = true,
-      this.hasSubtitle = false});
+      this.hasSubtitle = false,
+      this.hasNotification = true});
 
   @override
   Widget builder(
@@ -49,19 +51,21 @@ class MainAppBar extends StackedView<MainAppBarModel>
       ),
       actionsPadding: EdgeInsets.only(right: 16.w),
       actions: [
-        GestureDetector(
-          onTap: () {
-            viewModel.onNotificationTap();
-          },
-          child: CircleAvatar(
-            radius: 20.r,
-            backgroundColor: AppColors.secondary.withOpacity(0.1),
-            child: Center(
-              child: Icon(Iconsax.notification,
-                  size: 24.w, color: AppColors.textPrimary),
+        if (hasNotification) ...[
+          GestureDetector(
+            onTap: () {
+              viewModel.onNotificationTap();
+            },
+            child: CircleAvatar(
+              radius: 20.r,
+              backgroundColor: AppColors.secondary.withOpacity(0.1),
+              child: Center(
+                child: Icon(Iconsax.notification,
+                    size: 24.w, color: AppColors.textPrimary),
+              ),
             ),
           ),
-        )
+        ],
       ],
     );
   }

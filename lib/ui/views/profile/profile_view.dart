@@ -195,8 +195,12 @@ class ProfileView extends StackedView<ProfileViewModel> {
                                   fontSize: 14.sp,
                                   fontWeight: FontWeight.w400,
                                   color: AppColors.textPrimary)),
-                          trailing: Icon(Iconsax.toggle_off_circle_copy,
-                              size: 24.w, color: AppColors.textPrimary),
+                          trailing: Icon(
+                              viewModel.isNotificationsEnabled
+                                  ? IconsaxPlusBold.toggle_on_circle
+                                  : IconsaxPlusLinear.toggle_off_circle,
+                              size: 24.w,
+                              color: AppColors.textPrimary),
                         ),
                       ],
                     ),
