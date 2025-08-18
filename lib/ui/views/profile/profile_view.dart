@@ -25,54 +25,54 @@ class ProfileView extends StackedView<ProfileViewModel> {
     return Stack(
       children: [
         Scaffold(
-            backgroundColor: AppColors.scaffoldBackground,
-            appBar: MainAppBar(
-              hasLeading: true,
-              hasSubtitle: true,
-              leading: Row(
-                children: [
-                  CircleAvatar(
-                    radius: 22.r,
-                    backgroundColor: AppColors.secondary,
-                    child: ClipRRect(
-                      borderRadius: BorderRadius.circular(22.r),
-                      clipBehavior: Clip.hardEdge,
-                      child: CachedNetworkImage(
-                        imageUrl:
-                            "${ApiConfig.baseUrl}/storage/${viewModel.currentUser?.profileImage}",
-                        width: 100.w,
-                        height: 100.h,
-                        fit: BoxFit.cover,
-                        placeholder: (context, url) => const Center(
-                          child: CircularProgressIndicator(),
-                        ),
-                        errorWidget: (context, url, error) => Icon(
-                          IconsaxPlusLinear.user,
-                          size: 12.sp,
-                        ),
+          backgroundColor: AppColors.scaffoldBackground,
+          appBar: MainAppBar(
+            hasLeading: true,
+            hasSubtitle: true,
+            leading: Row(
+              children: [
+                CircleAvatar(
+                  radius: 22.r,
+                  backgroundColor: AppColors.secondary,
+                  child: ClipRRect(
+                    borderRadius: BorderRadius.circular(22.r),
+                    clipBehavior: Clip.hardEdge,
+                    child: CachedNetworkImage(
+                      imageUrl:
+                          "${ApiConfig.baseUrl}/storage/${viewModel.currentUser?.profileImage}",
+                      width: 100.w,
+                      height: 100.h,
+                      fit: BoxFit.cover,
+                      placeholder: (context, url) => const Center(
+                        child: CircularProgressIndicator(),
+                      ),
+                      errorWidget: (context, url, error) => Icon(
+                        IconsaxPlusLinear.user,
+                        size: 12.sp,
                       ),
                     ),
                   ),
-                  SizedBox(width: 10.w),
-                ],
-              ),
-              title: Text(
-                viewModel.currentUser?.name ?? '',
-                style: GoogleFonts.poppins(
-                    fontSize: 18.sp,
-                    fontWeight: FontWeight.w700,
-                    color: AppColors.textPrimary),
-              ),
-              subtitle: Text(
-                viewModel.currentUser?.email ?? '',
-                style: GoogleFonts.poppins(
-                    fontSize: 12.sp,
-                    fontWeight: FontWeight.w400,
-                    color: AppColors.textHint),
-              ),
+                ),
+                SizedBox(width: 10.w),
+              ],
             ),
-            body: SafeArea(
-                child: Stack(
+            title: Text(
+              viewModel.currentUser?.name ?? '',
+              style: GoogleFonts.poppins(
+                  fontSize: 18.sp,
+                  fontWeight: FontWeight.w700,
+                  color: AppColors.textPrimary),
+            ),
+            subtitle: Text(
+              viewModel.currentUser?.email ?? '',
+              style: GoogleFonts.poppins(
+                  fontSize: 12.sp,
+                  fontWeight: FontWeight.w400,
+                  color: AppColors.textHint),
+            ),
+          ),
+          body: SafeArea(
+            child: Stack(
               children: [
                 Padding(
                   padding: EdgeInsets.symmetric(horizontal: 25.w),
@@ -241,7 +241,9 @@ class ProfileView extends StackedView<ProfileViewModel> {
                       durationToShowMessage: const Duration(seconds: 5)),
                 )
               ],
-            ))),
+            ),
+          ),
+        ),
         if (viewModel.isLoggingOut)
           Container(
             color: Colors.black.withOpacity(0.5),

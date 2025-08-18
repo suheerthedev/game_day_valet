@@ -11,14 +11,11 @@ import 'package:game_day_valet/models/bundle_model.dart';
 import 'package:game_day_valet/models/item_model.dart';
 import 'package:game_day_valet/services/api_exception.dart';
 import 'package:game_day_valet/services/logger_service.dart';
-import 'package:game_day_valet/services/stripe_service.dart';
 import 'package:stacked/stacked.dart';
 import 'package:stacked_services/stacked_services.dart';
 
 class CheckoutViewModel extends BaseViewModel {
-  final _stripeService = locator<StripeService>();
   final _snackbarService = locator<SnackbarService>();
-  final _navigationService = locator<NavigationService>();
   final _rentalService = locator<RentalService>();
   final _userService = locator<UserService>();
 
@@ -102,6 +99,8 @@ class CheckoutViewModel extends BaseViewModel {
 
   bool isRentalSummaryExpanded = true;
 
+  bool isLoading = false;
+
   bool insuranceOne = false;
   bool insuranceTwo = false;
   bool damageWaiver = false;
@@ -112,6 +111,12 @@ class CheckoutViewModel extends BaseViewModel {
   CouponModel? coupon;
 
   void validatePromoCode() async {
+    if (promoCodeController.text.isEmpty) {
+      promoCodeError = 'Promo code is required';
+      rebuildUi();
+      return;
+    }
+    removeDiscount();
     isPromoCodeValid = false;
     promoCodeError = null;
     coupon = null;
@@ -131,6 +136,7 @@ class CheckoutViewModel extends BaseViewModel {
         isPromoCodeValid = true;
         promoCodeError = null;
         coupon = CouponModel.fromJson(response['data']['coupon']);
+        applyDiscount();
       }
     } catch (e) {
       promoCodeError = "Something went wrong";
@@ -195,19 +201,6 @@ class CheckoutViewModel extends BaseViewModel {
     notifyListeners();
   }
 
-  Future<void> _handleStripePayment(BuildContext context, num amount) async {
-    logger.info('Stripe');
-    final isPaymentSuccess = await _stripeService.payWithPaymentSheet(
-      amount: amount,
-      currency: 'usd',
-      context: context,
-    );
-
-    if (isPaymentSuccess) {
-      _navigationService.popUntil((route) => route.isFirst);
-    }
-  }
-
   // void _handleGooglePayPayment(BuildContext context) async {
   //   logger.info('Google Pay');
   //   // await _stripeService.payWithGooglePay(
@@ -241,13 +234,43 @@ class CheckoutViewModel extends BaseViewModel {
         .toList();
   }
 
+  void applyDiscount() {
+    if (isPromoCodeValid) {
+      if (coupon?.type == "fixed") {
+        totalAmount = totalAmount - double.parse(coupon?.value ?? '0');
+      }
+
+      if (coupon?.type == "percent") {
+        totalAmount =
+            totalAmount * (1 - (double.parse(coupon?.value ?? '0') / 100));
+      }
+    }
+  }
+
+  void removeDiscount() {
+    if (isPromoCodeValid) {
+      if (coupon?.type == "fixed") {
+        totalAmount = totalAmount + double.parse(coupon?.value ?? '0');
+      }
+    }
+
+    if (coupon?.type == "percent") {
+      totalAmount =
+          totalAmount * (1 + (double.parse(coupon?.value ?? '0') / 100));
+    }
+
+    notifyListeners();
+  }
+
   Future<void> bookRental(BuildContext context) async {
     if (!validateForm()) {
       return;
     }
 
     try {
-      await _rentalService.createRentalBooking({
+      isLoading = true;
+      rebuildUi();
+      await _rentalService.createRentalBooking(context, totalAmount, {
         "tournament_id": tournamentId.toString(),
         "team_name": teamNameController.text,
         "coach_name": coachNameController.text,
@@ -264,8 +287,6 @@ class CheckoutViewModel extends BaseViewModel {
         "payment_status": "pending",
         "total_amount": totalAmount.toStringAsFixed(2),
       });
-
-      await _handleStripePayment(context, totalAmount);
     } on ApiException catch (e) {
       _snackbarService.showCustomSnackBar(
           message: e.message,
@@ -280,6 +301,9 @@ class CheckoutViewModel extends BaseViewModel {
           variant: SnackbarType.error,
           duration: const Duration(seconds: 3));
       logger.error("Error in booking rental: ${e.toString()}");
+    } finally {
+      isLoading = false;
+      rebuildUi();
     }
   }
 }

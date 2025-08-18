@@ -1,19 +1,23 @@
 import 'dart:convert';
 
+import 'package:flutter/material.dart';
 import 'package:game_day_valet/app/app.locator.dart';
 import 'package:game_day_valet/config/api_config.dart';
-import 'package:game_day_valet/models/coupon_model.dart';
 import 'package:game_day_valet/models/rental_booking_model.dart';
 import 'package:game_day_valet/models/rental_status_model.dart';
 import 'package:game_day_valet/services/api_exception.dart';
 import 'package:game_day_valet/services/api_service.dart';
 import 'package:game_day_valet/services/logger_service.dart';
 import 'package:game_day_valet/services/pusher_service.dart';
+import 'package:game_day_valet/services/stripe_service.dart';
 import 'package:stacked/stacked.dart';
+import 'package:stacked_services/stacked_services.dart';
 
 class RentalService with ListenableServiceMixin {
   final _apiService = locator<ApiService>();
   final _pusherService = locator<PusherService>();
+  final _stripeService = locator<StripeService>();
+  final _navigationService = locator<NavigationService>();
 
   bool _isPusherInitialized = false;
 
@@ -36,7 +40,8 @@ class RentalService with ListenableServiceMixin {
   RentalBookingModel? get rentalBooking => _rentalBooking.value;
   List<RentalStatusModel> get rentalStatus => _rentalStatus.value;
 
-  Future<dynamic> createRentalBooking(Map<String, dynamic> body) async {
+  Future<dynamic> createRentalBooking(
+      BuildContext context, num totalAmount, Map<String, dynamic> body) async {
     final url = ApiConfig.baseUrl + ApiConfig.bookRentalEndPoint;
 
     try {
@@ -51,7 +56,13 @@ class RentalService with ListenableServiceMixin {
       _rentalBooking.value = RentalBookingModel.fromJson(response['data']);
 
       logger.info("Booking Rental Response: $response");
-      await initializePusher();
+
+      final isPaymentSuccess = await _handleStripePayment(context, totalAmount);
+
+      if (isPaymentSuccess) {
+        await initializePusher();
+      }
+
       notifyListeners();
     } on ApiException catch (e) {
       logger.error("Error in booking rental: ${e.message}");
@@ -60,6 +71,21 @@ class RentalService with ListenableServiceMixin {
       logger.error("Error in booking rental: ${e.toString()}");
       throw ApiException("Something went wrong. ${e.toString()}");
     }
+  }
+
+  Future<bool> _handleStripePayment(BuildContext context, num amount) async {
+    logger.info('Stripe');
+    final isPaymentSuccess = await _stripeService.payWithPaymentSheet(
+      amount: amount,
+      currency: 'usd',
+      context: context,
+    );
+
+    if (isPaymentSuccess) {
+      _navigationService.popUntil((route) => route.isFirst);
+    }
+
+    return isPaymentSuccess;
   }
 
   Future<void> getRentalStatus(int rentalId) async {
