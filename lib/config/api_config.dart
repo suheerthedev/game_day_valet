@@ -43,6 +43,7 @@ class ApiConfig {
   // Rental
   static const bookRentalEndPoint = '/api/rentals';
   static const rentalStatusEndPoint = '/api/rentals/status';
+  static const applyPromoCodeEndPoint = '/api/coupon/validate';
   //Refer and Earn
   static const referralCodeEndPoint = '/api/user/referral-code';
 

@@ -1,7 +1,10 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_chat_core/flutter_chat_core.dart';
 import 'package:game_day_valet/core/enums/snackbar_type.dart';
+import 'package:game_day_valet/models/coupon_model.dart';
+import 'package:game_day_valet/models/user_model.dart';
 import 'package:game_day_valet/services/rental_service.dart';
+import 'package:game_day_valet/services/user_service.dart';
 import 'package:intl/intl.dart';
 import 'package:game_day_valet/app/app.locator.dart';
 import 'package:game_day_valet/models/bundle_model.dart';
@@ -17,6 +20,9 @@ class CheckoutViewModel extends BaseViewModel {
   final _snackbarService = locator<SnackbarService>();
   final _navigationService = locator<NavigationService>();
   final _rentalService = locator<RentalService>();
+  final _userService = locator<UserService>();
+
+  UserModel? get user => _userService.currentUser;
 
   TextEditingController teamNameController = TextEditingController();
   TextEditingController coachNameController = TextEditingController();
@@ -100,6 +106,40 @@ class CheckoutViewModel extends BaseViewModel {
   bool insuranceTwo = false;
   bool damageWaiver = false;
   bool stripe = false;
+  bool isPromoCodeValid = false;
+  String? promoCodeError;
+
+  CouponModel? coupon;
+
+  void validatePromoCode() async {
+    isPromoCodeValid = false;
+    promoCodeError = null;
+    coupon = null;
+
+    setBusy(true);
+    rebuildUi();
+    try {
+      final response =
+          await _rentalService.applyPromoCode(promoCodeController.text, {
+        "user_id": user!.id.toString(),
+        "promo_code": promoCodeController.text,
+      });
+
+      if (response.containsKey('errors')) {
+        promoCodeError = response['errors']['promo_code'][0];
+      } else {
+        isPromoCodeValid = true;
+        promoCodeError = null;
+        coupon = CouponModel.fromJson(response['data']['coupon']);
+      }
+    } catch (e) {
+      promoCodeError = "Something went wrong";
+    } finally {
+      rebuildUi();
+      setBusy(false);
+    }
+  }
+
   // bool applePay = false;
   // bool googlePay = false;
 
@@ -217,7 +257,7 @@ class CheckoutViewModel extends BaseViewModel {
         "rental_date": DateFormat('yyyy-MM-dd').format(DateTime.now()),
         "drop_off_time": dropOffTimeController.text,
         "instructions": specialInstructionController.text,
-        "promo_code": promoCodeController.text,
+        "promo_code": isPromoCodeValid ? coupon?.code : null,
         "insurance_option": insuranceOne ? "3" : "7",
         "damage_waiver": damageWaiver,
         "payment_method": "stripe",

@@ -388,17 +388,98 @@ class CheckoutView extends StackedView<CheckoutViewModel> {
                       color: AppColors.textPrimary),
                 ),
                 SizedBox(height: 10.h),
-                MainTextField(
-                  label: "Apply Promo Code",
-                  controller: viewModel.promoCodeController,
-                  labelColor: AppColors.textHint,
-                  cursorColor: AppColors.primary,
-                  fillColor: AppColors.grey50,
-                  borderColor: AppColors.grey100,
-                  enabledBorderColor: AppColors.grey100,
-                  focusedBorderColor: AppColors.primary,
-                  hasSuffixIcon: false,
+                SizedBox(
+                  width: 340.w,
+                  height: 58.h,
+                  child: Row(
+                    children: [
+                      Expanded(
+                        child: SizedBox(
+                          child: TextField(
+                            controller: viewModel.promoCodeController,
+                            obscureText: false,
+                            cursorColor: AppColors.primary,
+                            style: GoogleFonts.poppins(
+                              fontSize: 14.sp,
+                              fontWeight: FontWeight.w400,
+                              color: AppColors.textPrimary,
+                            ),
+                            decoration: InputDecoration(
+                              focusColor: AppColors.primary,
+                              labelText: 'Promo Code',
+                              labelStyle: GoogleFonts.poppins(
+                                fontSize: 14.sp,
+                                fontWeight: FontWeight.w500,
+                                color: AppColors.textHint,
+                              ),
+                              suffixIcon: viewModel.isBusy
+                                  ? Container(
+                                      width: 20.w,
+                                      height: 20.h,
+                                      padding: EdgeInsets.all(10.r),
+                                      child: const CircularProgressIndicator(
+                                        color: AppColors.primary,
+                                        strokeWidth: 2,
+                                      ),
+                                    )
+                                  : viewModel.isPromoCodeValid
+                                      ? const Icon(
+                                          IconsaxPlusBold.tick_circle,
+                                          color: AppColors.success,
+                                        )
+                                      : null,
+                              filled: true,
+                              fillColor: AppColors.grey50,
+                              border: OutlineInputBorder(
+                                borderSide:
+                                    const BorderSide(color: AppColors.grey100),
+                                borderRadius: BorderRadius.circular(10.r),
+                              ),
+                              enabledBorder: OutlineInputBorder(
+                                borderSide:
+                                    const BorderSide(color: AppColors.grey100),
+                                borderRadius: BorderRadius.circular(10.r),
+                              ),
+                              focusedBorder: OutlineInputBorder(
+                                borderSide:
+                                    const BorderSide(color: AppColors.primary),
+                                borderRadius: BorderRadius.circular(10.r),
+                              ),
+                            ),
+                          ),
+                        ),
+                      ),
+                      SizedBox(width: 10.w),
+                      SizedBox(
+                        height: 52.h,
+                        child: FloatingActionButton(
+                          elevation: 0,
+                          onPressed: viewModel.validatePromoCode,
+                          backgroundColor: AppColors.primary,
+                          shape: RoundedRectangleBorder(
+                              borderRadius: BorderRadius.circular(10.r)),
+                          child: Text(
+                            "Apply",
+                            style: GoogleFonts.poppins(
+                              color: AppColors.white,
+                              fontSize: 14.sp,
+                              fontWeight: FontWeight.w500,
+                            ),
+                          ),
+                        ),
+                      )
+                    ],
+                  ),
                 ),
+                if (viewModel.promoCodeError != null)
+                  Text(
+                    viewModel.promoCodeError ?? '',
+                    style: GoogleFonts.poppins(
+                      fontSize: 12.sp,
+                      color: AppColors.error,
+                    ),
+                  ),
+
                 SizedBox(height: 20.h),
                 Text(
                   'Add Insurance',

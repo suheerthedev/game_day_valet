@@ -2,6 +2,7 @@ import 'dart:convert';
 
 import 'package:game_day_valet/app/app.locator.dart';
 import 'package:game_day_valet/config/api_config.dart';
+import 'package:game_day_valet/models/coupon_model.dart';
 import 'package:game_day_valet/models/rental_booking_model.dart';
 import 'package:game_day_valet/models/rental_status_model.dart';
 import 'package:game_day_valet/services/api_exception.dart';
@@ -78,6 +79,22 @@ class RentalService with ListenableServiceMixin {
       rethrow;
     } catch (e) {
       logger.error("Error in getting rental status: ${e.toString()}");
+      throw ApiException("Something went wrong. ${e.toString()}");
+    }
+  }
+
+  Future<dynamic> applyPromoCode(
+      String promoCode, Map<String, dynamic> body) async {
+    final url = ApiConfig.baseUrl + ApiConfig.applyPromoCodeEndPoint;
+    try {
+      final response = await _apiService.post(url, body);
+
+      return response;
+    } on ApiException catch (e) {
+      logger.error("Error in applying promo code: ${e.message}");
+      rethrow;
+    } catch (e) {
+      logger.error("Error in applying promo code: ${e.toString()}");
       throw ApiException("Something went wrong. ${e.toString()}");
     }
   }
