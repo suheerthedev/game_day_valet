@@ -281,7 +281,11 @@ class CheckoutViewModel extends BaseViewModel {
         "drop_off_time": dropOffTimeController.text,
         "instructions": specialInstructionController.text,
         "promo_code": isPromoCodeValid ? coupon?.code : null,
-        "insurance_option": insuranceOne ? "3" : "7",
+        "insurance_option": insuranceOne
+            ? "3"
+            : insuranceTwo
+                ? "7"
+                : null,
         "damage_waiver": damageWaiver,
         "payment_method": "stripe",
         "payment_status": "pending",

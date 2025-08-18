@@ -52,9 +52,24 @@ class RentalService with ListenableServiceMixin {
     }
   }
 
+  void clearData() {
+    rentalId = null;
+    _rentalStatus.value = [];
+    _rentalBooking.value = RentalBookingModel(
+      id: 0,
+      userId: 0,
+      tournamentId: 0,
+      teamName: "",
+      coachName: "",
+      fieldNumber: "",
+    );
+  }
+
   Future<dynamic> createRentalBooking(
       BuildContext context, num totalAmount, Map<String, dynamic> body) async {
     final url = ApiConfig.baseUrl + ApiConfig.bookRentalEndPoint;
+
+    clearData();
 
     try {
       final response = await _apiService.post(url, body);
@@ -72,9 +87,10 @@ class RentalService with ListenableServiceMixin {
       final isPaymentSuccess = await _handleStripePayment(context, totalAmount);
 
       if (isPaymentSuccess) {
-        await initializePusher();
-        await _sharedPreferencesService.setInt('rental_id', rentalBooking!.id);
-        rentalId = rentalBooking!.id;
+        await initializePusher(isNewRental: true);
+        await _sharedPreferencesService.setInt(
+            'rental_id', _rentalBooking.value.id);
+        rentalId = _rentalBooking.value.id;
         await getRentalStatus();
       }
 
@@ -143,15 +159,28 @@ class RentalService with ListenableServiceMixin {
     }
   }
 
-  Future<void> initializePusher() async {
-    logger.info("Initializing Pusher For Rental");
+  Future<void> initializePusher({bool isNewRental = false}) async {
+    int tempId;
+
+    if (isNewRental) {
+      tempId = rentalBooking?.id ?? 0;
+      if (_isPusherInitialized) {
+        _isPusherInitialized = false;
+        await _pusherService
+            .unsubscribeFromChannel('rental-${rentalId.toString()}');
+      }
+    } else {
+      tempId = rentalId ?? 0;
+    }
+
+    logger.info("Initializing Pusher For Rental: $tempId");
     if (_isPusherInitialized) return;
 
     try {
       await _pusherService.initialize();
 
-      if (rentalBooking?.id != null) {
-        await subscribeToChannel('rental-${rentalId!.toString()}');
+      if (tempId != 0) {
+        await subscribeToChannel('rental-${tempId.toString()}');
       }
       _isPusherInitialized = true;
       notifyListeners();

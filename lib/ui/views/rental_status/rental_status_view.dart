@@ -247,55 +247,54 @@ class RentalStatusView extends StackedView<RentalStatusViewModel> {
             //     label: 'Special Instructions',
             //     controller: viewModel.specialInstructionsController),
             SizedBox(height: 10.h),
-            viewModel.rentalStatus.last.status == 'delivered'
-                ? Text(
-                    'Delivery Photos',
-                    style: GoogleFonts.poppins(
-                        fontSize: 16.sp,
-                        fontWeight: FontWeight.w600,
-                        color: AppColors.primary),
-                  )
-                : const SizedBox.shrink(),
-
-            SizedBox(height: 10.h),
-            GridView.builder(
-              shrinkWrap: true,
-              physics: const NeverScrollableScrollPhysics(),
-              gridDelegate: SliverGridDelegateWithFixedCrossAxisCount(
-                  crossAxisCount: 2,
-                  childAspectRatio: 123.w / 106.h,
-                  crossAxisSpacing: 10.w,
-                  mainAxisSpacing: 10.h,
-                  mainAxisExtent: 106.h),
-              itemCount: viewModel.rentalStatus.last.imageUrls?.length ?? 10,
-              itemBuilder: (context, index) {
-                return Container(
-                  width: 123.w,
-                  height: 106.h,
-                  decoration: BoxDecoration(
-                    borderRadius: BorderRadius.circular(10.r),
-                    border: Border.all(
-                      color: AppColors.grey300,
-                      width: 1.w,
+            if (viewModel.rentalStatus.last.status == 'delivered') ...[
+              Text(
+                'Delivery Photos',
+                style: GoogleFonts.poppins(
+                    fontSize: 16.sp,
+                    fontWeight: FontWeight.w600,
+                    color: AppColors.primary),
+              ),
+              SizedBox(height: 10.h),
+              GridView.builder(
+                shrinkWrap: true,
+                physics: const NeverScrollableScrollPhysics(),
+                gridDelegate: SliverGridDelegateWithFixedCrossAxisCount(
+                    crossAxisCount: 2,
+                    childAspectRatio: 123.w / 106.h,
+                    crossAxisSpacing: 10.w,
+                    mainAxisSpacing: 10.h,
+                    mainAxisExtent: 106.h),
+                itemCount: viewModel.rentalStatus.last.imageUrls?.length ?? 0,
+                itemBuilder: (context, index) {
+                  return Container(
+                    width: 123.w,
+                    height: 106.h,
+                    decoration: BoxDecoration(
+                      borderRadius: BorderRadius.circular(10.r),
+                      border: Border.all(
+                        color: AppColors.grey300,
+                        width: 1.w,
+                      ),
                     ),
-                  ),
-                  clipBehavior: Clip.hardEdge,
-                  child: CachedNetworkImage(
-                    imageUrl:
-                        viewModel.rentalStatus.last.imageUrls?[index] ?? '',
-                    fit: BoxFit.cover,
-                    placeholder: (context, url) => const Center(
-                      child: CircularProgressIndicator(),
+                    clipBehavior: Clip.hardEdge,
+                    child: CachedNetworkImage(
+                      imageUrl:
+                          viewModel.rentalStatus.last.imageUrls?[index] ?? '',
+                      fit: BoxFit.cover,
+                      placeholder: (context, url) => const Center(
+                        child: CircularProgressIndicator(),
+                      ),
+                      errorWidget: (context, url, error) => Icon(
+                        IconsaxPlusLinear.image,
+                        color: AppColors.textHint,
+                        size: 24.sp,
+                      ),
                     ),
-                    errorWidget: (context, url, error) => Icon(
-                      IconsaxPlusLinear.image,
-                      color: AppColors.textHint,
-                      size: 24.sp,
-                    ),
-                  ),
-                );
-              },
-            ),
+                  );
+                },
+              ),
+            ],
             // SizedBox(height: 10.h),
             // Text(
             //   'Give Review',
