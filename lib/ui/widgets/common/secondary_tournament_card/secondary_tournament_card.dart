@@ -26,6 +26,7 @@ class SecondaryTournamentCard
     Widget? child,
   ) {
     return Container(
+      width: 338.w,
       height: 201.h,
       margin: EdgeInsets.only(right: 10.w),
       decoration: BoxDecoration(
@@ -109,11 +110,17 @@ class SecondaryTournamentCard
                   Icon(IconsaxPlusLinear.location,
                       size: 12.w, color: AppColors.textPrimary),
                   SizedBox(width: 4.w),
-                  Text(tournament.name ?? '',
-                      style: GoogleFonts.poppins(
-                          fontSize: 14.sp,
-                          fontWeight: FontWeight.w500,
-                          color: AppColors.textPrimary)),
+                  SizedBox(
+                    width: 200.w,
+                    child: Text(tournament.name ?? '',
+                        maxLines: 2,
+                        overflow: TextOverflow.ellipsis,
+                        softWrap: true,
+                        style: GoogleFonts.poppins(
+                            fontSize: 14.sp,
+                            fontWeight: FontWeight.w500,
+                            color: AppColors.textPrimary)),
+                  ),
                 ],
               ),
               Row(
