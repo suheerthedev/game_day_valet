@@ -134,8 +134,10 @@ class AddRentalsView extends StackedView<AddRentalsViewModel> {
                                                   viewModel
                                                       .toggleBundle(bundle);
                                                 }),
-                                            SizedBox(
-                                              width: 200.w,
+                                            ConstrainedBox(
+                                              constraints: BoxConstraints(
+                                                maxWidth: 200.w,
+                                              ),
                                               child: Text(
                                                 bundle.totalItems ?? '',
                                                 maxLines: 2,
