@@ -9,7 +9,7 @@ class ChatModel {
   final String? createdAt;
   final String? updatedAt;
   final List<MessageModel>? messages;
-  final UserModel? responder;
+  UserModel? responder;
 
   ChatModel({
     required this.id,

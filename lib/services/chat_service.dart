@@ -98,6 +98,9 @@ class ChatService with ListenableServiceMixin {
           .messages
           ?.add(MessageModel.fromJson(response['message']));
 
+      logger.info(
+          "Messages: ${_conversations.value.where((element) => element.id == conversationId).first.messages}");
+
       _messages.value.insert(0, MessageModel.fromJson(response['message']));
       return MessageModel.fromJson(response['message']);
     } on ApiException catch (e) {
@@ -202,6 +205,13 @@ class ChatService with ListenableServiceMixin {
           .first
           .messages
           ?.add(MessageModel.fromJson(data['message']));
+
+      //i want to udpate the response of the conversation when i recieve a message
+      _conversations.value
+          .where((conversation) =>
+              conversation.id == data['message']['conversation_id'])
+          .first
+          .responder = UserModel.fromJson(data['message']['sender']);
 
       _messages.value.insert(0, MessageModel.fromJson(data['message']));
 
