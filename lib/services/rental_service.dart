@@ -5,6 +5,7 @@ import 'package:game_day_valet/app/app.locator.dart';
 import 'package:game_day_valet/config/api_config.dart';
 import 'package:game_day_valet/models/rental_booking_model.dart';
 import 'package:game_day_valet/models/rental_status_model.dart';
+import 'package:game_day_valet/models/settings_item_model.dart';
 import 'package:game_day_valet/services/api_exception.dart';
 import 'package:game_day_valet/services/api_service.dart';
 import 'package:game_day_valet/services/logger_service.dart';
@@ -37,12 +38,19 @@ class RentalService with ListenableServiceMixin {
     fieldNumber: "",
   ));
 
+  final ReactiveValue<List<SettingsItemModel>> _insuranceOptions =
+      ReactiveValue<List<SettingsItemModel>>([]);
+  final ReactiveValue<List<SettingsItemModel>> _damageWaiverOptions =
+      ReactiveValue<List<SettingsItemModel>>([]);
+
   RentalService() {
     listenToReactiveValues([_rentalStatus, _rentalBooking]);
   }
 
   RentalBookingModel? get rentalBooking => _rentalBooking.value;
   List<RentalStatusModel> get rentalStatus => _rentalStatus.value;
+  List<SettingsItemModel> get insuranceOptions => _insuranceOptions.value;
+  List<SettingsItemModel> get damageWaiverOptions => _damageWaiverOptions.value;
 
   Future<void> init() async {
     rentalId = await _sharedPreferencesService.getInt('rental_id');
@@ -279,5 +287,27 @@ class RentalService with ListenableServiceMixin {
   Future<void> unsubscribeFromChannel(String channelName) async {
     await _pusherService.unsubscribeFromChannel(channelName);
     notifyListeners();
+  }
+
+  Future<void> getSettingsItems() async {
+    final url = ApiConfig.baseUrl + ApiConfig.settingsItemsEndPoint;
+    logger.info("Getting settings items from: $url");
+    try {
+      final response = await _apiService.get(url);
+
+      _insuranceOptions.value = (response['insurance_options'] as List)
+          .map((e) => SettingsItemModel.fromJson(e))
+          .toList();
+
+      _damageWaiverOptions.value = (response['damage_waiver_options'] as List)
+          .map((e) => SettingsItemModel.fromJson(e))
+          .toList();
+    } on ApiException catch (e) {
+      logger.error("Error in getting settings items: ${e.message}");
+    } catch (e) {
+      logger.error("Error in getting settings items: ${e.toString()}");
+    } finally {
+      notifyListeners();
+    }
   }
 }

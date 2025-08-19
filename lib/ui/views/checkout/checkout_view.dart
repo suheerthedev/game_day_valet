@@ -487,116 +487,107 @@ class CheckoutView extends StackedView<CheckoutViewModel> {
                       ),
 
                     SizedBox(height: 20.h),
-                    Text(
-                      'Add Insurance',
-                      style: GoogleFonts.poppins(
-                          fontSize: 18.sp,
-                          fontWeight: FontWeight.w600,
-                          color: AppColors.textPrimary),
-                    ),
-                    SizedBox(height: 10.h),
-                    Row(
-                      children: [
-                        Checkbox(
-                            activeColor: AppColors.secondary,
-                            checkColor: AppColors.white,
-                            splashRadius: 0,
-                            side: BorderSide(
-                                color: AppColors.textHint, width: 1.w),
-                            shape: RoundedRectangleBorder(
-                                borderRadius:
-                                    BorderRadius.all(Radius.circular(2.r))),
-                            value: viewModel.insuranceOne,
-                            onChanged: (value) {
-                              if (viewModel.insuranceTwo == true &&
-                                  viewModel.insuranceOne == false) {
-                                viewModel.insuranceTwo = false;
-                              }
-                              viewModel.insuranceOne = value ?? false;
-                              viewModel.notifyListeners();
-                            }),
-                        Text(
-                          "3-Day Warranty – \$0.99",
-                          style: GoogleFonts.poppins(
-                              fontSize: 14.sp,
-                              fontWeight: FontWeight.w500,
-                              color: AppColors.textPrimary),
-                        ),
-                      ],
-                    ),
-                    Row(
-                      children: [
-                        Checkbox(
-                            activeColor: AppColors.secondary,
-                            checkColor: AppColors.white,
-                            splashRadius: 0,
-                            side: BorderSide(
-                                color: AppColors.textHint, width: 1.w),
-                            shape: RoundedRectangleBorder(
-                                borderRadius:
-                                    BorderRadius.all(Radius.circular(2.r))),
-                            value: viewModel.insuranceTwo,
-                            onChanged: (value) {
-                              if (viewModel.insuranceOne == true &&
-                                  viewModel.insuranceTwo == false) {
-                                viewModel.insuranceOne = false;
-                              }
-                              viewModel.insuranceTwo = value ?? false;
-                              viewModel.notifyListeners();
-                            }),
-                        Expanded(
-                          child: Text(
-                            "7-Day Warranty – \$1.5 (Recommended)",
-                            softWrap: true,
-                            style: GoogleFonts.poppins(
-                                fontSize: 14.sp,
-                                fontWeight: FontWeight.w500,
-                                color: AppColors.textPrimary),
-                          ),
-                        ),
-                      ],
-                    ),
+                    if (viewModel.insuranceOptions.isNotEmpty) ...[
+                      Text(
+                        'Add Insurance',
+                        style: GoogleFonts.poppins(
+                            fontSize: 18.sp,
+                            fontWeight: FontWeight.w600,
+                            color: AppColors.textPrimary),
+                      ),
+                      SizedBox(height: 10.h),
+                      ListView.builder(
+                        shrinkWrap: true,
+                        physics: const NeverScrollableScrollPhysics(),
+                        itemCount: viewModel.insuranceOptions.length,
+                        itemBuilder: (context, index) {
+                          final insurance = viewModel.insuranceOptions[index];
+                          return Row(
+                            children: [
+                              Checkbox(
+                                  activeColor: AppColors.secondary,
+                                  checkColor: AppColors.white,
+                                  splashRadius: 0,
+                                  side: BorderSide(
+                                      color: AppColors.textHint, width: 1.w),
+                                  shape: RoundedRectangleBorder(
+                                      borderRadius: BorderRadius.all(
+                                          Radius.circular(2.r))),
+                                  value: insurance.isSelected,
+                                  onChanged: (value) {
+                                    viewModel.insuranceOptions
+                                        .forEach((element) {
+                                      element.isSelected = false;
+                                    });
+
+                                    insurance.isSelected = value ?? false;
+                                    viewModel.notifyListeners();
+                                  }),
+                              Expanded(
+                                child: Text(
+                                  "${insurance.label} – \$${insurance.price}",
+                                  softWrap: true,
+                                  style: GoogleFonts.poppins(
+                                      fontSize: 14.sp,
+                                      fontWeight: FontWeight.w500,
+                                      color: AppColors.textPrimary),
+                                ),
+                              ),
+                            ],
+                          );
+                        },
+                      ),
+                    ],
+
                     SizedBox(height: 20.h),
-                    Text(
-                      'Damage Waiver',
-                      style: GoogleFonts.poppins(
-                          fontSize: 18.sp,
-                          fontWeight: FontWeight.w600,
-                          color: AppColors.textPrimary),
-                    ),
-                    Text(
-                      'You have to pay \$20 if any gear get damaged.',
-                      style: GoogleFonts.poppins(
-                          fontSize: 10.sp,
-                          fontWeight: FontWeight.w400,
-                          color: AppColors.textHint),
-                    ),
-                    SizedBox(height: 10.h),
-                    Row(
-                      children: [
-                        Checkbox(
-                            activeColor: AppColors.secondary,
-                            checkColor: AppColors.white,
-                            splashRadius: 0,
-                            side: BorderSide(
-                                color: AppColors.textHint, width: 1.w),
-                            shape: RoundedRectangleBorder(
-                                borderRadius:
-                                    BorderRadius.all(Radius.circular(2.r))),
-                            value: viewModel.damageWaiver,
-                            onChanged: (value) {
-                              viewModel.damageWaiver = value ?? false;
-                              viewModel.notifyListeners();
-                            }),
-                        Text(
-                          "Damage waiver for \$20",
-                          style: GoogleFonts.poppins(
-                              fontSize: 14.sp,
-                              fontWeight: FontWeight.w500,
-                              color: AppColors.textPrimary),
-                        ),
-                      ],
-                    ),
+                    if (viewModel.damageWaiverOptions.isNotEmpty) ...[
+                      Text(
+                        'Damage Waiver',
+                        style: GoogleFonts.poppins(
+                            fontSize: 18.sp,
+                            fontWeight: FontWeight.w600,
+                            color: AppColors.textPrimary),
+                      ),
+                      SizedBox(height: 10.h),
+                      ListView.builder(
+                        shrinkWrap: true,
+                        physics: const NeverScrollableScrollPhysics(),
+                        itemCount: viewModel.damageWaiverOptions.length,
+                        itemBuilder: (context, index) {
+                          final option = viewModel.damageWaiverOptions[index];
+                          return Row(
+                            children: [
+                              Checkbox(
+                                  activeColor: AppColors.secondary,
+                                  checkColor: AppColors.white,
+                                  splashRadius: 0,
+                                  side: BorderSide(
+                                      color: AppColors.textHint, width: 1.w),
+                                  shape: RoundedRectangleBorder(
+                                      borderRadius: BorderRadius.all(
+                                          Radius.circular(2.r))),
+                                  value: option.isSelected,
+                                  onChanged: (value) {
+                                    viewModel.damageWaiverOptions
+                                        .forEach((element) {
+                                      element.isSelected = false;
+                                    });
+
+                                    option.isSelected = value ?? false;
+                                    viewModel.notifyListeners();
+                                  }),
+                              Text(
+                                option.label,
+                                style: GoogleFonts.poppins(
+                                    fontSize: 14.sp,
+                                    fontWeight: FontWeight.w500,
+                                    color: AppColors.textPrimary),
+                              ),
+                            ],
+                          );
+                        },
+                      ),
+                    ],
 
                     // SizedBox(height: 20.h),
                     // Text(

@@ -1,7 +1,7 @@
 class SettingsItemModel {
   final int id;
   final String label;
-  final String price;
+  final num price;
   bool isSelected;
 
   SettingsItemModel({

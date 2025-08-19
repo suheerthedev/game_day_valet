@@ -8,6 +8,7 @@ import 'package:game_day_valet/models/item_model.dart';
 import 'package:game_day_valet/services/api_exception.dart';
 import 'package:game_day_valet/services/api_service.dart';
 import 'package:game_day_valet/services/logger_service.dart';
+import 'package:game_day_valet/services/rental_service.dart';
 import 'package:stacked/stacked.dart';
 import 'package:stacked_services/stacked_services.dart';
 
@@ -15,6 +16,7 @@ class AddRentalsViewModel extends BaseViewModel {
   final _apiService = locator<ApiService>();
   final _navigationService = locator<NavigationService>();
   final _snackbarService = locator<SnackbarService>();
+  final _rentalService = locator<RentalService>();
 
   TextEditingController searchController = TextEditingController();
 
@@ -80,6 +82,7 @@ class AddRentalsViewModel extends BaseViewModel {
     try {
       await getItems();
       await getBundles();
+      await getSettingsItems();
     } catch (e) {
       logger.error("Error initializing: $e");
       _snackbarService.showCustomSnackBar(
@@ -89,6 +92,24 @@ class AddRentalsViewModel extends BaseViewModel {
     } finally {
       rebuildUi();
       setBusy(false);
+    }
+  }
+
+  Future<void> getSettingsItems() async {
+    try {
+      await _rentalService.getSettingsItems();
+    } on ApiException catch (e) {
+      logger.error("Error getting settings items: ${e.message}");
+      _snackbarService.showCustomSnackBar(
+        message: e.message,
+        variant: SnackbarType.error,
+      );
+    } catch (e) {
+      logger.error("Error getting settings items: $e");
+      _snackbarService.showCustomSnackBar(
+        message: "Something went wrong",
+        variant: SnackbarType.error,
+      );
     }
   }
 

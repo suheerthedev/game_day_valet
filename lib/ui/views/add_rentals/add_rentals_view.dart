@@ -62,7 +62,7 @@ class AddRentalsView extends StackedView<AddRentalsViewModel> {
                             gridDelegate:
                                 SliverGridDelegateWithFixedCrossAxisCount(
                               crossAxisCount: 2,
-                              childAspectRatio: 0.7,
+                              childAspectRatio: 0.6,
                               mainAxisSpacing: 10.h,
                               crossAxisSpacing: 20.w,
                             ),
@@ -134,12 +134,19 @@ class AddRentalsView extends StackedView<AddRentalsViewModel> {
                                                   viewModel
                                                       .toggleBundle(bundle);
                                                 }),
-                                            Text(
-                                              bundle.totalItems ?? '',
-                                              style: GoogleFonts.poppins(
-                                                  fontSize: 14.sp,
-                                                  fontWeight: FontWeight.w500,
-                                                  color: AppColors.textPrimary),
+                                            SizedBox(
+                                              width: 200.w,
+                                              child: Text(
+                                                bundle.totalItems ?? '',
+                                                maxLines: 2,
+                                                softWrap: true,
+                                                overflow: TextOverflow.ellipsis,
+                                                style: GoogleFonts.poppins(
+                                                    fontSize: 14.sp,
+                                                    fontWeight: FontWeight.w500,
+                                                    color:
+                                                        AppColors.textPrimary),
+                                              ),
                                             ),
                                           ],
                                         ),
@@ -167,20 +174,17 @@ class AddRentalsView extends StackedView<AddRentalsViewModel> {
                         ],
                       ),
                     ),
-                    Align(
-                      alignment: Alignment.bottomCenter,
-                      child: Padding(
-                        padding: EdgeInsets.only(bottom: 20.h),
-                        child: MainButton(
-                          text: 'Proceed to Checkout',
-                          onTap: viewModel.proceedToCheckout,
-                          isDisabled: viewModel.isProceedToCheckoutDisabled,
-                        ),
-                      ),
-                    ),
                   ],
                 ),
               ),
+      ),
+      bottomNavigationBar: Padding(
+        padding: EdgeInsets.symmetric(horizontal: 25.w, vertical: 20.h),
+        child: MainButton(
+          text: 'Proceed to Checkout',
+          onTap: viewModel.proceedToCheckout,
+          isDisabled: viewModel.isProceedToCheckoutDisabled,
+        ),
       ),
     );
   }

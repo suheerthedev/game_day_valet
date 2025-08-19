@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_chat_core/flutter_chat_core.dart';
 import 'package:game_day_valet/core/enums/snackbar_type.dart';
 import 'package:game_day_valet/models/coupon_model.dart';
+import 'package:game_day_valet/models/settings_item_model.dart';
 import 'package:game_day_valet/models/user_model.dart';
 import 'package:game_day_valet/services/rental_service.dart';
 import 'package:game_day_valet/services/user_service.dart';
@@ -20,6 +21,11 @@ class CheckoutViewModel extends BaseViewModel {
   final _userService = locator<UserService>();
 
   UserModel? get user => _userService.currentUser;
+
+  List<SettingsItemModel> get insuranceOptions =>
+      _rentalService.insuranceOptions;
+  List<SettingsItemModel> get damageWaiverOptions =>
+      _rentalService.damageWaiverOptions;
 
   TextEditingController teamNameController = TextEditingController();
   TextEditingController coachNameController = TextEditingController();
@@ -101,9 +107,6 @@ class CheckoutViewModel extends BaseViewModel {
 
   bool isLoading = false;
 
-  bool insuranceOne = false;
-  bool insuranceTwo = false;
-  bool damageWaiver = false;
   bool stripe = false;
   bool isPromoCodeValid = false;
   String? promoCodeError;
@@ -267,30 +270,34 @@ class CheckoutViewModel extends BaseViewModel {
       return;
     }
 
+    final body = {
+      "tournament_id": tournamentId.toString(),
+      "team_name": teamNameController.text,
+      "coach_name": coachNameController.text,
+      "field_number": fieldNumberController.text,
+      "items": formatItems(items),
+      "bundles": formatBundles(bundles),
+      "rental_date": DateFormat('yyyy-MM-dd').format(DateTime.now()),
+      "drop_off_time": dropOffTimeController.text,
+      "instructions": specialInstructionController.text,
+      "promo_code": isPromoCodeValid ? coupon?.code : null,
+      "insurance_option":
+          insuranceOptions.where((insurance) => insurance.isSelected).first.id,
+      "damage_waiver": damageWaiverOptions
+          .where((damageWaiver) => damageWaiver.isSelected)
+          .first
+          .id,
+      "payment_method": "stripe",
+      "payment_status": "pending",
+      "total_amount": totalAmount.toStringAsFixed(2),
+    };
+
+    logger.info("Booking rental body: $body");
+
     try {
       isLoading = true;
       rebuildUi();
-      await _rentalService.createRentalBooking(context, totalAmount, {
-        "tournament_id": tournamentId.toString(),
-        "team_name": teamNameController.text,
-        "coach_name": coachNameController.text,
-        "field_number": fieldNumberController.text,
-        "items": formatItems(items),
-        "bundles": formatBundles(bundles),
-        "rental_date": DateFormat('yyyy-MM-dd').format(DateTime.now()),
-        "drop_off_time": dropOffTimeController.text,
-        "instructions": specialInstructionController.text,
-        "promo_code": isPromoCodeValid ? coupon?.code : null,
-        "insurance_option": insuranceOne
-            ? "3"
-            : insuranceTwo
-                ? "7"
-                : null,
-        "damage_waiver": damageWaiver,
-        "payment_method": "stripe",
-        "payment_status": "pending",
-        "total_amount": totalAmount.toStringAsFixed(2),
-      });
+      await _rentalService.createRentalBooking(context, totalAmount, body);
     } on ApiException catch (e) {
       _snackbarService.showCustomSnackBar(
           message: e.message,

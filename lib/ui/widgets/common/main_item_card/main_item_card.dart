@@ -50,14 +50,18 @@ class MainItemCard extends StackedView<MainItemCardModel> {
         Row(
           mainAxisAlignment: MainAxisAlignment.spaceBetween,
           children: [
-            Text(
-              item.name ?? '',
-              maxLines: 1,
-              overflow: TextOverflow.ellipsis,
-              style: GoogleFonts.poppins(
-                  fontSize: 16.sp,
-                  fontWeight: FontWeight.w600,
-                  color: AppColors.textPrimary),
+            SizedBox(
+              width: 100.w,
+              child: Text(
+                item.name ?? '',
+                maxLines: 2,
+                softWrap: true,
+                overflow: TextOverflow.ellipsis,
+                style: GoogleFonts.poppins(
+                    fontSize: 16.sp,
+                    fontWeight: FontWeight.w600,
+                    color: AppColors.textPrimary),
+              ),
             ),
             Text(
               "\$ ${item.price}",
