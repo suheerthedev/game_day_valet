@@ -49,7 +49,7 @@ class MainTournamentCard extends StackedView<MainTournamentCardModel> {
               child: Stack(children: [
                 CachedNetworkImage(
                   imageUrl: tournament.image ?? 'assets/images/dummy.jpg',
-                  fit: BoxFit.cover,
+                  fit: BoxFit.contain,
                   width: 339.w,
                   height: 319.h,
                   placeholder: (context, url) => const Center(
@@ -61,7 +61,7 @@ class MainTournamentCard extends StackedView<MainTournamentCardModel> {
                 Container(
                   width: 339.w,
                   height: 319.h,
-                  color: AppColors.primary.withOpacity(0.4),
+                  color: AppColors.primary.withOpacity(0.6),
                 ),
                 Center(
                   child: InkWell(

@@ -1,3 +1,4 @@
+import 'package:cached_network_image/cached_network_image.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:game_day_valet/models/tournament_model.dart';
@@ -47,16 +48,21 @@ class SecondaryTournamentCard
               ),
               clipBehavior: Clip.antiAlias,
               child: Stack(children: [
-                Image.asset(
-                  'assets/images/dummy.jpg',
-                  fit: BoxFit.cover,
+                CachedNetworkImage(
+                  imageUrl: tournament.image ?? 'assets/images/dummy.jpg',
+                  fit: BoxFit.contain,
                   width: 339.w,
                   height: 319.h,
+                  placeholder: (context, url) => const Center(
+                    child: CircularProgressIndicator(),
+                  ),
+                  errorWidget: (context, url, error) =>
+                      const Icon(IconsaxPlusLinear.image),
                 ),
                 Container(
                   width: 339.w,
                   height: 319.h,
-                  color: AppColors.primary.withOpacity(0.4),
+                  color: AppColors.primary.withOpacity(0.6),
                 ),
                 Center(
                   child: InkWell(
