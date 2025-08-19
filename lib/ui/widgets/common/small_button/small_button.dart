@@ -55,12 +55,20 @@ class SmallButton extends StackedView<SmallButtonModel> {
                         height: 20.h,
                         child: const CircularProgressIndicator(),
                       )
-                    : Text(
-                        title,
-                        style: GoogleFonts.inter(
-                          color: textColor,
-                          fontWeight: FontWeight.w500,
-                          fontSize: 16.sp,
+                    : ConstrainedBox(
+                        constraints: BoxConstraints(
+                          maxWidth: 100.w,
+                        ),
+                        child: Text(
+                          title,
+                          maxLines: 1,
+                          overflow: TextOverflow.ellipsis,
+                          softWrap: true,
+                          style: GoogleFonts.inter(
+                            color: textColor,
+                            fontWeight: FontWeight.w500,
+                            fontSize: 16.sp,
+                          ),
                         ),
                       ),
               ],

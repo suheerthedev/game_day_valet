@@ -34,11 +34,19 @@ class HomeView extends StackedView<HomeViewModel> {
                 child: Row(
                   mainAxisSize: MainAxisSize.min,
                   children: [
-                    Text('Select City',
-                        style: GoogleFonts.poppins(
-                            fontSize: 14.sp,
-                            fontWeight: FontWeight.w700,
-                            color: AppColors.textPrimary)),
+                    ConstrainedBox(
+                      constraints: BoxConstraints(
+                        maxWidth: 100.w,
+                      ),
+                      child: Text('Select City',
+                          maxLines: 1,
+                          overflow: TextOverflow.ellipsis,
+                          softWrap: true,
+                          style: GoogleFonts.poppins(
+                              fontSize: 14.sp,
+                              fontWeight: FontWeight.w700,
+                              color: AppColors.textPrimary)),
+                    ),
                     const SizedBox(width: 4),
                     const Icon(Icons.keyboard_arrow_down, size: 18),
                   ],
@@ -64,12 +72,17 @@ class HomeView extends StackedView<HomeViewModel> {
                               color: AppColors.textSecondary)),
                     );
                   }
-                  return Text(
-                    snap.data ?? 'Unknown',
-                    style: GoogleFonts.poppins(
-                        fontSize: 14.sp,
-                        fontWeight: FontWeight.w700,
-                        color: AppColors.textSecondary),
+                  return ConstrainedBox(
+                    constraints: BoxConstraints(
+                      maxWidth: 200.w,
+                    ),
+                    child: Text(
+                      snap.data ?? 'Unknown',
+                      style: GoogleFonts.poppins(
+                          fontSize: 14.sp,
+                          fontWeight: FontWeight.w700,
+                          color: AppColors.textSecondary),
+                    ),
                   );
                 },
               ),
@@ -138,7 +151,7 @@ class HomeView extends StackedView<HomeViewModel> {
                                                       '${viewModel.selectedSport} Tournaments',
                                                       style:
                                                           GoogleFonts.poppins(
-                                                              fontSize: 21,
+                                                              fontSize: 21.sp,
                                                               fontWeight:
                                                                   FontWeight
                                                                       .w600,
@@ -426,14 +439,24 @@ class HomeView extends StackedView<HomeViewModel> {
                                                     MainAxisAlignment
                                                         .spaceBetween,
                                                 children: [
-                                                  Text(
-                                                    sport.name ?? '',
-                                                    style: GoogleFonts.poppins(
-                                                      fontSize: 16.sp,
-                                                      fontWeight:
-                                                          FontWeight.w500,
-                                                      color:
-                                                          AppColors.textPrimary,
+                                                  ConstrainedBox(
+                                                    constraints: BoxConstraints(
+                                                      maxWidth: 0.8.sw,
+                                                    ),
+                                                    child: Text(
+                                                      sport.name ?? '',
+                                                      maxLines: 1,
+                                                      overflow:
+                                                          TextOverflow.ellipsis,
+                                                      softWrap: true,
+                                                      style:
+                                                          GoogleFonts.poppins(
+                                                        fontSize: 16.sp,
+                                                        fontWeight:
+                                                            FontWeight.w500,
+                                                        color: AppColors
+                                                            .textPrimary,
+                                                      ),
                                                     ),
                                                   ),
                                                   if (isSelected)

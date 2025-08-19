@@ -40,6 +40,7 @@ class MainSearchBar extends StackedView<MainSearchBarModel> {
         onSubmitted: onSubmitted,
         textInputAction: TextInputAction.search,
         cursorColor: AppColors.primary,
+        clipBehavior: Clip.hardEdge,
         decoration: InputDecoration(
           hintText: hintText,
           hintStyle: GoogleFonts.poppins(
