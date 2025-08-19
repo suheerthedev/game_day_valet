@@ -73,6 +73,24 @@ class RentalService with ListenableServiceMixin {
     );
   }
 
+  Future<void> reset() async {
+    try {
+      if (_isPusherInitialized) {
+        final int currentRentalId = rentalId ?? 0;
+        if (currentRentalId != 0) {
+          await _pusherService
+              .unsubscribeFromChannel('rental-${currentRentalId.toString()}');
+        }
+        _isPusherInitialized = false;
+      }
+    } catch (e) {
+      logger.error("Error resetting RentalService: $e");
+    } finally {
+      clearData();
+      notifyListeners();
+    }
+  }
+
   Future<dynamic> createRentalBooking(
       BuildContext context, num totalAmount, Map<String, dynamic> body) async {
     final url = ApiConfig.baseUrl + ApiConfig.rentalEndPoint;

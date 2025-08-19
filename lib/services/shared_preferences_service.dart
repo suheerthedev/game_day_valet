@@ -111,8 +111,7 @@ class SharedPreferencesService {
     return prefs.remove(key);
   }
 
-  Future<bool> clear() async {
-    final prefs = _prefs;
-    return prefs.clear();
+  Future<void> clear() async {
+    _prefs.clear();
   }
 }

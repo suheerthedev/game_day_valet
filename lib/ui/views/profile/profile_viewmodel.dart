@@ -2,6 +2,7 @@ import 'package:game_day_valet/app/app.locator.dart';
 import 'package:game_day_valet/app/app.router.dart';
 import 'package:game_day_valet/models/user_model.dart';
 import 'package:game_day_valet/services/secure_storage_service.dart';
+import 'package:game_day_valet/services/rental_service.dart';
 import 'package:game_day_valet/services/shared_preferences_service.dart';
 import 'package:game_day_valet/services/user_service.dart';
 import 'package:stacked/stacked.dart';
@@ -12,6 +13,7 @@ class ProfileViewModel extends ReactiveViewModel {
   final _userService = locator<UserService>();
   final _secureStorageService = locator<SecureStorageService>();
   final _sharedPreferencesService = locator<SharedPreferencesService>();
+  final _rentalService = locator<RentalService>();
 
   UserModel? get currentUser => _userService.currentUser;
 
@@ -27,6 +29,9 @@ class ProfileViewModel extends ReactiveViewModel {
     isLoggingOut = true;
     rebuildUi();
     await Future.delayed(const Duration(seconds: 2));
+    // Reset rental subscriptions/state and remove any persisted rental id
+    await _rentalService.reset();
+    await _sharedPreferencesService.remove('rental_id');
     await _secureStorageService.deleteToken();
     await _sharedPreferencesService.clear();
     _userService.clearUser();
