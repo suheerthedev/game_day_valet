@@ -303,12 +303,18 @@ Account""",
                                           size: 24.sp,
                                           color: AppColors.primary),
                                       SizedBox(width: 10.w),
-                                      Text(
-                                        "Continue with Google",
-                                        style: GoogleFonts.poppins(
-                                            fontSize: 16.sp,
-                                            fontWeight: FontWeight.w500,
-                                            color: AppColors.primary),
+                                      SizedBox(
+                                        width: 200.w,
+                                        child: Text(
+                                          "Continue with Google",
+                                          maxLines: 1,
+                                          overflow: TextOverflow.ellipsis,
+                                          softWrap: true,
+                                          style: GoogleFonts.poppins(
+                                              fontSize: 16.sp,
+                                              fontWeight: FontWeight.w500,
+                                              color: AppColors.primary),
+                                        ),
                                       ),
                                     ],
                                   ),
