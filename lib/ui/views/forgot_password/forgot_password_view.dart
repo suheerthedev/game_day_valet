@@ -67,38 +67,6 @@ Password""",
                                 color: AppColors.error,
                               ),
                             ),
-                          if (viewModel.generalError != null)
-                            Padding(
-                              padding: EdgeInsets.only(top: 8.h, bottom: 8.h),
-                              child: Container(
-                                padding: EdgeInsets.all(10.w),
-                                decoration: BoxDecoration(
-                                  color: AppColors.error.withOpacity(0.1),
-                                  borderRadius: BorderRadius.circular(8.r),
-                                ),
-                                child: Row(
-                                  crossAxisAlignment: CrossAxisAlignment.start,
-                                  mainAxisAlignment: MainAxisAlignment.center,
-                                  children: [
-                                    Icon(
-                                      Icons.error_outline,
-                                      color: AppColors.error,
-                                      size: 16.sp,
-                                    ),
-                                    SizedBox(width: 8.w),
-                                    Expanded(
-                                      child: Text(
-                                        viewModel.generalError!,
-                                        style: GoogleFonts.poppins(
-                                          color: AppColors.error,
-                                          fontSize: 14.sp,
-                                        ),
-                                      ),
-                                    ),
-                                  ],
-                                ),
-                              ),
-                            ),
                           SizedBox(height: 30.h),
                           MainButton(
                               text: "Done",
