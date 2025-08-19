@@ -94,13 +94,14 @@ class RentalService with ListenableServiceMixin {
 
       final isPaymentSuccess = await _handleStripePayment(context, totalAmount);
 
+      await initializePusher(isNewRental: true);
+      await _sharedPreferencesService.setInt(
+          'rental_id', _rentalBooking.value.id);
+      rentalId = _rentalBooking.value.id;
+      await getRentalStatus();
+
       if (isPaymentSuccess) {
         await _updatePaymentStatus(_rentalBooking.value.id, 'completed');
-        await initializePusher(isNewRental: true);
-        await _sharedPreferencesService.setInt(
-            'rental_id', _rentalBooking.value.id);
-        rentalId = _rentalBooking.value.id;
-        await getRentalStatus();
       }
 
       notifyListeners();
@@ -121,9 +122,7 @@ class RentalService with ListenableServiceMixin {
       context: context,
     );
 
-    if (isPaymentSuccess) {
-      _navigationService.popUntil((route) => route.isFirst);
-    }
+    _navigationService.popUntil((route) => route.isFirst);
 
     return isPaymentSuccess;
   }

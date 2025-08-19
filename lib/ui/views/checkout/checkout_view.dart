@@ -479,8 +479,8 @@ class CheckoutView extends StackedView<CheckoutViewModel> {
                         ),
                       ),
 
-                    SizedBox(height: 20.h),
                     if (viewModel.insuranceOptions.isNotEmpty) ...[
+                      SizedBox(height: 20.h),
                       Text(
                         'Add Insurance',
                         style: GoogleFonts.poppins(
@@ -526,8 +526,8 @@ class CheckoutView extends StackedView<CheckoutViewModel> {
                       ),
                     ],
 
-                    SizedBox(height: 20.h),
                     if (viewModel.damageWaiverOptions.isNotEmpty) ...[
+                      SizedBox(height: 20.h),
                       Text(
                         'Damage Waiver',
                         style: GoogleFonts.poppins(
