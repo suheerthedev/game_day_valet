@@ -65,8 +65,13 @@ class HomeViewModel extends BaseViewModel {
     await getSports();
   }
 
+  bool isSportsLoading = false;
+
   Future<void> getSports() async {
     final url = ApiConfig.baseUrl + ApiConfig.sportsEndPoint;
+
+    isSportsLoading = true;
+    rebuildUi();
 
     try {
       final response = await _apiService.get(url);
@@ -82,6 +87,9 @@ class HomeViewModel extends BaseViewModel {
       logger.error("Error fetching sports", e);
     } catch (e) {
       logger.error("Error fetching sports", e);
+    } finally {
+      isSportsLoading = false;
+      rebuildUi();
     }
   }
 
