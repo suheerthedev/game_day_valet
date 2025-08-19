@@ -56,19 +56,35 @@ class ProfileView extends StackedView<ProfileViewModel> {
                 SizedBox(width: 10.w),
               ],
             ),
-            title: Text(
-              viewModel.currentUser?.name ?? '',
-              style: GoogleFonts.poppins(
-                  fontSize: 18.sp,
-                  fontWeight: FontWeight.w700,
-                  color: AppColors.textPrimary),
+            title: ConstrainedBox(
+              constraints: BoxConstraints(
+                maxWidth: 0.6.sw,
+              ),
+              child: Text(
+                viewModel.currentUser?.name ?? '',
+                maxLines: 1,
+                overflow: TextOverflow.ellipsis,
+                softWrap: true,
+                style: GoogleFonts.poppins(
+                    fontSize: 18.sp,
+                    fontWeight: FontWeight.w700,
+                    color: AppColors.textPrimary),
+              ),
             ),
-            subtitle: Text(
-              viewModel.currentUser?.email ?? '',
-              style: GoogleFonts.poppins(
-                  fontSize: 12.sp,
-                  fontWeight: FontWeight.w400,
-                  color: AppColors.textHint),
+            subtitle: ConstrainedBox(
+              constraints: BoxConstraints(
+                maxWidth: 0.6.sw,
+              ),
+              child: Text(
+                viewModel.currentUser?.email ?? '',
+                maxLines: 1,
+                overflow: TextOverflow.ellipsis,
+                softWrap: true,
+                style: GoogleFonts.poppins(
+                    fontSize: 12.sp,
+                    fontWeight: FontWeight.w400,
+                    color: AppColors.textHint),
+              ),
             ),
           ),
           body: SafeArea(
