@@ -105,40 +105,16 @@ Account""",
                               ),
                             ),
 
-                          Row(
-                            mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                            children: [
-                              Row(
-                                mainAxisSize: MainAxisSize.min,
-                                children: [
-                                  Checkbox(
-                                      activeColor: AppColors.secondary,
-                                      checkColor: AppColors.white,
-                                      splashRadius: 0,
-                                      shape: RoundedRectangleBorder(
-                                          borderRadius:
-                                              BorderRadius.circular(5.r)),
-                                      value: viewModel.isRememberMe,
-                                      onChanged: (value) {
-                                        viewModel.isRememberMe = value ?? false;
-                                        viewModel.rebuildUi();
-                                      }),
-                                  Text("Remember me",
-                                      style: GoogleFonts.poppins(
-                                          fontSize: 14.sp,
-                                          fontWeight: FontWeight.w400,
-                                          color: AppColors.primary)),
-                                ],
-                              ),
-                              GestureDetector(
-                                onTap: viewModel.goToForgotPassword,
-                                child: Text("Forgot Password?",
-                                    style: GoogleFonts.poppins(
-                                        fontSize: 14.sp,
-                                        fontWeight: FontWeight.w500,
-                                        color: AppColors.textSecondary)),
-                              ),
-                            ],
+                          Align(
+                            alignment: Alignment.centerRight,
+                            child: GestureDetector(
+                              onTap: viewModel.goToForgotPassword,
+                              child: Text("Forgot Password?",
+                                  style: GoogleFonts.poppins(
+                                      fontSize: 14.sp,
+                                      fontWeight: FontWeight.w500,
+                                      color: AppColors.textSecondary)),
+                            ),
                           ),
 
                           // if (viewModel.generalError != null)
@@ -216,6 +192,7 @@ Account""",
                                   border: BoxBorder.all(
                                       width: 1.04.w, color: AppColors.primary),
                                 ),
+                                clipBehavior: Clip.hardEdge,
                                 child: Center(
                                   child: Row(
                                     mainAxisAlignment: MainAxisAlignment.center,
@@ -224,12 +201,18 @@ Account""",
                                           size: 24.sp,
                                           color: AppColors.primary),
                                       SizedBox(width: 10.w),
-                                      Text(
-                                        "Continue with Google",
-                                        style: GoogleFonts.poppins(
-                                            fontSize: 16.sp,
-                                            fontWeight: FontWeight.w500,
-                                            color: AppColors.primary),
+                                      SizedBox(
+                                        width: 200.w,
+                                        child: Text(
+                                          "Continue with Google",
+                                          maxLines: 1,
+                                          overflow: TextOverflow.ellipsis,
+                                          softWrap: true,
+                                          style: GoogleFonts.poppins(
+                                              fontSize: 16.sp,
+                                              fontWeight: FontWeight.w500,
+                                              color: AppColors.primary),
+                                        ),
                                       ),
                                     ],
                                   ),
