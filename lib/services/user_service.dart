@@ -20,7 +20,7 @@ class UserService with ListenableServiceMixin {
     listenToReactiveValues([_currentUser]);
   }
 
-  Future<void> fetchCurrentUser() async {
+  Future<bool> fetchCurrentUser() async {
     final url = ApiConfig.baseUrl + ApiConfig.meEndPoint;
 
     try {
@@ -29,6 +29,7 @@ class UserService with ListenableServiceMixin {
 
       logger.info("Fetch User: $response");
       logger.info("Fetch User Status: ${response['message']}");
+      return true;
     } on ApiException catch (e) {
       logger.error("Fetch User Status failed - API Exception", e);
       _snackbarService.showCustomSnackBar(
@@ -45,6 +46,7 @@ class UserService with ListenableServiceMixin {
       );
     }
     notifyListeners();
+    return false;
   }
 
   void clearUser() {

@@ -23,8 +23,6 @@ class StartupViewModel extends BaseViewModel {
   final _sharedPreferencesService = locator<SharedPreferencesService>();
   // Place anything here that needs to happen before we get into the application
   Future runStartupLogic() async {
-    await Future.delayed(const Duration(seconds: 3));
-
     // This is where you can make decisions on where your app should navigate when
     // you have custom startup logic
     final hasDeepLink = await _deepLinkingService.processPendingUri();
@@ -37,11 +35,14 @@ class StartupViewModel extends BaseViewModel {
     final token = await _secureStorageService.getToken();
 
     if (token != null) {
-      await _sharedPreferencesService.init();
-      await _userService.fetchCurrentUser();
-      await getUserConversations();
-      await _rentalService.init();
-      await _navigationService.replaceWithMainView();
+      final hasUser = await _userService.fetchCurrentUser();
+      if (hasUser) {
+        await _sharedPreferencesService.init();
+        await getUserConversations();
+        await _rentalService.init();
+        await Future.delayed(const Duration(seconds: 3));
+        await _navigationService.replaceWithMainView();
+      }
     } else {
       _navigationService.replaceWithOnboardingView();
     }
