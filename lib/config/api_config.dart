@@ -41,7 +41,7 @@ class ApiConfig {
   static const sendMessageEndPoint = '/api/chat/send';
   static const markMessageAsReadEndPoint = '/api/chat/conversations/mark-read';
   // Rental
-  static const bookRentalEndPoint = '/api/rentals';
+  static const rentalEndPoint = '/api/rentals';
   static const rentalStatusEndPoint = '/api/rentals/status';
   static const applyPromoCodeEndPoint = '/api/coupon/validate';
   //Refer and Earn

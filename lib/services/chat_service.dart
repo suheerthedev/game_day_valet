@@ -60,6 +60,8 @@ class ChatService with ListenableServiceMixin {
     try {
       final response = await _apiService.get(url);
 
+      logger.info("Conversation messages: $response");
+
       for (var message in response) {
         _messages.value.insert(0, MessageModel.fromJson(message));
       }

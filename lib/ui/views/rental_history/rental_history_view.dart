@@ -49,6 +49,8 @@ class RentalHistoryView extends StackedView<RentalHistoryViewModel> {
                                     itemCount:
                                         viewModel.rentalHistoryList.length,
                                     itemBuilder: (context, index) {
+                                      final rental =
+                                          viewModel.rentalHistoryList[index];
                                       return Container(
                                         width: 338.w,
                                         height: 152.h,
@@ -67,11 +69,7 @@ class RentalHistoryView extends StackedView<RentalHistoryViewModel> {
                                                   CrossAxisAlignment.start,
                                               children: [
                                                 Text(
-                                                    viewModel
-                                                            .rentalHistoryList[
-                                                                index]
-                                                            .tournamentName ??
-                                                        '',
+                                                    rental.tournamentName ?? '',
                                                     style: GoogleFonts.poppins(
                                                         fontSize: 14.sp,
                                                         fontWeight:
@@ -79,24 +77,17 @@ class RentalHistoryView extends StackedView<RentalHistoryViewModel> {
                                                         color: AppColors
                                                             .textSecondary)),
                                                 Text(
-                                                    DateFormat('dd-MM-yyyy').format(
-                                                        DateTime.parse(viewModel
-                                                                .rentalHistoryList[
-                                                                    index]
-                                                                .rentalDate ??
-                                                            '')),
+                                                    DateFormat('dd-MM-yyyy')
+                                                        .format(DateTime.parse(
+                                                            rental.rentalDate ??
+                                                                '')),
                                                     style: GoogleFonts.poppins(
                                                         fontSize: 12.sp,
                                                         fontWeight:
                                                             FontWeight.w600,
                                                         color: AppColors
                                                             .textPrimary)),
-                                                Text(
-                                                    viewModel
-                                                            .rentalHistoryList[
-                                                                index]
-                                                            .fieldNumber ??
-                                                        '',
+                                                Text(rental.fieldNumber ?? '',
                                                     style: GoogleFonts.poppins(
                                                         fontSize: 12.sp,
                                                         fontWeight:
@@ -133,31 +124,52 @@ class RentalHistoryView extends StackedView<RentalHistoryViewModel> {
                                             //       size: 24.w,
                                             //       color: AppColors.secondary),
                                             // ),
-                                            // Align(
-                                            //   alignment: Alignment.bottomRight,
-                                            //   child: InkWell(
-                                            //     onTap: () {},
-                                            //     child: Container(
-                                            //         width: 121.w,
-                                            //         height: 33.h,
-                                            //         decoration: BoxDecoration(
-                                            //           color: AppColors.secondary,
-                                            //           borderRadius:
-                                            //               BorderRadius.circular(
-                                            //                   10.r),
-                                            //         ),
-                                            //         child: Center(
-                                            //           child: Text(
-                                            //             'Order Again',
-                                            //             style: GoogleFonts.poppins(
-                                            //                 fontSize: 16.sp,
-                                            //                 fontWeight:
-                                            //                     FontWeight.w500,
-                                            //                 color: AppColors.white),
-                                            //           ),
-                                            //         )),
-                                            //   ),
-                                            // )
+                                            Align(
+                                              alignment: Alignment.bottomRight,
+                                              child: InkWell(
+                                                onTap: () {
+                                                  rental.paymentStatus ==
+                                                          'pending'
+                                                      ? viewModel.completePayment(
+                                                          context,
+                                                          num.parse(rental
+                                                                  .totalAmount ??
+                                                              '0'),
+                                                          rental.id)
+                                                      : null;
+                                                },
+                                                child: Container(
+                                                    height: 33.h,
+                                                    decoration: BoxDecoration(
+                                                      color:
+                                                          rental.paymentStatus ==
+                                                                  'completed'
+                                                              ? AppColors
+                                                                  .grey500
+                                                              : AppColors
+                                                                  .secondary,
+                                                      borderRadius:
+                                                          BorderRadius.circular(
+                                                              10.r),
+                                                    ),
+                                                    child: Center(
+                                                      child: Text(
+                                                        rental.paymentStatus ==
+                                                                'completed'
+                                                            ? 'Payment Completed'
+                                                            : 'Payment Pending',
+                                                        style:
+                                                            GoogleFonts.poppins(
+                                                                fontSize: 16.sp,
+                                                                fontWeight:
+                                                                    FontWeight
+                                                                        .w500,
+                                                                color: AppColors
+                                                                    .white),
+                                                      ),
+                                                    )),
+                                              ),
+                                            )
                                           ],
                                         ),
                                       );

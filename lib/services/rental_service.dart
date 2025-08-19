@@ -67,7 +67,7 @@ class RentalService with ListenableServiceMixin {
 
   Future<dynamic> createRentalBooking(
       BuildContext context, num totalAmount, Map<String, dynamic> body) async {
-    final url = ApiConfig.baseUrl + ApiConfig.bookRentalEndPoint;
+    final url = ApiConfig.baseUrl + ApiConfig.rentalEndPoint;
 
     clearData();
 
@@ -87,6 +87,7 @@ class RentalService with ListenableServiceMixin {
       final isPaymentSuccess = await _handleStripePayment(context, totalAmount);
 
       if (isPaymentSuccess) {
+        await _updatePaymentStatus(_rentalBooking.value.id, 'completed');
         await initializePusher(isNewRental: true);
         await _sharedPreferencesService.setInt(
             'rental_id', _rentalBooking.value.id);
@@ -136,9 +137,41 @@ class RentalService with ListenableServiceMixin {
       logger.info("Rental Status Response: $response");
     } on ApiException catch (e) {
       logger.error("Error in getting rental status: ${e.message}");
-      rethrow;
     } catch (e) {
       logger.error("Error in getting rental status: ${e.toString()}");
+    }
+  }
+
+  Future<void> _updatePaymentStatus(int rentalId, String paymentStatus) async {
+    final url = "${ApiConfig.baseUrl}${ApiConfig.rentalEndPoint}/$rentalId";
+    try {
+      final response = await _apiService.put(url, {
+        'payment_status': paymentStatus,
+      });
+
+      logger.info("Payment Status Update Response: $response");
+    } on ApiException catch (e) {
+      logger.error("Error in updating payment status: ${e.message}");
+    } catch (e) {
+      logger.error("Error in updating payment status: ${e.toString()}");
+    }
+  }
+
+  Future<void> compeletePayment(
+      BuildContext context, num amount, int rentalId) async {
+    try {
+      final isPaymentSuccess = await _handleStripePayment(context, amount);
+
+      if (isPaymentSuccess) {
+        await _updatePaymentStatus(rentalId, 'completed');
+      }
+
+      notifyListeners();
+    } on ApiException catch (e) {
+      logger.error("Error in completing payment: ${e.message}");
+      rethrow;
+    } catch (e) {
+      logger.error("Error in completing payment: ${e.toString()}");
       throw ApiException("Something went wrong. ${e.toString()}");
     }
   }
