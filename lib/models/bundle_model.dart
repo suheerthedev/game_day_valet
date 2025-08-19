@@ -4,6 +4,7 @@ class BundleModel {
   final int id;
   final String? name;
   final String? description;
+  final String? image;
   final String? totalItems;
   final String? price;
   final String? status;
@@ -14,6 +15,7 @@ class BundleModel {
     required this.id,
     this.name,
     this.description,
+    this.image,
     this.totalItems,
     this.price,
     this.status,
@@ -26,6 +28,7 @@ class BundleModel {
       id: json['id'],
       name: json['name'],
       description: json['description'],
+      image: json['image'],
       totalItems: json['total_items'],
       price: json['price'],
       status: json['status'],

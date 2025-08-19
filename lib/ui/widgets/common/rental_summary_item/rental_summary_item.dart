@@ -1,6 +1,7 @@
 import 'package:cached_network_image/cached_network_image.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
+import 'package:game_day_valet/models/item_model.dart';
 import 'package:game_day_valet/ui/common/app_colors.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:iconsax_plus/iconsax_plus.dart';
@@ -9,20 +10,14 @@ import 'package:stacked/stacked.dart';
 import 'rental_summary_item_model.dart';
 
 class RentalSummaryItem extends StackedView<RentalSummaryItemModel> {
-  final String name;
-  final String quantityText;
-  final int count;
-  final String? imageUrl;
+  final ItemModel item;
   final VoidCallback onRemove;
   final VoidCallback onMinus;
   final VoidCallback onPlus;
 
   const RentalSummaryItem({
     super.key,
-    required this.name,
-    required this.quantityText,
-    required this.count,
-    required this.imageUrl,
+    required this.item,
     required this.onRemove,
     required this.onMinus,
     required this.onPlus,
@@ -49,7 +44,7 @@ class RentalSummaryItem extends StackedView<RentalSummaryItemModel> {
             child: ClipRRect(
               borderRadius: BorderRadius.circular(12.r),
               child: CachedNetworkImage(
-                  imageUrl: imageUrl ?? '',
+                  imageUrl: item.image ?? '',
                   fit: BoxFit.cover,
                   placeholder: (context, url) => const Center(
                         child: CircularProgressIndicator(
@@ -68,7 +63,7 @@ class RentalSummaryItem extends StackedView<RentalSummaryItemModel> {
               crossAxisAlignment: CrossAxisAlignment.start,
               children: [
                 Text(
-                  name,
+                  item.name ?? '',
                   style: GoogleFonts.poppins(
                     fontSize: 14.sp,
                     fontWeight: FontWeight.w600,
@@ -77,7 +72,7 @@ class RentalSummaryItem extends StackedView<RentalSummaryItemModel> {
                 ),
                 SizedBox(height: 2.h),
                 Text(
-                  quantityText,
+                  'Stock Quantity: ${item.stock ?? 0}',
                   style: GoogleFonts.poppins(
                     fontSize: 12.sp,
                     fontWeight: FontWeight.w500,
@@ -102,7 +97,7 @@ class RentalSummaryItem extends StackedView<RentalSummaryItemModel> {
                     ),
                     SizedBox(width: 12.w),
                     Text(
-                      count.toString().padLeft(2, '0'),
+                      item.quantity.toString().padLeft(2, '0'),
                       style: GoogleFonts.poppins(
                         fontSize: 14.sp,
                         fontWeight: FontWeight.w600,

@@ -189,11 +189,7 @@ class CheckoutView extends StackedView<CheckoutViewModel> {
                                       itemBuilder: (context, index) {
                                         final item = viewModel.items[index];
                                         return RentalSummaryItem(
-                                          name: item.name ?? '',
-                                          quantityText:
-                                              'Stock Quantity: ${item.stock ?? 0}',
-                                          count: item.quantity,
-                                          imageUrl: item.image,
+                                          item: item,
                                           onRemove: () => viewModel
                                               .removeItemFromSummary(item),
                                           onMinus: () => viewModel
@@ -222,10 +218,7 @@ class CheckoutView extends StackedView<CheckoutViewModel> {
                                       itemBuilder: (context, index) {
                                         final bundle = viewModel.bundles[index];
                                         return BundlesSummaryItem(
-                                          name: bundle.name ?? '',
-                                          totalItems:
-                                              'Total Items: ${bundle.totalItems}',
-                                          isSelected: bundle.isSelected,
+                                          bundle: bundle,
                                           onToggle: (value) {
                                             viewModel.toggleBundle(bundle);
                                           },
@@ -317,52 +310,52 @@ class CheckoutView extends StackedView<CheckoutViewModel> {
                             color: AppColors.error),
                       ),
                     ],
-                    SizedBox(height: 10.h),
-                    MainTextField(
-                      label: "Field Number (eg. Field 5)",
-                      controller: viewModel.fieldNumberController,
-                      labelColor: AppColors.textHint,
-                      cursorColor: AppColors.primary,
-                      fillColor: AppColors.grey50,
-                      borderColor: AppColors.grey100,
-                      enabledBorderColor: AppColors.grey100,
-                      focusedBorderColor: AppColors.primary,
-                    ),
-                    if (viewModel.fieldNumberError.isNotEmpty) ...[
-                      Text(
-                        viewModel.fieldNumberError,
-                        style: GoogleFonts.poppins(
-                            fontSize: 12.sp,
-                            fontWeight: FontWeight.w500,
-                            color: AppColors.error),
-                      ),
-                    ],
-                    SizedBox(height: 20.h),
-                    Text(
-                      'Drop-Off',
-                      style: GoogleFonts.poppins(
-                          fontSize: 18.sp,
-                          fontWeight: FontWeight.w600,
-                          color: AppColors.textPrimary),
-                    ),
-                    SizedBox(height: 10.h),
-                    MainTextField(
-                      label: "Estimated Drop-Off Time",
-                      readOnly: true,
-                      controller: viewModel.dropOffTimeController,
-                      labelColor: AppColors.textHint,
-                      cursorColor: AppColors.primary,
-                      fillColor: AppColors.grey50,
-                      borderColor: AppColors.grey100,
-                      enabledBorderColor: AppColors.grey100,
-                      focusedBorderColor: AppColors.grey100,
-                      hasSuffixIcon: true,
-                      suffixIcon: const Icon(IconsaxPlusLinear.calendar),
-                      onTap: () async {
-                        await viewModel.pickDropOffDateTime(context);
-                      },
-                      suffixIconColor: AppColors.textHint,
-                    ),
+                    // SizedBox(height: 10.h),
+                    // MainTextField(
+                    //   label: "Field Number (eg. Field 5)",
+                    //   controller: viewModel.fieldNumberController,
+                    //   labelColor: AppColors.textHint,
+                    //   cursorColor: AppColors.primary,
+                    //   fillColor: AppColors.grey50,
+                    //   borderColor: AppColors.grey100,
+                    //   enabledBorderColor: AppColors.grey100,
+                    //   focusedBorderColor: AppColors.primary,
+                    // ),
+                    // if (viewModel.fieldNumberError.isNotEmpty) ...[
+                    //   Text(
+                    //     viewModel.fieldNumberError,
+                    //     style: GoogleFonts.poppins(
+                    //         fontSize: 12.sp,
+                    //         fontWeight: FontWeight.w500,
+                    //         color: AppColors.error),
+                    //   ),
+                    // ],
+                    // SizedBox(height: 20.h),
+                    // Text(
+                    //   'Drop-Off',
+                    //   style: GoogleFonts.poppins(
+                    //       fontSize: 18.sp,
+                    //       fontWeight: FontWeight.w600,
+                    //       color: AppColors.textPrimary),
+                    // ),
+                    // SizedBox(height: 10.h),
+                    // MainTextField(
+                    //   label: "Estimated Drop-Off Time",
+                    //   readOnly: true,
+                    //   controller: viewModel.dropOffTimeController,
+                    //   labelColor: AppColors.textHint,
+                    //   cursorColor: AppColors.primary,
+                    //   fillColor: AppColors.grey50,
+                    //   borderColor: AppColors.grey100,
+                    //   enabledBorderColor: AppColors.grey100,
+                    //   focusedBorderColor: AppColors.grey100,
+                    //   hasSuffixIcon: true,
+                    //   suffixIcon: const Icon(IconsaxPlusLinear.calendar),
+                    //   onTap: () async {
+                    //     await viewModel.pickDropOffDateTime(context);
+                    //   },
+                    //   suffixIconColor: AppColors.textHint,
+                    // ),
 
                     SizedBox(height: 20.h),
                     Text(
@@ -515,13 +508,7 @@ class CheckoutView extends StackedView<CheckoutViewModel> {
                                           Radius.circular(2.r))),
                                   value: insurance.isSelected,
                                   onChanged: (value) {
-                                    viewModel.insuranceOptions
-                                        .forEach((element) {
-                                      element.isSelected = false;
-                                    });
-
-                                    insurance.isSelected = value ?? false;
-                                    viewModel.notifyListeners();
+                                    viewModel.toggleInsurance(insurance);
                                   }),
                               Expanded(
                                 child: Text(
@@ -568,13 +555,7 @@ class CheckoutView extends StackedView<CheckoutViewModel> {
                                           Radius.circular(2.r))),
                                   value: option.isSelected,
                                   onChanged: (value) {
-                                    viewModel.damageWaiverOptions
-                                        .forEach((element) {
-                                      element.isSelected = false;
-                                    });
-
-                                    option.isSelected = value ?? false;
-                                    viewModel.notifyListeners();
+                                    viewModel.toggleDamageWaiver(option);
                                   }),
                               Text(
                                 option.label,

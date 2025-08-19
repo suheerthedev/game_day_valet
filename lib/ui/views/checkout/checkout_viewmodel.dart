@@ -29,14 +29,14 @@ class CheckoutViewModel extends BaseViewModel {
 
   TextEditingController teamNameController = TextEditingController();
   TextEditingController coachNameController = TextEditingController();
-  TextEditingController fieldNumberController = TextEditingController();
-  TextEditingController dropOffTimeController = TextEditingController();
+  // TextEditingController fieldNumberController = TextEditingController();
+  // TextEditingController dropOffTimeController = TextEditingController();
   TextEditingController specialInstructionController = TextEditingController();
   TextEditingController promoCodeController = TextEditingController();
 
   String teamNameError = '';
   String coachNameError = '';
-  String fieldNumberError = '';
+  // String fieldNumberError = '';
 
   bool validateForm() {
     bool isValid = true;
@@ -48,10 +48,10 @@ class CheckoutViewModel extends BaseViewModel {
       isValid = false;
       coachNameError = 'Coach name is required';
     }
-    if (fieldNumberController.text.isEmpty) {
-      isValid = false;
-      fieldNumberError = 'Field number is required';
-    }
+    //  if (fieldNumberController.text.isEmpty) {
+    //   isValid = false;
+    //   fieldNumberError = 'Field number is required';
+    // }
     rebuildUi();
     return isValid;
   }
@@ -72,36 +72,36 @@ class CheckoutViewModel extends BaseViewModel {
     print(totalAmount);
   }
 
-  Future<void> pickDropOffDateTime(BuildContext context) async {
-    final DateTime now = DateTime.now();
-    final DateTime? pickedDate = await showDatePicker(
-      context: context,
-      initialDate: now,
-      firstDate: now.subtract(const Duration(days: 0)),
-      lastDate: DateTime(now.year + 5),
-    );
-    if (pickedDate == null) return;
+  // Future<void> pickDropOffDateTime(BuildContext context) async {
+  //   final DateTime now = DateTime.now();
+  //   final DateTime? pickedDate = await showDatePicker(
+  //     context: context,
+  //     initialDate: now,
+  //     firstDate: now.subtract(const Duration(days: 0)),
+  //     lastDate: DateTime(now.year + 5),
+  //   );
+  //   if (pickedDate == null) return;
 
-    final TimeOfDay? pickedTime = await showTimePicker(
-      // ignore: use_build_context_synchronously
-      context: context,
-      initialTime: TimeOfDay(hour: now.hour, minute: 0),
-    );
-    if (pickedTime == null) return;
+  //   final TimeOfDay? pickedTime = await showTimePicker(
+  //     // ignore: use_build_context_synchronously
+  //     context: context,
+  //     initialTime: TimeOfDay(hour: now.hour, minute: 0),
+  //   );
+  //   if (pickedTime == null) return;
 
-    final DateTime combined = DateTime(
-      pickedDate.year,
-      pickedDate.month,
-      pickedDate.day,
-      pickedTime.hour,
-      pickedTime.minute,
-    );
+  //   final DateTime combined = DateTime(
+  //     pickedDate.year,
+  //     pickedDate.month,
+  //     pickedDate.day,
+  //     pickedTime.hour,
+  //     pickedTime.minute,
+  //   );
 
-    // Format as "YYYY-MM-DD HH:MM:SS"
-    final String formatted = DateFormat('yyyy-MM-dd HH:mm:ss').format(combined);
-    dropOffTimeController.text = formatted;
-    notifyListeners();
-  }
+  //   // Format as "YYYY-MM-DD HH:MM:SS"
+  //   final String formatted = DateFormat('yyyy-MM-dd HH:mm:ss').format(combined);
+  //   dropOffTimeController.text = formatted;
+  //   notifyListeners();
+  // }
 
   bool isRentalSummaryExpanded = true;
 
@@ -222,6 +222,54 @@ class CheckoutViewModel extends BaseViewModel {
   //   // }
   // }
 
+  void toggleInsurance(SettingsItemModel insurance) {
+    SettingsItemModel? previouslySelected;
+    for (final option in insuranceOptions) {
+      if (option.isSelected) {
+        previouslySelected = option;
+        break;
+      }
+    }
+
+    if (insurance.isSelected) {
+      insurance.isSelected = false;
+      totalAmount -= double.parse(insurance.price.toString());
+    } else {
+      if (previouslySelected != null) {
+        previouslySelected.isSelected = false;
+        totalAmount -= double.parse(previouslySelected.price.toString());
+      }
+      insurance.isSelected = true;
+      totalAmount += double.parse(insurance.price.toString());
+    }
+
+    rebuildUi();
+  }
+
+  void toggleDamageWaiver(SettingsItemModel damageWaiver) {
+    SettingsItemModel? previouslySelected;
+    for (final option in damageWaiverOptions) {
+      if (option.isSelected) {
+        previouslySelected = option;
+        break;
+      }
+    }
+
+    if (damageWaiver.isSelected) {
+      damageWaiver.isSelected = false;
+      totalAmount -= double.parse(damageWaiver.price.toString());
+    } else {
+      if (previouslySelected != null) {
+        previouslySelected.isSelected = false;
+        totalAmount -= double.parse(previouslySelected.price.toString());
+      }
+      damageWaiver.isSelected = true;
+      totalAmount += double.parse(damageWaiver.price.toString());
+    }
+
+    rebuildUi();
+  }
+
   List<Map<String, dynamic>> formatItems(List<ItemModel> items) {
     return items
         .where((item) => item.quantity > 0)
@@ -270,23 +318,35 @@ class CheckoutViewModel extends BaseViewModel {
       return;
     }
 
+    SettingsItemModel? selectedInsurance;
+    for (final option in insuranceOptions) {
+      if (option.isSelected) {
+        selectedInsurance = option;
+        break;
+      }
+    }
+
+    SettingsItemModel? selectedDamageWaiver;
+    for (final option in damageWaiverOptions) {
+      if (option.isSelected) {
+        selectedDamageWaiver = option;
+        break;
+      }
+    }
+
     final body = {
       "tournament_id": tournamentId.toString(),
       "team_name": teamNameController.text,
       "coach_name": coachNameController.text,
-      "field_number": fieldNumberController.text,
+      // "field_number": "Field 5",
       "items": formatItems(items),
       "bundles": formatBundles(bundles),
       "rental_date": DateFormat('yyyy-MM-dd').format(DateTime.now()),
-      "drop_off_time": dropOffTimeController.text,
+      // "drop_off_time": dropOffTimeController.text,
       "instructions": specialInstructionController.text,
       "promo_code": isPromoCodeValid ? coupon?.code : null,
-      "insurance_option":
-          insuranceOptions.where((insurance) => insurance.isSelected).first.id,
-      "damage_waiver": damageWaiverOptions
-          .where((damageWaiver) => damageWaiver.isSelected)
-          .first
-          .id,
+      "insurance_option": selectedInsurance?.price,
+      "damage_waiver": selectedDamageWaiver?.price,
       "payment_method": "stripe",
       "payment_status": "pending",
       "total_amount": totalAmount.toStringAsFixed(2),
