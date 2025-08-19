@@ -295,7 +295,6 @@ Account""",
                                   border: BoxBorder.all(
                                       width: 1.04.w, color: AppColors.primary),
                                 ),
-                                clipBehavior: Clip.hardEdge,
                                 child: Center(
                                   child: Row(
                                     mainAxisAlignment: MainAxisAlignment.center,
@@ -304,8 +303,10 @@ Account""",
                                           size: 24.sp,
                                           color: AppColors.primary),
                                       SizedBox(width: 10.w),
-                                      SizedBox(
-                                        width: 200.w,
+                                      ConstrainedBox(
+                                        constraints: BoxConstraints(
+                                          maxWidth: 200.w,
+                                        ),
                                         child: Text(
                                           "Continue with Google",
                                           maxLines: 1,
