@@ -29,20 +29,71 @@ class HomeView extends StackedView<HomeViewModel> {
           title: Column(
             crossAxisAlignment: CrossAxisAlignment.start,
             children: [
-              Text('Select City',
-                  style: GoogleFonts.poppins(
-                      fontSize: 14.sp,
-                      fontWeight: FontWeight.w400,
-                      color: AppColors.textSecondary)),
-              Text(
-                'New York, United States',
-                style: GoogleFonts.poppins(
-                    fontSize: 14.sp,
-                    fontWeight: FontWeight.w700,
-                    color: AppColors.textPrimary),
-              )
+              GestureDetector(
+                behavior: HitTestBehavior.opaque,
+                onTap: viewModel
+                    .refreshCity, // tapping "Select City" re-tries detection
+                child: Row(
+                  mainAxisSize: MainAxisSize.min,
+                  children: [
+                    Text('Select City',
+                        style: GoogleFonts.poppins(
+                            fontSize: 14.sp,
+                            fontWeight: FontWeight.w700,
+                            color: AppColors.textPrimary)),
+                    const SizedBox(width: 4),
+                    const Icon(Icons.keyboard_arrow_down, size: 18),
+                  ],
+                ),
+              ),
+              FutureBuilder<String>(
+                future: viewModel.cityFuture,
+                builder: (context, snap) {
+                  if (snap.connectionState == ConnectionState.waiting) {
+                    return Text('Detecting...',
+                        style: GoogleFonts.poppins(
+                            fontSize: 14.sp,
+                            fontWeight: FontWeight.w400,
+                            color: AppColors.textSecondary));
+                  }
+                  if (snap.hasError) {
+                    return InkWell(
+                      onTap: viewModel.refreshCity,
+                      child: Text('Enable location & tap to retry',
+                          style: GoogleFonts.poppins(
+                              fontSize: 14.sp,
+                              fontWeight: FontWeight.w400,
+                              color: AppColors.textSecondary)),
+                    );
+                  }
+                  return Text(
+                    snap.data ?? 'Unknown',
+                    style: GoogleFonts.poppins(
+                        fontSize: 14.sp,
+                        fontWeight: FontWeight.w700,
+                        color: AppColors.textSecondary),
+                  );
+                },
+              ),
             ],
           ),
+          // title: Column(
+          //   crossAxisAlignment: CrossAxisAlignment.start,
+          //   children: [
+          //     Text('Select City',
+          //         style: GoogleFonts.poppins(
+          //             fontSize: 14.sp,
+          //             fontWeight: FontWeight.w400,
+          //             color: AppColors.textSecondary)),
+          //     Text(
+          //       'New York, United States',
+          //       style: GoogleFonts.poppins(
+          //           fontSize: 14.sp,
+          //           fontWeight: FontWeight.w700,
+          //           color: AppColors.textPrimary),
+          //     )
+          //   ],
+          // ),
         ),
         body: SafeArea(
           child: viewModel.isBusy

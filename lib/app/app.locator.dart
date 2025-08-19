@@ -18,6 +18,7 @@ import '../services/chat_service.dart';
 import '../services/connectivity_service.dart';
 import '../services/deep_linking_service.dart';
 import '../services/google_sign_in_service.dart';
+import '../services/location_service.dart';
 import '../services/logger_service.dart';
 import '../services/pusher_service.dart';
 import '../services/rental_service.dart';
@@ -56,4 +57,5 @@ Future<void> setupLocator({
   locator.registerLazySingleton(() => DeepLinkingService());
   locator.registerLazySingleton(() => RentalService());
   locator.registerLazySingleton(() => SharedPreferencesService());
+  locator.registerLazySingleton(() => LocationService());
 }

@@ -2,6 +2,7 @@ import 'dart:async';
 
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
+import 'package:game_day_valet/services/location_service.dart';
 import 'package:game_day_valet/app/app.locator.dart';
 import 'package:game_day_valet/app/app.router.dart';
 import 'package:game_day_valet/config/api_config.dart';
@@ -24,6 +25,15 @@ class HomeViewModel extends BaseViewModel {
   final _tournamentService = locator<TournamentService>();
   final _snackbarService = locator<SnackbarService>();
   final _pusherService = locator<PusherService>();
+  final _locationService = locator<LocationService>();
+
+  late Future<String> _cityFuture;
+
+  HomeViewModel() {
+    _cityFuture = _locationService.getCityAndCountry();
+  }
+
+  Future<String> get cityFuture => _cityFuture;
 
   String selectedSport = ''; // Default selected sport
 
@@ -63,6 +73,11 @@ class HomeViewModel extends BaseViewModel {
   Future<void> init() async {
     await _pusherService.initialize();
     await getSports();
+  }
+
+  void refreshCity() {
+    _cityFuture = _locationService.getCityAndCountry();
+    rebuildUi();
   }
 
   bool isSportsLoading = false;
