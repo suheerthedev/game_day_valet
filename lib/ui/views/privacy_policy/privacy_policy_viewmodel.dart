@@ -1,5 +1,4 @@
 import 'package:game_day_valet/app/app.locator.dart';
-import 'package:game_day_valet/app/app.router.dart';
 import 'package:game_day_valet/config/api_config.dart';
 import 'package:game_day_valet/core/enums/snackbar_type.dart';
 import 'package:game_day_valet/models/privacy_policy_model.dart';
@@ -10,7 +9,6 @@ import 'package:stacked/stacked.dart';
 import 'package:stacked_services/stacked_services.dart';
 
 class PrivacyPolicyViewModel extends BaseViewModel {
-  final _navigationService = locator<NavigationService>();
   final _apiService = locator<ApiService>();
   final _snackbarService = locator<SnackbarService>();
 
@@ -45,7 +43,7 @@ class PrivacyPolicyViewModel extends BaseViewModel {
     }
   }
 
-  void onChatTap() {
-    _navigationService.navigateToInboxView();
-  }
+  // void onChatTap() {
+  //   _navigationService.navigateToInboxView();
+  // }
 }

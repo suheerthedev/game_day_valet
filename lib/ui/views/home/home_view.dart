@@ -1,4 +1,3 @@
-import 'package:floating_chat_button/floating_chat_button.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:game_day_valet/ui/common/app_colors.dart';
@@ -8,7 +7,6 @@ import 'package:game_day_valet/ui/widgets/common/main_tournament_card/main_tourn
 import 'package:game_day_valet/ui/widgets/common/secondary_tournament_card/secondary_tournament_card.dart';
 import 'package:game_day_valet/ui/widgets/common/small_button/small_button.dart';
 import 'package:google_fonts/google_fonts.dart';
-import 'package:iconsax_flutter/iconsax_flutter.dart';
 import 'package:iconsax_plus/iconsax_plus.dart';
 import 'package:stacked/stacked.dart';
 
@@ -102,265 +100,231 @@ class HomeView extends StackedView<HomeViewModel> {
                       viewModel.recommendedTournamentsList.isEmpty &&
                       viewModel.selectedSport != ''
                   ? _buildEmptyState()
-                  : Stack(
-                      children: [
-                        Padding(
-                          padding: EdgeInsets.symmetric(
-                            horizontal: 25.w,
+                  : Padding(
+                      padding: EdgeInsets.symmetric(
+                        horizontal: 25.w,
+                      ),
+                      child: Column(
+                        children: [
+                          MainSearchBar(
+                            controller: viewModel.searchController,
+                            hintText:
+                                'Search tournament by name, date, and etc',
+                            isAutoFocus: false,
+                            isReadOnly: true,
+                            onTextFieldTap: () {
+                              viewModel.navigateToSearchView(
+                                  viewModel.searchController.text);
+                            },
                           ),
-                          child: Column(
-                            children: [
-                              MainSearchBar(
-                                controller: viewModel.searchController,
-                                hintText:
-                                    'Search tournament by name, date, and etc',
-                                isAutoFocus: false,
-                                isReadOnly: true,
-                                onTextFieldTap: () {
-                                  viewModel.navigateToSearchView(
-                                      viewModel.searchController.text);
-                                },
-                              ),
-                              SizedBox(height: 20.h),
-                              Expanded(
-                                child: viewModel.selectedSport.isEmpty
-                                    ? _buildSportSelector(context, viewModel)
-                                    : SizedBox(
-                                        width: double.infinity,
-                                        child: SingleChildScrollView(
-                                          child: Column(
-                                            crossAxisAlignment:
-                                                CrossAxisAlignment.start,
-                                            children: [
-                                              viewModel.tournamentsList.isEmpty
-                                                  ? const SizedBox.shrink()
-                                                  : Column(
-                                                      crossAxisAlignment:
-                                                          CrossAxisAlignment
-                                                              .start,
-                                                      children: [
-                                                        Text(
-                                                          '${viewModel.selectedSport} Tournaments',
-                                                          style: GoogleFonts.poppins(
+                          SizedBox(height: 20.h),
+                          Expanded(
+                            child: viewModel.selectedSport.isEmpty
+                                ? _buildSportSelector(context, viewModel)
+                                : SizedBox(
+                                    width: double.infinity,
+                                    child: SingleChildScrollView(
+                                      child: Column(
+                                        crossAxisAlignment:
+                                            CrossAxisAlignment.start,
+                                        children: [
+                                          viewModel.tournamentsList.isEmpty
+                                              ? const SizedBox.shrink()
+                                              : Column(
+                                                  crossAxisAlignment:
+                                                      CrossAxisAlignment.start,
+                                                  children: [
+                                                    Text(
+                                                      '${viewModel.selectedSport} Tournaments',
+                                                      style:
+                                                          GoogleFonts.poppins(
                                                               fontSize: 21,
                                                               fontWeight:
                                                                   FontWeight
                                                                       .w600,
                                                               color: AppColors
                                                                   .textPrimary),
-                                                        ),
-                                                        ListView.builder(
-                                                          shrinkWrap: true,
-                                                          physics:
-                                                              const NeverScrollableScrollPhysics(),
-                                                          itemCount: viewModel
-                                                              .tournamentsList
-                                                              .length,
-                                                          itemBuilder:
-                                                              (context, index) {
-                                                            return MainTournamentCard(
-                                                                tournament:
-                                                                    viewModel
-                                                                            .tournamentsList[
-                                                                        index],
-                                                                onBookNowTap:
-                                                                    () {
-                                                                  viewModel.navigateToRentalBook(
-                                                                      viewModel
-                                                                          .tournamentsList[
-                                                                              index]
-                                                                          .id);
-                                                                },
-                                                                onTapFavorite:
-                                                                    () {
-                                                                  viewModel.toggleFavorite(
-                                                                      viewModel
-                                                                          .tournamentsList[
-                                                                              index]
-                                                                          .id);
-                                                                },
-                                                                onTapMap: () {
+                                                    ),
+                                                    ListView.builder(
+                                                      shrinkWrap: true,
+                                                      physics:
+                                                          const NeverScrollableScrollPhysics(),
+                                                      itemCount: viewModel
+                                                          .tournamentsList
+                                                          .length,
+                                                      itemBuilder:
+                                                          (context, index) {
+                                                        return MainTournamentCard(
+                                                            tournament: viewModel
+                                                                    .tournamentsList[
+                                                                index],
+                                                            onBookNowTap: () {
+                                                              viewModel.navigateToRentalBook(
                                                                   viewModel
-                                                                      .showMapPopup(
-                                                                          context);
-                                                                });
-                                                          },
-                                                        ),
-                                                        SizedBox(
-                                                          height: 20.h,
-                                                        ),
-                                                        if (viewModel
-                                                            .hasMoreTournamentsBySport)
-                                                          Center(
-                                                            child: Padding(
-                                                              padding: EdgeInsets
-                                                                  .symmetric(
-                                                                      horizontal:
-                                                                          32.w),
-                                                              child:
-                                                                  SmallButton(
-                                                                title:
-                                                                    'Show More',
-                                                                onTap: () {
-                                                                  viewModel.loadMoreTournamentsBySport(
+                                                                      .tournamentsList[
+                                                                          index]
+                                                                      .id);
+                                                            },
+                                                            onTapFavorite: () {
+                                                              viewModel.toggleFavorite(
+                                                                  viewModel
+                                                                      .tournamentsList[
+                                                                          index]
+                                                                      .id);
+                                                            },
+                                                            onTapMap: () {
+                                                              viewModel
+                                                                  .showMapPopup(
+                                                                      context);
+                                                            });
+                                                      },
+                                                    ),
+                                                    SizedBox(
+                                                      height: 20.h,
+                                                    ),
+                                                    if (viewModel
+                                                        .hasMoreTournamentsBySport)
+                                                      Center(
+                                                        child: Padding(
+                                                          padding: EdgeInsets
+                                                              .symmetric(
+                                                                  horizontal:
+                                                                      32.w),
+                                                          child: SmallButton(
+                                                            title: 'Show More',
+                                                            onTap: () {
+                                                              viewModel
+                                                                  .loadMoreTournamentsBySport(
                                                                       viewModel
                                                                           .selectedSportId);
-                                                                },
-                                                                bgColor:
-                                                                    AppColors
-                                                                        .white,
-                                                                textColor:
-                                                                    AppColors
-                                                                        .secondary,
-                                                                borderColor:
-                                                                    AppColors
-                                                                        .secondary,
-                                                                isLoading: viewModel
-                                                                    .isLoadingMoreTournamentsBySport,
-                                                              ),
-                                                            ),
+                                                            },
+                                                            bgColor:
+                                                                AppColors.white,
+                                                            textColor: AppColors
+                                                                .secondary,
+                                                            borderColor:
+                                                                AppColors
+                                                                    .secondary,
+                                                            isLoading: viewModel
+                                                                .isLoadingMoreTournamentsBySport,
                                                           ),
-                                                      ],
-                                                    ),
+                                                        ),
+                                                      ),
+                                                  ],
+                                                ),
 
-                                              //Recommended Tournaments
-                                              SizedBox(height: 20.h),
-                                              viewModel
-                                                      .recommendedTournamentsList
-                                                      .isEmpty
-                                                  ? const SizedBox.shrink()
-                                                  : Column(
-                                                      crossAxisAlignment:
-                                                          CrossAxisAlignment
-                                                              .start,
-                                                      children: [
-                                                        Text(
-                                                          'Recommended Tournaments',
-                                                          style: GoogleFonts.poppins(
+                                          //Recommended Tournaments
+                                          SizedBox(height: 20.h),
+                                          viewModel.recommendedTournamentsList
+                                                  .isEmpty
+                                              ? const SizedBox.shrink()
+                                              : Column(
+                                                  crossAxisAlignment:
+                                                      CrossAxisAlignment.start,
+                                                  children: [
+                                                    Text(
+                                                      'Recommended Tournaments',
+                                                      style:
+                                                          GoogleFonts.poppins(
                                                               fontSize: 21,
                                                               fontWeight:
                                                                   FontWeight
                                                                       .w600,
                                                               color: AppColors
                                                                   .textPrimary),
-                                                        ),
-                                                        SizedBox(height: 10.h),
-                                                        SizedBox(
-                                                          width:
-                                                              double.infinity,
-                                                          height: 201.h,
-                                                          child:
-                                                              SingleChildScrollView(
-                                                            scrollDirection:
-                                                                Axis.horizontal,
-                                                            child: Row(
-                                                              children: [
-                                                                ListView
-                                                                    .builder(
-                                                                  itemCount: viewModel
-                                                                      .recommendedTournamentsList
-                                                                      .length,
-                                                                  shrinkWrap:
-                                                                      true,
-                                                                  physics:
-                                                                      const NeverScrollableScrollPhysics(),
-                                                                  scrollDirection:
-                                                                      Axis.horizontal,
-                                                                  itemBuilder:
-                                                                      (context,
-                                                                          index) {
-                                                                    return SecondaryTournamentCard(
-                                                                        tournament:
-                                                                            viewModel.recommendedTournamentsList[
-                                                                                index],
-                                                                        onBookNowTap:
-                                                                            () {
-                                                                          viewModel.navigateToRentalBook(viewModel
-                                                                              .recommendedTournamentsList[index]
-                                                                              .id);
-                                                                        },
-                                                                        onTapFavorite:
-                                                                            () {
-                                                                          viewModel.toggleFavorite(viewModel
-                                                                              .recommendedTournamentsList[index]
-                                                                              .id);
-                                                                        });
-                                                                  },
-                                                                ),
-                                                                SizedBox(
-                                                                  width: 10.h,
-                                                                ),
-                                                                if (viewModel
-                                                                    .hasMoreRecommendedTournaments)
-                                                                  Align(
-                                                                    alignment:
-                                                                        Alignment
-                                                                            .center,
-                                                                    child:
-                                                                        Padding(
-                                                                      padding: EdgeInsets.symmetric(
+                                                    ),
+                                                    SizedBox(height: 10.h),
+                                                    SizedBox(
+                                                      width: double.infinity,
+                                                      height: 201.h,
+                                                      child:
+                                                          SingleChildScrollView(
+                                                        scrollDirection:
+                                                            Axis.horizontal,
+                                                        child: Row(
+                                                          children: [
+                                                            ListView.builder(
+                                                              itemCount: viewModel
+                                                                  .recommendedTournamentsList
+                                                                  .length,
+                                                              shrinkWrap: true,
+                                                              physics:
+                                                                  const NeverScrollableScrollPhysics(),
+                                                              scrollDirection:
+                                                                  Axis.horizontal,
+                                                              itemBuilder:
+                                                                  (context,
+                                                                      index) {
+                                                                return SecondaryTournamentCard(
+                                                                    tournament:
+                                                                        viewModel.recommendedTournamentsList[
+                                                                            index],
+                                                                    onBookNowTap:
+                                                                        () {
+                                                                      viewModel.navigateToRentalBook(viewModel
+                                                                          .recommendedTournamentsList[
+                                                                              index]
+                                                                          .id);
+                                                                    },
+                                                                    onTapFavorite:
+                                                                        () {
+                                                                      viewModel.toggleFavorite(viewModel
+                                                                          .recommendedTournamentsList[
+                                                                              index]
+                                                                          .id);
+                                                                    });
+                                                              },
+                                                            ),
+                                                            SizedBox(
+                                                              width: 10.h,
+                                                            ),
+                                                            if (viewModel
+                                                                .hasMoreRecommendedTournaments)
+                                                              Align(
+                                                                alignment:
+                                                                    Alignment
+                                                                        .center,
+                                                                child: Padding(
+                                                                  padding: EdgeInsets
+                                                                      .symmetric(
                                                                           horizontal:
                                                                               32.w),
-                                                                      child:
-                                                                          SmallButton(
-                                                                        title:
-                                                                            'Show More',
-                                                                        onTap:
-                                                                            () {
-                                                                          viewModel
-                                                                              .loadMoreRecommendedTournaments();
-                                                                        },
-                                                                        bgColor:
-                                                                            AppColors.white,
-                                                                        textColor:
-                                                                            AppColors.secondary,
-                                                                        borderColor:
-                                                                            AppColors.secondary,
-                                                                        isLoading:
-                                                                            viewModel.isLoadingMoreRecommendedTournaments,
-                                                                      ),
-                                                                    ),
+                                                                  child:
+                                                                      SmallButton(
+                                                                    title:
+                                                                        'Show More',
+                                                                    onTap: () {
+                                                                      viewModel
+                                                                          .loadMoreRecommendedTournaments();
+                                                                    },
+                                                                    bgColor:
+                                                                        AppColors
+                                                                            .white,
+                                                                    textColor:
+                                                                        AppColors
+                                                                            .secondary,
+                                                                    borderColor:
+                                                                        AppColors
+                                                                            .secondary,
+                                                                    isLoading:
+                                                                        viewModel
+                                                                            .isLoadingMoreRecommendedTournaments,
                                                                   ),
-                                                              ],
-                                                            ),
-                                                          ),
-                                                        )
-                                                      ],
+                                                                ),
+                                                              ),
+                                                          ],
+                                                        ),
+                                                      ),
                                                     )
-                                            ],
-                                          ),
-                                        ),
+                                                  ],
+                                                )
+                                        ],
                                       ),
-                              ),
-                            ],
+                                    ),
+                                  ),
                           ),
-                        ),
-                        FloatingChatButton(
-                          onTap: (_) {
-                            viewModel.onChatTap();
-                          },
-                          chatIconWidget: const Padding(
-                            padding: EdgeInsets.all(14.0),
-                            child: Icon(
-                              Iconsax.message_2_copy,
-                              color: AppColors.white,
-                              size: 24,
-                            ),
-                          ),
-                          messageBackgroundColor: AppColors.secondary,
-                          chatIconBorderColor: AppColors.secondary,
-                          chatIconBackgroundColor: AppColors.secondary,
-                          messageBorderWidth: 2,
-                          messageTextStyle: GoogleFonts.poppins(
-                              fontSize: 14.sp,
-                              fontWeight: FontWeight.w400,
-                              color: AppColors.white),
-                          showMessageParameters: ShowMessageParameters(
-                              delayDuration: const Duration(seconds: 2),
-                              durationToShowMessage:
-                                  const Duration(seconds: 5)),
-                        )
-                      ],
+                        ],
+                      ),
                     ),
         ));
   }

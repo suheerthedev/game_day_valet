@@ -1,6 +1,5 @@
 import 'package:flutter/material.dart';
 import 'package:game_day_valet/app/app.locator.dart';
-import 'package:game_day_valet/app/app.router.dart';
 import 'package:game_day_valet/config/api_config.dart';
 import 'package:game_day_valet/core/enums/snackbar_type.dart';
 import 'package:game_day_valet/models/rental_history_model.dart';
@@ -12,7 +11,6 @@ import 'package:stacked/stacked.dart';
 import 'package:stacked_services/stacked_services.dart';
 
 class RentalHistoryViewModel extends BaseViewModel {
-  final _navigationService = locator<NavigationService>();
   final _apiService = locator<ApiService>();
   final _snackbarService = locator<SnackbarService>();
   final _rentalService = locator<RentalService>();
@@ -61,7 +59,7 @@ class RentalHistoryViewModel extends BaseViewModel {
     }
   }
 
-  void onChatTap() {
-    _navigationService.navigateToInboxView();
-  }
+  // void onChatTap() {
+  //   _navigationService.navigateToInboxView();
+  // }
 }
