@@ -179,13 +179,7 @@ class SignUpViewModel extends BaseViewModel {
             throw ApiException("Token not found in response", 500);
           }
 
-          final tokenParts = response['token'].split('|');
-          if (tokenParts.length != 2) {
-            throw ApiException("Invalid token format", 500);
-          }
-
-          final token = tokenParts[1];
-          await _secureStorageService.saveToken(token);
+          await _secureStorageService.saveToken(response['token']);
 
           await _userService.fetchCurrentUser();
 
