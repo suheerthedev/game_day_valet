@@ -295,6 +295,7 @@ Account""",
                                   border: BoxBorder.all(
                                       width: 1.04.w, color: AppColors.primary),
                                 ),
+                                clipBehavior: Clip.hardEdge,
                                 child: Center(
                                   child: Row(
                                     mainAxisAlignment: MainAxisAlignment.center,
