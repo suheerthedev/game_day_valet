@@ -33,7 +33,7 @@ class MainAppBar extends StackedView<MainAppBarModel>
     return AppBar(
       backgroundColor: AppColors.scaffoldBackground,
       surfaceTintColor: Colors.transparent,
-      automaticallyImplyLeading: false,
+      automaticallyImplyLeading: true,
       // elevation: 10,
       // shadowColor: AppColors.primary.withOpacity(0.1),
 
