@@ -292,7 +292,7 @@ Account""",
                                 decoration: BoxDecoration(
                                   color: AppColors.white,
                                   borderRadius: BorderRadius.circular(10.r),
-                                  border: BoxBorder.all(
+                                  border: Border.all(
                                       width: 1.04.w, color: AppColors.primary),
                                 ),
                                 child: Center(
@@ -333,7 +333,7 @@ Account""",
                           //       decoration: BoxDecoration(
                           //         color: AppColors.white,
                           //         borderRadius: BorderRadius.circular(10.r),
-                          //         border: BoxBorder.all(
+                          //         border: Border.all(
                           //             width: 1.04.w, color: AppColors.primary),
                           //       ),
                           //       child: Center(

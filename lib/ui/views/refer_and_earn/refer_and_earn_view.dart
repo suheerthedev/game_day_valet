@@ -66,7 +66,7 @@ class ReferAndEarnView extends StackedView<ReferAndEarnViewModel> {
                                   decoration: BoxDecoration(
                                     color: AppColors.secondary,
                                     borderRadius: BorderRadius.circular(10.r),
-                                    border: BoxBorder.all(
+                                    border: Border.all(
                                         width: 1.04.w, color: AppColors.white),
                                   ),
                                   child: Center(
@@ -106,7 +106,7 @@ class ReferAndEarnView extends StackedView<ReferAndEarnViewModel> {
                                           color: AppColors.white,
                                           borderRadius:
                                               BorderRadius.circular(10.r),
-                                          border: BoxBorder.all(
+                                          border: Border.all(
                                               width: 1.04.w,
                                               color: AppColors.secondary),
                                         ),
@@ -141,7 +141,7 @@ class ReferAndEarnView extends StackedView<ReferAndEarnViewModel> {
                                           color: AppColors.white,
                                           borderRadius:
                                               BorderRadius.circular(10.r),
-                                          border: BoxBorder.all(
+                                          border: Border.all(
                                               width: 1.04.w,
                                               color: AppColors.secondary),
                                         ),
@@ -203,7 +203,7 @@ class ReferAndEarnView extends StackedView<ReferAndEarnViewModel> {
                               //             color: AppColors.white,
                               //             borderRadius:
                               //                 BorderRadius.circular(10.r),
-                              //             border: BoxBorder.all(
+                              //             border: Border.all(
                               //                 width: 1.04.w,
                               //                 color: AppColors.secondary),
                               //           ),

@@ -73,7 +73,7 @@ class MainTournamentCard extends StackedView<MainTournamentCardModel> {
                           color: Colors.transparent,
                           borderRadius: BorderRadius.circular(5.r),
                           border:
-                              BoxBorder.all(width: 1.w, color: AppColors.white),
+                              Border.all(width: 1.w, color: AppColors.white),
                         ),
                         child: Center(
                           child: Text(

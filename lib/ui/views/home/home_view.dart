@@ -484,7 +484,7 @@ class HomeView extends StackedView<HomeViewModel> {
                       decoration: BoxDecoration(
                         color: AppColors.secondary,
                         borderRadius: BorderRadius.circular(10.r),
-                        border: BoxBorder.all(
+                        border: Border.all(
                             width: 1.04.w, color: AppColors.white),
                       ),
                       child: Center(

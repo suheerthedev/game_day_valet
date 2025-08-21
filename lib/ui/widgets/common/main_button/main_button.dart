@@ -40,7 +40,7 @@ class MainButton extends StackedView<MainButtonModel> {
                 isDisabled ? AppColors.grey500 : color ?? AppColors.secondary,
             borderRadius: BorderRadius.circular(10.r),
             border: hasBorder
-                ? BoxBorder.all(
+                ? Border.all(
                     width: 1.04.w, color: borderColor ?? AppColors.white)
                 : null,
           ),
