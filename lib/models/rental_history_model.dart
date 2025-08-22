@@ -10,7 +10,7 @@ class RentalHistoryModel {
   final String? dropoffTime;
   final String? promoCode;
   final String? insuranceOption;
-  final bool? damageWaiver;
+  final String? damageWaiver;
   final String? rentalDate;
   final String? deliveryAssignedTo;
   final String? paymentMethod;

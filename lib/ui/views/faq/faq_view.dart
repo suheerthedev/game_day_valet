@@ -53,16 +53,16 @@ class FaqView extends StackedView<FaqViewModel> {
   ) {
     return AnimatedContainer(
       width: 340.w,
-      height: faqItem.isExpanded ? 115.h : 58.h,
+      // Remove fixed height to allow content to determine the size
+      duration: const Duration(milliseconds: 250),
+      curve: Curves.easeInOut,
       padding: EdgeInsets.symmetric(horizontal: 16.w),
       decoration: BoxDecoration(
         color: AppColors.grey100,
         borderRadius: BorderRadius.circular(16.r),
       ),
-      duration: const Duration(milliseconds: 250),
-      curve: Curves.easeInOut,
       child: Column(
-        mainAxisAlignment: MainAxisAlignment.center,
+        mainAxisSize: MainAxisSize.min, // Use min size to prevent extra space
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
           // Question
@@ -97,24 +97,26 @@ class FaqView extends StackedView<FaqViewModel> {
           ),
 
           // Answer with smooth size + fade animation
-          AnimatedCrossFade(
-            firstChild: const SizedBox.shrink(),
-            secondChild: Padding(
-              padding: const EdgeInsets.only(bottom: 12.0),
-              child: Text(
-                faqItem.description ?? '',
-                style: GoogleFonts.poppins(
-                  fontSize: 12.sp,
-                  color: AppColors.textHint,
-                  fontWeight: FontWeight.w400,
+          ClipRect(
+            child: AnimatedCrossFade(
+              firstChild: const SizedBox.shrink(),
+              secondChild: Padding(
+                padding: const EdgeInsets.only(bottom: 12.0),
+                child: Text(
+                  faqItem.description ?? '',
+                  style: GoogleFonts.poppins(
+                    fontSize: 12.sp,
+                    color: AppColors.textHint,
+                    fontWeight: FontWeight.w400,
+                  ),
                 ),
               ),
+              crossFadeState: faqItem.isExpanded
+                  ? CrossFadeState.showSecond
+                  : CrossFadeState.showFirst,
+              duration: const Duration(milliseconds: 250),
+              sizeCurve: Curves.easeInOut,
             ),
-            crossFadeState: faqItem.isExpanded
-                ? CrossFadeState.showSecond
-                : CrossFadeState.showFirst,
-            duration: const Duration(milliseconds: 250),
-            sizeCurve: Curves.easeInOut,
           ),
         ],
       ),

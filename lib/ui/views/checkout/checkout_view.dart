@@ -535,16 +535,6 @@ class CheckoutView extends StackedView<CheckoutViewModel> {
                             fontWeight: FontWeight.w600,
                             color: AppColors.textPrimary),
                       ),
-                      if (viewModel.damageWaiverOptions.first.description !=
-                          null) ...[
-                        Text(
-                          viewModel.damageWaiverOptions.first.description ?? '',
-                          style: GoogleFonts.poppins(
-                              fontSize: 10.sp,
-                              fontWeight: FontWeight.w400,
-                              color: AppColors.textHint),
-                        ),
-                      ],
                       SizedBox(height: 10.h),
                       ListView.builder(
                         shrinkWrap: true,
@@ -567,12 +557,30 @@ class CheckoutView extends StackedView<CheckoutViewModel> {
                                   onChanged: (value) {
                                     viewModel.toggleDamageWaiver(option);
                                   }),
-                              Text(
-                                option.label,
-                                style: GoogleFonts.poppins(
-                                    fontSize: 14.sp,
-                                    fontWeight: FontWeight.w500,
-                                    color: AppColors.textPrimary),
+                              Expanded(
+                                child: Column(
+                                  crossAxisAlignment: CrossAxisAlignment.start,
+                                  children: [
+                                    Text(
+                                      option.label,
+                                      style: GoogleFonts.poppins(
+                                          fontSize: 14.sp,
+                                          fontWeight: FontWeight.w500,
+                                          color: AppColors.textPrimary),
+                                    ),
+                                    if (option.description != null) ...[
+                                      Text(
+                                        option.description ?? '',
+                                        maxLines: 2,
+                                        overflow: TextOverflow.ellipsis,
+                                        style: GoogleFonts.poppins(
+                                            fontSize: 10.sp,
+                                            fontWeight: FontWeight.w400,
+                                            color: AppColors.textHint),
+                                      ),
+                                    ],
+                                  ],
+                                ),
                               ),
                             ],
                           );
