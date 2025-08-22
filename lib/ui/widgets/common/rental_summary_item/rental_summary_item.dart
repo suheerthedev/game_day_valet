@@ -44,8 +44,8 @@ class RentalSummaryItem extends StackedView<RentalSummaryItemModel> {
             child: ClipRRect(
               borderRadius: BorderRadius.circular(12.r),
               child: CachedNetworkImage(
-                  imageUrl: item.image ?? '',
-                  fit: BoxFit.cover,
+                  imageUrl: item.imageUrl ?? '',
+                  fit: BoxFit.contain,
                   placeholder: (context, url) => const Center(
                         child: CircularProgressIndicator(
                           color: AppColors.secondary,

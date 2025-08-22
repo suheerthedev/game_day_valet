@@ -42,7 +42,7 @@ class BundlesSummaryItem extends StackedView<BundlesSummaryItemModel> {
               borderRadius: BorderRadius.circular(12.r),
               child: CachedNetworkImage(
                   imageUrl: bundle.image ?? '',
-                  fit: BoxFit.cover,
+                  fit: BoxFit.contain,
                   placeholder: (context, url) => const Center(
                         child: CircularProgressIndicator(
                           color: AppColors.secondary,

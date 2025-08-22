@@ -24,6 +24,7 @@ import '../services/pusher_service.dart';
 import '../services/rental_service.dart';
 import '../services/secure_storage_service.dart';
 import '../services/shared_preferences_service.dart';
+import '../services/sports_service.dart';
 import '../services/stripe_service.dart';
 import '../services/tournament_service.dart';
 import '../services/user_service.dart';
@@ -58,4 +59,5 @@ Future<void> setupLocator({
   locator.registerLazySingleton(() => RentalService());
   locator.registerLazySingleton(() => SharedPreferencesService());
   locator.registerLazySingleton(() => LocationService());
+  locator.registerLazySingleton(() => SportsService());
 }

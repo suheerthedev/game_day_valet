@@ -535,6 +535,16 @@ class CheckoutView extends StackedView<CheckoutViewModel> {
                             fontWeight: FontWeight.w600,
                             color: AppColors.textPrimary),
                       ),
+                      if (viewModel.damageWaiverOptions.first.description !=
+                          null) ...[
+                        Text(
+                          viewModel.damageWaiverOptions.first.description ?? '',
+                          style: GoogleFonts.poppins(
+                              fontSize: 10.sp,
+                              fontWeight: FontWeight.w400,
+                              color: AppColors.textHint),
+                        ),
+                      ],
                       SizedBox(height: 10.h),
                       ListView.builder(
                         shrinkWrap: true,

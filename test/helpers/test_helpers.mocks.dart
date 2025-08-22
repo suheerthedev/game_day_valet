@@ -11,6 +11,7 @@ import 'package:flutter/material.dart' as _i5;
 import 'package:game_day_valet/models/chat_model.dart' as _i19;
 import 'package:game_day_valet/models/message_model.dart' as _i2;
 import 'package:game_day_valet/models/rental_status_model.dart' as _i25;
+import 'package:game_day_valet/models/settings_item_model.dart' as _i26;
 import 'package:game_day_valet/models/tournament_model.dart' as _i22;
 import 'package:game_day_valet/models/user_model.dart' as _i13;
 import 'package:game_day_valet/services/api_service.dart' as _i8;
@@ -19,13 +20,14 @@ import 'package:game_day_valet/services/chat_service.dart' as _i18;
 import 'package:game_day_valet/services/connectivity_service.dart' as _i14;
 import 'package:game_day_valet/services/deep_linking_service.dart' as _i23;
 import 'package:game_day_valet/services/google_sign_in_service.dart' as _i16;
-import 'package:game_day_valet/services/location_service.dart' as _i27;
+import 'package:game_day_valet/services/location_service.dart' as _i28;
 import 'package:game_day_valet/services/logger_service.dart' as _i15;
 import 'package:game_day_valet/services/pusher_service.dart' as _i20;
 import 'package:game_day_valet/services/rental_service.dart' as _i24;
 import 'package:game_day_valet/services/secure_storage_service.dart' as _i10;
 import 'package:game_day_valet/services/shared_preferences_service.dart'
-    as _i26;
+    as _i27;
+import 'package:game_day_valet/services/sports_service.dart' as _i29;
 import 'package:game_day_valet/services/stripe_service.dart' as _i17;
 import 'package:game_day_valet/services/tournament_service.dart' as _i21;
 import 'package:game_day_valet/services/user_service.dart' as _i12;
@@ -1005,14 +1007,14 @@ class MockUserService extends _i1.Mock implements _i12.UserService {
       ) as int);
 
   @override
-  _i6.Future<void> fetchCurrentUser() => (super.noSuchMethod(
+  _i6.Future<bool> fetchCurrentUser() => (super.noSuchMethod(
         Invocation.method(
           #fetchCurrentUser,
           [],
         ),
-        returnValue: _i6.Future<void>.value(),
-        returnValueForMissingStub: _i6.Future<void>.value(),
-      ) as _i6.Future<void>);
+        returnValue: _i6.Future<bool>.value(false),
+        returnValueForMissingStub: _i6.Future<bool>.value(false),
+      ) as _i6.Future<bool>);
 
   @override
   void clearUser() => super.noSuchMethod(
@@ -1638,6 +1640,20 @@ class MockRentalService extends _i1.Mock implements _i24.RentalService {
       ) as List<_i25.RentalStatusModel>);
 
   @override
+  List<_i26.SettingsItemModel> get insuranceOptions => (super.noSuchMethod(
+        Invocation.getter(#insuranceOptions),
+        returnValue: <_i26.SettingsItemModel>[],
+        returnValueForMissingStub: <_i26.SettingsItemModel>[],
+      ) as List<_i26.SettingsItemModel>);
+
+  @override
+  List<_i26.SettingsItemModel> get damageWaiverOptions => (super.noSuchMethod(
+        Invocation.getter(#damageWaiverOptions),
+        returnValue: <_i26.SettingsItemModel>[],
+        returnValueForMissingStub: <_i26.SettingsItemModel>[],
+      ) as List<_i26.SettingsItemModel>);
+
+  @override
   int get listenersCount => (super.noSuchMethod(
         Invocation.getter(#listenersCount),
         returnValue: 0,
@@ -1662,6 +1678,16 @@ class MockRentalService extends _i1.Mock implements _i24.RentalService {
         ),
         returnValueForMissingStub: null,
       );
+
+  @override
+  _i6.Future<void> reset() => (super.noSuchMethod(
+        Invocation.method(
+          #reset,
+          [],
+        ),
+        returnValue: _i6.Future<void>.value(),
+        returnValueForMissingStub: _i6.Future<void>.value(),
+      ) as _i6.Future<void>);
 
   @override
   _i6.Future<dynamic> createRentalBooking(
@@ -1763,6 +1789,16 @@ class MockRentalService extends _i1.Mock implements _i24.RentalService {
       ) as _i6.Future<void>);
 
   @override
+  _i6.Future<void> getSettingsItems() => (super.noSuchMethod(
+        Invocation.method(
+          #getSettingsItems,
+          [],
+        ),
+        returnValue: _i6.Future<void>.value(),
+        returnValueForMissingStub: _i6.Future<void>.value(),
+      ) as _i6.Future<void>);
+
+  @override
   void listenToReactiveValues(List<dynamic>? reactiveValues) =>
       super.noSuchMethod(
         Invocation.method(
@@ -1804,7 +1840,7 @@ class MockRentalService extends _i1.Mock implements _i24.RentalService {
 ///
 /// See the documentation for Mockito's code generation for more information.
 class MockSharedPreferencesService extends _i1.Mock
-    implements _i26.SharedPreferencesService {
+    implements _i27.SharedPreferencesService {
   @override
   _i6.Future<void> init() => (super.noSuchMethod(
         Invocation.method(
@@ -2034,17 +2070,45 @@ class MockSharedPreferencesService extends _i1.Mock
       ) as _i6.Future<bool>);
 
   @override
-  _i6.Future<bool> clear() => (super.noSuchMethod(
+  _i6.Future<void> clear() => (super.noSuchMethod(
         Invocation.method(
           #clear,
           [],
         ),
-        returnValue: _i6.Future<bool>.value(false),
-        returnValueForMissingStub: _i6.Future<bool>.value(false),
-      ) as _i6.Future<bool>);
+        returnValue: _i6.Future<void>.value(),
+        returnValueForMissingStub: _i6.Future<void>.value(),
+      ) as _i6.Future<void>);
 }
 
 /// A class which mocks [LocationService].
 ///
 /// See the documentation for Mockito's code generation for more information.
-class MockLocationService extends _i1.Mock implements _i27.LocationService {}
+class MockLocationService extends _i1.Mock implements _i28.LocationService {
+  @override
+  _i6.Future<String> getCityAndCountry() => (super.noSuchMethod(
+        Invocation.method(
+          #getCityAndCountry,
+          [],
+        ),
+        returnValue: _i6.Future<String>.value(_i4.dummyValue<String>(
+          this,
+          Invocation.method(
+            #getCityAndCountry,
+            [],
+          ),
+        )),
+        returnValueForMissingStub:
+            _i6.Future<String>.value(_i4.dummyValue<String>(
+          this,
+          Invocation.method(
+            #getCityAndCountry,
+            [],
+          ),
+        )),
+      ) as _i6.Future<String>);
+}
+
+/// A class which mocks [SportsService].
+///
+/// See the documentation for Mockito's code generation for more information.
+class MockSportsService extends _i1.Mock implements _i29.SportsService {}

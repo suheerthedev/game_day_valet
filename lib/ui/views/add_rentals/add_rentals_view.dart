@@ -1,3 +1,4 @@
+import 'package:cached_network_image/cached_network_image.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:game_day_valet/ui/common/app_colors.dart';
@@ -6,6 +7,7 @@ import 'package:game_day_valet/ui/widgets/common/main_button/main_button.dart';
 import 'package:game_day_valet/ui/widgets/common/main_item_card/main_item_card.dart';
 import 'package:game_day_valet/ui/widgets/common/main_search_bar/main_search_bar.dart';
 import 'package:google_fonts/google_fonts.dart';
+import 'package:iconsax_plus/iconsax_plus.dart';
 import 'package:stacked/stacked.dart';
 
 import 'add_rentals_viewmodel.dart';
@@ -103,8 +105,8 @@ class AddRentalsView extends StackedView<AddRentalsViewModel> {
                               itemBuilder: (context, index) {
                                 final bundle = viewModel.bundles[index];
                                 return Container(
-                                  width: 340.w,
-                                  height: 58.h,
+                                  padding: EdgeInsets.symmetric(
+                                      vertical: 5.h, horizontal: 5.w),
                                   decoration: BoxDecoration(
                                       color: AppColors.grey50,
                                       borderRadius: BorderRadius.circular(10.r),
@@ -112,62 +114,220 @@ class AddRentalsView extends StackedView<AddRentalsViewModel> {
                                           color: AppColors.grey100,
                                           width: 1.w)),
                                   child: Row(
+                                    crossAxisAlignment:
+                                        CrossAxisAlignment.center,
                                     children: [
+                                      Container(
+                                        width: 56.w,
+                                        height: 56.w,
+                                        decoration: BoxDecoration(
+                                            color: AppColors.grey50,
+                                            borderRadius:
+                                                BorderRadius.circular(10.r),
+                                            border: Border.all(
+                                                color: AppColors.grey100,
+                                                width: 1.w)),
+                                        child: ClipRRect(
+                                          borderRadius:
+                                              BorderRadius.circular(12.r),
+                                          child: CachedNetworkImage(
+                                              imageUrl: bundle.image ?? '',
+                                              fit: BoxFit.contain,
+                                              placeholder: (context, url) =>
+                                                  const Center(
+                                                    child:
+                                                        CircularProgressIndicator(
+                                                      color:
+                                                          AppColors.secondary,
+                                                    ),
+                                                  ),
+                                              errorWidget:
+                                                  (context, url, error) => Icon(
+                                                      IconsaxPlusLinear.image,
+                                                      size: 24.sp,
+                                                      color:
+                                                          AppColors.grey400)),
+                                        ),
+                                      ),
+                                      SizedBox(width: 12.w),
                                       Expanded(
-                                        child: Row(
+                                        child: Column(
+                                          crossAxisAlignment:
+                                              CrossAxisAlignment.start,
                                           children: [
-                                            Checkbox(
-                                                activeColor: AppColors
-                                                    .secondary,
-                                                checkColor: AppColors.white,
-                                                splashRadius: 0,
-                                                side: BorderSide(
-                                                    color: AppColors.textHint,
-                                                    width: 1.w),
-                                                shape: RoundedRectangleBorder(
-                                                    borderRadius:
-                                                        BorderRadius.all(
-                                                            Radius.circular(
-                                                                2.r))),
-                                                value: bundle.isSelected,
-                                                onChanged: (value) {
-                                                  viewModel
-                                                      .toggleBundle(bundle);
-                                                }),
-                                            ConstrainedBox(
-                                              constraints: BoxConstraints(
-                                                maxWidth: 200.w,
+                                            Text(
+                                              bundle.name ?? '',
+                                              style: GoogleFonts.poppins(
+                                                fontSize: 14.sp,
+                                                fontWeight: FontWeight.w600,
+                                                color: AppColors.textPrimary,
                                               ),
-                                              child: Text(
-                                                bundle.totalItems ?? '',
-                                                maxLines: 2,
-                                                softWrap: true,
-                                                overflow: TextOverflow.ellipsis,
-                                                style: GoogleFonts.poppins(
-                                                    fontSize: 14.sp,
-                                                    fontWeight: FontWeight.w500,
-                                                    color:
-                                                        AppColors.textPrimary),
+                                            ),
+                                            SizedBox(height: 2.h),
+                                            Text(
+                                              bundle.totalItems ?? '',
+                                              style: GoogleFonts.poppins(
+                                                fontSize: 12.sp,
+                                                fontWeight: FontWeight.w400,
+                                                color: AppColors.textSecondary,
                                               ),
+                                            ),
+                                            SizedBox(height: 2.h),
+                                            Text(
+                                              "\$ ${bundle.price}",
+                                              maxLines: 1,
+                                              overflow: TextOverflow.ellipsis,
+                                              style: GoogleFonts.poppins(
+                                                  fontSize: 12.sp,
+                                                  fontWeight: FontWeight.w600,
+                                                  color: AppColors.secondary),
                                             ),
                                           ],
                                         ),
                                       ),
-                                      Padding(
-                                        padding: EdgeInsets.only(right: 10.w),
-                                        child: Text(
-                                          "\$ ${bundle.price}",
-                                          maxLines: 1,
-                                          overflow: TextOverflow.ellipsis,
-                                          style: GoogleFonts.poppins(
-                                              fontSize: 15.sp,
-                                              fontWeight: FontWeight.w500,
-                                              color: AppColors.secondary),
-                                        ),
-                                      ),
+                                      SizedBox(width: 12.w),
+                                      Checkbox(
+                                          activeColor: AppColors.secondary,
+                                          checkColor: AppColors.white,
+                                          splashRadius: 0,
+                                          side: BorderSide(
+                                              color: AppColors.textHint,
+                                              width: 1.w),
+                                          shape: RoundedRectangleBorder(
+                                              borderRadius: BorderRadius.all(
+                                                  Radius.circular(2.r))),
+                                          value: bundle.isSelected,
+                                          onChanged: (value) {
+                                            viewModel.toggleBundle(bundle);
+                                          }),
                                     ],
                                   ),
                                 );
+                                // return Container(
+                                //   width: 340.w,
+                                //   height: 85.h,
+                                //   decoration: BoxDecoration(
+                                //       color: AppColors.grey50,
+                                //       borderRadius: BorderRadius.circular(10.r),
+                                //       border: Border.all(
+                                //           color: AppColors.grey100,
+                                //           width: 1.w)),
+                                //   child: Row(
+                                //     children: [
+                                //       Container(
+                                //         width: 56.w,
+                                //         height: 56.w,
+                                //         decoration: BoxDecoration(
+                                //           color: AppColors.grey100,
+                                //           borderRadius:
+                                //               BorderRadius.circular(12.r),
+                                //         ),
+                                //         child: ClipRRect(
+                                //           borderRadius:
+                                //               BorderRadius.circular(12.r),
+                                //           child: CachedNetworkImage(
+                                //               imageUrl: bundle.image ?? '',
+                                //               fit: BoxFit.contain,
+                                //               placeholder: (context, url) =>
+                                //                   const Center(
+                                //                     child:
+                                //                         CircularProgressIndicator(
+                                //                       color:
+                                //                           AppColors.secondary,
+                                //                     ),
+                                //                   ),
+                                //               errorWidget:
+                                //                   (context, url, error) => Icon(
+                                //                       IconsaxPlusLinear.image,
+                                //                       size: 24.sp,
+                                //                       color:
+                                //                           AppColors.grey400)),
+                                //         ),
+                                //       ),
+                                //       SizedBox(width: 12.w),
+                                //       Expanded(
+                                //         child: Column(
+                                //           mainAxisAlignment:
+                                //               MainAxisAlignment.center,
+                                //           crossAxisAlignment:
+                                //               CrossAxisAlignment.start,
+                                //           children: [
+                                //             Text(
+                                //               bundle.totalItems ?? '',
+                                //               maxLines: 2,
+                                //               overflow: TextOverflow.ellipsis,
+                                //               style: GoogleFonts.poppins(
+                                //                 fontSize: 14.sp,
+                                //                 fontWeight: FontWeight.w600,
+                                //                 color: AppColors.textPrimary,
+                                //               ),
+                                //             ),
+                                //             SizedBox(height: 2.h),
+                                //             Text(
+                                //               "\$ ${bundle.price}",
+                                //               maxLines: 1,
+                                //               overflow: TextOverflow.ellipsis,
+                                //               style: GoogleFonts.poppins(
+                                //                   fontSize: 15.sp,
+                                //                   fontWeight: FontWeight.w500,
+                                //                   color: AppColors.secondary),
+                                //             ),
+                                //             SizedBox(height: 8.h),
+                                //           ],
+                                //         ),
+                                //       ),
+                                //       Checkbox(
+                                //           activeColor: AppColors.secondary,
+                                //           checkColor: AppColors.white,
+                                //           splashRadius: 0,
+                                //           side: BorderSide(
+                                //               color: AppColors.textHint,
+                                //               width: 1.w),
+                                //           shape: RoundedRectangleBorder(
+                                //               borderRadius: BorderRadius.all(
+                                //                   Radius.circular(2.r))),
+                                //           value: bundle.isSelected,
+                                //           onChanged: (value) {
+                                //             viewModel.toggleBundle(bundle);
+                                //           }),
+                                //       // Expanded(
+                                //       //   child: Row(
+                                //       //     children: [
+
+                                //       //       ConstrainedBox(
+                                //       //         constraints: BoxConstraints(
+                                //       //           maxWidth: 200.w,
+                                //       //         ),
+                                //       //         child: Text(
+                                //       //           bundle.totalItems ?? '',
+                                //       //           maxLines: 2,
+                                //       //           softWrap: true,
+                                //       //           overflow: TextOverflow.ellipsis,
+                                //       //           style: GoogleFonts.poppins(
+                                //       //               fontSize: 14.sp,
+                                //       //               fontWeight: FontWeight.w500,
+                                //       //               color:
+                                //       //                   AppColors.textPrimary),
+                                //       //         ),
+                                //       //       ),
+                                //       //     ],
+                                //       //   ),
+                                //       // ),
+                                //       // Padding(
+                                //       //   padding: EdgeInsets.only(right: 10.w),
+                                //       //   child: Text(
+                                //       //     "\$ ${bundle.price}",
+                                //       //     maxLines: 1,
+                                //       //     overflow: TextOverflow.ellipsis,
+                                //       //     style: GoogleFonts.poppins(
+                                //       //         fontSize: 15.sp,
+                                //       //         fontWeight: FontWeight.w500,
+                                //       //         color: AppColors.secondary),
+                                //       //   ),
+                                //       // ),
+                                //     ],
+                                //   ),
+                                // );
                               },
                             ),
                           ],

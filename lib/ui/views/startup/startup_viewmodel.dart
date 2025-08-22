@@ -36,13 +36,13 @@ class StartupViewModel extends BaseViewModel {
 
     if (token != null) {
       final hasUser = await _userService.fetchCurrentUser();
+      await _sharedPreferencesService.init();
+
       if (hasUser) {
-        await _sharedPreferencesService.init();
         await getUserConversations();
         await _rentalService.init();
-        await Future.delayed(const Duration(seconds: 3));
-        await _navigationService.replaceWithMainView();
       }
+      await _navigationService.replaceWithMainView();
     } else {
       _navigationService.replaceWithOnboardingView();
     }

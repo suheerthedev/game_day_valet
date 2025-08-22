@@ -17,6 +17,7 @@ import 'package:game_day_valet/services/deep_linking_service.dart';
 import 'package:game_day_valet/services/rental_service.dart';
 import 'package:game_day_valet/services/shared_preferences_service.dart';
 import 'package:game_day_valet/services/location_service.dart';
+import 'package:game_day_valet/services/sports_service.dart';
 // @stacked-import
 
 import 'test_helpers.mocks.dart';
@@ -43,6 +44,7 @@ import 'test_helpers.mocks.dart';
     MockSpec<SharedPreferencesService>(
         onMissingStub: OnMissingStub.returnDefault),
     MockSpec<LocationService>(onMissingStub: OnMissingStub.returnDefault),
+    MockSpec<SportsService>(onMissingStub: OnMissingStub.returnDefault),
 // @stacked-mock-spec
   ],
 )
@@ -65,6 +67,7 @@ void registerServices() {
   getAndRegisterRentalService();
   getAndRegisterSharedPreferencesService();
   getAndRegisterLocationService();
+  getAndRegisterSportsService();
 // @stacked-mock-register
 }
 
@@ -224,6 +227,13 @@ MockLocationService getAndRegisterLocationService() {
   _removeRegistrationIfExists<LocationService>();
   final service = MockLocationService();
   locator.registerSingleton<LocationService>(service);
+  return service;
+}
+
+MockSportsService getAndRegisterSportsService() {
+  _removeRegistrationIfExists<SportsService>();
+  final service = MockSportsService();
+  locator.registerSingleton<SportsService>(service);
   return service;
 }
 // @stacked-mock-create

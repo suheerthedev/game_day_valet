@@ -67,4 +67,9 @@ class TournamentService {
       throw ApiException(e.toString());
     }
   }
+
+  void clearTournaments() {
+    tournamentsBySport.clear();
+    recommendedTournaments.clear();
+  }
 }

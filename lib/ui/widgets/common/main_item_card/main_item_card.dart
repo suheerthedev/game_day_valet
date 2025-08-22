@@ -35,7 +35,8 @@ class MainItemCard extends StackedView<MainItemCardModel> {
             borderRadius: BorderRadius.circular(15),
           ),
           child: CachedNetworkImage(
-            imageUrl: item.image ?? '',
+            imageUrl: item.imageUrl ?? '',
+            fit: BoxFit.contain,
             placeholder: (context, url) => const Center(
               child: CircularProgressIndicator(),
             ),
@@ -79,14 +80,14 @@ class MainItemCard extends StackedView<MainItemCardModel> {
           mainAxisAlignment: MainAxisAlignment.spaceBetween,
           children: [
             InkWell(
-              onTap: onTapAdd,
+              onTap: onTapRemove,
               child: Container(
                 decoration: BoxDecoration(
                   color: AppColors.primary,
                   borderRadius: BorderRadius.circular(10.r),
                 ),
                 child: Icon(
-                  IconsaxPlusLinear.add,
+                  IconsaxPlusLinear.minus,
                   size: 20.sp,
                   color: AppColors.white,
                 ),
@@ -102,14 +103,14 @@ class MainItemCard extends StackedView<MainItemCardModel> {
                   color: AppColors.primary),
             ),
             InkWell(
-              onTap: onTapRemove,
+              onTap: onTapAdd,
               child: Container(
                 decoration: BoxDecoration(
                   color: AppColors.primary,
                   borderRadius: BorderRadius.circular(10.r),
                 ),
                 child: Icon(
-                  IconsaxPlusLinear.minus,
+                  IconsaxPlusLinear.add,
                   size: 20.sp,
                   color: AppColors.white,
                 ),

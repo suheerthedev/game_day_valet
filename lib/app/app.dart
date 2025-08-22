@@ -45,6 +45,8 @@ import 'package:game_day_valet/services/deep_linking_service.dart';
 import 'package:game_day_valet/services/rental_service.dart';
 import 'package:game_day_valet/services/shared_preferences_service.dart';
 import 'package:game_day_valet/services/location_service.dart';
+import 'package:game_day_valet/ui/views/tournaments/tournaments_view.dart';
+import 'package:game_day_valet/services/sports_service.dart';
 // @stacked-import
 
 @StackedApp(
@@ -84,6 +86,7 @@ import 'package:game_day_valet/services/location_service.dart';
         transitionsBuilder: TransitionsBuilders.fadeIn,
         durationInMilliseconds: 500),
     MaterialRoute(page: InboxView),
+    MaterialRoute(page: TournamentsView),
 // @stacked-route
   ],
   dependencies: [
@@ -106,6 +109,7 @@ import 'package:game_day_valet/services/location_service.dart';
     LazySingleton(classType: RentalService),
     LazySingleton(classType: SharedPreferencesService),
     LazySingleton(classType: LocationService),
+    LazySingleton(classType: SportsService),
 // @stacked-service
   ],
   bottomsheets: [

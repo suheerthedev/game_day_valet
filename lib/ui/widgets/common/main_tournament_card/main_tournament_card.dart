@@ -103,22 +103,22 @@ class MainTournamentCard extends StackedView<MainTournamentCardModel> {
                     ),
                   ),
                 ),
-                Align(
-                  alignment: Alignment.bottomRight,
-                  child: GestureDetector(
-                    onTap: onTapMap,
-                    child: Padding(
-                      padding: EdgeInsets.only(bottom: 10.h, right: 10.w),
-                      child: Text(
-                        'Field Map View',
-                        style: GoogleFonts.poppins(
-                          fontSize: 16.sp,
-                          color: const Color(0xFFFFE168),
-                        ),
-                      ),
-                    ),
-                  ),
-                )
+                // Align(
+                //   alignment: Alignment.bottomRight,
+                //   child: GestureDetector(
+                //     onTap: onTapMap,
+                //     child: Padding(
+                //       padding: EdgeInsets.only(bottom: 10.h, right: 10.w),
+                //       child: Text(
+                //         'Field Map View',
+                //         style: GoogleFonts.poppins(
+                //           fontSize: 16.sp,
+                //           color: const Color(0xFFFFE168),
+                //         ),
+                //       ),
+                //     ),
+                //   ),
+                // )
               ]),
             ),
           ),

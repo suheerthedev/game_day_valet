@@ -4,7 +4,7 @@ class ItemModel {
   final String? description;
   final String? price;
   final int? stock;
-  final String? image;
+  final String? imageUrl;
   final String? status;
   int quantity;
 
@@ -14,7 +14,7 @@ class ItemModel {
     this.description,
     this.price,
     this.stock,
-    this.image,
+    this.imageUrl,
     this.status,
     this.quantity = 0,
   });
@@ -26,7 +26,7 @@ class ItemModel {
       description: json['description'],
       price: json['price'],
       stock: json['stock'],
-      image: json['image'],
+      imageUrl: json['image_url'],
       status: json['status'],
     );
   }
