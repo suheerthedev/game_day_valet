@@ -87,7 +87,7 @@ class HomeView extends StackedView<HomeViewModel> {
           ),
         ),
         body: SafeArea(
-          child: viewModel.isBusy
+          child: viewModel.isSportsLoading
               ? const Center(child: CircularProgressIndicator())
               : viewModel.sportsList.isEmpty
                   ? _buildEmptyState()

@@ -23,7 +23,18 @@ class ProfileViewModel extends ReactiveViewModel {
 
   bool isLoggingOut = false;
 
-  bool isNotificationsEnabled = false;
+  bool? isNotificationsEnabled;
+
+  void init() async {
+    isNotificationsEnabled =
+        await _sharedPreferencesService.getBool('notifications_enabled');
+    if (isNotificationsEnabled == null) {
+      isNotificationsEnabled = false;
+      await _sharedPreferencesService.setBool(
+          'notifications_enabled', isNotificationsEnabled!);
+    }
+    rebuildUi();
+  }
 
   Future<void> onLogoutTap() async {
     isLoggingOut = true;
@@ -63,9 +74,10 @@ class ProfileViewModel extends ReactiveViewModel {
     _navigationService.navigateToFaqView();
   }
 
-  void onNotificationsTap() {
-    isNotificationsEnabled = !isNotificationsEnabled;
-    print(isNotificationsEnabled);
+  void onNotificationsTap() async {
+    isNotificationsEnabled = !isNotificationsEnabled!;
+    await _sharedPreferencesService.setBool(
+        'notifications_enabled', isNotificationsEnabled!);
     rebuildUi();
   }
 

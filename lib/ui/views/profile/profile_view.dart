@@ -212,7 +212,7 @@ class ProfileView extends StackedView<ProfileViewModel> {
                                   fontWeight: FontWeight.w400,
                                   color: AppColors.textPrimary)),
                           trailing: Icon(
-                              viewModel.isNotificationsEnabled
+                              viewModel.isNotificationsEnabled ?? false
                                   ? IconsaxPlusBold.toggle_on_circle
                                   : IconsaxPlusLinear.toggle_off_circle,
                               size: 24.w,
@@ -295,4 +295,10 @@ class ProfileView extends StackedView<ProfileViewModel> {
     BuildContext context,
   ) =>
       ProfileViewModel();
+
+  @override
+  void onViewModelReady(ProfileViewModel viewModel) {
+    viewModel.init();
+    super.onViewModelReady(viewModel);
+  }
 }
