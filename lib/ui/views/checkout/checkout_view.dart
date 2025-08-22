@@ -716,6 +716,7 @@ class CheckoutView extends StackedView<CheckoutViewModel> {
                     MainButton(
                         text: 'Book Now',
                         onTap: () {
+                          FocusScope.of(context).unfocus();
                           viewModel.bookRental(context);
                         },
                         textColor: AppColors.white,
