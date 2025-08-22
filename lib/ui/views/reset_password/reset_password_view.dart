@@ -22,6 +22,11 @@ class ResetPasswordView extends StackedView<ResetPasswordViewModel> {
   ) {
     return Scaffold(
         backgroundColor: AppColors.scaffoldBackground,
+        appBar: AppBar(
+          backgroundColor: AppColors.scaffoldBackground,
+          surfaceTintColor: AppColors.scaffoldBackground,
+          elevation: 0,
+        ),
         body: SafeArea(
             child: Padding(
           padding: EdgeInsets.symmetric(horizontal: 20.w, vertical: 20.h),

@@ -19,6 +19,11 @@ class ForgotPasswordView extends StackedView<ForgotPasswordViewModel> {
   ) {
     return Scaffold(
         backgroundColor: AppColors.scaffoldBackground,
+        appBar: AppBar(
+          backgroundColor: AppColors.scaffoldBackground,
+          surfaceTintColor: AppColors.scaffoldBackground,
+          elevation: 0,
+        ),
         body: SafeArea(
             child: viewModel.isBusy
                 ? const Center(

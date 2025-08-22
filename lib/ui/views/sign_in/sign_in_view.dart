@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
+import 'package:game_day_valet/app/app.dart';
 import 'package:game_day_valet/ui/common/app_colors.dart';
 import 'package:game_day_valet/ui/widgets/common/main_button/main_button.dart';
 import 'package:game_day_valet/ui/widgets/common/main_text_field/main_text_field.dart';
@@ -20,6 +21,11 @@ class SignInView extends StackedView<SignInViewModel> {
   ) {
     return Scaffold(
         backgroundColor: AppColors.scaffoldBackground,
+        appBar: AppBar(
+          backgroundColor: AppColors.scaffoldBackground,
+          surfaceTintColor: AppColors.scaffoldBackground,
+          elevation: 0,
+        ),
         body: SafeArea(
             child: viewModel.isBusy
                 ? const Center(child: CircularProgressIndicator())

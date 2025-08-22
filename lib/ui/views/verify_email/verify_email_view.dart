@@ -20,6 +20,11 @@ class VerifyEmailView extends StackedView<VerifyEmailViewModel> {
   ) {
     return Scaffold(
       backgroundColor: AppColors.scaffoldBackground,
+      appBar: AppBar(
+        backgroundColor: AppColors.scaffoldBackground,
+        surfaceTintColor: AppColors.scaffoldBackground,
+        elevation: 0,
+      ),
       body: SafeArea(
         child: viewModel.isBusy
             ? const Center(child: CircularProgressIndicator())
