@@ -47,6 +47,7 @@ import 'package:game_day_valet/services/shared_preferences_service.dart';
 import 'package:game_day_valet/services/location_service.dart';
 import 'package:game_day_valet/ui/views/tournaments/tournaments_view.dart';
 import 'package:game_day_valet/services/sports_service.dart';
+import 'package:game_day_valet/services/push_notification_service.dart';
 // @stacked-import
 
 @StackedApp(
@@ -110,6 +111,7 @@ import 'package:game_day_valet/services/sports_service.dart';
     LazySingleton(classType: SharedPreferencesService),
     LazySingleton(classType: LocationService),
     LazySingleton(classType: SportsService),
+    LazySingleton(classType: PushNotificationService),
 // @stacked-service
   ],
   bottomsheets: [

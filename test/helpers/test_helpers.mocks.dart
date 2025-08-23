@@ -12,6 +12,7 @@ import 'package:game_day_valet/models/chat_model.dart' as _i19;
 import 'package:game_day_valet/models/message_model.dart' as _i2;
 import 'package:game_day_valet/models/rental_status_model.dart' as _i25;
 import 'package:game_day_valet/models/settings_item_model.dart' as _i26;
+import 'package:game_day_valet/models/sports_model.dart' as _i30;
 import 'package:game_day_valet/models/tournament_model.dart' as _i22;
 import 'package:game_day_valet/models/user_model.dart' as _i13;
 import 'package:game_day_valet/services/api_service.dart' as _i8;
@@ -22,6 +23,7 @@ import 'package:game_day_valet/services/deep_linking_service.dart' as _i23;
 import 'package:game_day_valet/services/google_sign_in_service.dart' as _i16;
 import 'package:game_day_valet/services/location_service.dart' as _i28;
 import 'package:game_day_valet/services/logger_service.dart' as _i15;
+import 'package:game_day_valet/services/push_notification_service.dart' as _i31;
 import 'package:game_day_valet/services/pusher_service.dart' as _i20;
 import 'package:game_day_valet/services/rental_service.dart' as _i24;
 import 'package:game_day_valet/services/secure_storage_service.dart' as _i10;
@@ -1583,6 +1585,15 @@ class MockTournamentService extends _i1.Mock implements _i21.TournamentService {
         returnValue: _i6.Future<void>.value(),
         returnValueForMissingStub: _i6.Future<void>.value(),
       ) as _i6.Future<void>);
+
+  @override
+  void clearTournaments() => super.noSuchMethod(
+        Invocation.method(
+          #clearTournaments,
+          [],
+        ),
+        returnValueForMissingStub: null,
+      );
 }
 
 /// A class which mocks [DeepLinkingService].
@@ -2111,4 +2122,36 @@ class MockLocationService extends _i1.Mock implements _i28.LocationService {
 /// A class which mocks [SportsService].
 ///
 /// See the documentation for Mockito's code generation for more information.
-class MockSportsService extends _i1.Mock implements _i29.SportsService {}
+class MockSportsService extends _i1.Mock implements _i29.SportsService {
+  @override
+  List<_i30.SportsModel> get sports => (super.noSuchMethod(
+        Invocation.getter(#sports),
+        returnValue: <_i30.SportsModel>[],
+        returnValueForMissingStub: <_i30.SportsModel>[],
+      ) as List<_i30.SportsModel>);
+
+  @override
+  set sports(List<_i30.SportsModel>? _sports) => super.noSuchMethod(
+        Invocation.setter(
+          #sports,
+          _sports,
+        ),
+        returnValueForMissingStub: null,
+      );
+
+  @override
+  _i6.Future<void> getSports() => (super.noSuchMethod(
+        Invocation.method(
+          #getSports,
+          [],
+        ),
+        returnValue: _i6.Future<void>.value(),
+        returnValueForMissingStub: _i6.Future<void>.value(),
+      ) as _i6.Future<void>);
+}
+
+/// A class which mocks [PushNotificationService].
+///
+/// See the documentation for Mockito's code generation for more information.
+class MockPushNotificationService extends _i1.Mock
+    implements _i31.PushNotificationService {}

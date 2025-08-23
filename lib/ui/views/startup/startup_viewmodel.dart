@@ -32,11 +32,12 @@ class StartupViewModel extends BaseViewModel {
       return;
     }
 
+    await _sharedPreferencesService.init();
+
     final token = await _secureStorageService.getToken();
 
     if (token != null) {
       final hasUser = await _userService.fetchCurrentUser();
-      await _sharedPreferencesService.init();
 
       if (hasUser) {
         await getUserConversations();

@@ -13,6 +13,8 @@ dependencies:
   connectivity_plus: ^6.1.4
   dotted_line: ^3.2.3
   firebase_auth: ^6.0.0
+  firebase_core: ^4.0.0
+  firebase_messaging: ^16.0.0
   floating_chat_button: ^1.1.0
   flutter:
     sdk: flutter
@@ -20,6 +22,7 @@ dependencies:
   flutter_chat_ui: ^1.6.15
   flutter_dotenv: ^5.2.1
   flutter_html: ^3.0.0
+  flutter_local_notifications: ^19.4.0
   flutter_screenutil: ^5.9.3
   flutter_secure_storage: ^9.2.4
   flutter_stripe: ^11.5.0
@@ -37,6 +40,7 @@ dependencies:
   intl: ^0.20.2
   logger: ^1.4.0
   lottie: ^3.3.1
+  overlay_support: ^2.1.0
   pinput: ^5.0.1
   pusher_channels_flutter: ^2.4.0
   share_plus: ^11.1.0

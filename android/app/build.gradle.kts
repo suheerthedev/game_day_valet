@@ -14,6 +14,7 @@ android {
     compileOptions {
         sourceCompatibility = JavaVersion.VERSION_11
         targetCompatibility = JavaVersion.VERSION_11
+        isCoreLibraryDesugaringEnabled = true
     }
 
     kotlinOptions {
@@ -29,6 +30,7 @@ android {
         targetSdk = flutter.targetSdkVersion
         versionCode = flutter.versionCode
         versionName = flutter.versionName
+        multiDexEnabled = true
     }
 
     buildTypes {
@@ -50,10 +52,23 @@ flutter {
 }
 
 dependencies {
+     // Import the Firebase BoM
+    implementation(platform("com.google.firebase:firebase-bom:34.1.0"))
+
+
+    // TODO: Add the dependencies for Firebase products you want to use
+    // When using the BoM, don't specify versions in Firebase dependencies
+    implementation("com.google.firebase:firebase-analytics")
     // Firebase BoM (Bill of Materials)
     implementation(platform("com.google.firebase:firebase-bom:34.0.0"))
 
     // Firebase Auth (for Google Sign-In)
     implementation("com.google.firebase:firebase-auth")
+
+    // ✅ Desugaring support library (fixes your error)
+    coreLibraryDesugaring("com.android.tools:desugar_jdk_libs:2.1.4")
+
+    // ✅ Firebase Messaging for FCM
+    implementation("com.google.firebase:firebase-messaging")
 }
 

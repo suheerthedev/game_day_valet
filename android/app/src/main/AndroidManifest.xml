@@ -2,6 +2,7 @@
     package="com.gdv.game_day_valet">
 
     <!-- Permissions required for Google Maps -->
+    <uses-permission android:name="android.permission.POST_NOTIFICATIONS" />
     <uses-permission android:name="android.permission.INTERNET" />
     <uses-permission android:name="android.permission.ACCESS_NETWORK_STATE" />
     <uses-permission android:name="android.permission.ACCESS_FINE_LOCATION" />
@@ -15,6 +16,14 @@
         <!-- Google Maps API Key - must be in application tag -->
         <meta-data android:name="com.google.android.geo.API_KEY"
                android:value="AIzaSyC4RMAZ1fc72X_orjKdWcWHzG18C3m83q0"/>
+
+               <meta-data
+    android:name="com.google.firebase.messaging.default_notification_icon"
+    android:resource="@drawable/ic_stat_notification" />
+<meta-data
+    android:name="com.google.firebase.messaging.default_notification_color"
+    android:resource="@color/notification_color" />
+
         
         <activity
             android:name=".MainActivity"

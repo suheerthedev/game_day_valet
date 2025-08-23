@@ -12,7 +12,20 @@
           "package_name": "com.gdv.game_day_valet"
         }
       },
-      "oauth_client": [],
+      "oauth_client": [
+        {
+          "client_id": "222515758866-linosllsubbu2o54kfrq95t248ji7bdr.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "com.gdv.game_day_valet",
+            "certificate_hash": "0af55908ddefd2d3dde48c29986b911722af88b8"
+          }
+        },
+        {
+          "client_id": "222515758866-ca611qj2nrh9soneb4tf4qnt29vc7to7.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
       "api_key": [
         {
           "current_key": "AIzaSyAGCNaQjyFHzcZ4MBOwvgrYv48QK0YiAag"
@@ -20,7 +33,19 @@
       ],
       "services": {
         "appinvite_service": {
-          "other_platform_oauth_client": []
+          "other_platform_oauth_client": [
+            {
+              "client_id": "222515758866-ca611qj2nrh9soneb4tf4qnt29vc7to7.apps.googleusercontent.com",
+              "client_type": 3
+            },
+            {
+              "client_id": "222515758866-okrdr27ktvcpmc92sgma4m5prvkjagqh.apps.googleusercontent.com",
+              "client_type": 2,
+              "ios_info": {
+                "bundle_id": "com.example.gameDayValet"
+              }
+            }
+          ]
         }
       }
     }

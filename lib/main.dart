@@ -1,3 +1,4 @@
+import 'package:firebase_core/firebase_core.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:flutter_stripe/flutter_stripe.dart';
@@ -8,6 +9,7 @@ import 'package:game_day_valet/app/app.router.dart';
 import 'package:game_day_valet/core/enums/snackbar_type.dart';
 import 'package:game_day_valet/services/deep_linking_service.dart';
 import 'package:game_day_valet/services/logger_service.dart';
+import 'package:game_day_valet/services/push_notification_service.dart';
 // import 'package:game_day_valet/services/connectivity_service.dart';
 import 'package:game_day_valet/ui/common/app_colors.dart';
 import 'package:game_day_valet/ui/snackbars/error/error_snackbar.dart';
@@ -20,6 +22,8 @@ import 'package:flutter_dotenv/flutter_dotenv.dart';
 
 Future<void> main() async {
   WidgetsFlutterBinding.ensureInitialized();
+
+  await Firebase.initializeApp();
 
   // Initialize deep linking service
 
@@ -73,6 +77,9 @@ class MainApp extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    WidgetsBinding.instance.addPostFrameCallback((_) {
+      locator<PushNotificationService>().init(context);
+    });
     return ScreenUtilInit(
       designSize: const Size(390, 844),
       minTextAdapt: true,

@@ -20,6 +20,7 @@ import '../services/deep_linking_service.dart';
 import '../services/google_sign_in_service.dart';
 import '../services/location_service.dart';
 import '../services/logger_service.dart';
+import '../services/push_notification_service.dart';
 import '../services/pusher_service.dart';
 import '../services/rental_service.dart';
 import '../services/secure_storage_service.dart';
@@ -60,4 +61,5 @@ Future<void> setupLocator({
   locator.registerLazySingleton(() => SharedPreferencesService());
   locator.registerLazySingleton(() => LocationService());
   locator.registerLazySingleton(() => SportsService());
+  locator.registerLazySingleton(() => PushNotificationService());
 }
