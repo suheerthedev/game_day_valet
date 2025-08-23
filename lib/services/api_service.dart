@@ -158,7 +158,7 @@ class ApiService {
 
   Future<void> _onUnauthorized() async {
     await _secureStorageService.deleteToken();
-    await _navigationService.clearStackAndShow(Routes.signInView);
+    await _navigationService.clearStackAndShow(Routes.signUpView);
   }
 
   dynamic _handleResponse(http.Response response) {

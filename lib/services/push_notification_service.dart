@@ -1,10 +1,9 @@
-import 'dart:io';
-
 import 'package:firebase_core/firebase_core.dart';
 import 'package:firebase_messaging/firebase_messaging.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_local_notifications/flutter_local_notifications.dart';
 import 'package:game_day_valet/app/app.locator.dart';
+import 'package:game_day_valet/services/api_service.dart';
 import 'package:game_day_valet/services/logger_service.dart';
 import 'package:stacked_services/stacked_services.dart';
 
@@ -20,6 +19,7 @@ class PushNotificationService {
   final _messaging = FirebaseMessaging.instance;
   final _navigatorService = locator<NavigationService>();
   final _snackbarService = locator<SnackbarService>();
+  final _apiService = locator<ApiService>();
 
   //Local Notification
   static final _local = FlutterLocalNotificationsPlugin();
@@ -68,11 +68,13 @@ class PushNotificationService {
   }
 
   Future<void> _initLocalNotifications() async {
-    const androidInit =
-        AndroidInitializationSettings('@drawable/ic_stat_notification');
+    const androidInit = AndroidInitializationSettings(
+      '@drawable/ic_stat_notification',
+    );
     const iosInit = DarwinInitializationSettings();
     await _local.initialize(
-        const InitializationSettings(android: androidInit, iOS: iosInit));
+      const InitializationSettings(android: androidInit, iOS: iosInit),
+    );
 
     // Android: ensure channel exists
     await _local
@@ -95,19 +97,15 @@ class PushNotificationService {
     logger.info('🔐 Notification permission: ${settings.authorizationStatus}');
     if (settings.authorizationStatus == AuthorizationStatus.denied) {
       _snackbarService.showSnackbar(
-          message:
-              'Notifications are disabled. Enable in Settings for updates.');
+        message: 'Notifications are disabled. Enable in Settings for updates.',
+      );
     }
   }
 
   Future<void> _registerTokenWithBackend(String? token) async {
     if (token == null) return;
     try {
-      // TODO: call your ApiService here; example:
-      // await locator<ApiService>().post(ApiConfig.registerDevice, {
-      //   'token': token,
-      //   'platform': Platform.isIOS ? 'ios' : 'android',
-      // });
+      //  final response = await _apiService.
     } catch (e) {
       logger.error('⚠️ Failed to register FCM token: $e');
     }
