@@ -49,5 +49,7 @@ class ApiConfig {
   //Refer and Earn
   static const referralCodeEndPoint = '/api/user/referral-code';
 
+  static const toggleNotificationsEndPoint = '/api/notifications/fcm/toggle';
+
   // Add more as needed
 }

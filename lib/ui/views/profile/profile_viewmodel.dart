@@ -1,6 +1,11 @@
 import 'package:game_day_valet/app/app.locator.dart';
 import 'package:game_day_valet/app/app.router.dart';
+import 'package:game_day_valet/config/api_config.dart';
+import 'package:game_day_valet/core/enums/snackbar_type.dart';
 import 'package:game_day_valet/models/user_model.dart';
+import 'package:game_day_valet/services/api_exception.dart';
+import 'package:game_day_valet/services/api_service.dart';
+import 'package:game_day_valet/services/logger_service.dart';
 import 'package:game_day_valet/services/secure_storage_service.dart';
 import 'package:game_day_valet/services/rental_service.dart';
 import 'package:game_day_valet/services/shared_preferences_service.dart';
@@ -14,7 +19,8 @@ class ProfileViewModel extends ReactiveViewModel {
   final _secureStorageService = locator<SecureStorageService>();
   final _sharedPreferencesService = locator<SharedPreferencesService>();
   final _rentalService = locator<RentalService>();
-
+  final _apiService = locator<ApiService>();
+  final _snackbarService = locator<SnackbarService>();
   UserModel? get currentUser => _userService.currentUser;
 
   // ProfileViewModel() {
@@ -26,13 +32,14 @@ class ProfileViewModel extends ReactiveViewModel {
   bool? isNotificationsEnabled;
 
   void init() async {
-    isNotificationsEnabled =
-        await _sharedPreferencesService.getBool('notifications_enabled');
-    if (isNotificationsEnabled == null) {
-      isNotificationsEnabled = false;
-      await _sharedPreferencesService.setBool(
-          'notifications_enabled', isNotificationsEnabled!);
-    }
+    isNotificationsEnabled = currentUser?.isNotification ?? false;
+    // isNotificationsEnabled =
+    //     await _sharedPreferencesService.getBool('notifications_enabled');
+    // if (isNotificationsEnabled == null) {
+    //   isNotificationsEnabled = false;
+    //   await _sharedPreferencesService.setBool(
+    //       'notifications_enabled', isNotificationsEnabled!);
+    // }
     rebuildUi();
   }
 
@@ -80,16 +87,38 @@ class ProfileViewModel extends ReactiveViewModel {
 
   void onNotificationsTap() async {
     isNotificationsEnabled = !isNotificationsEnabled!;
-    await _sharedPreferencesService.setBool(
-        'notifications_enabled', isNotificationsEnabled!);
+
     rebuildUi();
+    final url = ApiConfig.baseUrl + ApiConfig.toggleNotificationsEndPoint;
+
+    try {
+      final response = await _apiService.post(url, {});
+
+      if (response.containsKey('enabled')) {
+        _snackbarService.showCustomSnackBar(
+            message: response['message'], variant: SnackbarType.success);
+      }
+    } on ApiException catch (e) {
+      logger.error("Error in updating user: ${e.message}");
+      _snackbarService.showCustomSnackBar(
+          message: e.message, variant: SnackbarType.error);
+    } catch (e) {
+      logger.error("Error in updating user: ${e.toString()}");
+      _snackbarService.showCustomSnackBar(
+          message: "Something went wrong", variant: SnackbarType.error);
+    } finally {
+      rebuildUi();
+    }
   }
 
   void onChatTap() {
     _navigationService.navigateToInboxView();
   }
 
-  void toggleNotifications() {}
+  void toggleNotifications() {
+    isNotificationsEnabled = !isNotificationsEnabled!;
+    rebuildUi();
+  }
 
   @override
   List<ListenableServiceMixin> get listenableServices => [_userService];
