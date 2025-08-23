@@ -25,6 +25,7 @@ class ApiConfig {
   static const rentalHistoryEndPoint = '/api/rentals/user';
 
   static const privacyPolicyEndPoint = '/api/privacy-policies';
+  static const termsAndConditionsEndPoint = '/api/terms-and-conditions';
 
   static const faqsEndPoint = '/api/faqs';
 

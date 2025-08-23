@@ -571,8 +571,6 @@ class CheckoutView extends StackedView<CheckoutViewModel> {
                                     if (option.description != null) ...[
                                       Text(
                                         option.description ?? '',
-                                        maxLines: 2,
-                                        overflow: TextOverflow.ellipsis,
                                         style: GoogleFonts.poppins(
                                             fontSize: 10.sp,
                                             fontWeight: FontWeight.w400,
