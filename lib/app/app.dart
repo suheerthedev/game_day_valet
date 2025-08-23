@@ -48,6 +48,7 @@ import 'package:game_day_valet/services/location_service.dart';
 import 'package:game_day_valet/ui/views/tournaments/tournaments_view.dart';
 import 'package:game_day_valet/services/sports_service.dart';
 import 'package:game_day_valet/services/push_notification_service.dart';
+import 'package:game_day_valet/ui/views/terms_and_conditions/terms_and_conditions_view.dart';
 // @stacked-import
 
 @StackedApp(
@@ -88,6 +89,7 @@ import 'package:game_day_valet/services/push_notification_service.dart';
         durationInMilliseconds: 500),
     MaterialRoute(page: InboxView),
     MaterialRoute(page: TournamentsView),
+    MaterialRoute(page: TermsAndConditionsView),
 // @stacked-route
   ],
   dependencies: [

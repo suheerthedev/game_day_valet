@@ -2154,4 +2154,14 @@ class MockSportsService extends _i1.Mock implements _i29.SportsService {
 ///
 /// See the documentation for Mockito's code generation for more information.
 class MockPushNotificationService extends _i1.Mock
-    implements _i31.PushNotificationService {}
+    implements _i31.PushNotificationService {
+  @override
+  _i6.Future<void> init(_i5.BuildContext? context) => (super.noSuchMethod(
+        Invocation.method(
+          #init,
+          [context],
+        ),
+        returnValue: _i6.Future<void>.value(),
+        returnValueForMissingStub: _i6.Future<void>.value(),
+      ) as _i6.Future<void>);
+}

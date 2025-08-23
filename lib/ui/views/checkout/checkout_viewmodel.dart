@@ -128,7 +128,7 @@ class CheckoutViewModel extends BaseViewModel {
     rebuildUi();
     try {
       final response =
-          await _rentalService.applyPromoCode(promoCodeController.text, {
+          await _rentalService.applyPromoCode(promoCodeController.text.trim(), {
         "user_id": user!.id.toString(),
         "promo_code": promoCodeController.text,
       });

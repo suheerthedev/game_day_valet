@@ -51,6 +51,7 @@ class PrivacyPolicyView extends StackedView<PrivacyPolicyViewModel> {
                         itemCount: viewModel.privacyPolicies.length,
                         itemBuilder: (context, index) {
                           return Html(
+                              shrinkWrap: true,
                               data:
                                   viewModel.privacyPolicies[index].description);
                         }),

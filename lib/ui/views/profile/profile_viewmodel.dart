@@ -66,6 +66,10 @@ class ProfileViewModel extends ReactiveViewModel {
     _navigationService.navigateToPrivacyPolicyView();
   }
 
+  void onTermsAndConditionsTap() {
+    _navigationService.navigateToTermsAndConditionsView();
+  }
+
   void onReferAndEarnTap() {
     _navigationService.navigateToReferAndEarnView();
   }
