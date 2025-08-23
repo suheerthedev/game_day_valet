@@ -3,6 +3,7 @@ import 'package:game_day_valet/config/api_config.dart';
 import 'package:game_day_valet/services/api_exception.dart';
 import 'package:game_day_valet/services/api_service.dart';
 import 'package:game_day_valet/services/logger_service.dart';
+import 'package:game_day_valet/services/push_notification_service.dart';
 // import 'package:game_day_valet/services/user_service.dart';
 
 class AuthService {
@@ -14,8 +15,12 @@ class AuthService {
     final url = ApiConfig.baseUrl + ApiConfig.loginEndPoint;
 
     try {
-      final response =
-          await _apiService.post(url, {'email': email, 'password': password});
+      final response = await _apiService.post(url, {
+        'email': email,
+        'password': password,
+        if (PushNotificationService.fcmToken != null)
+          'fcm_token': PushNotificationService.fcmToken
+      });
 
       logger.info("Login successful for email: $email");
       return response;
@@ -148,6 +153,8 @@ class AuthService {
     try {
       final response = await _apiService.post(url, {
         'id_token': idToken,
+        if (PushNotificationService.fcmToken != null)
+          'fcm_token': PushNotificationService.fcmToken
       });
 
       logger.info("Google Sign In successful for idToken: $idToken");

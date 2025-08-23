@@ -3,7 +3,6 @@ import 'package:firebase_messaging/firebase_messaging.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_local_notifications/flutter_local_notifications.dart';
 import 'package:game_day_valet/app/app.locator.dart';
-import 'package:game_day_valet/services/api_service.dart';
 import 'package:game_day_valet/services/logger_service.dart';
 import 'package:stacked_services/stacked_services.dart';
 
@@ -19,7 +18,8 @@ class PushNotificationService {
   final _messaging = FirebaseMessaging.instance;
   final _navigatorService = locator<NavigationService>();
   final _snackbarService = locator<SnackbarService>();
-  final _apiService = locator<ApiService>();
+
+  static String? fcmToken;
 
   //Local Notification
   static final _local = FlutterLocalNotificationsPlugin();
@@ -50,10 +50,10 @@ class PushNotificationService {
     // 5) Token get + upload to backend
     final token = await _messaging.getToken();
     logger.info('📲 FCM token: $token');
-    await _registerTokenWithBackend(token);
+    fcmToken = token;
     FirebaseMessaging.instance.onTokenRefresh.listen((t) async {
       logger.info('🔁 FCM token refreshed: $t');
-      await _registerTokenWithBackend(t);
+      fcmToken = t;
     });
 
     // 6) Foreground messages → show a local notification
@@ -99,15 +99,6 @@ class PushNotificationService {
       _snackbarService.showSnackbar(
         message: 'Notifications are disabled. Enable in Settings for updates.',
       );
-    }
-  }
-
-  Future<void> _registerTokenWithBackend(String? token) async {
-    if (token == null) return;
-    try {
-      //  final response = await _apiService.
-    } catch (e) {
-      logger.error('⚠️ Failed to register FCM token: $e');
     }
   }
 
