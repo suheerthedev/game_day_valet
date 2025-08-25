@@ -193,7 +193,10 @@ class RentalStatusView extends StackedView<RentalStatusViewModel> {
                                     : viewModel.rentalStatus.last.status ==
                                             'delivered'
                                         ? IconsaxPlusBold.box
-                                        : IconsaxPlusBold.box_tick,
+                                        : viewModel.rentalStatus.last.status ==
+                                                'cancelled'
+                                            ? IconsaxPlusBold.close_circle
+                                            : IconsaxPlusBold.box_tick,
                         size: 70.sp,
                         color: AppColors.secondary),
                     SizedBox(height: 10.h),
@@ -229,7 +232,7 @@ class RentalStatusView extends StackedView<RentalStatusViewModel> {
 
                 return _buildTimelineItem(
                   title: status.statusLabel ?? '',
-                  timestamp: status.formattedCreatedAt ?? '',
+                  timestamp: status.formattedUpdatedAt ?? '',
                   isLastItem: isLastItem,
                 );
               },
