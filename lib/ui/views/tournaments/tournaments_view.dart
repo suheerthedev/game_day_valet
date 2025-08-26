@@ -28,6 +28,7 @@ class TournamentsView extends StackedView<TournamentsViewModel> {
     Widget? child,
   ) {
     return Scaffold(
+      key: viewModel.scaffoldKey,
       backgroundColor: AppColors.scaffoldBackground,
       appBar: MainAppBar(
         title: ConstrainedBox(
@@ -44,7 +45,161 @@ class TournamentsView extends StackedView<TournamentsViewModel> {
                 color: AppColors.textPrimary),
           ),
         ),
+        // extraActions: [
+        //   GestureDetector(
+        //     onTap: () => viewModel.scaffoldKey.currentState?.openEndDrawer(),
+        //     child: Padding(
+        //       padding: EdgeInsets.only(right: 8.w),
+        //       child: CircleAvatar(
+        //         radius: 20.r,
+        //         backgroundColor: AppColors.secondary.withOpacity(0.1),
+        //         child:
+        //             Icon(Icons.tune, color: AppColors.textPrimary, size: 20.w),
+        //       ),
+        //     ),
+        //   ),
+        // ],
       ),
+      // endDrawer: Drawer(
+      //   backgroundColor: AppColors.white,
+      //   shape: RoundedRectangleBorder(
+      //     borderRadius: BorderRadius.only(
+      //       topLeft: Radius.circular(10.r),
+      //       bottomLeft: Radius.circular(10.r),
+      //     ),
+      //   ),
+      //   child: SafeArea(
+      //     child: Padding(
+      //       padding: EdgeInsets.symmetric(horizontal: 16.w, vertical: 16.h),
+      //       child: Column(
+      //         crossAxisAlignment: CrossAxisAlignment.start,
+      //         children: [
+      //           Text('Filters',
+      //               style: GoogleFonts.poppins(
+      //                   fontSize: 18.sp,
+      //                   fontWeight: FontWeight.w600,
+      //                   color: AppColors.textPrimary)),
+      //           SizedBox(height: 16.h),
+      //           GestureDetector(
+      //             onTap: () => viewModel.pickDate(context),
+      //             child: AbsorbPointer(
+      //               child: Container(
+      //                 decoration: BoxDecoration(
+      //                   borderRadius: BorderRadius.circular(10.r),
+      //                   border: Border.all(color: AppColors.grey100),
+      //                   color: AppColors.grey50,
+      //                 ),
+      //                 padding: EdgeInsets.symmetric(horizontal: 12.w),
+      //                 height: 48.h,
+      //                 child: Row(
+      //                   children: [
+      //                     const Icon(Icons.calendar_today,
+      //                         size: 18, color: AppColors.textHint),
+      //                     SizedBox(width: 8.w),
+      //                     Expanded(
+      //                       child: Text(
+      //                         viewModel.dateController.text.isEmpty
+      //                             ? 'Select date'
+      //                             : viewModel.dateController.text,
+      //                         overflow: TextOverflow.ellipsis,
+      //                         style: GoogleFonts.poppins(
+      //                           fontSize: 12.sp,
+      //                           fontWeight: FontWeight.w400,
+      //                           color: AppColors.textPrimary,
+      //                         ),
+      //                       ),
+      //                     ),
+      //                   ],
+      //                 ),
+      //               ),
+      //             ),
+      //           ),
+      //           SizedBox(height: 12.h),
+      //           GestureDetector(
+      //             onTap: () => viewModel.selectCity(context),
+      //             child: AbsorbPointer(
+      //               child: Container(
+      //                 decoration: BoxDecoration(
+      //                   borderRadius: BorderRadius.circular(10.r),
+      //                   border: Border.all(color: AppColors.grey100),
+      //                   color: AppColors.grey50,
+      //                 ),
+      //                 padding: EdgeInsets.symmetric(horizontal: 12.w),
+      //                 height: 48.h,
+      //                 child: Row(
+      //                   children: [
+      //                     const Icon(Icons.location_on_outlined,
+      //                         size: 18, color: AppColors.textHint),
+      //                     SizedBox(width: 8.w),
+      //                     Expanded(
+      //                       child: Text(
+      //                         viewModel.cityController.text.isEmpty
+      //                             ? 'Select city'
+      //                             : viewModel.cityController.text,
+      //                         overflow: TextOverflow.ellipsis,
+      //                         style: GoogleFonts.poppins(
+      //                           fontSize: 12.sp,
+      //                           fontWeight: FontWeight.w400,
+      //                           color: AppColors.textPrimary,
+      //                         ),
+      //                       ),
+      //                     ),
+      //                   ],
+      //                 ),
+      //               ),
+      //             ),
+      //           ),
+      //           SizedBox(height: 12.h),
+      //           GestureDetector(
+      //             onTap: () => viewModel.selectAgeGroup(context),
+      //             child: AbsorbPointer(
+      //               child: Container(
+      //                 decoration: BoxDecoration(
+      //                   borderRadius: BorderRadius.circular(10.r),
+      //                   border: Border.all(color: AppColors.grey100),
+      //                   color: AppColors.grey50,
+      //                 ),
+      //                 padding: EdgeInsets.symmetric(horizontal: 12.w),
+      //                 height: 48.h,
+      //                 child: Row(
+      //                   children: [
+      //                     const Icon(Icons.group_outlined,
+      //                         size: 18, color: AppColors.textHint),
+      //                     SizedBox(width: 8.w),
+      //                     Expanded(
+      //                       child: Text(
+      //                         viewModel.ageGroupController.text.isEmpty
+      //                             ? 'Age group'
+      //                             : viewModel.ageGroupController.text,
+      //                         overflow: TextOverflow.ellipsis,
+      //                         style: GoogleFonts.poppins(
+      //                           fontSize: 12.sp,
+      //                           fontWeight: FontWeight.w400,
+      //                           color: AppColors.textPrimary,
+      //                         ),
+      //                       ),
+      //                     ),
+      //                   ],
+      //                 ),
+      //               ),
+      //             ),
+      //           ),
+      //           const Spacer(),
+      //           MainButton(
+      //             text: 'Apply Filter',
+      //             onTap: () {
+      //               viewModel.applyFilters();
+      //               Navigator.of(context).maybePop();
+      //             },
+      //             textColor: AppColors.white,
+      //             borderColor: AppColors.secondary,
+      //             isDisabled: false,
+      //           ),
+      //         ],
+      //       ),
+      //     ),
+      //   ),
+      // ),
       body: SafeArea(
         child: viewModel.isBusy
             ? const Center(child: CircularProgressIndicator())

@@ -14,6 +14,7 @@ class MainAppBar extends StackedView<MainAppBarModel>
   final bool hasLeading;
   final bool hasSubtitle;
   final bool hasNotification;
+  final List<Widget> extraActions;
 
   const MainAppBar(
       {super.key,
@@ -22,7 +23,8 @@ class MainAppBar extends StackedView<MainAppBarModel>
       this.leading,
       this.hasLeading = true,
       this.hasSubtitle = false,
-      this.hasNotification = true});
+      this.hasNotification = true,
+      this.extraActions = const []});
 
   @override
   Widget builder(
@@ -51,6 +53,7 @@ class MainAppBar extends StackedView<MainAppBarModel>
       ),
       actionsPadding: EdgeInsets.only(right: 16.w),
       actions: [
+        ...extraActions,
         if (hasNotification) ...[
           GestureDetector(
             onTap: () {
