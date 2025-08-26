@@ -45,7 +45,7 @@ class NotificationView extends StackedView<NotificationViewModel> {
                             radius: 21.r,
                             backgroundColor: AppColors.secondary,
                             child: Text(
-                                viewModel.notifications[index]['title']
+                                viewModel.notifications[index].message
                                     .toString()
                                     .toUpperCase()
                                     .substring(0, 1),
@@ -54,13 +54,16 @@ class NotificationView extends StackedView<NotificationViewModel> {
                                     fontWeight: FontWeight.w400,
                                     color: AppColors.white)),
                           ),
-                          title: Text(viewModel.notifications[index]['title'],
+                          title: Text(
+                              viewModel.notifications[index].message ?? '',
                               style: GoogleFonts.poppins(
                                   fontSize: 14.sp,
-                                  fontWeight: FontWeight.w600,
+                                  fontWeight: FontWeight.w500,
                                   color: AppColors.textPrimary)),
                           subtitle: Text(
-                              viewModel.notifications[index]['description'],
+                              viewModel.notifications[index]
+                                      .formattedTimeStamp ??
+                                  '',
                               style: GoogleFonts.poppins(
                                   fontSize: 12.sp,
                                   fontWeight: FontWeight.w400,

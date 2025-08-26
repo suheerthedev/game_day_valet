@@ -50,6 +50,7 @@ class ApiConfig {
   static const referralCodeEndPoint = '/api/user/referral-code';
 
   static const toggleNotificationsEndPoint = '/api/notifications/fcm/toggle';
+  static const notificationsEndPoint = '/api/notifications';
 
   // Add more as needed
 }

@@ -7,7 +7,8 @@ import 'package:game_day_valet/services/auth_service.dart';
 import 'package:game_day_valet/services/google_sign_in_service.dart';
 import 'package:game_day_valet/services/logger_service.dart';
 import 'package:game_day_valet/services/secure_storage_service.dart';
-import 'package:game_day_valet/services/user_service.dart';
+import 'package:game_day_valet/services/startup_service.dart';
+// import 'package:game_day_valet/services/user_service.dart';
 import 'package:stacked/stacked.dart';
 import 'package:stacked_services/stacked_services.dart';
 
@@ -17,7 +18,8 @@ class SignUpViewModel extends BaseViewModel {
   final _snackbarService = locator<SnackbarService>();
   final _googleSignInService = locator<GoogleSignInService>();
   final _secureStorageService = locator<SecureStorageService>();
-  final _userService = locator<UserService>();
+  // final _userService = locator<UserService>();
+  final _startupService = locator<StartupService>();
 
   final TextEditingController emailController = TextEditingController();
   final TextEditingController nameController = TextEditingController();
@@ -181,7 +183,8 @@ class SignUpViewModel extends BaseViewModel {
 
           await _secureStorageService.saveToken(response['token']);
 
-          await _userService.fetchCurrentUser();
+          // await _userService.fetchCurrentUser();
+          await _startupService.runTokenTasks();
 
           await _navigationService.clearStackAndShow(Routes.mainView);
         }

@@ -10,6 +10,7 @@ import 'dart:ui' as _i7;
 import 'package:flutter/material.dart' as _i5;
 import 'package:game_day_valet/models/chat_model.dart' as _i19;
 import 'package:game_day_valet/models/message_model.dart' as _i2;
+import 'package:game_day_valet/models/notification_model.dart' as _i33;
 import 'package:game_day_valet/models/rental_status_model.dart' as _i25;
 import 'package:game_day_valet/models/settings_item_model.dart' as _i26;
 import 'package:game_day_valet/models/sports_model.dart' as _i30;
@@ -23,6 +24,7 @@ import 'package:game_day_valet/services/deep_linking_service.dart' as _i23;
 import 'package:game_day_valet/services/google_sign_in_service.dart' as _i16;
 import 'package:game_day_valet/services/location_service.dart' as _i28;
 import 'package:game_day_valet/services/logger_service.dart' as _i15;
+import 'package:game_day_valet/services/notification_service.dart' as _i32;
 import 'package:game_day_valet/services/push_notification_service.dart' as _i31;
 import 'package:game_day_valet/services/pusher_service.dart' as _i20;
 import 'package:game_day_valet/services/rental_service.dart' as _i24;
@@ -30,6 +32,7 @@ import 'package:game_day_valet/services/secure_storage_service.dart' as _i10;
 import 'package:game_day_valet/services/shared_preferences_service.dart'
     as _i27;
 import 'package:game_day_valet/services/sports_service.dart' as _i29;
+import 'package:game_day_valet/services/startup_service.dart' as _i34;
 import 'package:game_day_valet/services/stripe_service.dart' as _i17;
 import 'package:game_day_valet/services/tournament_service.dart' as _i21;
 import 'package:game_day_valet/services/user_service.dart' as _i12;
@@ -2165,3 +2168,75 @@ class MockPushNotificationService extends _i1.Mock
         returnValueForMissingStub: _i6.Future<void>.value(),
       ) as _i6.Future<void>);
 }
+
+/// A class which mocks [NotificationService].
+///
+/// See the documentation for Mockito's code generation for more information.
+class MockNotificationService extends _i1.Mock
+    implements _i32.NotificationService {
+  @override
+  List<_i33.NotificationModel> get notifications => (super.noSuchMethod(
+        Invocation.getter(#notifications),
+        returnValue: <_i33.NotificationModel>[],
+        returnValueForMissingStub: <_i33.NotificationModel>[],
+      ) as List<_i33.NotificationModel>);
+
+  @override
+  int get listenersCount => (super.noSuchMethod(
+        Invocation.getter(#listenersCount),
+        returnValue: 0,
+        returnValueForMissingStub: 0,
+      ) as int);
+
+  @override
+  _i6.Future<void> getUserNotifications() => (super.noSuchMethod(
+        Invocation.method(
+          #getUserNotifications,
+          [],
+        ),
+        returnValue: _i6.Future<void>.value(),
+        returnValueForMissingStub: _i6.Future<void>.value(),
+      ) as _i6.Future<void>);
+
+  @override
+  void listenToReactiveValues(List<dynamic>? reactiveValues) =>
+      super.noSuchMethod(
+        Invocation.method(
+          #listenToReactiveValues,
+          [reactiveValues],
+        ),
+        returnValueForMissingStub: null,
+      );
+
+  @override
+  void addListener(void Function()? listener) => super.noSuchMethod(
+        Invocation.method(
+          #addListener,
+          [listener],
+        ),
+        returnValueForMissingStub: null,
+      );
+
+  @override
+  void removeListener(void Function()? listener) => super.noSuchMethod(
+        Invocation.method(
+          #removeListener,
+          [listener],
+        ),
+        returnValueForMissingStub: null,
+      );
+
+  @override
+  void notifyListeners() => super.noSuchMethod(
+        Invocation.method(
+          #notifyListeners,
+          [],
+        ),
+        returnValueForMissingStub: null,
+      );
+}
+
+/// A class which mocks [StartupService].
+///
+/// See the documentation for Mockito's code generation for more information.
+class MockStartupService extends _i1.Mock implements _i34.StartupService {}
