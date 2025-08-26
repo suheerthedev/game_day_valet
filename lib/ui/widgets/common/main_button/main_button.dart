@@ -10,7 +10,6 @@ class MainButton extends StackedView<MainButtonModel> {
   final String text;
   final VoidCallback onTap;
   final bool hasBorder;
-  final Color? color;
   final Color? textColor;
   final Color? borderColor;
   final bool isDisabled;
@@ -19,7 +18,6 @@ class MainButton extends StackedView<MainButtonModel> {
       required this.text,
       required this.onTap,
       this.hasBorder = false,
-      this.color,
       this.textColor,
       this.borderColor,
       this.isDisabled = false});
@@ -36,8 +34,16 @@ class MainButton extends StackedView<MainButtonModel> {
           width: 340.w,
           height: 58.h,
           decoration: BoxDecoration(
-            color:
-                isDisabled ? AppColors.grey500 : color ?? AppColors.secondary,
+            gradient: isDisabled
+                ? null
+                : const LinearGradient(
+                    begin: Alignment.bottomLeft,
+                    end: Alignment.bottomRight,
+                    colors: [
+                      Color(0xFFC94C4C),
+                      Color(0xFF192126),
+                    ],
+                  ),
             borderRadius: BorderRadius.circular(10.r),
             border: hasBorder
                 ? Border.all(

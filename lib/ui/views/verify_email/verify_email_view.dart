@@ -95,7 +95,6 @@ OTP""",
                                 email, viewModel.otpController.text);
                           },
                           hasBorder: true,
-                          color: AppColors.secondary,
                           borderColor: AppColors.white,
                           textColor: AppColors.white),
                     ),

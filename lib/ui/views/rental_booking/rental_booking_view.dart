@@ -536,7 +536,6 @@ class RentalBookingView extends StackedView<RentalBookingViewModel> {
                     text: 'Book Now',
                     onTap: () {},
                     textColor: AppColors.white,
-                    color: AppColors.secondary,
                     borderColor: AppColors.secondary)
               ],
             ),

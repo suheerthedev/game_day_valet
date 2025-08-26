@@ -46,7 +46,6 @@ class OnboardingView extends StackedView<OnboardingViewModel> {
                       text: "Get Started",
                       onTap: viewModel.onGetStarted,
                       hasBorder: true,
-                      color: AppColors.secondary,
                       borderColor: AppColors.white,
                       textColor: AppColors.white)
                 ],

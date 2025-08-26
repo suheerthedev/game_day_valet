@@ -246,7 +246,6 @@ class ProfileView extends StackedView<ProfileViewModel> {
                     child: MainButton(
                       text: 'Logout',
                       onTap: viewModel.onLogoutTap,
-                      color: AppColors.secondary,
                       textColor: AppColors.white,
                       borderColor: AppColors.secondary,
                     ),

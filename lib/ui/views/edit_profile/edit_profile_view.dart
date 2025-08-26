@@ -160,7 +160,6 @@ class EditProfileView extends StackedView<EditProfileViewModel> {
                     child: MainButton(
                       text: 'Save',
                       onTap: viewModel.save,
-                      color: AppColors.secondary,
                       textColor: AppColors.white,
                       borderColor: AppColors.secondary,
                     ),

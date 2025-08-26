@@ -718,7 +718,6 @@ class CheckoutView extends StackedView<CheckoutViewModel> {
                           viewModel.bookRental(context);
                         },
                         textColor: AppColors.white,
-                        color: AppColors.secondary,
                         borderColor: AppColors.secondary)
                   ],
                 ),
