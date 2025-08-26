@@ -72,9 +72,9 @@ class AddRentalsViewModel extends BaseViewModel {
   Future<void> proceedToCheckout() async {
     await _navigationService.navigateToCheckoutView(
         tournamentId: tournamentId,
-        items: items,
+        items: items.where((item) => item.quantity > 0).toList(),
         bundles: bundles.where((bundle) => bundle.isSelected).toList());
-    await init();
+    rebuildUi();
   }
 
   Future<void> init() async {

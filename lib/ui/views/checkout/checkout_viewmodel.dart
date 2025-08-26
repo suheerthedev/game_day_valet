@@ -60,9 +60,11 @@ class CheckoutViewModel extends BaseViewModel {
 
   void calculateTotalAmount() {
     totalAmount = 0;
-    totalAmount += items
-        .map((item) => double.parse(item.price ?? '0') * item.quantity)
-        .reduce((a, b) => a + b);
+    if (items.isNotEmpty) {
+      totalAmount += items
+          .map((item) => double.parse(item.price ?? '0') * item.quantity)
+          .reduce((a, b) => a + b);
+    }
     if (bundles.isNotEmpty) {
       totalAmount += bundles
           .map((bundle) => double.parse(bundle.price ?? '0'))
