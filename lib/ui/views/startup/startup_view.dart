@@ -22,18 +22,32 @@ class StartupView extends StackedView<StartupViewModel> {
         height: double.infinity,
         padding: EdgeInsets.only(bottom: 20.h),
         decoration: const BoxDecoration(
-          image: DecorationImage(
-            image: AssetImage('assets/images/splash_image_1.png'),
-            fit: BoxFit.cover,
-          ),
+          color: AppColors.secondary,
         ),
-        child: Align(
-          alignment: Alignment.bottomCenter,
-          child: Image.asset(
-            'assets/logo/logo.png',
-            width: 304.w,
-            height: 112.w,
-          ),
+        child: Stack(
+          children: [
+            Align(
+              alignment: Alignment.topCenter,
+              child: Image.asset(
+                'assets/logo/gdv_full_logo_white.png',
+              ),
+            ),
+            Align(
+              alignment: Alignment.bottomCenter,
+              child: Container(
+                width: 366.w,
+                height: 551.h,
+                decoration: BoxDecoration(
+                  borderRadius: BorderRadius.circular(20.r),
+                ),
+                clipBehavior: Clip.hardEdge,
+                child: Image.asset(
+                  'assets/images/splash_image_2.png',
+                  fit: BoxFit.cover,
+                ),
+              ),
+            ),
+          ],
         ),
       ),
     );
