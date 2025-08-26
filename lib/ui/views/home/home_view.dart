@@ -185,7 +185,9 @@ class HomeView extends StackedView<HomeViewModel> {
                                                   child:
                                                       CircularProgressIndicator()),
                                           errorWidget: (context, url, error) =>
-                                              const Icon(Icons.error),
+                                              Icon(Icons.sports_soccer_rounded,
+                                                  size: 40.w,
+                                                  color: AppColors.white),
                                         ),
                                         SizedBox(height: 10.h),
                                         // Sport name
