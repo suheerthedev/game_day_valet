@@ -175,19 +175,24 @@ class HomeView extends StackedView<HomeViewModel> {
                                           MainAxisAlignment.center,
                                       children: [
                                         // Sport icon - using placeholder white icons as per the design
-                                        CachedNetworkImage(
-                                          imageUrl: sport.imageUrl ?? '',
-                                          width: 60.w,
-                                          height: 60.h,
-                                          fit: BoxFit.cover,
-                                          placeholder: (context, url) =>
-                                              const Center(
-                                                  child:
-                                                      CircularProgressIndicator()),
-                                          errorWidget: (context, url, error) =>
-                                              Icon(Icons.sports_soccer_rounded,
-                                                  size: 40.w,
-                                                  color: AppColors.white),
+                                        ClipRRect(
+                                          borderRadius:
+                                              BorderRadius.circular(10.r),
+                                          child: CachedNetworkImage(
+                                            imageUrl: sport.imageUrl ?? '',
+                                            width: 60.w,
+                                            height: 60.h,
+                                            fit: BoxFit.cover,
+                                            placeholder: (context, url) =>
+                                                const Center(
+                                                    child:
+                                                        CircularProgressIndicator()),
+                                            errorWidget:
+                                                (context, url, error) => Icon(
+                                                    Icons.sports_soccer_rounded,
+                                                    size: 40.w,
+                                                    color: AppColors.white),
+                                          ),
                                         ),
                                         SizedBox(height: 10.h),
                                         // Sport name
