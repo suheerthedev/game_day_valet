@@ -104,7 +104,7 @@ class ChatService with ListenableServiceMixin {
       _messages.value.insert(0, MessageModel.fromJson(response['message']));
       return MessageModel.fromJson(response['message']);
     } on ApiException catch (e) {
-      logger.error("Error sending message: ${e.message}");
+      logger.error("Errorg message: ${e.message}");
       rethrow;
     } catch (e) {
       logger.error("Error sending message: $e");

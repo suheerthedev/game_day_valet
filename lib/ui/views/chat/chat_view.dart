@@ -37,8 +37,8 @@ class ChatView extends StackedView<ChatViewModel> {
           ? const Center(child: CircularProgressIndicator())
           : Chat(
               showUserNames: false,
-              inputOptions: InputOptions(
-                  textEditingController: viewModel.messageController,
+              inputOptions: const InputOptions(
+                  // textEditingController: viewModel.messageController,
                   sendButtonVisibilityMode: SendButtonVisibilityMode.always),
               theme: _buildChatTheme(),
               bubbleBuilder: _bubbleBuilder,
@@ -47,6 +47,8 @@ class ChatView extends StackedView<ChatViewModel> {
                 viewModel.handleSendPressed(text);
               },
               user: viewModel.currentUserForChat!,
+              customBottomWidget:
+                  _buildQuickRepliesAndInput(context, viewModel),
             ),
     );
   }
@@ -101,6 +103,81 @@ class ChatView extends StackedView<ChatViewModel> {
     );
   }
 
+  Widget _buildQuickRepliesAndInput(
+      BuildContext context, ChatViewModel viewModel) {
+    final theme = _buildChatTheme();
+    final List<String> quickReplies = [
+      "Where's my order?",
+      "Update my rental",
+      "Cancel",
+    ];
+
+    return Container(
+      margin: theme.inputMargin,
+      padding: theme.inputPadding,
+      decoration: BoxDecoration(
+        color: theme.inputBackgroundColor,
+        borderRadius: theme.inputBorderRadius,
+      ),
+      child: Column(
+        mainAxisSize: MainAxisSize.min,
+        crossAxisAlignment: CrossAxisAlignment.stretch,
+        children: [
+          SingleChildScrollView(
+            scrollDirection: Axis.horizontal,
+            child: Row(
+              children: quickReplies
+                  .map((text) => Padding(
+                        padding: EdgeInsets.only(right: 8.w),
+                        child: _QuickReplyChip(
+                          label: text,
+                          onTap: () {
+                            viewModel.handleSendPressed(
+                              types.PartialText(text: text),
+                            );
+                          },
+                        ),
+                      ))
+                  .toList(),
+            ),
+          ),
+          SizedBox(height: 8.h),
+          Row(
+            children: [
+              Expanded(
+                child: TextField(
+                  controller: viewModel.messageController,
+                  cursorColor: theme.inputTextCursorColor,
+                  style:
+                      TextStyle(color: theme.inputTextColor, fontSize: 14.sp),
+                  decoration: InputDecoration(
+                    isDense: true,
+                    hintText: 'Type your message',
+                    hintStyle: TextStyle(
+                      color: theme.inputTextColor.withOpacity(0.7),
+                    ),
+                    border: InputBorder.none,
+                  ),
+                  minLines: 1,
+                  maxLines: 5,
+                ),
+              ),
+              IconButton(
+                onPressed: () {
+                  final text = viewModel.messageController.text.trim();
+                  if (text.isEmpty) return;
+                  viewModel.handleSendPressed(types.PartialText(text: text));
+                  viewModel.messageController.clear();
+                },
+                icon: const Icon(Icons.send, color: AppColors.white),
+              ),
+            ],
+          ),
+        ],
+      ),
+    );
+  }
+
   @override
   ChatViewModel viewModelBuilder(
     BuildContext context,
@@ -119,5 +196,35 @@ class ChatView extends StackedView<ChatViewModel> {
   void onDispose(ChatViewModel viewModel) {
     viewModel.clearMessages();
     super.onDispose(viewModel);
+  }
+}
+
+// ignore: must_be_immutable
+class _QuickReplyChip extends StatelessWidget {
+  final String label;
+  final VoidCallback onTap;
+
+  const _QuickReplyChip({required this.label, required this.onTap});
+
+  @override
+  Widget build(BuildContext context) {
+    return GestureDetector(
+      onTap: onTap,
+      child: Container(
+        padding: EdgeInsets.symmetric(horizontal: 12.w, vertical: 8.h),
+        decoration: BoxDecoration(
+          color: AppColors.secondary,
+          borderRadius: BorderRadius.circular(20.r),
+        ),
+        child: Text(
+          label,
+          style: GoogleFonts.poppins(
+            color: AppColors.white,
+            fontSize: 12.sp,
+            fontWeight: FontWeight.w500,
+          ),
+        ),
+      ),
+    );
   }
 }
