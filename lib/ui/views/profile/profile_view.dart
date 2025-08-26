@@ -131,6 +131,23 @@ class ProfileView extends StackedView<ProfileViewModel> {
                         ),
                         SizedBox(height: 10.h),
                         ListTile(
+                          onTap: viewModel.onReferAndEarnTap,
+                          tileColor: AppColors.grey600,
+                          shape: RoundedRectangleBorder(
+                            borderRadius: BorderRadius.circular(16.r),
+                          ),
+                          leading: Icon(Iconsax.gift,
+                              size: 24.w, color: AppColors.secondary),
+                          title: Text('Refer and Earn',
+                              style: GoogleFonts.poppins(
+                                  fontSize: 14.sp,
+                                  fontWeight: FontWeight.w400,
+                                  color: AppColors.textPrimary)),
+                          trailing: Icon(Iconsax.arrow_right_2,
+                              size: 24.w, color: AppColors.textPrimary),
+                        ),
+                        SizedBox(height: 10.h),
+                        ListTile(
                           onTap: viewModel.onFavoritesTap,
                           tileColor: AppColors.grey600,
                           shape: RoundedRectangleBorder(
@@ -173,23 +190,6 @@ class ProfileView extends StackedView<ProfileViewModel> {
                           leading: Icon(Iconsax.folder_open,
                               size: 24.w, color: AppColors.secondary),
                           title: Text('Terms & Conditions',
-                              style: GoogleFonts.poppins(
-                                  fontSize: 14.sp,
-                                  fontWeight: FontWeight.w400,
-                                  color: AppColors.textPrimary)),
-                          trailing: Icon(Iconsax.arrow_right_2,
-                              size: 24.w, color: AppColors.textPrimary),
-                        ),
-                        SizedBox(height: 10.h),
-                        ListTile(
-                          onTap: viewModel.onReferAndEarnTap,
-                          tileColor: AppColors.grey600,
-                          shape: RoundedRectangleBorder(
-                            borderRadius: BorderRadius.circular(16.r),
-                          ),
-                          leading: Icon(Iconsax.gift,
-                              size: 24.w, color: AppColors.secondary),
-                          title: Text('Refer and Earn',
                               style: GoogleFonts.poppins(
                                   fontSize: 14.sp,
                                   fontWeight: FontWeight.w400,
