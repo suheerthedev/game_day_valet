@@ -71,6 +71,82 @@ class RentalStatusView extends StackedView<RentalStatusViewModel> {
         )));
   }
 
+  void _showFullImage(BuildContext context, String imageUrl) {
+    showDialog(
+      context: context,
+      builder: (context) => Dialog(
+        insetPadding: EdgeInsets.symmetric(horizontal: 10.w, vertical: 10.h),
+        backgroundColor: Colors.transparent,
+        child: Column(
+          mainAxisSize: MainAxisSize.min,
+          children: [
+            Row(
+              mainAxisAlignment: MainAxisAlignment.end,
+              children: [
+                GestureDetector(
+                  onTap: () => Navigator.pop(context),
+                  child: Container(
+                    padding: EdgeInsets.all(8.r),
+                    decoration: const BoxDecoration(
+                      color: Colors.white,
+                      shape: BoxShape.circle,
+                    ),
+                    child: Icon(
+                      Icons.close,
+                      color: AppColors.primary,
+                      size: 24.sp,
+                    ),
+                  ),
+                ),
+              ],
+            ),
+            SizedBox(height: 8.h),
+            Flexible(
+              child: InteractiveViewer(
+                panEnabled: true,
+                minScale: 1.0,
+                maxScale: 4.0,
+                child: Container(
+                  decoration: BoxDecoration(
+                    color: Colors.black,
+                    borderRadius: BorderRadius.circular(10.r),
+                  ),
+                  child: CachedNetworkImage(
+                    imageUrl: imageUrl,
+                    fit: BoxFit.contain,
+                    placeholder: (context, url) => const Center(
+                      child: CircularProgressIndicator(
+                        color: Colors.white,
+                      ),
+                    ),
+                    errorWidget: (context, url, error) => Column(
+                      mainAxisAlignment: MainAxisAlignment.center,
+                      children: [
+                        Icon(
+                          IconsaxPlusLinear.image,
+                          color: Colors.white,
+                          size: 48.sp,
+                        ),
+                        SizedBox(height: 8.h),
+                        Text(
+                          'Failed to load image',
+                          style: GoogleFonts.poppins(
+                            color: Colors.white,
+                            fontSize: 14.sp,
+                          ),
+                        ),
+                      ],
+                    ),
+                  ),
+                ),
+              ),
+            ),
+          ],
+        ),
+      ),
+    );
+  }
+
   Widget _buildNoRentalState(BuildContext context) {
     return Padding(
       padding: EdgeInsets.symmetric(horizontal: 25.w),
@@ -112,6 +188,16 @@ class RentalStatusView extends StackedView<RentalStatusViewModel> {
         child: Column(
           crossAxisAlignment: CrossAxisAlignment.start,
           children: [
+            Image.asset(
+              'assets/logo/gdv_full_logo_black.png',
+              width: 1.sw,
+              height: 0.15.sh,
+            ),
+            Divider(
+              color: AppColors.grey300,
+              thickness: 1,
+              height: 50.h,
+            ),
             // Row(
             //   mainAxisAlignment: MainAxisAlignment.center,
             //   crossAxisAlignment: CrossAxisAlignment.start,
@@ -281,22 +367,31 @@ class RentalStatusView extends StackedView<RentalStatusViewModel> {
                       ),
                     ),
                     clipBehavior: Clip.hardEdge,
-                    child: CachedNetworkImage(
-                      imageUrl:
-                          viewModel.rentalStatus.last.imageUrls?[index] ?? '',
-                      fit: BoxFit.cover,
-                      placeholder: (context, url) => const Center(
-                        child: CircularProgressIndicator(),
-                      ),
-                      errorWidget: (context, url, error) => Icon(
-                        IconsaxPlusLinear.image,
-                        color: AppColors.textHint,
-                        size: 24.sp,
+                    child: GestureDetector(
+                      onTap: () {
+                        _showFullImage(
+                            context,
+                            viewModel.rentalStatus.last.imageUrls?[index] ??
+                                '');
+                      },
+                      child: CachedNetworkImage(
+                        imageUrl:
+                            viewModel.rentalStatus.last.imageUrls?[index] ?? '',
+                        fit: BoxFit.cover,
+                        placeholder: (context, url) => const Center(
+                          child: CircularProgressIndicator(),
+                        ),
+                        errorWidget: (context, url, error) => Icon(
+                          IconsaxPlusLinear.image,
+                          color: AppColors.textHint,
+                          size: 24.sp,
+                        ),
                       ),
                     ),
                   );
                 },
               ),
+              SizedBox(height: 50.h),
             ],
             // SizedBox(height: 10.h),
             // Text(
