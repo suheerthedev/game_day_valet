@@ -21,216 +21,188 @@ class HomeView extends StackedView<HomeViewModel> {
     return Scaffold(
         backgroundColor: AppColors.scaffoldBackground,
         appBar: MainAppBar(
-          title: Column(
-            crossAxisAlignment: CrossAxisAlignment.start,
-            children: [
-              GestureDetector(
-                behavior: HitTestBehavior.opaque,
-                onTap: viewModel
-                    .refreshCity, // tapping "Select City" re-tries detection
-                child: Row(
-                  mainAxisSize: MainAxisSize.min,
-                  children: [
-                    ConstrainedBox(
-                      constraints: BoxConstraints(
-                        maxWidth: 100.w,
-                      ),
-                      child: Text('Select City',
-                          maxLines: 1,
-                          overflow: TextOverflow.ellipsis,
-                          softWrap: true,
-                          style: GoogleFonts.poppins(
-                              fontSize: 14.sp,
-                              fontWeight: FontWeight.w700,
-                              color: AppColors.textPrimary)),
-                    ),
-                    const SizedBox(width: 4),
-                    const Icon(Icons.keyboard_arrow_down, size: 18),
-                  ],
-                ),
-              ),
-              FutureBuilder<String>(
-                future: viewModel.cityFuture,
-                builder: (context, snap) {
-                  if (snap.connectionState == ConnectionState.waiting) {
-                    return Text('Detecting...',
-                        style: GoogleFonts.poppins(
-                            fontSize: 14.sp,
-                            fontWeight: FontWeight.w400,
-                            color: AppColors.textSecondary));
-                  }
-                  if (snap.hasError) {
-                    return InkWell(
-                      onTap: viewModel.refreshCity,
-                      child: Text('Enable location & tap to retry',
-                          style: GoogleFonts.poppins(
-                              fontSize: 14.sp,
-                              fontWeight: FontWeight.w400,
-                              color: AppColors.textSecondary)),
-                    );
-                  }
-                  return ConstrainedBox(
-                    constraints: BoxConstraints(
-                      maxWidth: 200.w,
-                    ),
-                    child: Text(
-                      snap.data ?? 'Unknown',
-                      style: GoogleFonts.poppins(
-                          fontSize: 14.sp,
-                          fontWeight: FontWeight.w700,
-                          color: AppColors.textSecondary),
-                    ),
-                  );
-                },
-              ),
-            ],
-          ),
-        ),
+            title: Column(
+          crossAxisAlignment: CrossAxisAlignment.start,
+          children: [
+            Text(
+              'Sports',
+              style: GoogleFonts.poppins(
+                  fontSize: 24.sp,
+                  fontWeight: FontWeight.w600,
+                  color: AppColors.textPrimary),
+            ),
+            Text(
+              'Select a sport to begin exploring tournaments.',
+              style: GoogleFonts.poppins(
+                  fontSize: 12.sp,
+                  fontWeight: FontWeight.w500,
+                  color: AppColors.textHint),
+            ),
+          ],
+        )
+            // title: Column(
+            //   crossAxisAlignment: CrossAxisAlignment.start,
+            //   children: [
+            //     GestureDetector(
+            //       behavior: HitTestBehavior.opaque,
+            //       onTap: viewModel
+            //           .refreshCity, // tapping "Select City" re-tries detection
+            //       child: Row(
+            //         mainAxisSize: MainAxisSize.min,
+            //         children: [
+            //           ConstrainedBox(
+            //             constraints: BoxConstraints(
+            //               maxWidth: 100.w,
+            //             ),
+            //             child: Text('Select City',
+            //                 maxLines: 1,
+            //                 overflow: TextOverflow.ellipsis,
+            //                 softWrap: true,
+            //                 style: GoogleFonts.poppins(
+            //                     fontSize: 14.sp,
+            //                     fontWeight: FontWeight.w700,
+            //                     color: AppColors.textPrimary)),
+            //           ),
+            //           const SizedBox(width: 4),
+            //           const Icon(Icons.keyboard_arrow_down, size: 18),
+            //         ],
+            //       ),
+            //     ),
+            //     FutureBuilder<String>(
+            //       future: viewModel.cityFuture,
+            //       builder: (context, snap) {
+            //         if (snap.connectionState == ConnectionState.waiting) {
+            //           return Text('Detecting...',
+            //               style: GoogleFonts.poppins(
+            //                   fontSize: 14.sp,
+            //                   fontWeight: FontWeight.w400,
+            //                   color: AppColors.textSecondary));
+            //         }
+            //         if (snap.hasError) {
+            //           return InkWell(
+            //             onTap: viewModel.refreshCity,
+            //             child: Text('Enable location & tap to retry',
+            //                 style: GoogleFonts.poppins(
+            //                     fontSize: 14.sp,
+            //                     fontWeight: FontWeight.w400,
+            //                     color: AppColors.textSecondary)),
+            //           );
+            //         }
+            //         return ConstrainedBox(
+            //           constraints: BoxConstraints(
+            //             maxWidth: 200.w,
+            //           ),
+            //           child: Text(
+            //             snap.data ?? 'Unknown',
+            //             style: GoogleFonts.poppins(
+            //                 fontSize: 14.sp,
+            //                 fontWeight: FontWeight.w700,
+            //                 color: AppColors.textSecondary),
+            //           ),
+            //         );
+            //       },
+            //     ),
+            //   ],
+            // ),
+            ),
         body: SafeArea(
           child: viewModel.isSportsLoading
               ? const Center(child: CircularProgressIndicator())
               : viewModel.sportsList.isEmpty
                   ? _buildEmptyState()
                   : Padding(
-                      padding: EdgeInsets.symmetric(
-                        horizontal: 25.w,
+                      padding: EdgeInsets.only(
+                        top: 20.w,
+                        right: 20.w,
+                        left: 20.w,
                       ),
-                      child: Column(
-                        children: [
-                          Expanded(
-                            child: SizedBox(
-                              width: double.infinity,
-                              child: SingleChildScrollView(
-                                child: Column(
-                                  crossAxisAlignment: CrossAxisAlignment.start,
-                                  children: [
-                                    Text(
-                                      'Sports',
-                                      style: GoogleFonts.poppins(
-                                          fontSize: 21.sp,
-                                          fontWeight: FontWeight.w600,
-                                          color: AppColors.textPrimary),
-                                    ),
-                                    Text(
-                                      'Select a sport to begin exploring tournaments.',
-                                      style: GoogleFonts.poppins(
-                                        fontSize: 14.sp,
-                                        fontWeight: FontWeight.w500,
-                                        color: AppColors.textHint,
-                                      ),
-                                    ),
-                                    ListView.builder(
-                                      shrinkWrap: true,
-                                      physics:
-                                          const NeverScrollableScrollPhysics(),
-                                      itemCount: viewModel.sportsList.length,
-                                      itemBuilder: (context, index) {
-                                        final sport =
-                                            viewModel.sportsList[index];
-                                        return InkWell(
-                                          onTap: () {
-                                            viewModel.navigateToTournaments(
-                                                sport.name ?? '', sport.id);
-                                          },
-                                          child: Container(
-                                              margin: EdgeInsets.symmetric(
-                                                  vertical: 10.h),
-                                              decoration: BoxDecoration(
-                                                color: AppColors.white,
-                                                borderRadius:
-                                                    BorderRadius.circular(10.r),
-                                              ),
-                                              child: Column(
-                                                children: [
-                                                  Container(
-                                                    width: 339.w,
-                                                    height: 319.h,
-                                                    decoration: BoxDecoration(
-                                                      color: AppColors.white,
-                                                      borderRadius:
-                                                          BorderRadius.circular(
-                                                              16.r),
-                                                    ),
-                                                    clipBehavior:
-                                                        Clip.antiAlias,
-                                                    child: Stack(children: [
-                                                      CachedNetworkImage(
-                                                        imageUrl:
-                                                            sport.imageUrl ??
-                                                                '',
-                                                        fit: BoxFit.contain,
-                                                        width: 339.w,
-                                                        height: 319.h,
-                                                        placeholder:
-                                                            (context, url) =>
-                                                                const Center(
-                                                          child:
-                                                              CircularProgressIndicator(),
-                                                        ),
-                                                        errorWidget: (context,
-                                                                url, error) =>
-                                                            const Icon(
-                                                          IconsaxPlusLinear
-                                                              .image,
-                                                          color:
-                                                              AppColors.grey300,
-                                                        ),
-                                                      ),
-                                                      Container(
-                                                        width: 339.w,
-                                                        height: 319.h,
-                                                        color: AppColors.primary
-                                                            .withOpacity(0.7),
-                                                      ),
-                                                      Center(
-                                                        child: Column(
-                                                          mainAxisAlignment:
-                                                              MainAxisAlignment
-                                                                  .center,
-                                                          children: [
-                                                            Text(
-                                                              viewModel
-                                                                      .sportsList[
-                                                                          index]
-                                                                      .name ??
-                                                                  '',
-                                                              style: GoogleFonts.poppins(
-                                                                  fontSize:
-                                                                      24.sp,
-                                                                  fontWeight:
-                                                                      FontWeight
-                                                                          .w600,
-                                                                  color: AppColors
-                                                                      .white),
-                                                            ),
-                                                            Text(
-                                                              sport.description ??
-                                                                  '',
-                                                              style: GoogleFonts.poppins(
-                                                                  fontSize:
-                                                                      24.sp,
-                                                                  fontWeight:
-                                                                      FontWeight
-                                                                          .w600,
-                                                                  color: AppColors
-                                                                      .white),
-                                                            ),
-                                                          ],
-                                                        ),
-                                                      ),
-                                                    ]),
-                                                  ),
-                                                ],
-                                              )),
-                                        );
-                                      },
-                                    ),
-                                  ],
-                                ),
-                              ),
+                      child: SingleChildScrollView(
+                        child: Column(
+                          crossAxisAlignment: CrossAxisAlignment.start,
+                          children: [
+                            Image.asset(
+                              'assets/logo/gdv_full_logo_black.png',
+                              width: 1.sw,
+                              height: 0.15.sh,
                             ),
-                          ),
-                        ],
+
+                            SizedBox(height: 40.h),
+                            // Text(
+                            //   'Sports',
+                            //   style: GoogleFonts.poppins(
+                            //       fontSize: 21.sp,
+                            //       fontWeight: FontWeight.w600,
+                            //       color: AppColors.textPrimary),
+                            // ),
+                            // Text(
+                            //   'Select a sport to begin exploring tournaments.',
+                            //   style: GoogleFonts.poppins(
+                            //     fontSize: 14.sp,
+                            //     fontWeight: FontWeight.w500,
+                            //     color: AppColors.textHint,
+                            //   ),
+                            // ),
+                            // SizedBox(height: 20.h),
+                            GridView.builder(
+                              shrinkWrap: true,
+                              physics: const NeverScrollableScrollPhysics(),
+                              gridDelegate:
+                                  SliverGridDelegateWithFixedCrossAxisCount(
+                                crossAxisCount: 2,
+                                crossAxisSpacing: 15.w,
+                                mainAxisSpacing: 15.h,
+                                childAspectRatio: 1.1,
+                              ),
+                              itemCount: viewModel.sportsList.length,
+                              itemBuilder: (context, index) {
+                                final sport = viewModel.sportsList[index];
+                                return InkWell(
+                                  onTap: () {
+                                    viewModel.navigateToTournaments(
+                                        sport.name ?? '', sport.id);
+                                  },
+                                  child: Container(
+                                    decoration: BoxDecoration(
+                                      color: AppColors
+                                          .secondary, // Red background color like in image
+                                      borderRadius: BorderRadius.circular(10.r),
+                                    ),
+                                    child: Column(
+                                      mainAxisAlignment:
+                                          MainAxisAlignment.center,
+                                      children: [
+                                        // Sport icon - using placeholder white icons as per the design
+                                        CachedNetworkImage(
+                                          imageUrl: sport.imageUrl ?? '',
+                                          width: 60.w,
+                                          height: 60.h,
+                                          fit: BoxFit.cover,
+                                          placeholder: (context, url) =>
+                                              const Center(
+                                                  child:
+                                                      CircularProgressIndicator()),
+                                          errorWidget: (context, url, error) =>
+                                              const Icon(Icons.error),
+                                        ),
+                                        SizedBox(height: 10.h),
+                                        // Sport name
+                                        Text(
+                                          sport.name ?? '',
+                                          style: GoogleFonts.poppins(
+                                            fontSize: 18.sp,
+                                            fontWeight: FontWeight.w500,
+                                            color: AppColors.white,
+                                          ),
+                                          textAlign: TextAlign.center,
+                                        ),
+                                      ],
+                                    ),
+                                  ),
+                                );
+                              },
+                            ),
+                          ],
+                        ),
                       ),
                     ),
         ));
@@ -395,6 +367,58 @@ class HomeView extends StackedView<HomeViewModel> {
   //           ),
   //   );
   // }
+
+  // Helper method to get the appropriate icon for each sport
+  Widget _getSportIcon(String sportName, {required double size}) {
+    IconData iconData;
+
+    // Match sport names with appropriate icons
+    switch (sportName.toLowerCase()) {
+      case 'baseball':
+        iconData = Icons.sports_baseball_outlined;
+        break;
+      case 'softball':
+        iconData = Icons.sports_baseball;
+        break;
+      case 'soccer':
+        iconData = Icons.sports_soccer;
+        break;
+      case 'football':
+        iconData = Icons.sports_football;
+        break;
+      case 'basketball':
+        iconData = Icons.sports_basketball;
+        break;
+      case 'volleyball':
+        iconData = Icons.sports_volleyball;
+        break;
+      case 'tennis':
+        iconData = Icons.sports_tennis;
+        break;
+      case 'hockey':
+      case 'field hockey':
+        iconData = Icons.sports_hockey;
+        break;
+      case 'rugby':
+        iconData = Icons.sports_rugby;
+        break;
+      case 'cricket':
+        iconData = Icons.sports_cricket;
+        break;
+      case 'lacrosse':
+        // Using a generic icon since Flutter doesn't have a specific lacrosse icon
+        iconData = Icons.sports_handball;
+        break;
+      default:
+        iconData = Icons.sports;
+    }
+
+    return Icon(
+      iconData,
+      size: size,
+      color: AppColors.white,
+    );
+  }
 
   Widget _buildEmptyState() {
     return Center(
