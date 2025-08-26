@@ -18,11 +18,9 @@ class SportsService {
 
       logger.info("Sports response: $response");
 
-      final data = response['data'];
-
-      for (var item in data) {
-        sports.add(SportsModel.fromJson(item));
-      }
+      sports = (response['data'] as List)
+          .map((e) => SportsModel.fromJson(e))
+          .toList();
     } on ApiException catch (e) {
       logger.error("Error fetching sports", e);
       rethrow;
@@ -30,5 +28,9 @@ class SportsService {
       logger.error("Error fetching sports", e);
       throw ApiException(e.toString());
     }
+  }
+
+  void clearSports() {
+    sports.clear();
   }
 }

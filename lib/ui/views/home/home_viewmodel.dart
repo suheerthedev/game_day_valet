@@ -42,6 +42,11 @@ class HomeViewModel extends BaseViewModel {
     await getSports();
   }
 
+  void clearSports() {
+    _sportsService.clearSports();
+    rebuildUi();
+  }
+
   void navigateToTournaments(String sportsName, int sportId) {
     _navigationService.navigateToTournamentsView(
         sportId: sportId, sportsName: sportsName);

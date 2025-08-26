@@ -427,4 +427,10 @@ class HomeView extends StackedView<HomeViewModel> {
     await viewModel.init();
     super.onViewModelReady(viewModel);
   }
+
+  @override
+  void onDispose(HomeViewModel viewModel) {
+    viewModel.clearSports();
+    super.onDispose(viewModel);
+  }
 }
