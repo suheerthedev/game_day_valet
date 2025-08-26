@@ -368,58 +368,6 @@ class HomeView extends StackedView<HomeViewModel> {
   //   );
   // }
 
-  // Helper method to get the appropriate icon for each sport
-  Widget _getSportIcon(String sportName, {required double size}) {
-    IconData iconData;
-
-    // Match sport names with appropriate icons
-    switch (sportName.toLowerCase()) {
-      case 'baseball':
-        iconData = Icons.sports_baseball_outlined;
-        break;
-      case 'softball':
-        iconData = Icons.sports_baseball;
-        break;
-      case 'soccer':
-        iconData = Icons.sports_soccer;
-        break;
-      case 'football':
-        iconData = Icons.sports_football;
-        break;
-      case 'basketball':
-        iconData = Icons.sports_basketball;
-        break;
-      case 'volleyball':
-        iconData = Icons.sports_volleyball;
-        break;
-      case 'tennis':
-        iconData = Icons.sports_tennis;
-        break;
-      case 'hockey':
-      case 'field hockey':
-        iconData = Icons.sports_hockey;
-        break;
-      case 'rugby':
-        iconData = Icons.sports_rugby;
-        break;
-      case 'cricket':
-        iconData = Icons.sports_cricket;
-        break;
-      case 'lacrosse':
-        // Using a generic icon since Flutter doesn't have a specific lacrosse icon
-        iconData = Icons.sports_handball;
-        break;
-      default:
-        iconData = Icons.sports;
-    }
-
-    return Icon(
-      iconData,
-      size: size,
-      color: AppColors.white,
-    );
-  }
-
   Widget _buildEmptyState() {
     return Center(
       child: Column(

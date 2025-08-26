@@ -35,7 +35,14 @@ class MainButton extends StackedView<MainButtonModel> {
           height: 58.h,
           decoration: BoxDecoration(
             gradient: isDisabled
-                ? null
+                ? const LinearGradient(
+                    begin: Alignment.bottomLeft,
+                    end: Alignment.bottomRight,
+                    colors: [
+                      AppColors.grey500,
+                      AppColors.grey500,
+                    ],
+                  )
                 : const LinearGradient(
                     begin: Alignment.bottomLeft,
                     end: Alignment.bottomRight,
