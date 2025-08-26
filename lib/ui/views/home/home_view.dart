@@ -125,8 +125,11 @@ class HomeView extends StackedView<HomeViewModel> {
                               width: 1.sw,
                               height: 0.15.sh,
                             ),
-
-                            SizedBox(height: 40.h),
+                            Divider(
+                              color: AppColors.grey300,
+                              thickness: 1,
+                              height: 50.h,
+                            ),
                             // Text(
                             //   'Sports',
                             //   style: GoogleFonts.poppins(
