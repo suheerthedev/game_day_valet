@@ -11,6 +11,7 @@ class RentalHistoryModel {
   final String? promoCode;
   final String? insuranceOption;
   final String? damageWaiver;
+  final String? createdAt;
   final String? rentalDate;
   final String? deliveryAssignedTo;
   final String? paymentMethod;
@@ -18,6 +19,7 @@ class RentalHistoryModel {
   final String? totalAmount;
   final String? status;
   final String? returnInstructions;
+  final String? totalRentals;
 
   RentalHistoryModel({
     required this.id,
@@ -32,6 +34,7 @@ class RentalHistoryModel {
     this.promoCode,
     this.insuranceOption,
     this.damageWaiver,
+    this.createdAt,
     this.rentalDate,
     this.deliveryAssignedTo,
     this.paymentMethod,
@@ -39,6 +42,7 @@ class RentalHistoryModel {
     this.totalAmount,
     this.status,
     this.returnInstructions,
+    this.totalRentals,
   });
 
   factory RentalHistoryModel.fromJson(Map<String, dynamic> json) {
@@ -55,6 +59,7 @@ class RentalHistoryModel {
       promoCode: json['promo_code'],
       insuranceOption: json['insurance_option'],
       damageWaiver: json['damage_waiver'],
+      createdAt: json['created_at'],
       rentalDate: json['rental_date'],
       deliveryAssignedTo: json['delivery_assigned_to'],
       paymentMethod: json['payment_method'],
@@ -62,6 +67,7 @@ class RentalHistoryModel {
       totalAmount: json['total_amount'],
       status: json['status'],
       returnInstructions: json['return_instructions'],
+      totalRentals: json['total_items'],
     );
   }
 }

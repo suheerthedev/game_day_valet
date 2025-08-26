@@ -17,6 +17,8 @@ class RentalHistoryViewModel extends BaseViewModel {
 
   List<RentalHistoryModel> rentalHistoryList = [];
 
+  bool isLoading = false;
+
   void getRentalHistory() async {
     final url = ApiConfig.baseUrl + ApiConfig.rentalHistoryEndPoint;
 
@@ -44,6 +46,8 @@ class RentalHistoryViewModel extends BaseViewModel {
   }
 
   void completePayment(BuildContext context, num amount, int rentalId) async {
+    isLoading = true;
+    rebuildUi();
     try {
       await _rentalService.compeletePayment(context, amount, rentalId);
     } on ApiException catch (e) {
@@ -55,6 +59,7 @@ class RentalHistoryViewModel extends BaseViewModel {
       _snackbarService.showCustomSnackBar(
           message: "Something went wrong", variant: SnackbarType.error);
     } finally {
+      isLoading = false;
       rebuildUi();
     }
   }

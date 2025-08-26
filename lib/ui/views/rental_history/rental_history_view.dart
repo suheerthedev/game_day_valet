@@ -1,7 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:game_day_valet/ui/widgets/common/main_app_bar/main_app_bar.dart';
-import 'package:intl/intl.dart';
 import 'package:game_day_valet/ui/common/app_colors.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:iconsax_flutter/iconsax_flutter.dart';
@@ -18,18 +17,20 @@ class RentalHistoryView extends StackedView<RentalHistoryViewModel> {
     RentalHistoryViewModel viewModel,
     Widget? child,
   ) {
-    return Scaffold(
-        backgroundColor: AppColors.scaffoldBackground,
-        appBar: MainAppBar(
-          title: Text(
-            'Rental History',
-            style: GoogleFonts.poppins(
-                fontSize: 24.sp,
-                fontWeight: FontWeight.w600,
-                color: AppColors.textPrimary),
+    return Stack(
+      children: [
+        Scaffold(
+          backgroundColor: AppColors.scaffoldBackground,
+          appBar: MainAppBar(
+            title: Text(
+              'Rental History',
+              style: GoogleFonts.poppins(
+                  fontSize: 24.sp,
+                  fontWeight: FontWeight.w600,
+                  color: AppColors.textPrimary),
+            ),
           ),
-        ),
-        body: SafeArea(
+          body: SafeArea(
             child: viewModel.isBusy
                 ? const Center(child: CircularProgressIndicator())
                 : viewModel.rentalHistoryList.isEmpty
@@ -48,7 +49,6 @@ class RentalHistoryView extends StackedView<RentalHistoryViewModel> {
                                       viewModel.rentalHistoryList[index];
                                   return Container(
                                     width: 338.w,
-                                    height: 152.h,
                                     margin: EdgeInsets.only(bottom: 10.h),
                                     padding: EdgeInsets.symmetric(
                                         horizontal: 16.w, vertical: 14.h),
@@ -56,61 +56,42 @@ class RentalHistoryView extends StackedView<RentalHistoryViewModel> {
                                       color: AppColors.grey900,
                                       borderRadius: BorderRadius.circular(16.r),
                                     ),
-                                    child: Stack(
+                                    child: Column(
+                                      crossAxisAlignment:
+                                          CrossAxisAlignment.start,
+                                      mainAxisSize: MainAxisSize.min,
                                       children: [
-                                        Column(
-                                          crossAxisAlignment:
-                                              CrossAxisAlignment.start,
-                                          children: [
-                                            Text(rental.tournamentName ?? '',
-                                                style: GoogleFonts.poppins(
-                                                    fontSize: 14.sp,
-                                                    fontWeight: FontWeight.w700,
-                                                    color: AppColors
-                                                        .textSecondary)),
-                                            Text(
-                                                DateFormat('dd-MM-yyyy').format(
-                                                    DateTime.parse(
-                                                        rental.rentalDate ??
-                                                            '')),
-                                                style: GoogleFonts.poppins(
-                                                    fontSize: 12.sp,
-                                                    fontWeight: FontWeight.w600,
-                                                    color:
-                                                        AppColors.textPrimary)),
-                                            Text(rental.fieldNumber ?? '',
-                                                style: GoogleFonts.poppins(
-                                                    fontSize: 12.sp,
-                                                    fontWeight: FontWeight.w500,
-                                                    color: AppColors.textHint)),
-                                            SizedBox(height: 10.h),
-                                            Text.rich(TextSpan(children: [
-                                              TextSpan(
-                                                text: 'Rentals: ',
-                                                style: GoogleFonts.poppins(
-                                                    fontSize: 14.sp,
-                                                    fontWeight: FontWeight.w600,
-                                                    color: AppColors.textHint),
-                                              ),
-                                              TextSpan(
-                                                text:
-                                                    '100 Chairs . 20 Lights . 4 Speakers',
-                                                style: GoogleFonts.poppins(
-                                                    fontSize: 14.sp,
-                                                    fontWeight: FontWeight.w500,
-                                                    color: AppColors.textHint),
-                                              )
-                                            ])),
-                                          ],
-                                        ),
-                                        // Align(
-                                        //   alignment: Alignment.topRight,
-                                        //   child: Icon(Iconsax.heart_copy,
-                                        //       size: 24.w,
-                                        //       color: AppColors.secondary),
-                                        // ),
+                                        Text(rental.tournamentName ?? '',
+                                            style: GoogleFonts.poppins(
+                                                fontSize: 14.sp,
+                                                fontWeight: FontWeight.w700,
+                                                color:
+                                                    AppColors.textSecondary)),
+                                        Text(rental.createdAt ?? '',
+                                            style: GoogleFonts.poppins(
+                                                fontSize: 12.sp,
+                                                fontWeight: FontWeight.w600,
+                                                color: AppColors.textPrimary)),
+                                        SizedBox(height: 10.h),
+                                        Text.rich(TextSpan(children: [
+                                          TextSpan(
+                                            text: 'Rentals: ',
+                                            style: GoogleFonts.poppins(
+                                                fontSize: 14.sp,
+                                                fontWeight: FontWeight.w600,
+                                                color: AppColors.textHint),
+                                          ),
+                                          TextSpan(
+                                            text: rental.totalRentals ?? '',
+                                            style: GoogleFonts.poppins(
+                                                fontSize: 14.sp,
+                                                fontWeight: FontWeight.w500,
+                                                color: AppColors.textHint),
+                                          )
+                                        ])),
+                                        SizedBox(height: 15.h),
                                         Align(
-                                          alignment: Alignment.bottomRight,
+                                          alignment: Alignment.centerRight,
                                           child: InkWell(
                                             onTap: () {
                                               rental.paymentStatus == 'pending'
@@ -124,6 +105,8 @@ class RentalHistoryView extends StackedView<RentalHistoryViewModel> {
                                             },
                                             child: Container(
                                                 height: 33.h,
+                                                padding: EdgeInsets.symmetric(
+                                                    horizontal: 10.w),
                                                 decoration: BoxDecoration(
                                                   color: rental.paymentStatus ==
                                                           'completed'
@@ -156,7 +139,20 @@ class RentalHistoryView extends StackedView<RentalHistoryViewModel> {
                             ],
                           ),
                         ),
-                      )));
+                      ),
+          ),
+        ),
+        if (viewModel.isLoading)
+          Container(
+            color: Colors.black.withOpacity(0.5),
+            child: const Center(
+              child: CircularProgressIndicator(
+                valueColor: AlwaysStoppedAnimation<Color>(AppColors.white),
+              ),
+            ),
+          ),
+      ],
+    );
   }
 
   Widget _buildEmptyState() {
