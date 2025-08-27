@@ -54,32 +54,6 @@ class AddRentalsView extends StackedView<AddRentalsViewModel> {
                                   viewModel.searchController.text);
                             },
                           ),
-                          SizedBox(height: 20.h),
-
-                          //Items
-                          GridView.builder(
-                            shrinkWrap: true,
-                            physics: const NeverScrollableScrollPhysics(),
-                            itemCount: viewModel.items.length,
-                            gridDelegate:
-                                SliverGridDelegateWithFixedCrossAxisCount(
-                              crossAxisCount: 2,
-                              childAspectRatio: 0.6,
-                              mainAxisSpacing: 10.h,
-                              crossAxisSpacing: 20.w,
-                            ),
-                            itemBuilder: (context, index) {
-                              return MainItemCard(
-                                item: viewModel.items[index],
-                                onTapAdd: () {
-                                  viewModel.addItem(viewModel.items[index]);
-                                },
-                                onTapRemove: () {
-                                  viewModel.removeItem(viewModel.items[index]);
-                                },
-                              );
-                            },
-                          ),
 
                           //View Smart Suggestions
                           SizedBox(height: 20.h),
@@ -98,10 +72,12 @@ class AddRentalsView extends StackedView<AddRentalsViewModel> {
                           ),
                           if (viewModel.viewSmartSuggestions) ...[
                             SizedBox(height: 10.h),
-                            ListView.builder(
+                            ListView.separated(
                               shrinkWrap: true,
                               physics: const NeverScrollableScrollPhysics(),
                               itemCount: viewModel.bundles.length,
+                              separatorBuilder: (context, index) =>
+                                  SizedBox(height: 10.h),
                               itemBuilder: (context, index) {
                                 final bundle = viewModel.bundles[index];
                                 return Container(
@@ -203,134 +179,36 @@ class AddRentalsView extends StackedView<AddRentalsViewModel> {
                                     ],
                                   ),
                                 );
-                                // return Container(
-                                //   width: 340.w,
-                                //   height: 85.h,
-                                //   decoration: BoxDecoration(
-                                //       color: AppColors.grey50,
-                                //       borderRadius: BorderRadius.circular(10.r),
-                                //       border: Border.all(
-                                //           color: AppColors.grey100,
-                                //           width: 1.w)),
-                                //   child: Row(
-                                //     children: [
-                                //       Container(
-                                //         width: 56.w,
-                                //         height: 56.w,
-                                //         decoration: BoxDecoration(
-                                //           color: AppColors.grey100,
-                                //           borderRadius:
-                                //               BorderRadius.circular(12.r),
-                                //         ),
-                                //         child: ClipRRect(
-                                //           borderRadius:
-                                //               BorderRadius.circular(12.r),
-                                //           child: CachedNetworkImage(
-                                //               imageUrl: bundle.image ?? '',
-                                //               fit: BoxFit.contain,
-                                //               placeholder: (context, url) =>
-                                //                   const Center(
-                                //                     child:
-                                //                         CircularProgressIndicator(
-                                //                       color:
-                                //                           AppColors.secondary,
-                                //                     ),
-                                //                   ),
-                                //               errorWidget:
-                                //                   (context, url, error) => Icon(
-                                //                       IconsaxPlusLinear.image,
-                                //                       size: 24.sp,
-                                //                       color:
-                                //                           AppColors.grey400)),
-                                //         ),
-                                //       ),
-                                //       SizedBox(width: 12.w),
-                                //       Expanded(
-                                //         child: Column(
-                                //           mainAxisAlignment:
-                                //               MainAxisAlignment.center,
-                                //           crossAxisAlignment:
-                                //               CrossAxisAlignment.start,
-                                //           children: [
-                                //             Text(
-                                //               bundle.totalItems ?? '',
-                                //               maxLines: 2,
-                                //               overflow: TextOverflow.ellipsis,
-                                //               style: GoogleFonts.poppins(
-                                //                 fontSize: 14.sp,
-                                //                 fontWeight: FontWeight.w600,
-                                //                 color: AppColors.textPrimary,
-                                //               ),
-                                //             ),
-                                //             SizedBox(height: 2.h),
-                                //             Text(
-                                //               "\$ ${bundle.price}",
-                                //               maxLines: 1,
-                                //               overflow: TextOverflow.ellipsis,
-                                //               style: GoogleFonts.poppins(
-                                //                   fontSize: 15.sp,
-                                //                   fontWeight: FontWeight.w500,
-                                //                   color: AppColors.secondary),
-                                //             ),
-                                //             SizedBox(height: 8.h),
-                                //           ],
-                                //         ),
-                                //       ),
-                                //       Checkbox(
-                                //           activeColor: AppColors.secondary,
-                                //           checkColor: AppColors.white,
-                                //           splashRadius: 0,
-                                //           side: BorderSide(
-                                //               color: AppColors.textHint,
-                                //               width: 1.w),
-                                //           shape: RoundedRectangleBorder(
-                                //               borderRadius: BorderRadius.all(
-                                //                   Radius.circular(2.r))),
-                                //           value: bundle.isSelected,
-                                //           onChanged: (value) {
-                                //             viewModel.toggleBundle(bundle);
-                                //           }),
-                                //       // Expanded(
-                                //       //   child: Row(
-                                //       //     children: [
-
-                                //       //       ConstrainedBox(
-                                //       //         constraints: BoxConstraints(
-                                //       //           maxWidth: 200.w,
-                                //       //         ),
-                                //       //         child: Text(
-                                //       //           bundle.totalItems ?? '',
-                                //       //           maxLines: 2,
-                                //       //           softWrap: true,
-                                //       //           overflow: TextOverflow.ellipsis,
-                                //       //           style: GoogleFonts.poppins(
-                                //       //               fontSize: 14.sp,
-                                //       //               fontWeight: FontWeight.w500,
-                                //       //               color:
-                                //       //                   AppColors.textPrimary),
-                                //       //         ),
-                                //       //       ),
-                                //       //     ],
-                                //       //   ),
-                                //       // ),
-                                //       // Padding(
-                                //       //   padding: EdgeInsets.only(right: 10.w),
-                                //       //   child: Text(
-                                //       //     "\$ ${bundle.price}",
-                                //       //     maxLines: 1,
-                                //       //     overflow: TextOverflow.ellipsis,
-                                //       //     style: GoogleFonts.poppins(
-                                //       //         fontSize: 15.sp,
-                                //       //         fontWeight: FontWeight.w500,
-                                //       //         color: AppColors.secondary),
-                                //       //   ),
-                                //       // ),
-                                //     ],
-                                //   ),
-                                // );
                               },
                             ),
                           ],
+
+                          //Items
+
+                          SizedBox(height: 20.h),
+                          GridView.builder(
+                            shrinkWrap: true,
+                            physics: const NeverScrollableScrollPhysics(),
+                            itemCount: viewModel.items.length,
+                            gridDelegate:
+                                SliverGridDelegateWithFixedCrossAxisCount(
+                              crossAxisCount: 2,
+                              childAspectRatio: 0.6,
+                              mainAxisSpacing: 10.h,
+                              crossAxisSpacing: 20.w,
+                            ),
+                            itemBuilder: (context, index) {
+                              return MainItemCard(
+                                item: viewModel.items[index],
+                                onTapAdd: () {
+                                  viewModel.addItem(viewModel.items[index]);
+                                },
+                                onTapRemove: () {
+                                  viewModel.removeItem(viewModel.items[index]);
+                                },
+                              );
+                            },
+                          ),
 
                           //View Smart Suggestions
                         ],
