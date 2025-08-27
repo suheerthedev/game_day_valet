@@ -57,7 +57,7 @@ import 'package:stacked_services/stacked_services.dart' as _i33;
 class Routes {
   static const homeView = '/home-view';
 
-  static const startupView = '/startup-view';
+  static const startupView = '/';
 
   static const onboardingView = '/onboarding-view';
 
@@ -285,8 +285,12 @@ class StackedRouter extends _i1.RouterBase {
       );
     },
     _i5.SignUpView: (data) {
+      final args = data.getArgs<SignUpViewArguments>(
+        orElse: () => const SignUpViewArguments(),
+      );
       return _i30.MaterialPageRoute<dynamic>(
-        builder: (context) => const _i5.SignUpView(),
+        builder: (context) =>
+            _i5.SignUpView(key: args.key, referralCode: args.referralCode),
         settings: data,
       );
     },
@@ -471,6 +475,33 @@ class StackedRouter extends _i1.RouterBase {
 
   @override
   Map<Type, _i1.StackedRouteFactory> get pagesMap => _pagesMap;
+}
+
+class SignUpViewArguments {
+  const SignUpViewArguments({
+    this.key,
+    this.referralCode,
+  });
+
+  final _i30.Key? key;
+
+  final String? referralCode;
+
+  @override
+  String toString() {
+    return '{"key": "$key", "referralCode": "$referralCode"}';
+  }
+
+  @override
+  bool operator ==(covariant SignUpViewArguments other) {
+    if (identical(this, other)) return true;
+    return other.key == key && other.referralCode == referralCode;
+  }
+
+  @override
+  int get hashCode {
+    return key.hashCode ^ referralCode.hashCode;
+  }
 }
 
 class ResetPasswordViewArguments {
@@ -784,14 +815,17 @@ extension NavigatorStateExtension on _i33.NavigationService {
         transition: transition);
   }
 
-  Future<dynamic> navigateToSignUpView([
+  Future<dynamic> navigateToSignUpView({
+    _i30.Key? key,
+    String? referralCode,
     int? routerId,
     bool preventDuplicates = true,
     Map<String, String>? parameters,
     Widget Function(BuildContext, Animation<double>, Animation<double>, Widget)?
         transition,
-  ]) async {
+  }) async {
     return navigateTo<dynamic>(Routes.signUpView,
+        arguments: SignUpViewArguments(key: key, referralCode: referralCode),
         id: routerId,
         preventDuplicates: preventDuplicates,
         parameters: parameters,
@@ -1218,14 +1252,17 @@ extension NavigatorStateExtension on _i33.NavigationService {
         transition: transition);
   }
 
-  Future<dynamic> replaceWithSignUpView([
+  Future<dynamic> replaceWithSignUpView({
+    _i30.Key? key,
+    String? referralCode,
     int? routerId,
     bool preventDuplicates = true,
     Map<String, String>? parameters,
     Widget Function(BuildContext, Animation<double>, Animation<double>, Widget)?
         transition,
-  ]) async {
+  }) async {
     return replaceWith<dynamic>(Routes.signUpView,
+        arguments: SignUpViewArguments(key: key, referralCode: referralCode),
         id: routerId,
         preventDuplicates: preventDuplicates,
         parameters: parameters,

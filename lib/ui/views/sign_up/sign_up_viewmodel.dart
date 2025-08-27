@@ -21,6 +21,9 @@ class SignUpViewModel extends BaseViewModel {
   // final _userService = locator<UserService>();
   final _startupService = locator<StartupService>();
 
+  final String? referralCode;
+  SignUpViewModel({this.referralCode});
+
   final TextEditingController emailController = TextEditingController();
   final TextEditingController nameController = TextEditingController();
   final TextEditingController passwordController = TextEditingController();
@@ -36,6 +39,12 @@ class SignUpViewModel extends BaseViewModel {
   bool isPasswordVisible = false;
 
   bool isReferralCodeValid = false;
+
+  void init() {
+    referralCodeController.text = referralCode ?? '';
+    isReferralCodeValid = referralCode != null;
+    rebuildUi();
+  }
 
   void togglePasswordVisibility() {
     isPasswordVisible = !isPasswordVisible;

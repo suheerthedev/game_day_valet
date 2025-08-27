@@ -11,7 +11,8 @@ import 'package:stacked/stacked.dart';
 import 'sign_up_viewmodel.dart';
 
 class SignUpView extends StackedView<SignUpViewModel> {
-  const SignUpView({Key? key}) : super(key: key);
+  final String? referralCode;
+  const SignUpView({Key? key, this.referralCode}) : super(key: key);
 
   @override
   Widget builder(
@@ -398,5 +399,11 @@ Account""",
   SignUpViewModel viewModelBuilder(
     BuildContext context,
   ) =>
-      SignUpViewModel();
+      SignUpViewModel(referralCode: referralCode);
+
+  @override
+  void onViewModelReady(SignUpViewModel viewModel) {
+    viewModel.init();
+    super.onViewModelReady(viewModel);
+  }
 }

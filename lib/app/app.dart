@@ -56,7 +56,7 @@ import 'package:game_day_valet/services/startup_service.dart';
 @StackedApp(
   routes: [
     MaterialRoute(page: HomeView),
-    MaterialRoute(page: StartupView),
+    MaterialRoute(page: StartupView, initial: true),
     CustomRoute(
       page: OnboardingView,
       transitionsBuilder: TransitionsBuilders.slideLeft,

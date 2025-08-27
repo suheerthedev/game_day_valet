@@ -21,22 +21,37 @@ class StartupViewModel extends BaseViewModel {
   final _startupService = locator<StartupService>();
   // Place anything here that needs to happen before we get into the application
   Future runStartupLogic() async {
+    logger.info('Running startup logic');
+    await Future.delayed(const Duration(seconds: 2));
+    logger.info('Delayed');
     // This is where you can make decisions on where your app should navigate when
     // you have custom startup logic
-    final hasDeepLink = await _deepLinkingService.processPendingUri();
-    logger.info('Has deep link: $hasDeepLink');
-    if (hasDeepLink) {
-      // Deep link handled; do not perform any further navigation here.
-      return;
-    }
+    // final hasDeepLink = await _deepLinkingService.processPendingUri();
 
     await _sharedPreferencesService.init();
-
     final token = await _secureStorageService.getToken();
 
-    if (token != null) {
-      await _startupService.runTokenTasks();
+    _deepLinkingService.isStartupInitiated = true;
 
+    await _deepLinkingService.processPendingUri();
+
+    final pendingRoute = _deepLinkingService.getPendingRoute();
+
+    // logger.info('Has deep link: $hasDeepLink');
+    // if (hasDeepLink) {
+    //   // Deep link handled; do not perform any further navigation here.
+    //   return;
+    // }
+
+    if (pendingRoute != null) {
+      logger.info('Pending route: $pendingRoute');
+      _navigationService.clearStackAndShow(pendingRoute,
+          arguments: SignUpViewArguments(
+            referralCode: _deepLinkingService.getReferralCode(),
+          ));
+      _deepLinkingService.clearPendingRoute();
+    } else if (token != null) {
+      await _startupService.runTokenTasks();
       await _navigationService.replaceWithMainView();
     } else {
       _navigationService.replaceWithOnboardingView();

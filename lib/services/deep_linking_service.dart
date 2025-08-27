@@ -1,6 +1,6 @@
 import 'package:app_links/app_links.dart';
-import 'package:game_day_valet/app/app.locator.dart';
 import 'package:game_day_valet/app/app.router.dart';
+import 'package:game_day_valet/app/app.locator.dart';
 import 'package:game_day_valet/services/logger_service.dart';
 import 'package:stacked_services/stacked_services.dart';
 
@@ -8,7 +8,11 @@ class DeepLinkingService {
   final _appLinks = AppLinks();
   final _navigationService = locator<NavigationService>();
 
+  bool isStartupInitiated = false;
+
   static Uri? pendingUri;
+
+  String? pendingRoute;
 
   static String? referralCode;
 
@@ -49,16 +53,29 @@ class DeepLinkingService {
 
     final queryParams = uri.queryParameters;
 
-    if (path == '/register-referal') {
+    if (path == '/register-referral') {
       referralCode = queryParams['referralCode'];
       logger.info('Referral code: $referralCode');
-      _navigationService.clearStackAndShow(Routes.signUpView);
+      if (isStartupInitiated) {
+        _navigationService.clearStackAndShow(Routes.signUpView,
+            arguments: SignUpViewArguments(
+              referralCode: referralCode,
+            ));
+      } else {
+        pendingRoute = Routes.signUpView;
+      }
     }
   }
 
   String? getReferralCode() => referralCode;
 
+  String? getPendingRoute() => pendingRoute;
+
   void clearReferralCode() {
     referralCode = null;
+  }
+
+  void clearPendingRoute() {
+    pendingRoute = null;
   }
 }

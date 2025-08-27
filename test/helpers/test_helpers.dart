@@ -270,7 +270,6 @@ MockStartupService getAndRegisterStartupService() {
   return service;
 }
 
-
 // @stacked-mock-create
 
 void _removeRegistrationIfExists<T extends Object>() {
