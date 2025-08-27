@@ -52,6 +52,7 @@ import 'test_helpers.mocks.dart';
         onMissingStub: OnMissingStub.returnDefault),
     MockSpec<NotificationService>(onMissingStub: OnMissingStub.returnDefault),
     MockSpec<StartupService>(onMissingStub: OnMissingStub.returnDefault),
+    MockSpec<AuthSessionService>(onMissingStub: OnMissingStub.returnDefault),
 // @stacked-mock-spec
   ],
 )
@@ -78,6 +79,7 @@ void registerServices() {
   getAndRegisterPushNotificationService();
   getAndRegisterNotificationService();
   getAndRegisterStartupService();
+  getAndRegisterAuthSessionService();
 // @stacked-mock-register
 }
 
@@ -267,6 +269,8 @@ MockStartupService getAndRegisterStartupService() {
   locator.registerSingleton<StartupService>(service);
   return service;
 }
+
+
 // @stacked-mock-create
 
 void _removeRegistrationIfExists<T extends Object>() {

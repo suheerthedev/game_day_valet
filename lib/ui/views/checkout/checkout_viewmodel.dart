@@ -74,19 +74,50 @@ class CheckoutViewModel extends BaseViewModel {
   double totalAmount = 0;
 
   void calculateTotalAmount() {
-    totalAmount = 0;
-    if (items.isNotEmpty) {
-      totalAmount += items
-          .map((item) => double.parse(item.price ?? '0') * item.quantity)
-          .reduce((a, b) => a + b);
-    }
-    if (bundles.isNotEmpty) {
-      totalAmount += bundles
-          .map((bundle) => double.parse(bundle.price ?? '0'))
-          .reduce((a, b) => a + b);
+    double subtotal = 0;
+
+    // Items
+    for (final item in items) {
+      final double itemPrice = double.tryParse(item.price ?? '0') ?? 0;
+      subtotal += itemPrice * (item.quantity);
     }
 
-    print(totalAmount);
+    // Selected bundles only
+    for (final bundle in bundles) {
+      if (bundle.isSelected) {
+        final double bundlePrice = double.tryParse(bundle.price ?? '0') ?? 0;
+        subtotal += bundlePrice;
+      }
+    }
+
+    // Selected insurance (single select)
+    for (final option in insuranceOptions) {
+      if (option.isSelected) {
+        subtotal += (option.price).toDouble();
+        break;
+      }
+    }
+
+    // Selected damage waiver (single select)
+    for (final option in damageWaiverOptions) {
+      if (option.isSelected) {
+        subtotal += (option.price).toDouble();
+        break;
+      }
+    }
+
+    double finalTotal = subtotal;
+    if (isPromoCodeValid && coupon != null) {
+      if (coupon?.type == "fixed") {
+        finalTotal = subtotal - (double.tryParse(coupon?.value ?? '0') ?? 0);
+      } else if (coupon?.type == "percent") {
+        final double percent = double.tryParse(coupon?.value ?? '0') ?? 0;
+        finalTotal = subtotal * (1 - (percent / 100));
+      }
+    }
+
+    if (finalTotal < 0) finalTotal = 0;
+    totalAmount = finalTotal;
   }
 
   // Future<void> pickDropOffDateTime(BuildContext context) async {
@@ -211,13 +242,8 @@ class CheckoutViewModel extends BaseViewModel {
   }
 
   void toggleBundle(BundleModel bundle) {
-    if (bundle.isSelected) {
-      totalAmount += double.parse(bundle.price ?? '0');
-    } else {
-      totalAmount -= double.parse(bundle.price ?? '0');
-    }
     bundle.isSelected = !bundle.isSelected;
-
+    calculateTotalAmount();
     notifyListeners();
   }
 
@@ -250,16 +276,14 @@ class CheckoutViewModel extends BaseViewModel {
 
     if (insurance.isSelected) {
       insurance.isSelected = false;
-      totalAmount -= double.parse(insurance.price.toString());
     } else {
       if (previouslySelected != null) {
         previouslySelected.isSelected = false;
-        totalAmount -= double.parse(previouslySelected.price.toString());
       }
       insurance.isSelected = true;
-      totalAmount += double.parse(insurance.price.toString());
     }
 
+    calculateTotalAmount();
     rebuildUi();
   }
 
@@ -274,16 +298,14 @@ class CheckoutViewModel extends BaseViewModel {
 
     if (damageWaiver.isSelected) {
       damageWaiver.isSelected = false;
-      totalAmount -= double.parse(damageWaiver.price.toString());
     } else {
       if (previouslySelected != null) {
         previouslySelected.isSelected = false;
-        totalAmount -= double.parse(previouslySelected.price.toString());
       }
       damageWaiver.isSelected = true;
-      totalAmount += double.parse(damageWaiver.price.toString());
     }
 
+    calculateTotalAmount();
     rebuildUi();
   }
 
@@ -303,30 +325,15 @@ class CheckoutViewModel extends BaseViewModel {
   }
 
   void applyDiscount() {
-    if (isPromoCodeValid) {
-      if (coupon?.type == "fixed") {
-        totalAmount = totalAmount - double.parse(coupon?.value ?? '0');
-      }
-
-      if (coupon?.type == "percent") {
-        totalAmount =
-            totalAmount * (1 - (double.parse(coupon?.value ?? '0') / 100));
-      }
-    }
+    // Recalculate totals with the currently applied coupon
+    calculateTotalAmount();
   }
 
   void removeDiscount() {
-    if (isPromoCodeValid) {
-      if (coupon?.type == "fixed") {
-        totalAmount = totalAmount + double.parse(coupon?.value ?? '0');
-      }
-    }
-
-    if (coupon?.type == "percent") {
-      totalAmount =
-          totalAmount * (1 + (double.parse(coupon?.value ?? '0') / 100));
-    }
-
+    // Clear coupon and recalculate to base amounts
+    isPromoCodeValid = false;
+    coupon = null;
+    calculateTotalAmount();
     notifyListeners();
   }
 

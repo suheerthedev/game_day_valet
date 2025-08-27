@@ -72,7 +72,7 @@ class RentalSummaryItem extends StackedView<RentalSummaryItemModel> {
                 ),
                 SizedBox(height: 2.h),
                 Text(
-                  'Stock Quantity: ${item.stock ?? 0}',
+                  'Price: \$${item.price ?? 0}',
                   style: GoogleFonts.poppins(
                     fontSize: 12.sp,
                     fontWeight: FontWeight.w500,
