@@ -42,7 +42,8 @@ class ChatView extends StackedView<ChatViewModel> {
                   sendButtonVisibilityMode: SendButtonVisibilityMode.always),
               theme: _buildChatTheme(),
               bubbleBuilder: _bubbleBuilder,
-              messages: viewModel.chatMessages,
+              // Include a fixed support greeting message followed by dynamic content
+              messages: viewModel.displayMessages,
               onSendPressed: (types.PartialText text) {
                 viewModel.handleSendPressed(text);
               },
@@ -108,8 +109,8 @@ class ChatView extends StackedView<ChatViewModel> {
     final theme = _buildChatTheme();
     final List<String> quickReplies = [
       "Where's my order?",
-      "Update my rental",
-      "Cancel",
+      "Chat with Support",
+      "Update on my rental?",
     ];
 
     return Container(

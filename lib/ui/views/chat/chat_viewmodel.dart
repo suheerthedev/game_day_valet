@@ -28,6 +28,28 @@ class ChatViewModel extends ReactiveViewModel {
     return convertToChatMessages(messages);
   }
 
+  // Support-side greeting shown each time chat opens
+  final types.User _supportUser = const types.User(
+    id: 'support',
+    firstName: 'Support',
+  );
+
+  types.TextMessage get _greetingMessage => types.TextMessage(
+        id: 'support_greeting_message',
+        text: 'Hey! Glad you stopped by 👋 What’s up with your rental today?',
+        createdAt: DateTime.now().millisecondsSinceEpoch,
+        author: _supportUser,
+      );
+
+  // Messages to display in UI: greeting (support) + dynamic content
+  List<types.Message> get displayMessages {
+    final List<types.Message> combined = List.of(chatMessages);
+    // Place greeting as the oldest message (at the end) to appear first in the
+    // conversation timeline when using newest-first lists.
+    combined.add(_greetingMessage);
+    return combined;
+  }
+
   List<types.Message> convertToChatMessages(List<MessageModel> messages) {
     return messages.map((message) {
       return types.TextMessage(
