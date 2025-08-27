@@ -300,14 +300,20 @@ class TournamentsViewModel extends BaseViewModel {
     int indexRecommended = recommendedTournamentsList
         .indexWhere((element) => element.id == tournamentId);
 
-    logger.info("Is Favorite: ${tournamentsList[index].isFavorite}");
-    tournamentsList[index].isFavorite = !tournamentsList[index].isFavorite;
-    recommendedTournamentsList[indexRecommended].isFavorite =
-        !recommendedTournamentsList[indexRecommended].isFavorite;
-    logger.info("Is Favorite: ${tournamentsList[index].isFavorite}");
-    logger.info(
-        "Is Favorite: ${recommendedTournamentsList[indexRecommended].isFavorite}");
-    rebuildUi();
+    // logger.info("Is Favorite: ${tournamentsList[index].isFavorite}");
+    if (index != -1) {
+      tournamentsList[index].isFavorite = !tournamentsList[index].isFavorite;
+      rebuildUi();
+    }
+
+    if (indexRecommended != -1) {
+      recommendedTournamentsList[indexRecommended].isFavorite =
+          !recommendedTournamentsList[indexRecommended].isFavorite;
+      rebuildUi();
+    }
+    // logger.info("Is Favorite: ${tournamentsList[index].isFavorite}");
+    // logger.info(
+    // "Is Favorite: ${recommendedTournamentsList[indexRecommended].isFavorite}");
 
     try {
       final response = await _apiService.post(url, {

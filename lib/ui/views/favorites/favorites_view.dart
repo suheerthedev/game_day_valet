@@ -1,4 +1,6 @@
+import 'package:cached_network_image/cached_network_image.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_chat_core/flutter_chat_core.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:game_day_valet/ui/common/app_colors.dart';
 import 'package:game_day_valet/ui/widgets/common/main_app_bar/main_app_bar.dart';
@@ -43,9 +45,9 @@ class FavoritesView extends StackedView<FavoritesViewModel> {
                             physics: const NeverScrollableScrollPhysics(),
                             itemCount: viewModel.favorites.length,
                             itemBuilder: (context, index) {
+                              final favorite = viewModel.favorites[index];
                               return Container(
                                 width: 338.w,
-                                height: 110.h,
                                 margin: EdgeInsets.only(bottom: 10.h),
                                 padding: EdgeInsets.symmetric(
                                     horizontal: 16.w, vertical: 14.h),
@@ -55,27 +57,68 @@ class FavoritesView extends StackedView<FavoritesViewModel> {
                                 ),
                                 child: Stack(
                                   children: [
-                                    Column(
-                                      crossAxisAlignment:
-                                          CrossAxisAlignment.start,
-                                      children: [
-                                        Text(
-                                            viewModel.favorites[index]
-                                                    .tournament?.name ??
-                                                '',
+                                    Padding(
+                                      padding: EdgeInsets.only(right: 36.w),
+                                      child: Column(
+                                        crossAxisAlignment:
+                                            CrossAxisAlignment.start,
+                                        children: [
+                                          ClipRRect(
+                                            borderRadius: BorderRadius.circular(
+                                                10.r), // Adjust the radius as needed
+                                            child: CachedNetworkImage(
+                                              imageUrl:
+                                                  favorite.tournament?.image ??
+                                                      '',
+                                              placeholder: (context, url) =>
+                                                  const Center(
+                                                      child:
+                                                          CircularProgressIndicator()),
+                                              errorWidget:
+                                                  (context, url, error) => Icon(
+                                                      Icons
+                                                          .sports_soccer_rounded,
+                                                      size: 40.w,
+                                                      color: AppColors.white),
+                                              fit: BoxFit.cover,
+                                              width: double.maxFinite,
+                                            ),
+                                          ),
+                                          SizedBox(height: 10.h),
+                                          Text(
+                                              viewModel.favorites[index]
+                                                      .tournament?.name ??
+                                                  '',
+                                              style: GoogleFonts.poppins(
+                                                  fontSize: 14.sp,
+                                                  fontWeight: FontWeight.w700,
+                                                  color:
+                                                      AppColors.textPrimary)),
+                                          SizedBox(height: 5.h),
+                                          Text(
+                                            'Location: ${favorite.tournament?.location}',
                                             style: GoogleFonts.poppins(
                                                 fontSize: 14.sp,
-                                                fontWeight: FontWeight.w700,
-                                                color: AppColors.textPrimary)),
-                                        SizedBox(height: 5.h),
-                                        Text(
-                                          '100 Chairs . 20 Lights . 4 Speakers',
-                                          style: GoogleFonts.poppins(
-                                              fontSize: 14.sp,
-                                              fontWeight: FontWeight.w500,
-                                              color: AppColors.textHint),
-                                        )
-                                      ],
+                                                fontWeight: FontWeight.w500,
+                                                color: AppColors.textHint),
+                                          ),
+                                          SizedBox(height: 5.h),
+                                          Text(
+                                            'Start Date: ${DateFormat.yMMMd().format(DateTime.parse(favorite.tournament?.startDate.toString() ?? ''))}',
+                                            style: GoogleFonts.poppins(
+                                                fontSize: 14.sp,
+                                                fontWeight: FontWeight.w500,
+                                                color: AppColors.textHint),
+                                          ),
+                                          Text(
+                                            'End Date: ${DateFormat.yMMMd().format(DateTime.parse(favorite.tournament?.endDate.toString() ?? ''))}',
+                                            style: GoogleFonts.poppins(
+                                                fontSize: 14.sp,
+                                                fontWeight: FontWeight.w500,
+                                                color: AppColors.textHint),
+                                          )
+                                        ],
+                                      ),
                                     ),
                                     Align(
                                       alignment: Alignment.topRight,
@@ -83,29 +126,29 @@ class FavoritesView extends StackedView<FavoritesViewModel> {
                                           size: 24.w,
                                           color: AppColors.secondary),
                                     ),
-                                    Align(
-                                      alignment: Alignment.bottomRight,
-                                      child: InkWell(
-                                        onTap: () {},
-                                        child: Container(
-                                            width: 121.w,
-                                            height: 33.h,
-                                            decoration: BoxDecoration(
-                                              color: AppColors.secondary,
-                                              borderRadius:
-                                                  BorderRadius.circular(10.r),
-                                            ),
-                                            child: Center(
-                                              child: Text(
-                                                'Order Again',
-                                                style: GoogleFonts.poppins(
-                                                    fontSize: 16.sp,
-                                                    fontWeight: FontWeight.w500,
-                                                    color: AppColors.white),
-                                              ),
-                                            )),
-                                      ),
-                                    )
+                                    // Align(
+                                    //   alignment: Alignment.bottomRight,
+                                    //   child: InkWell(
+                                    //     onTap: () {},
+                                    //     child: Container(
+                                    //         width: 121.w,
+                                    //         height: 33.h,
+                                    //         decoration: BoxDecoration(
+                                    //           color: AppColors.secondary,
+                                    //           borderRadius:
+                                    //               BorderRadius.circular(10.r),
+                                    //         ),
+                                    //         child: Center(
+                                    //           child: Text(
+                                    //             'Order Again',
+                                    //             style: GoogleFonts.poppins(
+                                    //                 fontSize: 16.sp,
+                                    //                 fontWeight: FontWeight.w500,
+                                    //                 color: AppColors.white),
+                                    //           ),
+                                    //         )),
+                                    //   ),
+                                    // )
                                   ],
                                 ),
                               );
