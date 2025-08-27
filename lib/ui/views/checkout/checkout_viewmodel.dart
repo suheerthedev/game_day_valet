@@ -359,9 +359,11 @@ class CheckoutViewModel extends BaseViewModel {
     }
 
     final body = {
-      "tournament_id": tournamentId.toString(),
-      "team_name": teamNameController.text,
+      "tournament_id": tournamentId,
+      "team_name_with_age_group": teamNameController.text,
       "coach_name": coachNameController.text,
+      "phone_number": phoneNumberController.text,
+      "email": emailController.text,
       // "field_number": "Field 5",
       "items": formatItems(items),
       "bundles": formatBundles(bundles),

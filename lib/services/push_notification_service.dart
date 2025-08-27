@@ -47,6 +47,9 @@ class PushNotificationService {
     // 4) Ask permission (iOS + Android 13+)
     await _requestPermissions();
 
+    final apnsToken = await _messaging.getAPNSToken();
+    logger.info("🍏 APNs Token: $apnsToken");
+
     // 5) Token get + upload to backend
     final token = await _messaging.getToken();
     logger.info('📲 FCM token: $token');
