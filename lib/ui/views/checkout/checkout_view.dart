@@ -270,7 +270,7 @@ class CheckoutView extends StackedView<CheckoutViewModel> {
 
                     SizedBox(height: 20.h),
                     MainTextField(
-                      label: "Team Name",
+                      label: "Team Name/Age Group",
                       controller: viewModel.teamNameController,
                       labelColor: AppColors.textHint,
                       cursorColor: AppColors.primary,
@@ -304,6 +304,48 @@ class CheckoutView extends StackedView<CheckoutViewModel> {
                     if (viewModel.coachNameError.isNotEmpty) ...[
                       Text(
                         viewModel.coachNameError,
+                        style: GoogleFonts.poppins(
+                            fontSize: 12.sp,
+                            fontWeight: FontWeight.w500,
+                            color: AppColors.error),
+                      ),
+                    ],
+                    SizedBox(height: 10.h),
+                    MainTextField(
+                      label: "Email",
+                      controller: viewModel.emailController,
+                      labelColor: AppColors.textHint,
+                      cursorColor: AppColors.primary,
+                      fillColor: AppColors.grey50,
+                      borderColor: AppColors.grey100,
+                      enabledBorderColor: AppColors.grey100,
+                      focusedBorderColor: AppColors.primary,
+                      hasSuffixIcon: false,
+                    ),
+                    if (viewModel.emailError.isNotEmpty) ...[
+                      Text(
+                        viewModel.emailError,
+                        style: GoogleFonts.poppins(
+                            fontSize: 12.sp,
+                            fontWeight: FontWeight.w500,
+                            color: AppColors.error),
+                      ),
+                    ],
+                    SizedBox(height: 10.h),
+                    MainTextField(
+                      label: "Phone Number",
+                      controller: viewModel.phoneNumberController,
+                      labelColor: AppColors.textHint,
+                      cursorColor: AppColors.primary,
+                      fillColor: AppColors.grey50,
+                      borderColor: AppColors.grey100,
+                      enabledBorderColor: AppColors.grey100,
+                      focusedBorderColor: AppColors.primary,
+                      hasSuffixIcon: false,
+                    ),
+                    if (viewModel.phoneNumberError.isNotEmpty) ...[
+                      Text(
+                        viewModel.phoneNumberError,
                         style: GoogleFonts.poppins(
                             fontSize: 12.sp,
                             fontWeight: FontWeight.w500,
@@ -747,6 +789,7 @@ class CheckoutView extends StackedView<CheckoutViewModel> {
 
   @override
   void onViewModelReady(CheckoutViewModel viewModel) {
+    viewModel.init();
     viewModel.calculateTotalAmount();
     super.onViewModelReady(viewModel);
   }

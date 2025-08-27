@@ -29,14 +29,21 @@ class CheckoutViewModel extends BaseViewModel {
 
   TextEditingController teamNameController = TextEditingController();
   TextEditingController coachNameController = TextEditingController();
-  // TextEditingController fieldNumberController = TextEditingController();
-  // TextEditingController dropOffTimeController = TextEditingController();
+  TextEditingController emailController = TextEditingController();
+  TextEditingController phoneNumberController = TextEditingController();
   TextEditingController specialInstructionController = TextEditingController();
   TextEditingController promoCodeController = TextEditingController();
 
   String teamNameError = '';
   String coachNameError = '';
+  String phoneNumberError = '';
+  String emailError = '';
   // String fieldNumberError = '';
+
+  void init() {
+    emailController.text = user?.email ?? '';
+    phoneNumberController.text = user?.contactNumber ?? '';
+  }
 
   bool validateForm() {
     bool isValid = true;
@@ -47,6 +54,14 @@ class CheckoutViewModel extends BaseViewModel {
     if (coachNameController.text.isEmpty) {
       isValid = false;
       coachNameError = 'Coach name is required';
+    }
+    if (phoneNumberController.text.isEmpty) {
+      isValid = false;
+      phoneNumberError = 'Phone number is required';
+    }
+    if (emailController.text.isEmpty) {
+      isValid = false;
+      emailError = 'Email is required';
     }
     //  if (fieldNumberController.text.isEmpty) {
     //   isValid = false;
