@@ -32,11 +32,12 @@ class MainItemCard extends StackedView<MainItemCardModel> {
           height: 170.h,
           decoration: BoxDecoration(
             color: AppColors.grey100,
-            borderRadius: BorderRadius.circular(15),
+            borderRadius: BorderRadius.circular(15.r),
           ),
+          clipBehavior: Clip.hardEdge,
           child: CachedNetworkImage(
             imageUrl: item.imageUrl ?? '',
-            fit: BoxFit.contain,
+            fit: BoxFit.cover,
             placeholder: (context, url) => const Center(
               child: CircularProgressIndicator(),
             ),
@@ -48,75 +49,88 @@ class MainItemCard extends StackedView<MainItemCardModel> {
           ),
         ),
         SizedBox(height: 5.h),
-        Row(
-          mainAxisAlignment: MainAxisAlignment.spaceBetween,
-          children: [
-            SizedBox(
-              width: 100.w,
-              child: Text(
-                item.name ?? '',
-                maxLines: 2,
-                softWrap: true,
+        Expanded(
+          child: Row(
+            mainAxisAlignment: MainAxisAlignment.spaceBetween,
+            children: [
+              SizedBox(
+                width: 100.w,
+                child: Text(
+                  item.name ?? '',
+                  maxLines: 2,
+                  softWrap: true,
+                  overflow: TextOverflow.ellipsis,
+                  style: GoogleFonts.poppins(
+                      fontSize: 16.sp,
+                      fontWeight: FontWeight.w600,
+                      color: AppColors.textPrimary),
+                ),
+              ),
+              Text(
+                "\$ ${item.price}",
+                maxLines: 1,
                 overflow: TextOverflow.ellipsis,
                 style: GoogleFonts.poppins(
-                    fontSize: 16.sp,
-                    fontWeight: FontWeight.w600,
-                    color: AppColors.textPrimary),
+                    fontSize: 15.sp,
+                    fontWeight: FontWeight.w500,
+                    color: AppColors.secondary),
               ),
-            ),
-            Text(
-              "\$ ${item.price}",
-              maxLines: 1,
-              overflow: TextOverflow.ellipsis,
-              style: GoogleFonts.poppins(
-                  fontSize: 15.sp,
-                  fontWeight: FontWeight.w500,
-                  color: AppColors.secondary),
-            ),
-          ],
+            ],
+          ),
         ),
         SizedBox(height: 5.h),
-        Row(
-          mainAxisAlignment: MainAxisAlignment.spaceBetween,
-          children: [
-            InkWell(
-              onTap: onTapRemove,
-              child: Container(
-                decoration: BoxDecoration(
-                  color: AppColors.primary,
-                  borderRadius: BorderRadius.circular(10.r),
-                ),
-                child: Icon(
-                  IconsaxPlusLinear.minus,
-                  size: 20.sp,
-                  color: AppColors.white,
-                ),
-              ),
-            ),
-            Text(
-              "${item.quantity}",
-              maxLines: 1,
-              overflow: TextOverflow.ellipsis,
-              style: GoogleFonts.poppins(
-                  fontSize: 14.sp,
-                  fontWeight: FontWeight.w500,
-                  color: AppColors.primary),
-            ),
-            InkWell(
-              onTap: onTapAdd,
-              child: Container(
-                decoration: BoxDecoration(
-                  color: AppColors.primary,
-                  borderRadius: BorderRadius.circular(10.r),
-                ),
-                child: Icon(
-                  IconsaxPlusLinear.add,
-                  size: 20.sp,
-                  color: AppColors.white,
+        Container(
+          padding: EdgeInsets.all(5.w),
+          decoration: BoxDecoration(
+            color: AppColors.grey100,
+            borderRadius: BorderRadius.circular(15.r),
+          ),
+          child: Row(
+            mainAxisAlignment: MainAxisAlignment.spaceBetween,
+            children: [
+              GestureDetector(
+                onTap: onTapRemove,
+                child: Container(
+                  decoration: BoxDecoration(
+                    color: AppColors.primary,
+                    borderRadius: BorderRadius.circular(10.r),
+                  ),
+                  child: Center(
+                    child: Icon(
+                      IconsaxPlusLinear.minus,
+                      size: 24.sp,
+                      color: AppColors.white,
+                    ),
+                  ),
                 ),
               ),
-            ),
-          ],
+              Text(
+                "${item.quantity}",
+                maxLines: 1,
+                overflow: TextOverflow.ellipsis,
+                style: GoogleFonts.poppins(
+                    fontSize: 14.sp,
+                    fontWeight: FontWeight.w500,
+                    color: AppColors.primary),
+              ),
+              GestureDetector(
+                onTap: onTapAdd,
+                child: Container(
+                  decoration: BoxDecoration(
+                    color: AppColors.primary,
+                    borderRadius: BorderRadius.circular(10.r),
+                  ),
+                  child: Center(
+                    child: Icon(
+                      IconsaxPlusLinear.add,
+                      size: 24.sp,
+                      color: AppColors.white,
+                    ),
+                  ),
+                ),
+              ),
+            ],
+          ),
         )
       ],
     );
