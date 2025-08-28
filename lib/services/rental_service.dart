@@ -3,6 +3,9 @@ import 'dart:convert';
 import 'package:flutter/material.dart';
 import 'package:game_day_valet/app/app.locator.dart';
 import 'package:game_day_valet/config/api_config.dart';
+import 'package:game_day_valet/core/enums/snackbar_type.dart';
+import 'package:game_day_valet/models/bundle_model.dart';
+import 'package:game_day_valet/models/item_model.dart';
 import 'package:game_day_valet/models/rental_booking_model.dart';
 import 'package:game_day_valet/models/rental_status_model.dart';
 import 'package:game_day_valet/models/settings_item_model.dart';
@@ -17,6 +20,7 @@ import 'package:stacked_services/stacked_services.dart';
 
 class RentalService with ListenableServiceMixin {
   final _apiService = locator<ApiService>();
+  final _snackbarService = locator<SnackbarService>();
   final _pusherService = locator<PusherService>();
   final _stripeService = locator<StripeService>();
   final _navigationService = locator<NavigationService>();
@@ -38,6 +42,15 @@ class RentalService with ListenableServiceMixin {
     fieldNumber: "",
   ));
 
+  List<ItemModel> _items = [];
+  List<BundleModel> _bundles = [];
+
+  int? itemsLastPage;
+  // int? bundlesLastPage;
+
+  List<ItemModel> get items => _items;
+  List<BundleModel> get bundles => _bundles;
+
   final ReactiveValue<List<SettingsItemModel>> _insuranceOptions =
       ReactiveValue<List<SettingsItemModel>>([]);
   final ReactiveValue<List<SettingsItemModel>> _damageWaiverOptions =
@@ -58,6 +71,10 @@ class RentalService with ListenableServiceMixin {
       await getRentalStatus();
       await initializePusher();
     }
+
+    await getItems();
+    await getBundles();
+    await getSettingsItems();
   }
 
   void clearData() {
@@ -321,10 +338,71 @@ class RentalService with ListenableServiceMixin {
           .toList();
     } on ApiException catch (e) {
       logger.error("Error in getting settings items: ${e.message}");
+      _snackbarService.showCustomSnackBar(
+        message: e.message,
+        variant: SnackbarType.error,
+      );
     } catch (e) {
       logger.error("Error in getting settings items: ${e.toString()}");
+      _snackbarService.showCustomSnackBar(
+        message: "Something went wrong",
+        variant: SnackbarType.error,
+      );
     } finally {
       notifyListeners();
+    }
+  }
+
+  Future<void> getItems({int page = 1}) async {
+    final url = "${ApiConfig.baseUrl}${ApiConfig.items}?limit=10&page=$page";
+
+    try {
+      final response = await _apiService.get(url);
+      _items =
+          (response['data'] as List).map((e) => ItemModel.fromJson(e)).toList();
+      itemsLastPage = response['meta']['last_page'];
+      logger.info("Items: $items");
+    } on ApiException catch (e) {
+      logger.error("Error getting items: ${e.message}");
+      _snackbarService.showCustomSnackBar(
+        message: e.message,
+        variant: SnackbarType.error,
+      );
+    } catch (e) {
+      logger.error("Error getting items: $e");
+      _snackbarService.showCustomSnackBar(
+        message: "Something went wrong",
+        variant: SnackbarType.error,
+      );
+    }
+  }
+
+  Future<void> getMoreItems() async {}
+
+  Future<void> getMoreBundles() async {}
+
+  Future<void> getBundles({int page = 1}) async {
+    final url = "${ApiConfig.baseUrl}${ApiConfig.bundles}?limit=10&page=1";
+
+    try {
+      final response = await _apiService.get(url);
+      logger.info("Bundles: $response");
+      _bundles = (response['data'] as List)
+          .map((e) => BundleModel.fromJson(e))
+          .toList();
+      // bundlesLastPage = response['meta']['last_page'];
+    } on ApiException catch (e) {
+      logger.error("Error getting bundles: ${e.message}");
+      _snackbarService.showCustomSnackBar(
+        message: e.message,
+        variant: SnackbarType.error,
+      );
+    } catch (e) {
+      logger.error("Error getting bundles: ${e.toString()}");
+      _snackbarService.showCustomSnackBar(
+        message: "Something went wrong",
+        variant: SnackbarType.error,
+      );
     }
   }
 }

@@ -251,10 +251,4 @@ class AddRentalsView extends StackedView<AddRentalsViewModel> {
     BuildContext context,
   ) =>
       AddRentalsViewModel(tournamentId: tournamentId);
-
-  @override
-  void onViewModelReady(AddRentalsViewModel viewModel) {
-    viewModel.init();
-    super.onViewModelReady(viewModel);
-  }
 }
