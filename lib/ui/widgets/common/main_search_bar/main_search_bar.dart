@@ -1,8 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
-import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import 'package:game_day_valet/ui/common/app_colors.dart';
 import 'package:google_fonts/google_fonts.dart';
+import 'package:iconsax_plus/iconsax_plus.dart';
 import 'package:stacked/stacked.dart';
 
 import 'main_search_bar_model.dart';
@@ -12,16 +12,20 @@ class MainSearchBar extends StackedView<MainSearchBarModel> {
 
   final bool isAutoFocus;
   final bool isReadOnly;
+  final bool hasDatePicker;
   final Function()? onTextFieldTap;
   final Function(String)? onSubmitted;
+  final Function()? onDatePickerTap;
   final String hintText;
   const MainSearchBar(
       {super.key,
       required this.controller,
       this.isAutoFocus = false,
       this.isReadOnly = false,
+      this.hasDatePicker = false,
       this.onTextFieldTap,
       this.onSubmitted,
+      this.onDatePickerTap,
       this.hintText = 'Search here...'});
 
   @override
@@ -48,14 +52,27 @@ class MainSearchBar extends StackedView<MainSearchBarModel> {
             fontWeight: FontWeight.w400,
             color: AppColors.textHint,
           ),
-          prefixIconConstraints: BoxConstraints(
-            minWidth: 40.w,
-            minHeight: 40.h,
-          ),
-          prefixIcon: IconButton(
-            onPressed: () => onSubmitted?.call(controller.text),
-            icon: Icon(FontAwesomeIcons.magnifyingGlass,
-                size: 20.w, color: AppColors.textHint),
+          suffix: Row(
+            mainAxisAlignment: MainAxisAlignment.end,
+            mainAxisSize: MainAxisSize.min,
+            children: [
+              InkWell(
+                onTap: () => onSubmitted?.call(controller.text),
+                child: Icon(IconsaxPlusLinear.search_normal_1,
+                    size: 20.w, color: AppColors.textHint),
+              ),
+              if (hasDatePicker) ...[
+                SizedBox(width: 10.w),
+                InkWell(
+                  onTap: onDatePickerTap,
+                  child: const Icon(
+                    IconsaxPlusLinear.calendar,
+                    color: AppColors.textHint,
+                    size: 20,
+                  ),
+                )
+              ]
+            ],
           ),
           border: InputBorder.none,
           contentPadding: EdgeInsets.symmetric(

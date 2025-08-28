@@ -32,6 +32,30 @@ class SearchView extends StackedView<SearchViewModel> {
           title: MainSearchBar(
               controller: viewModel.searchController,
               isAutoFocus: true,
+              hasDatePicker: isTournamentSearch,
+              onDatePickerTap: () async {
+                final DateTime? picked = await showDatePicker(
+                  context: context,
+                  initialDate: DateTime.now(),
+                  firstDate: DateTime(2000),
+                  lastDate: DateTime(2030),
+                  builder: (context, child) {
+                    return Theme(
+                      data: ThemeData.light().copyWith(
+                        primaryColor: AppColors.primary,
+                        colorScheme:
+                            const ColorScheme.light(primary: AppColors.primary),
+                        buttonTheme: const ButtonThemeData(
+                            textTheme: ButtonTextTheme.primary),
+                      ),
+                      child: child!,
+                    );
+                  },
+                );
+                if (picked != null) {
+                  viewModel.selectDate(picked);
+                }
+              },
               onSubmitted: (value) {
                 if (isTournamentSearch) {
                   viewModel.searchTournaments(value);
@@ -44,76 +68,93 @@ class SearchView extends StackedView<SearchViewModel> {
         padding: EdgeInsets.symmetric(
           horizontal: 25.w,
         ),
-        child: viewModel.isBusy
-            ? const Center(child: CircularProgressIndicator())
-            : viewModel.tournaments.isEmpty && viewModel.items.isEmpty
-                ? _buildEmptyView()
-                : SingleChildScrollView(
-                    child: Column(
-                      children: [
-                        isTournamentSearch
-                            ? ListView.builder(
-                                shrinkWrap: true,
-                                physics: const NeverScrollableScrollPhysics(),
-                                itemCount: viewModel.tournaments.length,
-                                itemBuilder: (context, index) {
-                                  return MainTournamentCard(
-                                    tournament: viewModel.tournaments[index],
-                                    onTapMap: () {},
-                                    onBookNowTap: () {},
-                                    onTapFavorite: () {},
-                                  );
-                                },
-                              )
-                            : GridView.builder(
-                                shrinkWrap: true,
-                                physics: const NeverScrollableScrollPhysics(),
-                                itemCount: viewModel.items.length,
-                                gridDelegate:
-                                    SliverGridDelegateWithFixedCrossAxisCount(
-                                  crossAxisCount: 2,
-                                  childAspectRatio: 0.6,
-                                  mainAxisSpacing: 10.h,
-                                  crossAxisSpacing: 20.w,
+        child: Column(
+          children: [
+            // if (isTournamentSearch)
+            //   Padding(
+            //     padding: EdgeInsets.only(top: 10.h, bottom: 10.h),
+            //     child: _buildDateSelector(context, viewModel),
+            //   ),
+            Expanded(
+              child: viewModel.isBusy
+                  ? const Center(child: CircularProgressIndicator())
+                  : viewModel.tournaments.isEmpty && viewModel.items.isEmpty
+                      ? _buildEmptyView()
+                      : SingleChildScrollView(
+                          child: Column(
+                            children: [
+                              isTournamentSearch
+                                  ? ListView.builder(
+                                      shrinkWrap: true,
+                                      physics:
+                                          const NeverScrollableScrollPhysics(),
+                                      itemCount: viewModel.tournaments.length,
+                                      itemBuilder: (context, index) {
+                                        return MainTournamentCard(
+                                          tournament:
+                                              viewModel.tournaments[index],
+                                          onTapMap: () {},
+                                          onBookNowTap: () {},
+                                          onTapFavorite: () {},
+                                        );
+                                      },
+                                    )
+                                  : GridView.builder(
+                                      shrinkWrap: true,
+                                      physics:
+                                          const NeverScrollableScrollPhysics(),
+                                      itemCount: viewModel.items.length,
+                                      gridDelegate:
+                                          SliverGridDelegateWithFixedCrossAxisCount(
+                                        crossAxisCount: 2,
+                                        childAspectRatio: 0.6,
+                                        mainAxisSpacing: 10.h,
+                                        crossAxisSpacing: 20.w,
+                                      ),
+                                      itemBuilder: (context, index) {
+                                        return MainItemCard(
+                                          item: viewModel.items[index],
+                                          onTapAdd: () {
+                                            viewModel.addItem(
+                                                viewModel.items[index]);
+                                          },
+                                          onTapRemove: () {
+                                            viewModel.removeItem(
+                                                viewModel.items[index]);
+                                          },
+                                        );
+                                      },
+                                    ),
+                              SizedBox(height: 20.h),
+                              if (viewModel.hasMoreResults)
+                                Center(
+                                  child: Padding(
+                                    padding:
+                                        const EdgeInsets.only(bottom: 16.0),
+                                    child: SmallButton(
+                                      title: 'Show More',
+                                      onTap: () {
+                                        if (viewModel.isTournamentSearch ==
+                                            true) {
+                                          viewModel.loadMoreTournaments();
+                                        }
+                                        if (viewModel.isItemSearch == true) {
+                                          viewModel.loadMoreItems();
+                                        }
+                                      },
+                                      bgColor: AppColors.white,
+                                      textColor: AppColors.secondary,
+                                      borderColor: AppColors.secondary,
+                                      isLoading: viewModel.isLoading,
+                                    ),
+                                  ),
                                 ),
-                                itemBuilder: (context, index) {
-                                  return MainItemCard(
-                                    item: viewModel.items[index],
-                                    onTapAdd: () {
-                                      viewModel.addItem(viewModel.items[index]);
-                                    },
-                                    onTapRemove: () {
-                                      viewModel
-                                          .removeItem(viewModel.items[index]);
-                                    },
-                                  );
-                                },
-                              ),
-                        SizedBox(height: 20.h),
-                        if (viewModel.hasMoreResults)
-                          Center(
-                            child: Padding(
-                              padding: const EdgeInsets.only(bottom: 16.0),
-                              child: SmallButton(
-                                title: 'Show More',
-                                onTap: () {
-                                  if (viewModel.isTournamentSearch == true) {
-                                    viewModel.loadMoreTournaments();
-                                  }
-                                  if (viewModel.isItemSearch == true) {
-                                    viewModel.loadMoreItems();
-                                  }
-                                },
-                                bgColor: AppColors.white,
-                                textColor: AppColors.secondary,
-                                borderColor: AppColors.secondary,
-                                isLoading: viewModel.isLoading,
-                              ),
-                            ),
+                            ],
                           ),
-                      ],
-                    ),
-                  ),
+                        ),
+            ),
+          ],
+        ),
       ),
     );
   }

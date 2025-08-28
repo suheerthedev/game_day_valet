@@ -15,6 +15,7 @@ class SearchViewModel extends BaseViewModel {
   final _snackbarService = locator<SnackbarService>();
 
   TextEditingController searchController = TextEditingController();
+  DateTime? selectedDate;
 
   final bool isTournamentSearch;
   final bool isItemSearch;
@@ -56,8 +57,12 @@ class SearchViewModel extends BaseViewModel {
   }
 
   Future<void> searchTournaments(String query) async {
+    tournaments = [];
+    logger.info('Searching tournaments with query: $query');
     final url =
         '${ApiConfig.baseUrl}${ApiConfig.tournamentsEndPoint}?search=$query&limit=10&page=$currentPage';
+
+    logger.info('URL: $url');
     setBusy(true);
     rebuildUi();
 
@@ -67,6 +72,8 @@ class SearchViewModel extends BaseViewModel {
     searchQuery = query;
     try {
       final response = await _apiService.get(url);
+
+      logger.info('Response: $response');
 
       if (response.containsKey('meta')) {
         if (response['meta'].containsKey('last_page')) {
@@ -97,6 +104,20 @@ class SearchViewModel extends BaseViewModel {
       rebuildUi();
       setBusy(false);
     }
+  }
+
+  void selectDate(DateTime date) {
+    selectedDate = date;
+    // Format date as YYYY-MM-DD
+    String formattedDate =
+        "${date.year}-${date.month.toString().padLeft(2, '0')}-${date.day.toString().padLeft(2, '0')}";
+    logger.info('Selected date: $formattedDate');
+
+    // Clear any existing search text
+    searchController.clear();
+
+    // Perform search with the formatted date
+    searchTournaments(formattedDate);
   }
 
   void loadMoreTournaments() async {
