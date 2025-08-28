@@ -37,7 +37,7 @@ class MainItemCard extends StackedView<MainItemCardModel> {
           clipBehavior: Clip.hardEdge,
           child: CachedNetworkImage(
             imageUrl: item.imageUrl ?? '',
-            fit: BoxFit.cover,
+            fit: BoxFit.contain,
             placeholder: (context, url) => const Center(
               child: CircularProgressIndicator(),
             ),
