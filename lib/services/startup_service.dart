@@ -20,6 +20,7 @@ class StartupService {
     await _userService.fetchCurrentUser();
     await getUserConversations();
     await _rentalService.init();
+    await getInitalChatMessage();
   }
 
   Future<void> getUserConversations() async {
@@ -31,6 +32,20 @@ class StartupService {
           message: e.message, variant: SnackbarType.error);
     } catch (e) {
       logger.error("Error getting user conversations: $e");
+      _snackbarService.showCustomSnackBar(
+          message: "Something went wrong", variant: SnackbarType.error);
+    }
+  }
+
+  Future<void> getInitalChatMessage() async {
+    try {
+      await _chatService.getInitalChatMessage();
+    } on ApiException catch (e) {
+      logger.error("Error getting inital chat message: ${e.message}");
+      _snackbarService.showCustomSnackBar(
+          message: e.message, variant: SnackbarType.error);
+    } catch (e) {
+      logger.error("Error getting inital chat message: $e");
       _snackbarService.showCustomSnackBar(
           message: "Something went wrong", variant: SnackbarType.error);
     }

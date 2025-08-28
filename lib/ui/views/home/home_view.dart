@@ -164,70 +164,86 @@ class HomeView extends StackedView<HomeViewModel> {
                                     viewModel.navigateToTournaments(
                                         sport.name ?? '', sport.id);
                                   },
-                                  child: Container(
-                                    padding: EdgeInsets.all(10.w),
-                                    decoration: BoxDecoration(
-                                      color: AppColors
-                                          .secondary, // Red background color like in image
-                                      borderRadius: BorderRadius.circular(10.r),
+                                  child: ClipRRect(
+                                    borderRadius: BorderRadius.circular(10.r),
+                                    child: CachedNetworkImage(
+                                      imageUrl: sport.imageUrl ?? '',
+                                      fit: BoxFit.cover,
+                                      placeholder: (context, url) =>
+                                          const Center(
+                                              child:
+                                                  CircularProgressIndicator()),
+                                      errorWidget: (context, url, error) =>
+                                          Icon(Icons.sports_soccer_rounded,
+                                              size: 60.w,
+                                              color: AppColors.white),
                                     ),
-                                    clipBehavior: Clip.hardEdge,
-                                    child: ClipRRect(
-                                      borderRadius: BorderRadius.circular(10.r),
-                                      child: CachedNetworkImage(
-                                        imageUrl: sport.imageUrl ?? '',
-                                        fit: BoxFit.cover,
-                                        placeholder: (context, url) =>
-                                            const Center(
-                                                child:
-                                                    CircularProgressIndicator()),
-                                        errorWidget: (context, url, error) =>
-                                            Icon(Icons.sports_soccer_rounded,
-                                                size: 60.w,
-                                                color: AppColors.white),
-                                      ),
-                                    ),
-                                    // child: Column(
-                                    //   mainAxisAlignment:
-                                    //       MainAxisAlignment.center,
-                                    //   children: [
-                                    //     // Sport icon - using placeholder white icons as per the design
-                                    //     ClipRRect(
-                                    //       borderRadius:
-                                    //           BorderRadius.circular(10.r),
-                                    //       child: CachedNetworkImage(
-                                    //         imageUrl: sport.imageUrl ?? '',
-                                    //         width: 60.w,
-                                    //         height: 60.h,
-                                    //         fit: BoxFit.cover,
-                                    //         placeholder: (context, url) =>
-                                    //             const Center(
-                                    //                 child:
-                                    //                     CircularProgressIndicator()),
-                                    //         errorWidget:
-                                    //             (context, url, error) => Icon(
-                                    //                 Icons.sports_soccer_rounded,
-                                    //                 size: 40.w,
-                                    //                 color: AppColors.white),
-                                    //       ),
-                                    //     ),
-                                    //     SizedBox(height: 10.h),
-                                    //     // Sport name
-                                    //     Text(
-                                    //       sport.name ?? '',
-                                    //       style: GoogleFonts.poppins(
-                                    //         fontSize: 18.sp,
-                                    //         fontWeight: FontWeight.w500,
-                                    //         color: AppColors.white,
-                                    //       ),
-                                    //       textAlign: TextAlign.center,
-                                    //     ),
-                                    //   ],
-                                    // ),
                                   ),
+                                  // child: Container(
+                                  //   padding: EdgeInsets.all(10.w),
+                                  //   decoration: BoxDecoration(
+                                  //     color: AppColors
+                                  //         .secondary, // Red background color like in image
+                                  //     borderRadius: BorderRadius.circular(10.r),
+                                  //   ),
+                                  //   clipBehavior: Clip.hardEdge,
+                                  //   child: ClipRRect(
+                                  //     borderRadius: BorderRadius.circular(10.r),
+                                  //     child: CachedNetworkImage(
+                                  //       imageUrl: sport.imageUrl ?? '',
+                                  //       fit: BoxFit.cover,
+                                  //       placeholder: (context, url) =>
+                                  //           const Center(
+                                  //               child:
+                                  //                   CircularProgressIndicator()),
+                                  //       errorWidget: (context, url, error) =>
+                                  //           Icon(Icons.sports_soccer_rounded,
+                                  //               size: 60.w,
+                                  //               color: AppColors.white),
+                                  //     ),
+                                  //   ),
+                                  //   // child: Column(
+                                  //   //   mainAxisAlignment:
+                                  //   //       MainAxisAlignment.center,
+                                  //   //   children: [
+                                  //   //     // Sport icon - using placeholder white icons as per the design
+                                  //   //     ClipRRect(
+                                  //   //       borderRadius:
+                                  //   //           BorderRadius.circular(10.r),
+                                  //   //       child: CachedNetworkImage(
+                                  //   //         imageUrl: sport.imageUrl ?? '',
+                                  //   //         width: 60.w,
+                                  //   //         height: 60.h,
+                                  //   //         fit: BoxFit.cover,
+                                  //   //         placeholder: (context, url) =>
+                                  //   //             const Center(
+                                  //   //                 child:
+                                  //   //                     CircularProgressIndicator()),
+                                  //   //         errorWidget:
+                                  //   //             (context, url, error) => Icon(
+                                  //   //                 Icons.sports_soccer_rounded,
+                                  //   //                 size: 40.w,
+                                  //   //                 color: AppColors.white),
+                                  //   //       ),
+                                  //   //     ),
+                                  //   //     SizedBox(height: 10.h),
+                                  //   //     // Sport name
+                                  //   //     Text(
+                                  //   //       sport.name ?? '',
+                                  //   //       style: GoogleFonts.poppins(
+                                  //   //         fontSize: 18.sp,
+                                  //   //         fontWeight: FontWeight.w500,
+                                  //   //         color: AppColors.white,
+                                  //   //       ),
+                                  //   //       textAlign: TextAlign.center,
+                                  //   //     ),
+                                  //   //   ],
+                                  //   // ),
+                                  // ),
                                 );
                               },
                             ),
+                            SizedBox(height: 20.h),
                           ],
                         ),
                       ),

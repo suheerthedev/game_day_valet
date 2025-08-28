@@ -25,6 +25,8 @@ class ChatService with ListenableServiceMixin {
   List<ChatModel> get conversations => _conversations.value;
   List<MessageModel> get messages => _messages.value;
 
+  String initalChatMessage = '';
+
   bool _isPusherInitialized = false;
 
   ChatService() {
@@ -71,6 +73,24 @@ class ChatService with ListenableServiceMixin {
       rethrow;
     } catch (e) {
       logger.error("Error getting conversation messages: $e");
+      rethrow;
+    }
+  }
+
+  Future<void> getInitalChatMessage() async {
+    final url = ApiConfig.baseUrl + ApiConfig.initalChatMessageEndPoint;
+
+    try {
+      final response = await _apiService.get(url);
+
+      initalChatMessage = response['chat_initial_message'];
+
+      logger.info("Inital chat message: $response");
+    } on ApiException catch (e) {
+      logger.error("Error getting inital chat message: ${e.message}");
+      rethrow;
+    } catch (e) {
+      logger.error("Error getting inital chat message: $e");
       rethrow;
     }
   }

@@ -52,5 +52,7 @@ class ApiConfig {
   static const toggleNotificationsEndPoint = '/api/notifications/fcm/toggle';
   static const notificationsEndPoint = '/api/notifications';
 
+  static const initalChatMessageEndPoint = '/api/settings/chat';
+
   // Add more as needed
 }
