@@ -45,7 +45,7 @@ class TournamentsViewModel extends BaseViewModel {
   int get lastPageForTournamentsBySport =>
       _tournamentService.lastPageForTournamentsBySport;
   bool get hasMoreTournamentsBySport =>
-      currentPageForTournamentsBySport <= lastPageForTournamentsBySport;
+      _tournamentService.hasMoreTournamentsBySport;
   bool isLoadingMoreTournamentsBySport = false;
 
   // Recommended tournaments
@@ -53,7 +53,7 @@ class TournamentsViewModel extends BaseViewModel {
   int get lastPageForRecommendedTournaments =>
       _tournamentService.lastPageForRecommendedTournaments;
   bool get hasMoreRecommendedTournaments =>
-      currentPageForRecommendedTournaments <= lastPageForRecommendedTournaments;
+      _tournamentService.hasMoreRecommendedTournaments;
   bool isLoadingMoreRecommendedTournaments = false;
 
   void navigateToSearchView(String searchQuery) {
@@ -210,6 +210,10 @@ class TournamentsViewModel extends BaseViewModel {
   Future<void> getTournamentsBySport(int sportId) async {
     try {
       await _tournamentService.getTournamentsBySport(sportId);
+
+      // tournamentsList.isEmpty
+      //     ? hasMoreTournamentsBySport = false
+      //     : hasMoreTournamentsBySport = true;
     } on ApiException catch (e) {
       logger.error("Error fetching tournaments", e);
       _snackbarService.showCustomSnackBar(
@@ -231,6 +235,10 @@ class TournamentsViewModel extends BaseViewModel {
     try {
       await _tournamentService.getTournamentsBySport(sportId,
           page: ++currentPageForTournamentsBySport);
+
+      // tournamentsList.isEmpty
+      //     ? hasMoreTournamentsBySport = false
+      //     : hasMoreTournamentsBySport = true;
     } on ApiException catch (e) {
       logger.error("Error fetching tournaments", e);
       _snackbarService.showCustomSnackBar(
@@ -252,6 +260,10 @@ class TournamentsViewModel extends BaseViewModel {
   Future<void> getRecommendedTournaments() async {
     try {
       await _tournamentService.getRecommendedTournaments();
+
+      // recommendedTournamentsList.isEmpty
+      //     ? hasMoreRecommendedTournaments = false
+      //     : hasMoreRecommendedTournaments = true;
     } on ApiException catch (e) {
       logger.error("Error fetching recommended tournaments", e);
       _snackbarService.showCustomSnackBar(
@@ -273,6 +285,10 @@ class TournamentsViewModel extends BaseViewModel {
     try {
       await _tournamentService.getRecommendedTournaments(
           page: ++currentPageForRecommendedTournaments);
+
+      // recommendedTournamentsList.isEmpty
+      //     ? hasMoreRecommendedTournaments = false
+      //     : hasMoreRecommendedTournaments = true;
     } on ApiException catch (e) {
       logger.error("Error fetching tournaments", e);
       _snackbarService.showCustomSnackBar(

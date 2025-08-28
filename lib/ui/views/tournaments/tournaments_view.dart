@@ -231,7 +231,7 @@ class TournamentsView extends StackedView<TournamentsViewModel> {
                                 crossAxisAlignment: CrossAxisAlignment.start,
                                 children: [
                                   viewModel.tournamentsList.isEmpty
-                                      ? const SizedBox.shrink()
+                                      ? _buildTournamentEmptyView()
                                       : Column(
                                           crossAxisAlignment:
                                               CrossAxisAlignment.start,
@@ -421,6 +421,26 @@ class TournamentsView extends StackedView<TournamentsViewModel> {
                 color: AppColors.textPrimary),
           ),
           SizedBox(height: 10.h),
+        ],
+      ),
+    );
+  }
+
+  Widget _buildTournamentEmptyView() {
+    return Center(
+      child: Column(
+        mainAxisAlignment: MainAxisAlignment.center,
+        children: [
+          Icon(IconsaxPlusLinear.emoji_sad,
+              size: 40.w, color: AppColors.secondary),
+          SizedBox(height: 10.h),
+          Text(
+            'No $sportsName Tournaments Found',
+            style: GoogleFonts.poppins(
+                fontSize: 16.sp,
+                fontWeight: FontWeight.w500,
+                color: AppColors.textPrimary),
+          ),
         ],
       ),
     );

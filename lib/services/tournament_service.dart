@@ -12,8 +12,10 @@ class TournamentService {
   List<TournamentModel> recommendedTournaments = [];
 
   int lastPageForRecommendedTournaments = 0;
+  bool hasMoreRecommendedTournaments = true;
 
   int lastPageForTournamentsBySport = 0;
+  bool hasMoreTournamentsBySport = true;
 
   Future<void> getTournamentsBySport(int sportId, {int page = 1}) async {
     final url =
@@ -30,9 +32,15 @@ class TournamentService {
 
       logger.info("Tournaments by sport: $response");
 
-      tournamentsBySport.addAll((response['data'] as List)
+      final newTournaments = (response['data'] as List)
           .map((e) => TournamentModel.fromJson(e))
-          .toList());
+          .toList();
+
+      tournamentsBySport.addAll(newTournaments);
+
+      newTournaments.length < 10
+          ? hasMoreTournamentsBySport = false
+          : hasMoreTournamentsBySport = true;
     } on ApiException catch (e) {
       logger.error("Error fetching tournaments by sport", e);
       rethrow;
@@ -56,9 +64,15 @@ class TournamentService {
       }
       logger.info("Recommended tournaments: $response");
 
-      recommendedTournaments.addAll((response['data'] as List)
+      final newTournaments = (response['data'] as List)
           .map((e) => TournamentModel.fromJson(e))
-          .toList());
+          .toList();
+
+      recommendedTournaments.addAll(newTournaments);
+
+      newTournaments.length < 10
+          ? hasMoreRecommendedTournaments = false
+          : hasMoreRecommendedTournaments = true;
     } on ApiException catch (e) {
       logger.error("Error fetching recommended tournaments", e);
       rethrow;
