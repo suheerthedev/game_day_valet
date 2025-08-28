@@ -101,6 +101,7 @@ class PushNotificationService {
     if (settings.authorizationStatus == AuthorizationStatus.denied) {
       _snackbarService.showSnackbar(
         message: 'Notifications are disabled. Enable in Settings for updates.',
+        duration: const Duration(seconds: 5),
       );
     }
   }

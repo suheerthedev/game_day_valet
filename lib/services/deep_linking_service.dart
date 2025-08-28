@@ -2,11 +2,13 @@ import 'package:app_links/app_links.dart';
 import 'package:game_day_valet/app/app.router.dart';
 import 'package:game_day_valet/app/app.locator.dart';
 import 'package:game_day_valet/services/logger_service.dart';
+import 'package:game_day_valet/services/secure_storage_service.dart';
 import 'package:stacked_services/stacked_services.dart';
 
 class DeepLinkingService {
   final _appLinks = AppLinks();
   final _navigationService = locator<NavigationService>();
+  final _secureStorageService = locator<SecureStorageService>();
 
   bool isStartupInitiated = false;
 
@@ -57,10 +59,15 @@ class DeepLinkingService {
       referralCode = queryParams['referralCode'];
       logger.info('Referral code: $referralCode');
       if (isStartupInitiated) {
-        _navigationService.clearStackAndShow(Routes.signUpView,
-            arguments: SignUpViewArguments(
-              referralCode: referralCode,
-            ));
+        if (await _secureStorageService.hasToken()) {
+          return;
+        } else {
+          _navigationService.clearStackAndShow(Routes.signUpView,
+              arguments: SignUpViewArguments(
+                referralCode: referralCode,
+              ));
+          clearAll();
+        }
       } else {
         pendingRoute = Routes.signUpView;
       }
@@ -70,6 +77,12 @@ class DeepLinkingService {
   String? getReferralCode() => referralCode;
 
   String? getPendingRoute() => pendingRoute;
+
+  void clearAll() {
+    pendingUri = null;
+    pendingRoute = null;
+    referralCode = null;
+  }
 
   void clearReferralCode() {
     referralCode = null;

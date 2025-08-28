@@ -21,9 +21,6 @@ class StartupViewModel extends BaseViewModel {
   final _startupService = locator<StartupService>();
   // Place anything here that needs to happen before we get into the application
   Future runStartupLogic() async {
-    logger.info('Running startup logic');
-    await Future.delayed(const Duration(seconds: 2));
-    logger.info('Delayed');
     // This is where you can make decisions on where your app should navigate when
     // you have custom startup logic
     // final hasDeepLink = await _deepLinkingService.processPendingUri();
@@ -45,11 +42,16 @@ class StartupViewModel extends BaseViewModel {
 
     if (pendingRoute != null) {
       logger.info('Pending route: $pendingRoute');
-      _navigationService.clearStackAndShow(pendingRoute,
-          arguments: SignUpViewArguments(
-            referralCode: _deepLinkingService.getReferralCode(),
-          ));
-      _deepLinkingService.clearPendingRoute();
+      if (await _secureStorageService.hasToken()) {
+        return;
+      } else {
+        _navigationService.clearStackAndShow(pendingRoute,
+            arguments: SignUpViewArguments(
+              referralCode: _deepLinkingService.getReferralCode(),
+            ));
+
+        _deepLinkingService.clearAll();
+      }
     } else if (token != null) {
       await _startupService.runTokenTasks();
       await _navigationService.replaceWithMainView();

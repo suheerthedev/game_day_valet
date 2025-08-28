@@ -13,6 +13,10 @@ class SecureStorageService {
     return await _storage.read(key: _tokenKey);
   }
 
+  Future<bool> hasToken() async {
+    return await _storage.containsKey(key: _tokenKey);
+  }
+
   Future<void> deleteToken() async {
     await _storage.delete(key: _tokenKey);
   }
