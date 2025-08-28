@@ -42,7 +42,6 @@ class SignUpViewModel extends BaseViewModel {
 
   void init() {
     referralCodeController.text = referralCode ?? '';
-    isReferralCodeValid = referralCode != null;
     rebuildUi();
   }
 

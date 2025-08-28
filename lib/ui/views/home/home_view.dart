@@ -176,7 +176,7 @@ class HomeView extends StackedView<HomeViewModel> {
                                       errorWidget: (context, url, error) =>
                                           Icon(Icons.sports_soccer_rounded,
                                               size: 60.w,
-                                              color: AppColors.white),
+                                              color: AppColors.secondary),
                                     ),
                                   ),
                                   // child: Container(

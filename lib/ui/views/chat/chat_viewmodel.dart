@@ -24,7 +24,7 @@ class ChatViewModel extends ReactiveViewModel {
 
   List<MessageModel> get messages => _chatService.messages;
 
-  String get initalChatMessage => _chatService.initalChatMessage;
+  String? get initalChatMessage => _chatService.initalChatMessage;
 
   List<types.Message> get chatMessages {
     return convertToChatMessages(messages);
@@ -38,7 +38,8 @@ class ChatViewModel extends ReactiveViewModel {
 
   types.TextMessage get _greetingMessage => types.TextMessage(
         id: 'support_greeting_message',
-        text: initalChatMessage,
+        text: initalChatMessage ??
+            'Hey! Glad you stopped by 👋 What’s up with your rental today?',
         createdAt: DateTime.now().millisecondsSinceEpoch,
         author: _supportUser,
       );
