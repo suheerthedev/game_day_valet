@@ -6,7 +6,6 @@ import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:game_day_valet/ui/common/app_colors.dart';
 import 'package:game_day_valet/ui/widgets/common/main_app_bar/main_app_bar.dart';
 import 'package:google_fonts/google_fonts.dart';
-import 'package:iconsax_flutter/iconsax_flutter.dart';
 import 'package:iconsax_plus/iconsax_plus.dart';
 import 'package:stacked/stacked.dart';
 
@@ -49,7 +48,7 @@ class RentalStatusView extends StackedView<RentalStatusViewModel> {
               chatIconWidget: const Padding(
                 padding: EdgeInsets.all(14.0),
                 child: Icon(
-                  Iconsax.message_2_copy,
+                  IconsaxPlusLinear.message_2,
                   color: AppColors.white,
                   size: 24,
                 ),

@@ -5,7 +5,7 @@ import 'package:game_day_valet/ui/common/app_colors.dart';
 import 'package:game_day_valet/ui/widgets/common/main_button/main_button.dart';
 import 'package:game_day_valet/ui/widgets/common/main_text_field/main_text_field.dart';
 import 'package:google_fonts/google_fonts.dart';
-import 'package:iconsax_flutter/iconsax_flutter.dart';
+import 'package:iconsax_plus/iconsax_plus.dart';
 import 'package:stacked/stacked.dart';
 
 import 'sign_up_viewmodel.dart';
@@ -157,13 +157,13 @@ Account""",
                                           fontWeight: FontWeight.w500,
                                           color: AppColors.textHint,
                                         ),
-                                        suffixIcon:
-                                            viewModel.isReferralCodeValid
-                                                ? const Icon(
-                                                    Iconsax.tick_circle,
-                                                    color: AppColors.success,
-                                                  )
-                                                : null,
+                                        suffixIcon: viewModel
+                                                .isReferralCodeValid
+                                            ? const Icon(
+                                                IconsaxPlusLinear.tick_circle,
+                                                color: AppColors.success,
+                                              )
+                                            : null,
                                         filled: true,
                                         fillColor: AppColors.grey50,
                                         border: OutlineInputBorder(

@@ -5,7 +5,7 @@ import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:game_day_valet/ui/common/app_colors.dart';
 import 'package:game_day_valet/ui/widgets/common/main_app_bar/main_app_bar.dart';
 import 'package:google_fonts/google_fonts.dart';
-import 'package:iconsax_flutter/iconsax_flutter.dart';
+import 'package:iconsax_plus/iconsax_plus.dart';
 import 'package:stacked/stacked.dart';
 
 import 'favorites_viewmodel.dart';
@@ -122,7 +122,7 @@ class FavoritesView extends StackedView<FavoritesViewModel> {
                                     ),
                                     Align(
                                       alignment: Alignment.topRight,
-                                      child: Icon(Iconsax.heart,
+                                      child: Icon(IconsaxPlusBold.heart,
                                           size: 24.w,
                                           color: AppColors.secondary),
                                     ),
@@ -165,7 +165,7 @@ class FavoritesView extends StackedView<FavoritesViewModel> {
       child: Column(
         mainAxisAlignment: MainAxisAlignment.center,
         children: [
-          Icon(Iconsax.heart, size: 40.w, color: AppColors.secondary),
+          Icon(IconsaxPlusLinear.heart, size: 40.w, color: AppColors.secondary),
           SizedBox(height: 10.h),
           Text(
             'No favorites yet',

@@ -7,7 +7,6 @@ import 'package:game_day_valet/ui/common/app_colors.dart';
 import 'package:game_day_valet/ui/widgets/common/main_app_bar/main_app_bar.dart';
 import 'package:game_day_valet/ui/widgets/common/main_button/main_button.dart';
 import 'package:google_fonts/google_fonts.dart';
-import 'package:iconsax_flutter/iconsax_flutter.dart';
 import 'package:iconsax_plus/iconsax_plus.dart';
 import 'package:stacked/stacked.dart';
 
@@ -102,14 +101,14 @@ class ProfileView extends StackedView<ProfileViewModel> {
                           shape: RoundedRectangleBorder(
                             borderRadius: BorderRadius.circular(16.r),
                           ),
-                          leading: Icon(Iconsax.user,
+                          leading: Icon(IconsaxPlusBold.user,
                               size: 24.w, color: AppColors.secondary),
                           title: Text('Edit Profile',
                               style: GoogleFonts.poppins(
                                   fontSize: 14.sp,
                                   fontWeight: FontWeight.w400,
                                   color: AppColors.textPrimary)),
-                          trailing: Icon(Iconsax.arrow_right_2,
+                          trailing: Icon(IconsaxPlusLinear.arrow_right_2,
                               size: 24.w, color: AppColors.textPrimary),
                         ),
                         SizedBox(height: 10.h),
@@ -119,14 +118,14 @@ class ProfileView extends StackedView<ProfileViewModel> {
                           shape: RoundedRectangleBorder(
                             borderRadius: BorderRadius.circular(16.r),
                           ),
-                          leading: Icon(Iconsax.receipt_item,
+                          leading: Icon(IconsaxPlusBold.receipt_item,
                               size: 24.w, color: AppColors.secondary),
                           title: Text('Rental History',
                               style: GoogleFonts.poppins(
                                   fontSize: 14.sp,
                                   fontWeight: FontWeight.w400,
                                   color: AppColors.textPrimary)),
-                          trailing: Icon(Iconsax.arrow_right_2,
+                          trailing: Icon(IconsaxPlusLinear.arrow_right_2,
                               size: 24.w, color: AppColors.textPrimary),
                         ),
                         SizedBox(height: 10.h),
@@ -136,14 +135,14 @@ class ProfileView extends StackedView<ProfileViewModel> {
                           shape: RoundedRectangleBorder(
                             borderRadius: BorderRadius.circular(16.r),
                           ),
-                          leading: Icon(Iconsax.gift,
+                          leading: Icon(IconsaxPlusBold.gift,
                               size: 24.w, color: AppColors.secondary),
                           title: Text('Refer and Earn',
                               style: GoogleFonts.poppins(
                                   fontSize: 14.sp,
                                   fontWeight: FontWeight.w400,
                                   color: AppColors.textPrimary)),
-                          trailing: Icon(Iconsax.arrow_right_2,
+                          trailing: Icon(IconsaxPlusLinear.arrow_right_2,
                               size: 24.w, color: AppColors.textPrimary),
                         ),
                         SizedBox(height: 10.h),
@@ -153,14 +152,14 @@ class ProfileView extends StackedView<ProfileViewModel> {
                           shape: RoundedRectangleBorder(
                             borderRadius: BorderRadius.circular(16.r),
                           ),
-                          leading: Icon(Iconsax.heart,
+                          leading: Icon(IconsaxPlusBold.heart,
                               size: 24.w, color: AppColors.secondary),
                           title: Text('Favorites',
                               style: GoogleFonts.poppins(
                                   fontSize: 14.sp,
                                   fontWeight: FontWeight.w400,
                                   color: AppColors.textPrimary)),
-                          trailing: Icon(Iconsax.arrow_right_2,
+                          trailing: Icon(IconsaxPlusLinear.arrow_right_2,
                               size: 24.w, color: AppColors.textPrimary),
                         ),
                         SizedBox(height: 10.h),
@@ -170,14 +169,14 @@ class ProfileView extends StackedView<ProfileViewModel> {
                           shape: RoundedRectangleBorder(
                             borderRadius: BorderRadius.circular(16.r),
                           ),
-                          leading: Icon(Iconsax.shield_tick,
+                          leading: Icon(IconsaxPlusBold.shield_tick,
                               size: 24.w, color: AppColors.secondary),
                           title: Text('Privacy Policy',
                               style: GoogleFonts.poppins(
                                   fontSize: 14.sp,
                                   fontWeight: FontWeight.w400,
                                   color: AppColors.textPrimary)),
-                          trailing: Icon(Iconsax.arrow_right_2,
+                          trailing: Icon(IconsaxPlusLinear.arrow_right_2,
                               size: 24.w, color: AppColors.textPrimary),
                         ),
                         SizedBox(height: 10.h),
@@ -187,14 +186,14 @@ class ProfileView extends StackedView<ProfileViewModel> {
                           shape: RoundedRectangleBorder(
                             borderRadius: BorderRadius.circular(16.r),
                           ),
-                          leading: Icon(Iconsax.folder_open,
+                          leading: Icon(IconsaxPlusBold.folder_open,
                               size: 24.w, color: AppColors.secondary),
                           title: Text('Terms & Conditions',
                               style: GoogleFonts.poppins(
                                   fontSize: 14.sp,
                                   fontWeight: FontWeight.w400,
                                   color: AppColors.textPrimary)),
-                          trailing: Icon(Iconsax.arrow_right_2,
+                          trailing: Icon(IconsaxPlusLinear.arrow_right_2,
                               size: 24.w, color: AppColors.textPrimary),
                         ),
                         SizedBox(height: 10.h),
@@ -204,14 +203,14 @@ class ProfileView extends StackedView<ProfileViewModel> {
                           shape: RoundedRectangleBorder(
                             borderRadius: BorderRadius.circular(16.r),
                           ),
-                          leading: Icon(Iconsax.message_question,
+                          leading: Icon(IconsaxPlusBold.message_question,
                               size: 24.w, color: AppColors.secondary),
                           title: Text('Frequently Asked Questions',
                               style: GoogleFonts.poppins(
                                   fontSize: 14.sp,
                                   fontWeight: FontWeight.w400,
                                   color: AppColors.textPrimary)),
-                          trailing: Icon(Iconsax.arrow_right_2,
+                          trailing: Icon(IconsaxPlusLinear.arrow_right_2,
                               size: 24.w, color: AppColors.textPrimary),
                         ),
                         SizedBox(height: 10.h),
@@ -221,7 +220,7 @@ class ProfileView extends StackedView<ProfileViewModel> {
                           shape: RoundedRectangleBorder(
                             borderRadius: BorderRadius.circular(16.r),
                           ),
-                          leading: Icon(Iconsax.notification,
+                          leading: Icon(IconsaxPlusBold.notification,
                               size: 24.w, color: AppColors.secondary),
                           title: Text('Notifications',
                               style: GoogleFonts.poppins(
@@ -258,7 +257,7 @@ class ProfileView extends StackedView<ProfileViewModel> {
                   chatIconWidget: const Padding(
                     padding: EdgeInsets.all(14.0),
                     child: Icon(
-                      Iconsax.message_2_copy,
+                      IconsaxPlusLinear.message_2,
                       color: AppColors.white,
                       size: 24,
                     ),

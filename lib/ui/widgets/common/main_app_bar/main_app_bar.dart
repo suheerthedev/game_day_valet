@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:game_day_valet/ui/common/app_colors.dart';
-import 'package:iconsax_flutter/iconsax_flutter.dart';
+import 'package:iconsax_plus/iconsax_plus.dart';
 import 'package:stacked/stacked.dart';
 
 import 'main_app_bar_model.dart';
@@ -63,7 +63,7 @@ class MainAppBar extends StackedView<MainAppBarModel>
               radius: 20.r,
               backgroundColor: AppColors.secondary.withOpacity(0.1),
               child: Center(
-                child: Icon(Iconsax.notification,
+                child: Icon(IconsaxPlusLinear.notification,
                     size: 24.w, color: AppColors.textPrimary),
               ),
             ),

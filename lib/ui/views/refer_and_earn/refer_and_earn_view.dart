@@ -4,7 +4,7 @@ import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import 'package:game_day_valet/ui/common/app_colors.dart';
 import 'package:game_day_valet/ui/widgets/common/main_app_bar/main_app_bar.dart';
 import 'package:google_fonts/google_fonts.dart';
-import 'package:iconsax_flutter/iconsax_flutter.dart';
+import 'package:iconsax_plus/iconsax_plus.dart';
 import 'package:stacked/stacked.dart';
 
 import 'refer_and_earn_viewmodel.dart';
@@ -115,7 +115,7 @@ class ReferAndEarnView extends StackedView<ReferAndEarnViewModel> {
                                             mainAxisAlignment:
                                                 MainAxisAlignment.center,
                                             children: [
-                                              Icon(Iconsax.copy,
+                                              Icon(IconsaxPlusLinear.copy,
                                                   size: 24.w,
                                                   color:
                                                       AppColors.textSecondary),

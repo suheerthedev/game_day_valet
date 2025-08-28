@@ -5,7 +5,7 @@ import 'package:game_day_valet/ui/widgets/common/main_app_bar/main_app_bar.dart'
 import 'package:game_day_valet/ui/widgets/common/main_button/main_button.dart';
 import 'package:game_day_valet/ui/widgets/common/main_text_field/main_text_field.dart';
 import 'package:google_fonts/google_fonts.dart';
-import 'package:iconsax_flutter/iconsax_flutter.dart';
+import 'package:iconsax_plus/iconsax_plus.dart';
 import 'package:stacked/stacked.dart';
 
 import 'rental_booking_viewmodel.dart';
@@ -57,7 +57,7 @@ class RentalBookingView extends StackedView<RentalBookingViewModel> {
                                 fontWeight: FontWeight.w500,
                                 color: AppColors.textPrimary),
                           ),
-                          Icon(Iconsax.arrow_down,
+                          Icon(IconsaxPlusLinear.arrow_down,
                               size: 20.w, color: AppColors.textPrimary)
                         ],
                       ),
@@ -79,7 +79,7 @@ class RentalBookingView extends StackedView<RentalBookingViewModel> {
                                 fontWeight: FontWeight.w500,
                                 color: AppColors.textPrimary),
                           ),
-                          Icon(Iconsax.arrow_down,
+                          Icon(IconsaxPlusLinear.arrow_down,
                               size: 20.w,
                               color: const Color.fromRGBO(25, 33, 38, 1))
                         ],
@@ -99,7 +99,8 @@ class RentalBookingView extends StackedView<RentalBookingViewModel> {
                   focusedBorderColor: AppColors.primary,
                   hasSuffixIcon: true,
                   suffixIcon: IconButton(
-                      onPressed: () {}, icon: const Icon(Iconsax.arrow_down)),
+                      onPressed: () {},
+                      icon: const Icon(IconsaxPlusLinear.arrow_down)),
                   suffixIconColor: AppColors.textHint,
                 ),
                 SizedBox(height: 10.h),
@@ -138,7 +139,8 @@ class RentalBookingView extends StackedView<RentalBookingViewModel> {
                   focusedBorderColor: AppColors.primary,
                   hasSuffixIcon: true,
                   suffixIcon: IconButton(
-                      onPressed: () {}, icon: const Icon(Iconsax.arrow_down)),
+                      onPressed: () {},
+                      icon: const Icon(IconsaxPlusLinear.arrow_down)),
                   suffixIconColor: AppColors.textHint,
                 ),
                 SizedBox(height: 20.h),
@@ -165,7 +167,7 @@ class RentalBookingView extends StackedView<RentalBookingViewModel> {
                         viewModel.isGearExpanded = !viewModel.isGearExpanded;
                         viewModel.notifyListeners();
                       },
-                      icon: const Icon(Iconsax.arrow_down)),
+                      icon: const Icon(IconsaxPlusLinear.arrow_down)),
                   suffixIconColor: AppColors.textHint,
                 ),
                 if (viewModel.isGearExpanded) ...[
@@ -209,7 +211,8 @@ class RentalBookingView extends StackedView<RentalBookingViewModel> {
                   focusedBorderColor: AppColors.primary,
                   hasSuffixIcon: true,
                   suffixIcon: IconButton(
-                      onPressed: () {}, icon: const Icon(Iconsax.arrow_down)),
+                      onPressed: () {},
+                      icon: const Icon(IconsaxPlusLinear.arrow_down)),
                   suffixIconColor: AppColors.textHint,
                 ),
                 SizedBox(height: 20.h),

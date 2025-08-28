@@ -5,7 +5,6 @@ import 'package:game_day_valet/ui/widgets/common/main_app_bar/main_app_bar.dart'
 import 'package:game_day_valet/ui/widgets/common/main_button/main_button.dart';
 import 'package:game_day_valet/ui/widgets/common/main_text_field/main_text_field.dart';
 import 'package:google_fonts/google_fonts.dart';
-import 'package:iconsax_flutter/iconsax_flutter.dart';
 import 'package:iconsax_plus/iconsax_plus.dart';
 import 'package:stacked/stacked.dart';
 
@@ -99,7 +98,7 @@ class EditProfileView extends StackedView<EditProfileViewModel> {
                             hasSuffixIcon: true,
                             suffixIcon: IconButton(
                                 onPressed: () {},
-                                icon: const Icon(Iconsax.edit_copy)),
+                                icon: const Icon(IconsaxPlusLinear.edit)),
                             suffixIconColor: AppColors.primary,
                           ),
                           SizedBox(height: 10.h),
@@ -116,7 +115,7 @@ class EditProfileView extends StackedView<EditProfileViewModel> {
                             hasSuffixIcon: true,
                             suffixIcon: IconButton(
                                 onPressed: () {},
-                                icon: const Icon(Iconsax.edit_copy)),
+                                icon: const Icon(IconsaxPlusLinear.edit)),
                             suffixIconColor: AppColors.primary,
                           ),
                           SizedBox(height: 10.h),
@@ -132,7 +131,7 @@ class EditProfileView extends StackedView<EditProfileViewModel> {
                             hasSuffixIcon: true,
                             suffixIcon: IconButton(
                                 onPressed: () {},
-                                icon: const Icon(Iconsax.edit_copy)),
+                                icon: const Icon(IconsaxPlusLinear.edit)),
                             suffixIconColor: AppColors.primary,
                           ),
                           SizedBox(height: 10.h),
@@ -148,7 +147,7 @@ class EditProfileView extends StackedView<EditProfileViewModel> {
                             hasSuffixIcon: true,
                             suffixIcon: IconButton(
                                 onPressed: () {},
-                                icon: const Icon(Iconsax.edit_copy)),
+                                icon: const Icon(IconsaxPlusLinear.edit)),
                             suffixIconColor: AppColors.primary,
                           ),
                         ],
