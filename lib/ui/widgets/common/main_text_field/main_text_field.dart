@@ -9,6 +9,7 @@ import 'main_text_field_model.dart';
 class MainTextField extends StackedView<MainTextFieldModel> {
   final String label;
   final TextEditingController controller;
+  final TextInputType? keyboardType;
   final bool hasSuffixIcon;
   final Color? labelColor;
   final Color? cursorColor;
@@ -26,6 +27,7 @@ class MainTextField extends StackedView<MainTextFieldModel> {
     super.key,
     required this.label,
     required this.controller,
+    this.keyboardType,
     this.labelColor,
     this.cursorColor,
     this.fillColor,
@@ -51,6 +53,7 @@ class MainTextField extends StackedView<MainTextFieldModel> {
       width: 340.w,
       height: 58.h,
       child: TextField(
+        keyboardType: keyboardType ?? TextInputType.text,
         readOnly: readOnly,
         onTap: onTap,
         obscureText: obscureText,

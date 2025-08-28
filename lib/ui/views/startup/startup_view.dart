@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter/scheduler.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:game_day_valet/ui/common/app_colors.dart';
+import 'package:google_fonts/google_fonts.dart';
 import 'package:stacked/stacked.dart';
 
 import 'startup_viewmodel.dart';
@@ -33,20 +34,30 @@ class StartupView extends StackedView<StartupViewModel> {
               ),
             ),
             Align(
-              alignment: Alignment.bottomCenter,
-              child: Container(
-                width: 366.w,
-                height: 551.h,
-                decoration: BoxDecoration(
-                  borderRadius: BorderRadius.circular(20.r),
-                ),
-                clipBehavior: Clip.hardEdge,
-                child: Image.asset(
-                  'assets/images/splash_image_2.png',
-                  fit: BoxFit.cover,
-                ),
-              ),
-            ),
+                alignment: Alignment.center,
+                child: Text(
+                  "READY FOR GAME DAY CONVENIENCE?",
+                  style: GoogleFonts.poppins(
+                    fontSize: 24.sp,
+                    fontWeight: FontWeight.w600,
+                    color: AppColors.textPrimary,
+                  ),
+                )),
+            // Align(
+            //   alignment: Alignment.bottomCenter,
+            //   child: Container(
+            //     width: 366.w,
+            //     height: 551.h,
+            //     decoration: BoxDecoration(
+            //       borderRadius: BorderRadius.circular(20.r),
+            //     ),
+            //     clipBehavior: Clip.hardEdge,
+            //     child: Image.asset(
+            //       'assets/images/splash_image_2.png',
+            //       fit: BoxFit.cover,
+            //     ),
+            //   ),
+            // ),
           ],
         ),
       ),

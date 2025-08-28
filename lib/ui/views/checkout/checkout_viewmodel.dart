@@ -33,6 +33,7 @@ class CheckoutViewModel extends BaseViewModel {
   TextEditingController phoneNumberController = TextEditingController();
   TextEditingController specialInstructionController = TextEditingController();
   TextEditingController promoCodeController = TextEditingController();
+  TextEditingController rentalDaysController = TextEditingController();
 
   String teamNameError = '';
   String coachNameError = '';
@@ -364,6 +365,7 @@ class CheckoutViewModel extends BaseViewModel {
       "coach_name": coachNameController.text,
       "phone_number": phoneNumberController.text,
       "email": emailController.text,
+      "booking_days": rentalDaysController.text,
       // "field_number": "Field 5",
       "items": formatItems(items),
       "bundles": formatBundles(bundles),
