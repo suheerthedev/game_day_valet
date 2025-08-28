@@ -37,12 +37,19 @@ class StartupView extends StackedView<StartupViewModel> {
                 alignment: Alignment.center,
                 child: Text(
                   "READY FOR GAME DAY CONVENIENCE?",
+                  textAlign: TextAlign.center,
                   style: GoogleFonts.poppins(
-                    fontSize: 24.sp,
-                    fontWeight: FontWeight.w600,
-                    color: AppColors.textPrimary,
+                    fontSize: 28.sp,
+                    fontWeight: FontWeight.w500,
+                    color: AppColors.white,
                   ),
                 )),
+
+            const Align(
+                alignment: Alignment.bottomCenter,
+                child: CircularProgressIndicator(
+                  color: AppColors.white,
+                ))
             // Align(
             //   alignment: Alignment.bottomCenter,
             //   child: Container(

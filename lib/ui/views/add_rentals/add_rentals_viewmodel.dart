@@ -21,6 +21,11 @@ class AddRentalsViewModel extends BaseViewModel {
   final int tournamentId;
   AddRentalsViewModel({required this.tournamentId});
 
+  void resetItemsandBundles() {
+    _rentalService.resetItemsandBundles();
+    searchController.clear();
+  }
+
   void navigateToSearch(String searchQuery) {
     _navigationService.navigateToSearchView(
         isTournamentSearch: false, isItemSearch: true);

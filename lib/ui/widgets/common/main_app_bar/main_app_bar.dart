@@ -63,7 +63,7 @@ class MainAppBar extends StackedView<MainAppBarModel>
               radius: 20.r,
               backgroundColor: AppColors.secondary.withOpacity(0.1),
               child: Center(
-                child: Icon(IconsaxPlusLinear.notification,
+                child: Icon(IconsaxPlusBold.notification,
                     size: 24.w, color: AppColors.textPrimary),
               ),
             ),

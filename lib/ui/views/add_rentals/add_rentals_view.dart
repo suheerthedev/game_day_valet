@@ -251,4 +251,10 @@ class AddRentalsView extends StackedView<AddRentalsViewModel> {
     BuildContext context,
   ) =>
       AddRentalsViewModel(tournamentId: tournamentId);
+
+  @override
+  void onDispose(AddRentalsViewModel viewModel) {
+    viewModel.resetItemsandBundles();
+    super.onDispose(viewModel);
+  }
 }

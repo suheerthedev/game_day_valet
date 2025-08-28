@@ -405,4 +405,14 @@ class RentalService with ListenableServiceMixin {
       );
     }
   }
+
+  void resetItemsandBundles() {
+    //change their quantites to 0 and unselect bundles
+    _items.forEach((element) {
+      element.quantity = 0;
+    });
+    _bundles.forEach((element) {
+      element.isSelected = false;
+    });
+  }
 }
