@@ -35,8 +35,6 @@ class NotificationView extends StackedView<NotificationViewModel> {
                 : Padding(
                     padding: EdgeInsets.symmetric(horizontal: 25.w),
                     child: ListView.builder(
-                      shrinkWrap: true,
-                      physics: const NeverScrollableScrollPhysics(),
                       itemCount: viewModel.notifications.length,
                       itemBuilder: (context, index) {
                         return ListTile(
