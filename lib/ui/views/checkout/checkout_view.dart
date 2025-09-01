@@ -399,27 +399,27 @@ class CheckoutView extends StackedView<CheckoutViewModel> {
                     //   suffixIconColor: AppColors.textHint,
                     // ),
 
-                    SizedBox(height: 20.h),
-                    Text(
-                      'Rental Days',
-                      style: GoogleFonts.poppins(
-                          fontSize: 18.sp,
-                          fontWeight: FontWeight.w600,
-                          color: AppColors.textPrimary),
-                    ),
-                    SizedBox(height: 10.h),
-                    MainTextField(
-                      keyboardType: TextInputType.number,
-                      label: "Enter Rental Days (Optional)",
-                      controller: viewModel.rentalDaysController,
-                      labelColor: AppColors.textHint,
-                      cursorColor: AppColors.primary,
-                      fillColor: AppColors.grey50,
-                      borderColor: AppColors.grey100,
-                      enabledBorderColor: AppColors.grey100,
-                      focusedBorderColor: AppColors.primary,
-                      hasSuffixIcon: false,
-                    ),
+                    // SizedBox(height: 20.h),
+                    // Text(
+                    //   'Rental Days',
+                    //   style: GoogleFonts.poppins(
+                    //       fontSize: 18.sp,
+                    //       fontWeight: FontWeight.w600,
+                    //       color: AppColors.textPrimary),
+                    // ),
+                    // SizedBox(height: 10.h),
+                    // MainTextField(
+                    //   keyboardType: TextInputType.number,
+                    //   label: "Enter Rental Days (Optional)",
+                    //   controller: viewModel.rentalDaysController,
+                    //   labelColor: AppColors.textHint,
+                    //   cursorColor: AppColors.primary,
+                    //   fillColor: AppColors.grey50,
+                    //   borderColor: AppColors.grey100,
+                    //   enabledBorderColor: AppColors.grey100,
+                    //   focusedBorderColor: AppColors.primary,
+                    //   hasSuffixIcon: false,
+                    // ),
                     SizedBox(height: 20.h),
                     Text(
                       'Instruction',
