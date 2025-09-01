@@ -14,6 +14,8 @@ class FaqViewModel extends BaseViewModel {
 
   List<FaqItemModel> faqItems = [];
 
+  String colorCode = '0xFFFFFFFF';
+
   void toggleExpansion(int index) {
     faqItems[index].isExpanded = !faqItems[index].isExpanded;
     rebuildUi();
@@ -30,6 +32,9 @@ class FaqViewModel extends BaseViewModel {
     try {
       final response = await _apiService.get(url);
       logger.info("Faqs: $response");
+
+      colorCode = response['color'] ?? '0xFFFFFFFF';
+
       faqItems = (response['data'] as List)
           .map((e) => FaqItemModel.fromJson(e))
           .toList();

@@ -17,7 +17,7 @@ class FaqView extends StackedView<FaqViewModel> {
     Widget? child,
   ) {
     return Scaffold(
-        backgroundColor: AppColors.scaffoldBackground,
+        backgroundColor: Color(int.parse(viewModel.colorCode)),
         appBar: MainAppBar(
           title: Text(
             'FAQs',

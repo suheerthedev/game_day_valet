@@ -19,7 +19,7 @@ class PrivacyPolicyView extends StackedView<PrivacyPolicyViewModel> {
     Widget? child,
   ) {
     return Scaffold(
-        backgroundColor: AppColors.scaffoldBackground,
+        backgroundColor: Color(int.parse(viewModel.colorCode)),
         appBar: MainAppBar(
           hasSubtitle: true,
           title: Text(

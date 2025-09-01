@@ -16,6 +16,8 @@ class PrivacyPolicyViewModel extends BaseViewModel {
 
   List<PrivacyPolicyModel> get privacyPolicies => _privacyPolicies;
 
+  String colorCode = '0xFFFFFFFF';
+
   void getPrivacyPolicy() async {
     setBusy(true);
     final url = ApiConfig.baseUrl + ApiConfig.privacyPolicyEndPoint;
@@ -23,6 +25,8 @@ class PrivacyPolicyViewModel extends BaseViewModel {
     try {
       final response = await _apiService.get(url);
       logger.info("Privacy policy: $response");
+
+      colorCode = response['color'] ?? '0xFFFFFFFF';
 
       _privacyPolicies = (response['data'] as List)
           .map((e) => PrivacyPolicyModel.fromJson(e))

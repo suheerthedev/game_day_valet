@@ -16,6 +16,8 @@ class TermsAndConditionsViewModel extends BaseViewModel {
 
   List<TermsModel> get terms => _terms;
 
+  String colorCode = '0xFFFFFFFF';
+
   void getTerms() async {
     setBusy(true);
     final url = ApiConfig.baseUrl + ApiConfig.termsAndConditionsEndPoint;
@@ -23,6 +25,8 @@ class TermsAndConditionsViewModel extends BaseViewModel {
     try {
       final response = await _apiService.get(url);
       logger.info("Terms and conditions: $response");
+
+      colorCode = response['color'] ?? '0xFFFFFFFF';
 
       _terms = (response['data'] as List)
           .map((e) => TermsModel.fromJson(e))
