@@ -1,19 +1,50 @@
 import 'package:game_day_valet/app/app.locator.dart';
+import 'package:game_day_valet/config/api_config.dart';
 import 'package:game_day_valet/core/enums/snackbar_type.dart';
 import 'package:game_day_valet/services/api_exception.dart';
+import 'package:game_day_valet/services/api_service.dart';
 import 'package:game_day_valet/services/chat_service.dart';
 import 'package:game_day_valet/services/logger_service.dart';
 import 'package:game_day_valet/services/notification_service.dart';
 import 'package:game_day_valet/services/rental_service.dart';
+import 'package:game_day_valet/services/secure_storage_service.dart';
 import 'package:game_day_valet/services/user_service.dart';
+import 'package:stacked/stacked.dart';
 import 'package:stacked_services/stacked_services.dart';
 
-class StartupService {
+class StartupService with ListenableServiceMixin {
   final _notificationService = locator<NotificationService>();
   final _userService = locator<UserService>();
   final _rentalService = locator<RentalService>();
   final _chatService = locator<ChatService>();
   final _snackbarService = locator<SnackbarService>();
+  final _apiService = locator<ApiService>();
+  final _secureStorageService = locator<SecureStorageService>();
+
+  Future<dynamic> validateToken() async {
+    final url = ApiConfig.baseUrl + ApiConfig.validateTokenEndPoint;
+
+    final token = await _secureStorageService.getToken();
+
+    try {
+      final response = await _apiService.post(url, {
+        'token': token,
+      });
+      logger.info("Token validated: $response");
+
+      if (response['valid']) {
+        return true;
+      } else {
+        await _apiService.unauthorized();
+        notifyListeners();
+        return false;
+      }
+    } on ApiException catch (e) {
+      logger.error("Error validating token: ${e.message}");
+      _snackbarService.showCustomSnackBar(
+          message: e.message, variant: SnackbarType.error);
+    }
+  }
 
   Future<void> runTokenTasks() async {
     await _notificationService.getUserNotifications();

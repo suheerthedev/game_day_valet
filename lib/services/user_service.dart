@@ -25,6 +25,7 @@ class UserService with ListenableServiceMixin {
 
     try {
       final response = await _apiService.get(url);
+      logger.info("Fetch User: $response");
       _currentUser.value = UserModel.fromJson(response['user']);
 
       logger.info("Fetch User: $response");

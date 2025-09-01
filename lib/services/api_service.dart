@@ -10,10 +10,12 @@ import 'package:game_day_valet/services/logger_service.dart';
 import 'package:game_day_valet/services/secure_storage_service.dart';
 import 'package:http/http.dart' as http;
 import 'package:stacked_services/stacked_services.dart';
+import 'package:game_day_valet/core/enums/snackbar_type.dart';
 
 class ApiService {
   final _secureStorageService = locator<SecureStorageService>();
   final _navigationService = locator<NavigationService>();
+  final _snackbarService = locator<SnackbarService>();
   // final _connectivityService = locator<ConnectivityService>();
 
   Future<Map<String, String>> _getHeaders({bool isMultiPart = false}) async {
@@ -156,8 +158,14 @@ class ApiService {
     }
   }
 
-  Future<void> _onUnauthorized() async {
+  Future<void> unauthorized() async {
+    await _snackbarService.showCustomSnackBar(
+      variant: SnackbarType.error,
+      message: "Session expired. Login again.",
+      duration: const Duration(seconds: 5),
+    );
     await _secureStorageService.deleteToken();
+
     await _navigationService.clearStackAndShow(Routes.signUpView);
   }
 
@@ -173,7 +181,7 @@ class ApiService {
         throw ApiException(
             decoded['message'] ?? "Bad Request", response.statusCode);
       case 401:
-        _onUnauthorized();
+        unauthorized();
         throw UnauthorizedException();
       case 404:
         throw ApiException("Resource not found", 404);
@@ -192,7 +200,7 @@ class ApiService {
       case 422:
         throw ApiException(decoded['message'] ?? "Bad Request", statusCode);
       case 401:
-        _onUnauthorized();
+        unauthorized();
         throw UnauthorizedException();
       default:
         throw ApiException("Something went wrong", statusCode);

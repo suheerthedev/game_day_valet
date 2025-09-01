@@ -53,8 +53,10 @@ class StartupViewModel extends BaseViewModel {
         _deepLinkingService.clearAll();
       }
     } else if (token != null) {
-      await _startupService.runTokenTasks();
-      await _navigationService.replaceWithMainView();
+      if (await _startupService.validateToken()) {
+        await _startupService.runTokenTasks();
+        await _navigationService.replaceWithMainView();
+      }
     } else {
       _navigationService.replaceWithOnboardingView();
     }

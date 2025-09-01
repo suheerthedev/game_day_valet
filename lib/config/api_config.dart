@@ -55,5 +55,8 @@ class ApiConfig {
 
   static const initalChatMessageEndPoint = '/api/settings/chat';
 
+  //Token
+  static const validateTokenEndPoint = '/api/token/validate';
+
   // Add more as needed
 }
