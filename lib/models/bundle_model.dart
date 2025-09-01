@@ -32,10 +32,9 @@ class BundleModel {
       totalItems: json['total_items'],
       price: json['price'],
       status: json['status'],
-      items: json['items']
-          .map((e) => ItemModel.fromJson(e))
-          .toList()
-          .cast<ItemModel>(),
+      items: json['items'] != null
+          ? (json['items'] as List).map((e) => ItemModel.fromJson(e)).toList()
+          : [],
     );
   }
 }

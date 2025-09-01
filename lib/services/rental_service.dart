@@ -9,6 +9,7 @@ import 'package:game_day_valet/models/item_model.dart';
 import 'package:game_day_valet/models/rental_booking_model.dart';
 import 'package:game_day_valet/models/rental_status_model.dart';
 import 'package:game_day_valet/models/settings_item_model.dart';
+import 'package:game_day_valet/models/tournament_rental.dart';
 import 'package:game_day_valet/services/api_exception.dart';
 import 'package:game_day_valet/services/api_service.dart';
 import 'package:game_day_valet/services/logger_service.dart';
@@ -45,11 +46,14 @@ class RentalService with ListenableServiceMixin {
   List<ItemModel> _items = [];
   List<BundleModel> _bundles = [];
 
+  TournamentRentalModel? _tournamentRental;
+
   int? itemsLastPage;
   // int? bundlesLastPage;
 
   List<ItemModel> get items => _items;
   List<BundleModel> get bundles => _bundles;
+  TournamentRentalModel? get tournamentRental => _tournamentRental;
 
   final ReactiveValue<List<SettingsItemModel>> _insuranceOptions =
       ReactiveValue<List<SettingsItemModel>>([]);
@@ -404,6 +408,33 @@ class RentalService with ListenableServiceMixin {
         variant: SnackbarType.error,
       );
     }
+  }
+
+  Future<void> getTournamentRentalItems(int tournamentId) async {
+    final url =
+        "${ApiConfig.baseUrl}${ApiConfig.tournamentRentalItemsEndPoint}/$tournamentId";
+    try {
+      final response = await _apiService.get(url);
+
+      logger.info("Tournament Rental Items: $response");
+      _tournamentRental = TournamentRentalModel.fromJson(response);
+    } on ApiException catch (e) {
+      logger.error("Error getting tournament rental items: ${e.message}");
+      _snackbarService.showCustomSnackBar(
+        message: e.message,
+        variant: SnackbarType.error,
+      );
+    } catch (e) {
+      logger.error("Error getting tournament rental items: ${e.toString()}");
+      _snackbarService.showCustomSnackBar(
+        message: "Something went wrong",
+        variant: SnackbarType.error,
+      );
+    }
+  }
+
+  clearTournamentRental() {
+    _tournamentRental = null;
   }
 
   void resetItemsandBundles() {

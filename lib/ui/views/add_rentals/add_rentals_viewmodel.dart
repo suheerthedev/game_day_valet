@@ -3,6 +3,7 @@ import 'package:game_day_valet/app/app.locator.dart';
 import 'package:game_day_valet/app/app.router.dart';
 import 'package:game_day_valet/models/bundle_model.dart';
 import 'package:game_day_valet/models/item_model.dart';
+import 'package:game_day_valet/models/tournament_rental.dart';
 import 'package:game_day_valet/services/rental_service.dart';
 import 'package:stacked/stacked.dart';
 import 'package:stacked_services/stacked_services.dart';
@@ -13,15 +14,27 @@ class AddRentalsViewModel extends BaseViewModel {
 
   TextEditingController searchController = TextEditingController();
 
-  List<ItemModel> get items => _rentalService.items;
-  List<BundleModel> get bundles => _rentalService.bundles;
+  List<ItemModel> get items => tournamentRental?.items ?? [];
+  List<BundleModel> get bundles => tournamentRental?.bundles ?? [];
+
+  TournamentRentalModel? get tournamentRental =>
+      _rentalService.tournamentRental;
 
   // bool viewSmartSuggestions = false;
 
   final int tournamentId;
   AddRentalsViewModel({required this.tournamentId});
 
+  Future<void> getTournamentRentalItems() async {
+    setBusy(true);
+    rebuildUi();
+    await _rentalService.getTournamentRentalItems(tournamentId);
+    setBusy(false);
+    rebuildUi();
+  }
+
   void resetItemsandBundles() {
+    _rentalService.clearTournamentRental();
     _rentalService.resetItemsandBundles();
     searchController.clear();
   }

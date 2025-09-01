@@ -71,15 +71,18 @@ class AddRentalsView extends StackedView<AddRentalsViewModel> {
                           //     ),
                           //   ),
                           // ),
+                          SizedBox(height: 20.h),
+                          Text(
+                            'Bundles',
+                            style: GoogleFonts.poppins(
+                                fontSize: 20.sp,
+                                fontWeight: FontWeight.w600,
+                                color: AppColors.textPrimary),
+                          ),
+                          if (viewModel.bundles.isEmpty) ...[
+                            buildEmptyBundles(),
+                          ],
                           if (viewModel.bundles.isNotEmpty) ...[
-                            SizedBox(height: 20.h),
-                            Text(
-                              'Bundles',
-                              style: GoogleFonts.poppins(
-                                  fontSize: 20.sp,
-                                  fontWeight: FontWeight.w600,
-                                  color: AppColors.textPrimary),
-                            ),
                             SizedBox(height: 10.h),
                             ListView.builder(
                               shrinkWrap: true,
@@ -193,14 +196,17 @@ class AddRentalsView extends StackedView<AddRentalsViewModel> {
                           //Items
 
                           SizedBox(height: 20.h),
+                          Text(
+                            'Items',
+                            style: GoogleFonts.poppins(
+                                fontSize: 20.sp,
+                                fontWeight: FontWeight.w600,
+                                color: AppColors.textPrimary),
+                          ),
+                          if (viewModel.items.isEmpty) ...[
+                            buildEmptyItems(),
+                          ],
                           if (viewModel.items.isNotEmpty) ...[
-                            Text(
-                              'Items',
-                              style: GoogleFonts.poppins(
-                                  fontSize: 20.sp,
-                                  fontWeight: FontWeight.w600,
-                                  color: AppColors.textPrimary),
-                            ),
                             SizedBox(height: 10.h),
                             GridView.builder(
                               shrinkWrap: true,
@@ -246,11 +252,57 @@ class AddRentalsView extends StackedView<AddRentalsViewModel> {
     );
   }
 
+  Widget buildEmptyItems() {
+    return Center(
+      child: Column(
+        mainAxisAlignment: MainAxisAlignment.center,
+        children: [
+          Icon(IconsaxPlusLinear.emoji_sad,
+              size: 40.w, color: AppColors.secondary),
+          SizedBox(height: 10.h),
+          Text(
+            'No items found',
+            style: GoogleFonts.poppins(
+                fontSize: 16.sp,
+                fontWeight: FontWeight.w500,
+                color: AppColors.textPrimary),
+          ),
+        ],
+      ),
+    );
+  }
+
+  Widget buildEmptyBundles() {
+    return Center(
+      child: Column(
+        mainAxisAlignment: MainAxisAlignment.center,
+        children: [
+          Icon(IconsaxPlusLinear.emoji_sad,
+              size: 40.w, color: AppColors.secondary),
+          SizedBox(height: 10.h),
+          Text(
+            'No bundles found',
+            style: GoogleFonts.poppins(
+                fontSize: 16.sp,
+                fontWeight: FontWeight.w500,
+                color: AppColors.textPrimary),
+          ),
+        ],
+      ),
+    );
+  }
+
   @override
   AddRentalsViewModel viewModelBuilder(
     BuildContext context,
   ) =>
       AddRentalsViewModel(tournamentId: tournamentId);
+
+  @override
+  void onViewModelReady(AddRentalsViewModel viewModel) {
+    viewModel.getTournamentRentalItems();
+    super.onViewModelReady(viewModel);
+  }
 
   @override
   void onDispose(AddRentalsViewModel viewModel) {

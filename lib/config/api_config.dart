@@ -31,6 +31,7 @@ class ApiConfig {
 
   static const items = '/api/items';
   static const bundles = '/api/bundles';
+  static const tournamentRentalItemsEndPoint = '/api/tournaments/details';
 
   //Payment
   static const createPaymentIntent = '/api/create-payment-intent';
