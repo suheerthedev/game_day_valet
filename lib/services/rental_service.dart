@@ -76,8 +76,8 @@ class RentalService with ListenableServiceMixin {
       await initializePusher();
     }
 
-    await getItems();
-    await getBundles();
+    // await getItems();
+    // await getBundles();
     await getSettingsItems();
   }
 
