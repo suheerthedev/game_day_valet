@@ -1,6 +1,7 @@
 import 'package:app_links/app_links.dart';
 import 'package:game_day_valet/app/app.router.dart';
 import 'package:game_day_valet/app/app.locator.dart';
+import 'package:game_day_valet/core/enums/snackbar_type.dart';
 import 'package:game_day_valet/services/logger_service.dart';
 import 'package:game_day_valet/services/secure_storage_service.dart';
 import 'package:stacked_services/stacked_services.dart';
@@ -9,7 +10,7 @@ class DeepLinkingService {
   final _appLinks = AppLinks();
   final _navigationService = locator<NavigationService>();
   final _secureStorageService = locator<SecureStorageService>();
-
+  final _snackbarService = locator<SnackbarService>();
   bool isStartupInitiated = false;
 
   static Uri? pendingUri;
@@ -60,6 +61,12 @@ class DeepLinkingService {
       logger.info('Referral code: $referralCode');
       if (isStartupInitiated) {
         if (await _secureStorageService.hasToken()) {
+          _snackbarService.showCustomSnackBar(
+            message:
+                'You are already logged in. Logout to use the referral code.',
+            variant: SnackbarType.warning,
+            duration: const Duration(seconds: 3),
+          );
           return;
         } else {
           _navigationService.clearStackAndShow(Routes.signUpView,
