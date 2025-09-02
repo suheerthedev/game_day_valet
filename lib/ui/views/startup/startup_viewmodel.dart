@@ -42,8 +42,11 @@ class StartupViewModel extends BaseViewModel {
 
     if (pendingRoute != null) {
       logger.info('Pending route: $pendingRoute');
-      if (await _secureStorageService.hasToken()) {
-        return;
+      if (token != null) {
+        if (await _startupService.validateToken()) {
+          await _startupService.runTokenTasks();
+          await _navigationService.replaceWithMainView();
+        }
       } else {
         _navigationService.clearStackAndShow(pendingRoute,
             arguments: SignUpViewArguments(
