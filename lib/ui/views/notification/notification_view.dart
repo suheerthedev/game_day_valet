@@ -30,46 +30,54 @@ class NotificationView extends StackedView<NotificationViewModel> {
           ),
         ),
         body: SafeArea(
-            child: viewModel.notifications.isEmpty
-                ? _buildEmptyState()
-                : Padding(
-                    padding: EdgeInsets.symmetric(horizontal: 25.w),
-                    child: ListView.builder(
-                      itemCount: viewModel.notifications.length,
-                      itemBuilder: (context, index) {
-                        return ListTile(
-                          contentPadding: EdgeInsets.zero,
-                          leading: CircleAvatar(
-                            radius: 21.r,
-                            backgroundColor: AppColors.secondary,
-                            child: Text(
-                                viewModel.notifications[index].message
-                                    .toString()
-                                    .toUpperCase()
-                                    .substring(0, 1),
-                                style: GoogleFonts.poppins(
-                                    fontSize: 24.sp,
-                                    fontWeight: FontWeight.w400,
-                                    color: AppColors.white)),
-                          ),
-                          title: Text(
-                              viewModel.notifications[index].message ?? '',
-                              style: GoogleFonts.poppins(
-                                  fontSize: 14.sp,
-                                  fontWeight: FontWeight.w500,
-                                  color: AppColors.textPrimary)),
-                          subtitle: Text(
-                              viewModel.notifications[index]
-                                      .formattedTimeStamp ??
-                                  '',
-                              style: GoogleFonts.poppins(
-                                  fontSize: 12.sp,
-                                  fontWeight: FontWeight.w400,
-                                  color: AppColors.textHint)),
-                        );
-                      },
-                    ),
-                  )));
+            child: viewModel.isBusy
+                ? const Center(child: CircularProgressIndicator())
+                : viewModel.notifications.isEmpty
+                    ? _buildEmptyState()
+                    : Padding(
+                        padding: EdgeInsets.symmetric(horizontal: 25.w),
+                        child: ListView.builder(
+                          itemCount: viewModel.notifications.length +
+                              (viewModel.hasMorePages ? 1 : 0),
+                          itemBuilder: (context, index) {
+                            if (index == viewModel.notifications.length) {
+                              // This is the "See More" button
+                              return _buildLoadMoreButton(viewModel);
+                            }
+
+                            return ListTile(
+                              contentPadding: EdgeInsets.zero,
+                              leading: CircleAvatar(
+                                radius: 21.r,
+                                backgroundColor: AppColors.secondary,
+                                child: Text(
+                                    viewModel.notifications[index].message
+                                        .toString()
+                                        .toUpperCase()
+                                        .substring(0, 1),
+                                    style: GoogleFonts.poppins(
+                                        fontSize: 24.sp,
+                                        fontWeight: FontWeight.w400,
+                                        color: AppColors.white)),
+                              ),
+                              title: Text(
+                                  viewModel.notifications[index].message ?? '',
+                                  style: GoogleFonts.poppins(
+                                      fontSize: 14.sp,
+                                      fontWeight: FontWeight.w500,
+                                      color: AppColors.textPrimary)),
+                              subtitle: Text(
+                                  viewModel.notifications[index]
+                                          .formattedTimeStamp ??
+                                      '',
+                                  style: GoogleFonts.poppins(
+                                      fontSize: 12.sp,
+                                      fontWeight: FontWeight.w400,
+                                      color: AppColors.textHint)),
+                            );
+                          },
+                        ),
+                      )));
   }
 
   Widget _buildEmptyState() {
@@ -93,9 +101,37 @@ class NotificationView extends StackedView<NotificationViewModel> {
     );
   }
 
+  Widget _buildLoadMoreButton(NotificationViewModel viewModel) {
+    return viewModel.isFetching
+        ? Padding(
+            padding: EdgeInsets.symmetric(vertical: 15.h),
+            child: const Center(child: CircularProgressIndicator()),
+          )
+        : Padding(
+            padding: EdgeInsets.symmetric(vertical: 15.h),
+            child: TextButton(
+              onPressed: viewModel.loadMoreNotifications,
+              child: Text(
+                'See More',
+                style: GoogleFonts.poppins(
+                  fontSize: 16.sp,
+                  fontWeight: FontWeight.w500,
+                  color: AppColors.primary,
+                ),
+              ),
+            ),
+          );
+  }
+
   @override
   NotificationViewModel viewModelBuilder(
     BuildContext context,
   ) =>
       NotificationViewModel();
+
+  @override
+  void onViewModelReady(NotificationViewModel viewModel) {
+    super.onViewModelReady(viewModel);
+    viewModel.initialize();
+  }
 }
