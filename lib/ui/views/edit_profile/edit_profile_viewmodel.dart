@@ -31,9 +31,6 @@ class EditProfileViewModel extends BaseViewModel {
 
     imageFile = File(image.path);
 
-    print(imageFile);
-    print(imagePath);
-
     rebuildUi();
   }
 

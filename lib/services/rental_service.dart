@@ -121,7 +121,7 @@ class RentalService with ListenableServiceMixin {
     try {
       final response = await _apiService.post(url, body);
 
-      print("Booking Rental Response: $response");
+      logger.info("Booking Rental Response: $response");
 
       if (response.containsKey('errors')) {
         return response;
@@ -174,7 +174,7 @@ class RentalService with ListenableServiceMixin {
     try {
       final response = await _apiService.get(url);
 
-      print("Rental Status Response: $response");
+      logger.info("Rental Status Response: $response");
 
       _rentalStatus.value = (response['status'] as List)
           .map((e) => RentalStatusModel.fromJson(e))

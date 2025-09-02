@@ -51,6 +51,10 @@
 	<string>222515758866-l59l7u1cu5drp8hdb5hvs1tbrhnhi3uf.apps.googleusercontent.com</string>
 	<key>LSRequiresIPhoneOS</key>
 	<true/>
+	<key>com.apple.developer.associated-domains</key>
+	<array>
+		<string>applinks:rental.gamedayvaletrentals.com</string>
+	</array>
 	<key>NSCameraUsageDescription</key>
 	<string>Scan your card or take photo</string>
 	<!-- <key>NSLocationAlwaysAndWhenInUseUsageDescription</key>
