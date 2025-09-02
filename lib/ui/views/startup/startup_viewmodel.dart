@@ -21,7 +21,6 @@ class StartupViewModel extends BaseViewModel {
 
   // Place anything here that needs to happen before we get into the application
   Future runStartupLogic() async {
-    await Future.delayed(const Duration(seconds: 2));
     // This is where you can make decisions on where your app should navigate when
     // you have custom startup logic
     // final hasDeepLink = await _deepLinkingService.processPendingUri();
@@ -33,10 +32,10 @@ class StartupViewModel extends BaseViewModel {
 
     final pendingRoute = _deepLinkingService.getPendingRoute();
 
-    // logger.info('Has deep link: $hasDeepLink');
-    // if (hasDeepLink) {
+    // if (pendingRoute != null) {
     //   // Deep link handled; do not perform any further navigation here.
-    //   return;
+    //   await _deepLinkingService.processPendingUri();
+    //   // return;
     // }
 
     // if (pendingRoute != null) {
@@ -58,12 +57,19 @@ class StartupViewModel extends BaseViewModel {
 
     if (pendingRoute != null) {
       await _deepLinkingService.processPendingUri();
+      if (token != null) {
+        if (await _startupService.validateToken()) {
+          await _startupService.runTokenTasks();
+          await _navigationService.replaceWithMainView();
+        }
+      }
     } else if (token != null) {
       if (await _startupService.validateToken()) {
         await _startupService.runTokenTasks();
         await _navigationService.replaceWithMainView();
       }
     } else {
+      await Future.delayed(const Duration(seconds: 2));
       _navigationService.replaceWithOnboardingView();
     }
   }

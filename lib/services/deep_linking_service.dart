@@ -4,7 +4,6 @@ import 'package:game_day_valet/app/app.locator.dart';
 import 'package:game_day_valet/core/enums/snackbar_type.dart';
 import 'package:game_day_valet/services/logger_service.dart';
 import 'package:game_day_valet/services/secure_storage_service.dart';
-import 'package:game_day_valet/services/startup_service.dart';
 import 'package:stacked_services/stacked_services.dart';
 
 class DeepLinkingService {
@@ -12,7 +11,6 @@ class DeepLinkingService {
   final _navigationService = locator<NavigationService>();
   final _secureStorageService = locator<SecureStorageService>();
   final _snackbarService = locator<SnackbarService>();
-  final _startupService = locator<StartupService>();
 
   bool isStartupInitiated = false;
 
@@ -23,6 +21,7 @@ class DeepLinkingService {
   static String? referralCode;
 
   void init() {
+    isStartupInitiated = false;
     _appLinks.uriLinkStream.listen((uri) {
       _handleUri(uri);
     });
@@ -72,10 +71,6 @@ class DeepLinkingService {
             variant: SnackbarType.warning,
             duration: const Duration(seconds: 3),
           );
-          if (await _startupService.validateToken()) {
-            await _startupService.runTokenTasks();
-            await _navigationService.replaceWithMainView();
-          }
         } else {
           _navigationService.clearStackAndShow(Routes.signUpView,
               arguments: SignUpViewArguments(
