@@ -115,7 +115,7 @@ class ReferAndEarnView extends StackedView<ReferAndEarnViewModel> {
                                             mainAxisAlignment:
                                                 MainAxisAlignment.center,
                                             children: [
-                                              Icon(IconsaxPlusLinear.copy,
+                                              Icon(IconsaxPlusBold.copy,
                                                   size: 24.w,
                                                   color:
                                                       AppColors.textSecondary),
