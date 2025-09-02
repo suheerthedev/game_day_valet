@@ -36,9 +36,16 @@ class OnboardingView extends StackedView<OnboardingViewModel> {
                 spacing: 20.h,
                 children: [
                   Text(
-                      'Lorem Ipsum has been the industry\'s standard dummy text ever since the 1500s, when an unknown',
+                      'Easily book premium tailgate gear and game-day rentals, making your event hassle-free and unforgettable.',
                       textAlign: TextAlign.center,
                       style: GoogleFonts.poppins(
+                          shadows: [
+                            const Shadow(
+                              color: AppColors.primary,
+                              offset: Offset(0, 2),
+                              blurRadius: 5,
+                            ),
+                          ],
                           fontSize: 16.sp,
                           fontWeight: FontWeight.w600,
                           color: AppColors.white)),
