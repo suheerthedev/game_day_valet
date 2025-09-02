@@ -214,7 +214,7 @@ class ChatService with ListenableServiceMixin {
       logger.info("Handling in ChatService incoming message: $eventData");
 
       if (eventData.toString() == '{}') {
-        print('No data received from Pusher');
+        logger.info('No data received from Pusher');
         return;
       }
 

@@ -407,11 +407,10 @@ class TournamentsViewModel extends BaseViewModel {
     );
   }
 
-  void applyFilters() {
-    // TODO: If API supports filter parameters, call service with them.
-    // For now, just trigger a UI rebuild; filtering can be applied client-side later.
-    logger.info(
-        'Applying filters: date=${dateController.text}, city=${cityController.text}, age=${ageGroupController.text}');
-    rebuildUi();
-  }
+  // void applyFilters() {
+  //   // For now, just trigger a UI rebuild; filtering can be applied client-side later.
+  //   logger.info(
+  //       'Applying filters: date=${dateController.text}, city=${cityController.text}, age=${ageGroupController.text}');
+  //   rebuildUi();
+  // }
 }

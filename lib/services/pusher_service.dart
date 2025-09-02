@@ -35,7 +35,7 @@ class PusherService {
       },
       onAuthorizer: (channelName, socketId, options) async {
         logger.info(socketId.toString());
-        //   // ignore: prefer_typing_uninitialized_variables
+        // ignore: prefer_typing_uninitialized_variables
         var json;
         try {
           var authUrl = '${ApiConfig.baseUrl}/broadcasting/auth';

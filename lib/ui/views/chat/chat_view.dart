@@ -93,7 +93,7 @@ class ChatView extends StackedView<ChatViewModel> {
           borderRadius: BorderRadius.circular(16.r),
           boxShadow: [
             BoxShadow(
-              color: Colors.black.withOpacity(0.05),
+              color: Colors.black.withValues(alpha: 0.05),
               blurRadius: 5,
               offset: const Offset(0, 2),
             ),
@@ -155,7 +155,7 @@ class ChatView extends StackedView<ChatViewModel> {
                     isDense: true,
                     hintText: 'Type your message',
                     hintStyle: TextStyle(
-                      color: theme.inputTextColor.withOpacity(0.7),
+                      color: theme.inputTextColor.withValues(alpha: 0.7),
                     ),
                     border: InputBorder.none,
                   ),

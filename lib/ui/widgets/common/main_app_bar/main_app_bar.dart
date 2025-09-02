@@ -61,7 +61,7 @@ class MainAppBar extends StackedView<MainAppBarModel>
             },
             child: CircleAvatar(
               radius: 20.r,
-              backgroundColor: AppColors.secondary.withOpacity(0.1),
+              backgroundColor: AppColors.secondary.withValues(alpha: 0.1),
               child: Center(
                 child: Icon(IconsaxPlusBold.notification,
                     size: 24.w, color: AppColors.textPrimary),

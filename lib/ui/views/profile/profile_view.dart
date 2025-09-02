@@ -281,7 +281,7 @@ class ProfileView extends StackedView<ProfileViewModel> {
         ),
         if (viewModel.isLoggingOut)
           Container(
-            color: Colors.black.withOpacity(0.5),
+            color: Colors.black.withValues(alpha: 0.5),
             child: const Center(
               child: Column(
                 mainAxisSize: MainAxisSize.min,

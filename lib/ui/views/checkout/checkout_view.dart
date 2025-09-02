@@ -151,7 +151,7 @@ class CheckoutView extends StackedView<CheckoutViewModel> {
                                   color: AppColors.grey200, width: 1.w),
                               boxShadow: [
                                 BoxShadow(
-                                  color: Colors.black.withOpacity(0.03),
+                                  color: Colors.black.withValues(alpha: 0.03),
                                   blurRadius: 6,
                                   offset: const Offset(0, 2),
                                 )
@@ -790,7 +790,7 @@ class CheckoutView extends StackedView<CheckoutViewModel> {
         ),
         if (viewModel.isLoading)
           Container(
-            color: Colors.black.withOpacity(0.5),
+            color: Colors.black.withValues(alpha: 0.5),
             child: const Center(
               child: CircularProgressIndicator(
                 valueColor: AlwaysStoppedAnimation<Color>(AppColors.white),

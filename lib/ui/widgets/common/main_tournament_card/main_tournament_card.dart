@@ -61,7 +61,7 @@ class MainTournamentCard extends StackedView<MainTournamentCardModel> {
                 Container(
                   width: 339.w,
                   height: 319.h,
-                  color: AppColors.primary.withOpacity(0.6),
+                  color: AppColors.primary.withValues(alpha: 0.6),
                 ),
                 Center(
                   child: InkWell(
