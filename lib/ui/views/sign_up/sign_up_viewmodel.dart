@@ -4,6 +4,7 @@ import 'package:game_day_valet/app/app.router.dart';
 import 'package:game_day_valet/core/enums/snackbar_type.dart';
 import 'package:game_day_valet/services/api_exception.dart';
 import 'package:game_day_valet/services/auth_service.dart';
+import 'package:game_day_valet/services/chat_service.dart';
 import 'package:game_day_valet/services/google_sign_in_service.dart';
 import 'package:game_day_valet/services/logger_service.dart';
 import 'package:game_day_valet/services/secure_storage_service.dart';
@@ -191,8 +192,11 @@ class SignUpViewModel extends BaseViewModel {
 
           await _secureStorageService.saveToken(response['token']);
 
-          // await _userService.fetchCurrentUser();
           await _startupService.runTokenTasks();
+
+          // Ensure ChatService initializes Pusher after user fetch
+          final chatService = locator<ChatService>();
+          await chatService.initializePusher();
 
           await _navigationService.clearStackAndShow(Routes.mainView);
         }

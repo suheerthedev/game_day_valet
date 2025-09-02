@@ -191,7 +191,23 @@ class ChatService with ListenableServiceMixin {
 
       if (_user?.id != null) {
         await subscribeToChannel('conversation.${_user!.id.toString()}');
+        logger.info(
+            "Successfully subscribed to Pusher channel for user: ${_user!.id}");
+      } else {
+        logger.error("Failed to subscribe to Pusher channel: User ID is null");
+        // Fetch user if not available
+        await _userService.fetchCurrentUser();
+        if (_user?.id != null) {
+          await subscribeToChannel('conversation.${_user!.id.toString()}');
+          logger.info(
+              "Successfully subscribed to Pusher channel after fetching user: ${_user!.id}");
+        } else {
+          logger.error(
+              "Still couldn't subscribe to Pusher: User ID remains null after fetch");
+        }
       }
+
+      logger.info("=======================================");
       _isPusherInitialized = true;
       notifyListeners();
     } on ApiException catch (e) {
