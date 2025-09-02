@@ -17,7 +17,9 @@ class FavoriteModel {
     return FavoriteModel(
       id: json['id'],
       userId: json['user_id'],
-      tournament: TournamentModel.fromJson(json['tournament']),
+      tournament: json['tournament'] != null
+          ? TournamentModel.fromJson(json['tournament'])
+          : null,
       createdAt: json['created_at'],
     );
   }

@@ -96,7 +96,7 @@ class FavoritesView extends StackedView<FavoritesViewModel> {
                                                       AppColors.textPrimary)),
                                           SizedBox(height: 5.h),
                                           Text(
-                                            'Location: ${favorite.tournament?.location}',
+                                            'Location: ${favorite.tournament?.location ?? 'Location Not Found'}',
                                             style: GoogleFonts.poppins(
                                                 fontSize: 14.sp,
                                                 fontWeight: FontWeight.w500,
@@ -104,14 +104,14 @@ class FavoritesView extends StackedView<FavoritesViewModel> {
                                           ),
                                           SizedBox(height: 5.h),
                                           Text(
-                                            'Start Date: ${DateFormat.yMMMd().format(DateTime.parse(favorite.tournament?.startDate.toString() ?? ''))}',
+                                            'Start Date: ${favorite.tournament?.startDate != null ? DateFormat.yMMMd().format(DateTime.parse(favorite.tournament?.startDate.toString() ?? '')) : ''}',
                                             style: GoogleFonts.poppins(
                                                 fontSize: 14.sp,
                                                 fontWeight: FontWeight.w500,
                                                 color: AppColors.textHint),
                                           ),
                                           Text(
-                                            'End Date: ${DateFormat.yMMMd().format(DateTime.parse(favorite.tournament?.endDate.toString() ?? ''))}',
+                                            'End Date: ${favorite.tournament?.endDate != null ? DateFormat.yMMMd().format(DateTime.parse(favorite.tournament?.endDate.toString() ?? '')) : ''}',
                                             style: GoogleFonts.poppins(
                                                 fontSize: 14.sp,
                                                 fontWeight: FontWeight.w500,
@@ -120,11 +120,18 @@ class FavoritesView extends StackedView<FavoritesViewModel> {
                                         ],
                                       ),
                                     ),
-                                    Align(
-                                      alignment: Alignment.topRight,
-                                      child: Icon(IconsaxPlusBold.heart,
-                                          size: 24.w,
-                                          color: AppColors.secondary),
+                                    GestureDetector(
+                                      onTap: () {
+                                        viewModel.removeFromFavorites(
+                                            favorite.tournament?.id ?? 0,
+                                            index);
+                                      },
+                                      child: Align(
+                                        alignment: Alignment.topRight,
+                                        child: Icon(IconsaxPlusBold.heart,
+                                            size: 24.w,
+                                            color: AppColors.secondary),
+                                      ),
                                     ),
                                     // Align(
                                     //   alignment: Alignment.bottomRight,

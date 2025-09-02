@@ -44,6 +44,87 @@ class FavoritesViewModel extends BaseViewModel {
     }
   }
 
+  void removeFromFavorites(int tournamentId, int index) async {
+    final url = ApiConfig.baseUrl + ApiConfig.toggleFavoriteEndPoint;
+
+    favorites.removeAt(index);
+    rebuildUi();
+
+    try {
+      final response = await _apiService
+          .post(url, {"tournament_id": tournamentId.toString()});
+      _snackbarService.showCustomSnackBar(
+        variant: SnackbarType.success,
+        message: response['message'],
+      );
+    } on ApiException catch (e) {
+      logger.error("Error in removing from favorites: ${e.toString()}");
+      _snackbarService.showCustomSnackBar(
+        variant: SnackbarType.error,
+        message: e.toString(),
+      );
+    } catch (e) {
+      logger.error("Error in removing from favorites: ${e.toString()}");
+      _snackbarService.showCustomSnackBar(
+        variant: SnackbarType.error,
+        message: e.toString(),
+      );
+    } finally {
+      rebuildUi();
+    }
+  }
+
+  //  void toggleFavorite(int tournamentId) async {
+  //   final url = ApiConfig.baseUrl + ApiConfig.toggleFavoriteEndPoint;
+
+  //   int index =
+  //       tournamentsList.indexWhere((element) => element.id == tournamentId);
+
+  //   int indexRecommended = recommendedTournamentsList
+  //       .indexWhere((element) => element.id == tournamentId);
+
+  //   // logger.info("Is Favorite: ${tournamentsList[index].isFavorite}");
+  //   if (index != -1) {
+  //     tournamentsList[index].isFavorite = !tournamentsList[index].isFavorite;
+  //     rebuildUi();
+  //   }
+
+  //   if (indexRecommended != -1) {
+  //     recommendedTournamentsList[indexRecommended].isFavorite =
+  //         !recommendedTournamentsList[indexRecommended].isFavorite;
+  //     rebuildUi();
+  //   }
+  //   // logger.info("Is Favorite: ${tournamentsList[index].isFavorite}");
+  //   // logger.info(
+  //   // "Is Favorite: ${recommendedTournamentsList[indexRecommended].isFavorite}");
+
+  //   try {
+  //     final response = await _apiService.post(url, {
+  //       "tournament_id": tournamentId.toString(),
+  //     });
+
+  //     logger.info("Favorite toggled successfully. Response: $response");
+  //     _snackbarService.showCustomSnackBar(
+  //       variant: SnackbarType.success,
+  //       message: response['message'],
+  //     );
+  //   } on ApiException catch (e) {
+  //     logger.error("Error toggling favorite", e);
+  //     _snackbarService.showCustomSnackBar(
+  //       variant: SnackbarType.error,
+  //       message: e.message,
+  //     );
+  //   } catch (e) {
+  //     logger.error("Error toggling favorite", e);
+  //     _snackbarService.showCustomSnackBar(
+  //       variant: SnackbarType.error,
+  //       message: e.toString(),
+  //     );
+  //   } finally {
+  //     rebuildUi();
+  //   }
+  // }
+
   // void onChatTap() {
   //   _navigationService.navigateToInboxView();
   // }
