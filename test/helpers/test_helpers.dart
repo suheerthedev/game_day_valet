@@ -16,7 +16,6 @@ import 'package:game_day_valet/services/tournament_service.dart';
 import 'package:game_day_valet/services/deep_linking_service.dart';
 import 'package:game_day_valet/services/rental_service.dart';
 import 'package:game_day_valet/services/shared_preferences_service.dart';
-import 'package:game_day_valet/services/location_service.dart';
 import 'package:game_day_valet/services/sports_service.dart';
 import 'package:game_day_valet/services/push_notification_service.dart';
 import 'package:game_day_valet/services/notification_service.dart';
@@ -235,12 +234,7 @@ MockSharedPreferencesService getAndRegisterSharedPreferencesService() {
   return service;
 }
 
-MockLocationService getAndRegisterLocationService() {
-  _removeRegistrationIfExists<LocationService>();
-  final service = MockLocationService();
-  locator.registerSingleton<LocationService>(service);
-  return service;
-}
+
 
 MockSportsService getAndRegisterSportsService() {
   _removeRegistrationIfExists<SportsService>();

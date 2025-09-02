@@ -44,7 +44,6 @@ import 'package:game_day_valet/services/tournament_service.dart';
 import 'package:game_day_valet/services/deep_linking_service.dart';
 import 'package:game_day_valet/services/rental_service.dart';
 import 'package:game_day_valet/services/shared_preferences_service.dart';
-import 'package:game_day_valet/services/location_service.dart';
 import 'package:game_day_valet/ui/views/tournaments/tournaments_view.dart';
 import 'package:game_day_valet/services/sports_service.dart';
 import 'package:game_day_valet/services/push_notification_service.dart';
@@ -113,7 +112,6 @@ import 'package:game_day_valet/services/startup_service.dart';
     LazySingleton(classType: DeepLinkingService),
     LazySingleton(classType: RentalService),
     LazySingleton(classType: SharedPreferencesService),
-    LazySingleton(classType: LocationService),
     LazySingleton(classType: SportsService),
     LazySingleton(classType: PushNotificationService),
     LazySingleton(classType: NotificationService),

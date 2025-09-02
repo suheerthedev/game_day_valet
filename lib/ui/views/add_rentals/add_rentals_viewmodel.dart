@@ -3,7 +3,7 @@ import 'package:game_day_valet/app/app.locator.dart';
 import 'package:game_day_valet/app/app.router.dart';
 import 'package:game_day_valet/models/bundle_model.dart';
 import 'package:game_day_valet/models/item_model.dart';
-import 'package:game_day_valet/models/tournament_rental.dart';
+import 'package:game_day_valet/models/tournament_rental_model.dart';
 import 'package:game_day_valet/services/rental_service.dart';
 import 'package:stacked/stacked.dart';
 import 'package:stacked_services/stacked_services.dart';

@@ -3,7 +3,7 @@ import 'package:game_day_valet/models/item_model.dart';
 
 class TournamentRentalModel {
   final int id;
-  final int sportId;
+  final String sportId;
   final String? sportName;
   final String? name;
   final String? image;

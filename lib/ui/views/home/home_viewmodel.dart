@@ -4,7 +4,6 @@ import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:game_day_valet/app/app.router.dart';
 import 'package:game_day_valet/core/enums/snackbar_type.dart';
-import 'package:game_day_valet/services/location_service.dart';
 import 'package:game_day_valet/app/app.locator.dart';
 import 'package:game_day_valet/models/sports_model.dart';
 import 'package:game_day_valet/services/api_exception.dart';
@@ -20,18 +19,9 @@ class HomeViewModel extends BaseViewModel {
   final _navigationService = locator<NavigationService>();
   final _snackbarService = locator<SnackbarService>();
   final _pusherService = locator<PusherService>();
-  final _locationService = locator<LocationService>();
   final _sportsService = locator<SportsService>();
 
-  late Future<String> _cityFuture;
-
   List<SportsModel> get sportsList => _sportsService.sports;
-
-  HomeViewModel() {
-    _cityFuture = _locationService.getCityAndCountry();
-  }
-
-  Future<String> get cityFuture => _cityFuture;
 
   String selectedSport = ''; // Default selected sport
 
@@ -50,11 +40,6 @@ class HomeViewModel extends BaseViewModel {
   void navigateToTournaments(String sportsName, int sportId) {
     _navigationService.navigateToTournamentsView(
         sportId: sportId, sportsName: sportsName);
-  }
-
-  void refreshCity() {
-    _cityFuture = _locationService.getCityAndCountry();
-    rebuildUi();
   }
 
   bool isSportsLoading = false;

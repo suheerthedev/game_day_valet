@@ -53,10 +53,10 @@
 	<true/>
 	<key>NSCameraUsageDescription</key>
 	<string>Scan your card or take photo</string>
-	<key>NSLocationAlwaysAndWhenInUseUsageDescription</key>
+	<!-- <key>NSLocationAlwaysAndWhenInUseUsageDescription</key>
 	<string>This app needs your location to show your city even when the app is in use.</string>
 	<key>NSLocationWhenInUseUsageDescription</key>
-	<string>This app needs your location to show your city.</string>
+	<string>This app needs your location to show your city.</string> -->
 	<key>UIApplicationSupportsIndirectInputEvents</key>
 	<true/>
 	<key>UIBackgroundModes</key>

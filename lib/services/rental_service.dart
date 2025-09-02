@@ -9,7 +9,7 @@ import 'package:game_day_valet/models/item_model.dart';
 import 'package:game_day_valet/models/rental_booking_model.dart';
 import 'package:game_day_valet/models/rental_status_model.dart';
 import 'package:game_day_valet/models/settings_item_model.dart';
-import 'package:game_day_valet/models/tournament_rental.dart';
+import 'package:game_day_valet/models/tournament_rental_model.dart';
 import 'package:game_day_valet/services/api_exception.dart';
 import 'package:game_day_valet/services/api_service.dart';
 import 'package:game_day_valet/services/logger_service.dart';
