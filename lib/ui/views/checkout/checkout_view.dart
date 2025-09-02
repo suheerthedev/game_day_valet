@@ -486,7 +486,7 @@ class CheckoutView extends StackedView<CheckoutViewModel> {
                                         )
                                       : viewModel.isPromoCodeValid
                                           ? const Icon(
-                                              IconsaxPlusBold.tick_circle,
+                                              IconsaxPlusLinear.tick_circle,
                                               color: AppColors.success,
                                             )
                                           : null,
