@@ -1,5 +1,4 @@
 import 'package:game_day_valet/services/deep_linking_service.dart';
-import 'package:game_day_valet/services/logger_service.dart';
 import 'package:game_day_valet/services/secure_storage_service.dart';
 import 'package:game_day_valet/services/shared_preferences_service.dart';
 import 'package:game_day_valet/services/startup_service.dart';
@@ -19,8 +18,10 @@ class StartupViewModel extends BaseViewModel {
   final _sharedPreferencesService = locator<SharedPreferencesService>();
   // final _notificationService = locator<NotificationService>();
   final _startupService = locator<StartupService>();
+
   // Place anything here that needs to happen before we get into the application
   Future runStartupLogic() async {
+    await Future.delayed(const Duration(seconds: 2));
     // This is where you can make decisions on where your app should navigate when
     // you have custom startup logic
     // final hasDeepLink = await _deepLinkingService.processPendingUri();
@@ -30,8 +31,6 @@ class StartupViewModel extends BaseViewModel {
 
     _deepLinkingService.isStartupInitiated = true;
 
-    await _deepLinkingService.processPendingUri();
-
     final pendingRoute = _deepLinkingService.getPendingRoute();
 
     // logger.info('Has deep link: $hasDeepLink');
@@ -40,21 +39,25 @@ class StartupViewModel extends BaseViewModel {
     //   return;
     // }
 
-    if (pendingRoute != null) {
-      logger.info('Pending route: $pendingRoute');
-      if (token != null) {
-        if (await _startupService.validateToken()) {
-          await _startupService.runTokenTasks();
-          await _navigationService.replaceWithMainView();
-        }
-      } else {
-        _navigationService.clearStackAndShow(pendingRoute,
-            arguments: SignUpViewArguments(
-              referralCode: _deepLinkingService.getReferralCode(),
-            ));
+    // if (pendingRoute != null) {
+    //   logger.info('Pending route: $pendingRoute');
+    //   if (token != null) {
+    //     if (await _startupService.validateToken()) {
+    //       await _startupService.runTokenTasks();
+    //       await _navigationService.replaceWithMainView();
+    //     }
+    //   } else {
+    //     _navigationService.clearStackAndShow(pendingRoute,
+    //         arguments: SignUpViewArguments(
+    //           referralCode: _deepLinkingService.getReferralCode(),
+    //         ));
 
-        _deepLinkingService.clearAll();
-      }
+    //     _deepLinkingService.clearAll();
+    //   }
+    // } else
+
+    if (pendingRoute != null) {
+      await _deepLinkingService.processPendingUri();
     } else if (token != null) {
       if (await _startupService.validateToken()) {
         await _startupService.runTokenTasks();
