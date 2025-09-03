@@ -80,14 +80,16 @@ class CheckoutViewModel extends BaseViewModel {
     // Items
     for (final item in items) {
       final double itemPrice = double.tryParse(item.price ?? '0') ?? 0;
-      subtotal += itemPrice * (item.quantity);
+      if (item.quantity > 0) {
+        subtotal += itemPrice * (item.quantity);
+      }
     }
 
     // Selected bundles only
     for (final bundle in bundles) {
+      final double bundlePrice = double.tryParse(bundle.price ?? '0') ?? 0;
       if (bundle.quantity > 0) {
-        final double bundlePrice = double.tryParse(bundle.price ?? '0') ?? 0;
-        subtotal += bundlePrice;
+        subtotal += bundlePrice * (bundle.quantity);
       }
     }
 
@@ -236,14 +238,25 @@ class CheckoutViewModel extends BaseViewModel {
     notifyListeners();
   }
 
-  void removeBundleFromSummary(BundleModel bundle) {
-    bundles.removeWhere((i) => i.id == bundle.id);
+  void incrementBundleQuantity(BundleModel bundle) {
+    final int index = bundles.indexWhere((i) => i.id == bundle.id);
+    if (index == -1) return;
+    bundles[index].quantity = (bundles[index].quantity) + 1;
     calculateTotalAmount();
     notifyListeners();
   }
 
-  void toggleBundle(BundleModel bundle) {
-    bundle.quantity++;
+  void decrementBundleQuantity(BundleModel bundle) {
+    final int index = bundles.indexWhere((i) => i.id == bundle.id);
+    if (index == -1) return;
+    final int current = bundles[index].quantity;
+    bundles[index].quantity = current > 1 ? current - 1 : 1;
+    calculateTotalAmount();
+    notifyListeners();
+  }
+
+  void removeBundleFromSummary(BundleModel bundle) {
+    bundles.removeWhere((i) => i.id == bundle.id);
     calculateTotalAmount();
     notifyListeners();
   }
@@ -318,10 +331,11 @@ class CheckoutViewModel extends BaseViewModel {
         .toList();
   }
 
-  List<int> formatBundles(List<BundleModel> bundles) {
+  List<Map<String, dynamic>> formatBundles(List<BundleModel> bundles) {
     return bundles
         .where((bundle) => bundle.quantity > 0)
-        .map((bundle) => bundle.id)
+        .map((bundle) =>
+            {"bundle_id": bundle.id.toString(), "quantity": bundle.quantity})
         .toList();
   }
 
