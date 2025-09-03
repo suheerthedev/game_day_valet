@@ -53,7 +53,7 @@ class StartupView extends StackedView<StartupViewModel> {
             ),
             Container(
               width: double.infinity,
-              height: 0.35.sh,
+              height: 0.3.sh,
               margin: EdgeInsets.symmetric(horizontal: 10.r),
               decoration: BoxDecoration(
                 borderRadius: BorderRadius.circular(20.r),
