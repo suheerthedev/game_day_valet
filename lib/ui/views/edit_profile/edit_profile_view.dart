@@ -42,9 +42,20 @@ class EditProfileView extends StackedView<EditProfileViewModel> {
                         children: [
                           GestureDetector(
                             onTap: viewModel.pickImage,
-                            child: CircleAvatar(
-                              radius: 50.r,
-                              backgroundColor: AppColors.secondary,
+                            child: Container(
+                              width: 100.r,
+                              height: 100.r,
+                              decoration: BoxDecoration(
+                                  color: AppColors.secondary,
+                                  borderRadius: BorderRadius.circular(50.r),
+                                  boxShadow: [
+                                    BoxShadow(
+                                      color: AppColors.primary
+                                          .withValues(alpha: 0.2),
+                                      blurRadius: 10.r,
+                                      offset: Offset(0, 5.h),
+                                    ),
+                                  ]),
                               child: Stack(children: [
                                 Align(
                                   alignment: Alignment.center,
