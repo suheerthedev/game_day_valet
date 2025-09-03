@@ -83,11 +83,11 @@ class CheckoutViewModel extends BaseViewModel {
       subtotal += itemPrice * (item.quantity);
     }
 
-    // Selected bundles only
+    // Selected bundles with quantities
     for (final bundle in bundles) {
-      if (bundle.isSelected) {
+      if (bundle.quantity > 0) {
         final double bundlePrice = double.tryParse(bundle.price ?? '0') ?? 0;
-        subtotal += bundlePrice;
+        subtotal += bundlePrice * bundle.quantity;
       }
     }
 
@@ -242,8 +242,15 @@ class CheckoutViewModel extends BaseViewModel {
     notifyListeners();
   }
 
-  void toggleBundle(BundleModel bundle) {
-    bundle.isSelected = !bundle.isSelected;
+  void incrementBundleQuantity(BundleModel bundle) {
+    bundle.quantity++;
+    calculateTotalAmount();
+    notifyListeners();
+  }
+
+  void decrementBundleQuantity(BundleModel bundle) {
+    if (bundle.quantity <= 1) return;
+    bundle.quantity--;
     calculateTotalAmount();
     notifyListeners();
   }
@@ -318,10 +325,11 @@ class CheckoutViewModel extends BaseViewModel {
         .toList();
   }
 
-  List<int> formatBundles(List<BundleModel> bundles) {
+  List<Map<String, dynamic>> formatBundles(List<BundleModel> bundles) {
     return bundles
-        .where((bundle) => bundle.isSelected)
-        .map((bundle) => bundle.id)
+        .where((bundle) => bundle.quantity > 0)
+        .map((bundle) =>
+            {"bundle_id": bundle.id.toString(), "quantity": bundle.quantity})
         .toList();
   }
 

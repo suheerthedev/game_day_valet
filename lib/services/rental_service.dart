@@ -443,7 +443,7 @@ class RentalService with ListenableServiceMixin {
       element.quantity = 0;
     });
     _bundles.forEach((element) {
-      element.isSelected = false;
+      element.quantity = 0;
     });
   }
 }

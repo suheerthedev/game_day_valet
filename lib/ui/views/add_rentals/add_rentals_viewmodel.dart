@@ -44,8 +44,15 @@ class AddRentalsViewModel extends BaseViewModel {
         isTournamentSearch: false, isItemSearch: true);
   }
 
-  void toggleBundle(BundleModel bundle) {
-    bundle.isSelected = !bundle.isSelected;
+  void addBundle(BundleModel bundle) {
+    bundle.quantity++;
+    checkBundleQuantity();
+    rebuildUi();
+  }
+
+  void removeBundle(BundleModel bundle) {
+    if (bundle.quantity <= 0) return;
+    bundle.quantity--;
     checkBundleQuantity();
     rebuildUi();
   }
@@ -73,7 +80,7 @@ class AddRentalsViewModel extends BaseViewModel {
   }
 
   bool checkBundleQuantity() {
-    return bundles.any((bundle) => bundle.isSelected);
+    return bundles.any((bundle) => bundle.quantity > 0);
   }
 
   bool get isProceedToCheckoutDisabled {
@@ -84,7 +91,7 @@ class AddRentalsViewModel extends BaseViewModel {
     await _navigationService.navigateToCheckoutView(
         tournamentId: tournamentId,
         items: items.where((item) => item.quantity > 0).toList(),
-        bundles: bundles.where((bundle) => bundle.isSelected).toList());
+        bundles: bundles.where((bundle) => bundle.quantity > 0).toList());
     rebuildUi();
   }
 

@@ -9,7 +9,7 @@ class BundleModel {
   final String? price;
   final String? status;
   final List<ItemModel>? items;
-  bool isSelected;
+  int quantity;
 
   BundleModel({
     required this.id,
@@ -20,7 +20,7 @@ class BundleModel {
     this.price,
     this.status,
     this.items,
-    this.isSelected = false,
+    this.quantity = 0,
   });
 
   factory BundleModel.fromJson(Map<String, dynamic> json) {
