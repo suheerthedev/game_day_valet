@@ -82,114 +82,206 @@ class AddRentalsView extends StackedView<AddRentalsViewModel> {
                           if (viewModel.bundles.isEmpty) ...[
                             buildEmptyBundles(),
                           ],
+
                           if (viewModel.bundles.isNotEmpty) ...[
                             SizedBox(height: 10.h),
-                            ListView.builder(
-                              shrinkWrap: true,
-                              physics: const NeverScrollableScrollPhysics(),
-                              itemCount: viewModel.bundles.length,
-                              itemBuilder: (context, index) {
-                                final bundle = viewModel.bundles[index];
-                                return Container(
-                                  padding: EdgeInsets.symmetric(
-                                      vertical: 5.h, horizontal: 5.w),
-                                  decoration: BoxDecoration(
-                                      color: AppColors.grey50,
-                                      borderRadius: BorderRadius.circular(10.r),
-                                      border: Border.all(
-                                          color: AppColors.grey100,
-                                          width: 1.w)),
-                                  child: Row(
-                                    crossAxisAlignment:
-                                        CrossAxisAlignment.center,
-                                    children: [
-                                      Container(
-                                        width: 56.w,
-                                        height: 56.w,
+                            Container(
+                              decoration: BoxDecoration(
+                                color: const Color(
+                                    0xFFFFF9C4), // Light golden color
+                                borderRadius: BorderRadius.circular(10.r),
+                              ),
+                              child: Column(
+                                crossAxisAlignment: CrossAxisAlignment.start,
+                                children: [
+                                  Padding(
+                                    padding: EdgeInsets.symmetric(
+                                        horizontal: 15.w, vertical: 10.h),
+                                    child: Row(
+                                      children: [
+                                        Icon(
+                                          IconsaxPlusBold.star,
+                                          color: const Color(0xFFFFB300),
+                                          size: 20.sp,
+                                        ),
+                                        SizedBox(width: 5.w),
+                                        Text(
+                                          'Best Value Bundles',
+                                          style: GoogleFonts.poppins(
+                                            fontSize: 14.sp,
+                                            fontWeight: FontWeight.w600,
+                                            color: const Color(0xFF5D4037),
+                                          ),
+                                        ),
+                                      ],
+                                    ),
+                                  ),
+                                  ListView.builder(
+                                    shrinkWrap: true,
+                                    physics:
+                                        const NeverScrollableScrollPhysics(),
+                                    itemCount: viewModel.bundles.length,
+                                    itemBuilder: (context, index) {
+                                      final bundle = viewModel.bundles[index];
+                                      return Container(
+                                        padding: EdgeInsets.symmetric(
+                                            vertical: 5.h, horizontal: 5.w),
                                         decoration: BoxDecoration(
-                                            color: AppColors.grey50,
+                                            color: const Color(0xFFFFB300),
                                             borderRadius:
                                                 BorderRadius.circular(10.r),
                                             border: Border.all(
                                                 color: AppColors.grey100,
                                                 width: 1.w)),
-                                        child: ClipRRect(
-                                          borderRadius:
-                                              BorderRadius.circular(12.r),
-                                          child: CachedNetworkImage(
-                                              imageUrl: bundle.image ?? '',
-                                              fit: BoxFit.contain,
-                                              placeholder: (context, url) =>
-                                                  const Center(
-                                                    child:
-                                                        CircularProgressIndicator(
+                                        child: Row(
+                                          crossAxisAlignment:
+                                              CrossAxisAlignment.center,
+                                          children: [
+                                            Container(
+                                              width: 56.w,
+                                              height: 56.w,
+                                              decoration: BoxDecoration(
+                                                  color: AppColors.grey50,
+                                                  borderRadius:
+                                                      BorderRadius.circular(
+                                                          10.r),
+                                                  border: Border.all(
+                                                      color: AppColors.grey100,
+                                                      width: 1.w)),
+                                              child: ClipRRect(
+                                                borderRadius:
+                                                    BorderRadius.circular(12.r),
+                                                child: CachedNetworkImage(
+                                                    imageUrl:
+                                                        bundle.image ?? '',
+                                                    fit: BoxFit.contain,
+                                                    placeholder:
+                                                        (context, url) =>
+                                                            const Center(
+                                                              child:
+                                                                  CircularProgressIndicator(
+                                                                color: Color(
+                                                                    0xFFFFB300),
+                                                              ),
+                                                            ),
+                                                    errorWidget: (context, url,
+                                                            error) =>
+                                                        Icon(
+                                                            IconsaxPlusLinear
+                                                                .image,
+                                                            size: 24.sp,
+                                                            color: AppColors
+                                                                .grey400)),
+                                              ),
+                                            ),
+                                            SizedBox(width: 12.w),
+                                            Expanded(
+                                              child: Column(
+                                                crossAxisAlignment:
+                                                    CrossAxisAlignment.start,
+                                                children: [
+                                                  Text(
+                                                    bundle.name ?? '',
+                                                    style: GoogleFonts.poppins(
+                                                      fontSize: 14.sp,
+                                                      fontWeight:
+                                                          FontWeight.w600,
                                                       color:
-                                                          AppColors.secondary,
+                                                          AppColors.textPrimary,
                                                     ),
                                                   ),
-                                              errorWidget:
-                                                  (context, url, error) => Icon(
-                                                      IconsaxPlusLinear.image,
-                                                      size: 24.sp,
-                                                      color:
-                                                          AppColors.grey400)),
-                                        ),
-                                      ),
-                                      SizedBox(width: 12.w),
-                                      Expanded(
-                                        child: Column(
-                                          crossAxisAlignment:
-                                              CrossAxisAlignment.start,
-                                          children: [
-                                            Text(
-                                              bundle.name ?? '',
-                                              style: GoogleFonts.poppins(
-                                                fontSize: 14.sp,
-                                                fontWeight: FontWeight.w600,
-                                                color: AppColors.textPrimary,
+                                                  SizedBox(height: 2.h),
+                                                  Text(
+                                                    bundle.totalItems ?? '',
+                                                    style: GoogleFonts.poppins(
+                                                      fontSize: 12.sp,
+                                                      fontWeight:
+                                                          FontWeight.w400,
+                                                      color: AppColors.primary,
+                                                    ),
+                                                  ),
+                                                  SizedBox(height: 2.h),
+                                                  Text(
+                                                    "\$ ${bundle.price}",
+                                                    maxLines: 1,
+                                                    overflow:
+                                                        TextOverflow.ellipsis,
+                                                    style: GoogleFonts.poppins(
+                                                      fontSize: 12.sp,
+                                                      fontWeight:
+                                                          FontWeight.w600,
+                                                      color: AppColors.white,
+                                                    ),
+                                                  ),
+                                                ],
                                               ),
                                             ),
-                                            SizedBox(height: 2.h),
-                                            Text(
-                                              bundle.totalItems ?? '',
-                                              style: GoogleFonts.poppins(
-                                                fontSize: 12.sp,
-                                                fontWeight: FontWeight.w400,
-                                                color: AppColors.textSecondary,
+                                            SizedBox(width: 12.w),
+                                            Container(
+                                              decoration: BoxDecoration(
+                                                borderRadius:
+                                                    BorderRadius.circular(5.r),
+                                                border: Border.all(
+                                                  color:
+                                                      const Color(0xFFFFF9C4),
+                                                ),
                                               ),
-                                            ),
-                                            SizedBox(height: 2.h),
-                                            Text(
-                                              "\$ ${bundle.price}",
-                                              maxLines: 1,
-                                              overflow: TextOverflow.ellipsis,
-                                              style: GoogleFonts.poppins(
-                                                  fontSize: 12.sp,
-                                                  fontWeight: FontWeight.w600,
-                                                  color: AppColors.secondary),
+                                              child: Row(
+                                                mainAxisSize: MainAxisSize.min,
+                                                children: [
+                                                  InkWell(
+                                                    onTap: () => viewModel
+                                                        .removeBundle(bundle),
+                                                    child: Container(
+                                                      padding:
+                                                          EdgeInsets.all(4.w),
+                                                      child: Icon(
+                                                        Icons.remove,
+                                                        color: const Color(
+                                                            0xFFFFF9C4),
+                                                        size: 18.sp,
+                                                      ),
+                                                    ),
+                                                  ),
+                                                  Container(
+                                                    padding:
+                                                        EdgeInsets.symmetric(
+                                                            horizontal: 8.w),
+                                                    child: Text(
+                                                      '${bundle.quantity}',
+                                                      style:
+                                                          GoogleFonts.poppins(
+                                                        fontSize: 14.sp,
+                                                        fontWeight:
+                                                            FontWeight.w500,
+                                                        color: AppColors.white,
+                                                      ),
+                                                    ),
+                                                  ),
+                                                  InkWell(
+                                                    onTap: () => viewModel
+                                                        .addBundle(bundle),
+                                                    child: Container(
+                                                      padding:
+                                                          EdgeInsets.all(4.w),
+                                                      child: Icon(
+                                                        Icons.add,
+                                                        color: const Color(
+                                                            0xFFFFF9C4),
+                                                        size: 18.sp,
+                                                      ),
+                                                    ),
+                                                  ),
+                                                ],
+                                              ),
                                             ),
                                           ],
                                         ),
-                                      ),
-                                      SizedBox(width: 12.w),
-                                      Checkbox(
-                                          activeColor: AppColors.secondary,
-                                          checkColor: AppColors.white,
-                                          splashRadius: 0,
-                                          side: BorderSide(
-                                              color: AppColors.textHint,
-                                              width: 1.w),
-                                          shape: RoundedRectangleBorder(
-                                              borderRadius: BorderRadius.all(
-                                                  Radius.circular(2.r))),
-                                          value: bundle.isSelected,
-                                          onChanged: (value) {
-                                            viewModel.toggleBundle(bundle);
-                                          }),
-                                    ],
+                                      );
+                                    },
                                   ),
-                                );
-                              },
+                                ],
+                              ),
                             ),
                           ],
 
