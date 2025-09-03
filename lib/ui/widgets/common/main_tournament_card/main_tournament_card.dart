@@ -14,13 +14,12 @@ class MainTournamentCard extends StackedView<MainTournamentCardModel> {
   final TournamentModel tournament;
   final Function() onBookNowTap;
   final Function() onTapFavorite;
-  final Function() onTapMap;
-  const MainTournamentCard(
-      {super.key,
-      required this.tournament,
-      required this.onBookNowTap,
-      required this.onTapFavorite,
-      required this.onTapMap});
+  const MainTournamentCard({
+    super.key,
+    required this.tournament,
+    required this.onBookNowTap,
+    required this.onTapFavorite,
+  });
 
   @override
   Widget builder(

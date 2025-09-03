@@ -94,7 +94,6 @@ class SearchView extends StackedView<SearchViewModel> {
                                             viewModel.tournaments[index];
                                         return MainTournamentCard(
                                           tournament: tournament,
-                                          onTapMap: () {},
                                           onBookNowTap: () {
                                             viewModel.navigateToRentalBook(
                                                 tournament.id);

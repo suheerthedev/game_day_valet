@@ -251,27 +251,24 @@ class TournamentsView extends StackedView<TournamentsViewModel> {
                                                   .tournamentsList.length,
                                               itemBuilder: (context, index) {
                                                 return MainTournamentCard(
-                                                    tournament: viewModel
-                                                        .tournamentsList[index],
-                                                    onBookNowTap: () {
-                                                      viewModel
-                                                          .navigateToRentalBook(
-                                                              viewModel
-                                                                  .tournamentsList[
-                                                                      index]
-                                                                  .id);
-                                                    },
-                                                    onTapFavorite: () {
-                                                      viewModel.toggleFavorite(
-                                                          viewModel
-                                                              .tournamentsList[
-                                                                  index]
-                                                              .id);
-                                                    },
-                                                    onTapMap: () {
-                                                      viewModel.showMapPopup(
-                                                          context);
-                                                    });
+                                                  tournament: viewModel
+                                                      .tournamentsList[index],
+                                                  onBookNowTap: () {
+                                                    viewModel
+                                                        .navigateToRentalBook(
+                                                            viewModel
+                                                                .tournamentsList[
+                                                                    index]
+                                                                .id);
+                                                  },
+                                                  onTapFavorite: () {
+                                                    viewModel.toggleFavorite(
+                                                        viewModel
+                                                            .tournamentsList[
+                                                                index]
+                                                            .id);
+                                                  },
+                                                );
                                               },
                                             ),
                                             SizedBox(
