@@ -15,14 +15,22 @@ class NotificationViewModel extends BaseViewModel {
   bool get hasMorePages => _notificationService.hasMorePages;
 
   Future<void> initialize() async {
-    setBusy(true);
-    await fetchNotifications(refresh: true);
-    setBusy(false);
+    if (notifications.isEmpty) {
+      setBusy(true);
+      await fetchNotifications(refresh: true);
+      setBusy(false);
+    }
   }
 
   Future<void> fetchNotifications({bool refresh = false}) async {
     await _notificationService.getUserNotifications(refresh: refresh);
     notifyListeners();
+  }
+
+  Future<void> reloadNotifications() async {
+    setBusy(true);
+    await fetchNotifications(refresh: true);
+    setBusy(false);
   }
 
   Future<void> loadMoreNotifications() async {

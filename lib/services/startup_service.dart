@@ -5,7 +5,7 @@ import 'package:game_day_valet/services/api_exception.dart';
 import 'package:game_day_valet/services/api_service.dart';
 import 'package:game_day_valet/services/chat_service.dart';
 import 'package:game_day_valet/services/logger_service.dart';
-import 'package:game_day_valet/services/notification_service.dart';
+// import 'package:game_day_valet/services/notification_service.dart';
 import 'package:game_day_valet/services/rental_service.dart';
 import 'package:game_day_valet/services/secure_storage_service.dart';
 import 'package:game_day_valet/services/user_service.dart';
@@ -13,7 +13,7 @@ import 'package:stacked/stacked.dart';
 import 'package:stacked_services/stacked_services.dart';
 
 class StartupService with ListenableServiceMixin {
-  final _notificationService = locator<NotificationService>();
+  // final _notificationService = locator<NotificationService>();
   final _userService = locator<UserService>();
   final _rentalService = locator<RentalService>();
   final _chatService = locator<ChatService>();
@@ -47,7 +47,7 @@ class StartupService with ListenableServiceMixin {
   }
 
   Future<void> runTokenTasks() async {
-    await _notificationService.getUserNotifications();
+    // await _notificationService.getUserNotifications();
     await _userService.fetchCurrentUser();
     await getUserConversations();
     await _rentalService.init();

@@ -34,48 +34,54 @@ class NotificationView extends StackedView<NotificationViewModel> {
                 ? const Center(child: CircularProgressIndicator())
                 : viewModel.notifications.isEmpty
                     ? _buildEmptyState()
-                    : Padding(
-                        padding: EdgeInsets.symmetric(horizontal: 25.w),
-                        child: ListView.builder(
-                          itemCount: viewModel.notifications.length +
-                              (viewModel.hasMorePages ? 1 : 0),
-                          itemBuilder: (context, index) {
-                            if (index == viewModel.notifications.length) {
-                              // This is the "See More" button
-                              return _buildLoadMoreButton(viewModel);
-                            }
+                    : RefreshIndicator(
+                        onRefresh: () async {
+                          await viewModel.reloadNotifications();
+                        },
+                        child: Padding(
+                          padding: EdgeInsets.symmetric(horizontal: 25.w),
+                          child: ListView.builder(
+                            itemCount: viewModel.notifications.length +
+                                (viewModel.hasMorePages ? 1 : 0),
+                            itemBuilder: (context, index) {
+                              if (index == viewModel.notifications.length) {
+                                // This is the "See More" button
+                                return _buildLoadMoreButton(viewModel);
+                              }
 
-                            return ListTile(
-                              contentPadding: EdgeInsets.zero,
-                              leading: CircleAvatar(
-                                radius: 21.r,
-                                backgroundColor: AppColors.secondary,
-                                child: Text(
-                                    viewModel.notifications[index].message
-                                        .toString()
-                                        .toUpperCase()
-                                        .substring(0, 1),
+                              return ListTile(
+                                contentPadding: EdgeInsets.zero,
+                                leading: CircleAvatar(
+                                  radius: 21.r,
+                                  backgroundColor: AppColors.secondary,
+                                  child: Text(
+                                      viewModel.notifications[index].message
+                                          .toString()
+                                          .toUpperCase()
+                                          .substring(0, 1),
+                                      style: GoogleFonts.poppins(
+                                          fontSize: 24.sp,
+                                          fontWeight: FontWeight.w400,
+                                          color: AppColors.white)),
+                                ),
+                                title: Text(
+                                    viewModel.notifications[index].message ??
+                                        '',
                                     style: GoogleFonts.poppins(
-                                        fontSize: 24.sp,
+                                        fontSize: 14.sp,
+                                        fontWeight: FontWeight.w500,
+                                        color: AppColors.textPrimary)),
+                                subtitle: Text(
+                                    viewModel.notifications[index]
+                                            .formattedTimeStamp ??
+                                        '',
+                                    style: GoogleFonts.poppins(
+                                        fontSize: 12.sp,
                                         fontWeight: FontWeight.w400,
-                                        color: AppColors.white)),
-                              ),
-                              title: Text(
-                                  viewModel.notifications[index].message ?? '',
-                                  style: GoogleFonts.poppins(
-                                      fontSize: 14.sp,
-                                      fontWeight: FontWeight.w500,
-                                      color: AppColors.textPrimary)),
-                              subtitle: Text(
-                                  viewModel.notifications[index]
-                                          .formattedTimeStamp ??
-                                      '',
-                                  style: GoogleFonts.poppins(
-                                      fontSize: 12.sp,
-                                      fontWeight: FontWeight.w400,
-                                      color: AppColors.textHint)),
-                            );
-                          },
+                                        color: AppColors.textHint)),
+                              );
+                            },
+                          ),
                         ),
                       )));
   }
