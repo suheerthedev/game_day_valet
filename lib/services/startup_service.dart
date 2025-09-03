@@ -50,9 +50,9 @@ class StartupService with ListenableServiceMixin {
     // await _notificationService.getUserNotifications();
     // await getUserConversations();
     await _userService.fetchCurrentUser();
-    await intializeChatPusher();
     await _rentalService.init();
-    await getInitalChatMessage();
+    await intializeChatPusher();
+    // await getInitalChatMessage();
   }
 
   Future<void> intializeChatPusher() async {
@@ -69,17 +69,17 @@ class StartupService with ListenableServiceMixin {
     }
   }
 
-  Future<void> getInitalChatMessage() async {
-    try {
-      await _chatService.getInitalChatMessage();
-    } on ApiException catch (e) {
-      logger.error("Error getting inital chat message: ${e.message}");
-      _snackbarService.showCustomSnackBar(
-          message: e.message, variant: SnackbarType.error);
-    } catch (e) {
-      logger.error("Error getting inital chat message: $e");
-      _snackbarService.showCustomSnackBar(
-          message: "Something went wrong", variant: SnackbarType.error);
-    }
-  }
+  // Future<void> getInitalChatMessage() async {
+  //   try {
+  //     await _chatService.getInitalChatMessage();
+  //   } on ApiException catch (e) {
+  //     logger.error("Error getting inital chat message: ${e.message}");
+  //     _snackbarService.showCustomSnackBar(
+  //         message: e.message, variant: SnackbarType.error);
+  //   } catch (e) {
+  //     logger.error("Error getting inital chat message: $e");
+  //     _snackbarService.showCustomSnackBar(
+  //         message: "Something went wrong", variant: SnackbarType.error);
+  //   }
+  // }
 }

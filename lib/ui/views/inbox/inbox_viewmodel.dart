@@ -15,9 +15,26 @@ class InboxViewModel extends ReactiveViewModel {
 
   List<ChatModel> get conversations => _chatService.conversations;
 
-  void initialize() async {
+  Future<void> initialize() async {
     if (conversations.isEmpty) {
       await getUserConversations();
+    }
+    if (_chatService.initalChatMessage.isEmpty) {
+      await getInitalChatMessage();
+    }
+  }
+
+  Future<void> getInitalChatMessage() async {
+    try {
+      await _chatService.getInitalChatMessage();
+    } on ApiException catch (e) {
+      logger.error("Error getting inital chat message: ${e.message}");
+      _snackbarService.showCustomSnackBar(
+          message: e.message, variant: SnackbarType.error);
+    } catch (e) {
+      logger.error("Error getting inital chat message: $e");
+      _snackbarService.showCustomSnackBar(
+          message: "Something went wrong", variant: SnackbarType.error);
     }
   }
 
