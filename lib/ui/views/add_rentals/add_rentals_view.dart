@@ -314,7 +314,7 @@ class AddRentalsView extends StackedView<AddRentalsViewModel> {
                                 crossAxisCount: 2,
                                 childAspectRatio: 0.6,
                                 mainAxisSpacing: 10.h,
-                                crossAxisSpacing: 20.w,
+                                crossAxisSpacing: 10.w,
                               ),
                               itemBuilder: (context, index) {
                                 return MainItemCard(
