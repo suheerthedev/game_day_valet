@@ -11,15 +11,13 @@ import 'bundles_summary_item_model.dart';
 
 class BundlesSummaryItem extends StackedView<BundlesSummaryItemModel> {
   final BundleModel bundle;
+  final Function(bool) onToggle;
   final VoidCallback onRemove;
-  final VoidCallback onMinus;
-  final VoidCallback onPlus;
   const BundlesSummaryItem({
     super.key,
     required this.bundle,
+    required this.onToggle,
     required this.onRemove,
-    required this.onMinus,
-    required this.onPlus,
   });
 
   @override
@@ -79,56 +77,21 @@ class BundlesSummaryItem extends StackedView<BundlesSummaryItemModel> {
                   ),
                 ),
                 SizedBox(height: 8.h),
-                // SizedBox(width: 12.w),
-                Row(
-                  children: [
-                    InkWell(
-                      onTap: onMinus,
-                      child: Container(
-                        width: 20.w,
-                        height: 20.w,
-                        decoration: const BoxDecoration(
-                          color: AppColors.secondary,
-                          shape: BoxShape.circle,
-                        ),
-                        child: Icon(IconsaxPlusLinear.minus,
-                            size: 16.sp, color: AppColors.white),
-                      ),
-                    ),
-                    SizedBox(width: 12.w),
-                    Text(
-                      bundle.quantity.toString().padLeft(2, '0'),
-                      style: GoogleFonts.poppins(
-                        fontSize: 14.sp,
-                        fontWeight: FontWeight.w600,
-                        color: AppColors.textPrimary,
-                      ),
-                    ),
-                    SizedBox(width: 12.w),
-                    InkWell(
-                      onTap: onPlus,
-                      child: Container(
-                        width: 20.w,
-                        height: 20.w,
-                        decoration: const BoxDecoration(
-                          color: AppColors.primary,
-                          shape: BoxShape.circle,
-                        ),
-                        child: Icon(IconsaxPlusLinear.add,
-                            size: 16.sp, color: AppColors.white),
-                      ),
-                    ),
-                  ],
-                ),
               ],
             ),
           ),
-          SizedBox(width: 8.w),
-          InkWell(
-            onTap: onRemove,
-            child: Icon(IconsaxPlusLinear.trash,
-                color: AppColors.secondary, size: 20.sp),
-          )
+          SizedBox(width: 12.w),
+          Checkbox(
+              activeColor: AppColors.secondary,
+              checkColor: AppColors.white,
+              splashRadius: 0,
+              side: BorderSide(color: AppColors.textHint, width: 1.w),
+              shape: RoundedRectangleBorder(
+                  borderRadius: BorderRadius.all(Radius.circular(2.r))),
+              value: bundle.quantity > 0,
+              onChanged: (value) {
+                onToggle(value ?? false);
+              }),
         ],
       ),
     );

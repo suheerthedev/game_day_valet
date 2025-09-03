@@ -219,10 +219,9 @@ class CheckoutView extends StackedView<CheckoutViewModel> {
                                         final bundle = viewModel.bundles[index];
                                         return BundlesSummaryItem(
                                           bundle: bundle,
-                                          onMinus: () => viewModel
-                                              .decrementBundleQuantity(bundle),
-                                          onPlus: () => viewModel
-                                              .incrementBundleQuantity(bundle),
+                                          onToggle: (value) {
+                                            viewModel.toggleBundle(bundle);
+                                          },
                                           onRemove: () => viewModel
                                               .removeBundleFromSummary(bundle),
                                         );

@@ -82,7 +82,6 @@ class RentalService with ListenableServiceMixin {
   }
 
   void clearData() {
-    rentalId = null;
     _rentalStatus.value = [];
     _rentalBooking.value = RentalBookingModel(
       id: 0,
@@ -443,7 +442,7 @@ class RentalService with ListenableServiceMixin {
       element.quantity = 0;
     });
     _bundles.forEach((element) {
-      element.quantity = 0;
+      element.isSelected = false;
     });
   }
 }
