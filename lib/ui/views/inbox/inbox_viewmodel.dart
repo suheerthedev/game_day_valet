@@ -15,7 +15,16 @@ class InboxViewModel extends ReactiveViewModel {
 
   List<ChatModel> get conversations => _chatService.conversations;
 
-  void getUserConversations() async {
+  void initialize() async {
+    if (conversations.isEmpty) {
+      await getUserConversations();
+    }
+  }
+
+  Future<void> getUserConversations({bool refresh = false}) async {
+    if (refresh) {
+      conversations.clear();
+    }
     setBusy(true);
     rebuildUi();
     try {

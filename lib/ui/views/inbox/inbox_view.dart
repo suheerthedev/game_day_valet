@@ -34,62 +34,68 @@ class InboxView extends StackedView<InboxViewModel> {
             ? const Center(child: CircularProgressIndicator())
             : viewModel.conversations.isEmpty
                 ? _buildEmptyState()
-                : ListView.separated(
-                    itemCount: viewModel.conversations.length,
-                    separatorBuilder: (context, index) => Divider(
-                      height: 1.h,
-                      color: AppColors.grey200,
-                    ),
-                    itemBuilder: (context, index) {
-                      final conversation = viewModel.conversations[index];
-
-                      return ListTile(
-                        // contentPadding: EdgeInsets.zero,
-                        onTap: () {
-                          viewModel.navigateToChatView(conversation.id);
-                        },
-                        trailing: conversation.messages?.last.isRead == 0
-                            ? CircleAvatar(
-                                radius: 5.r,
-                                backgroundColor: AppColors.secondary,
-                              )
-                            : null,
-                        leading: CircleAvatar(
-                          radius: 22.r,
-                          backgroundColor: AppColors.secondary,
-                          child: ClipRRect(
-                              borderRadius: BorderRadius.circular(22.r),
-                              clipBehavior: Clip.hardEdge,
-                              child: CachedNetworkImage(
-                                imageUrl: conversation
-                                        .responder?.profileImage ??
-                                    "https://ui-avatars.com/api/?name=${conversation.responder?.name}",
-                                placeholder: (context, url) => const Center(
-                                  child: CircularProgressIndicator(
-                                    color: AppColors.white,
-                                  ),
-                                ),
-                                errorWidget: (context, url, error) => Icon(
-                                    IconsaxPlusLinear.user,
-                                    color: AppColors.white,
-                                    size: 20.r),
-                              )),
-                        ),
-                        title: Text(
-                            conversation.responder?.name ?? "GDV Support",
-                            style: GoogleFonts.poppins(
-                                fontSize: 16.sp,
-                                fontWeight: FontWeight.w600,
-                                color: AppColors.textPrimary)),
-                        subtitle: Text(
-                            conversation.messages?.last.content ??
-                                "No messages",
-                            style: GoogleFonts.poppins(
-                                fontSize: 12.sp,
-                                fontWeight: FontWeight.w400,
-                                color: AppColors.textHint)),
-                      );
+                : RefreshIndicator(
+                    onRefresh: () async {
+                      await viewModel.getUserConversations();
                     },
+                    child: ListView.separated(
+                      physics: const AlwaysScrollableScrollPhysics(),
+                      itemCount: viewModel.conversations.length,
+                      separatorBuilder: (context, index) => Divider(
+                        height: 1.h,
+                        color: AppColors.grey200,
+                      ),
+                      itemBuilder: (context, index) {
+                        final conversation = viewModel.conversations[index];
+
+                        return ListTile(
+                          // contentPadding: EdgeInsets.zero,
+                          onTap: () {
+                            viewModel.navigateToChatView(conversation.id);
+                          },
+                          trailing: conversation.messages?.last.isRead == 0
+                              ? CircleAvatar(
+                                  radius: 5.r,
+                                  backgroundColor: AppColors.secondary,
+                                )
+                              : null,
+                          leading: CircleAvatar(
+                            radius: 22.r,
+                            backgroundColor: AppColors.secondary,
+                            child: ClipRRect(
+                                borderRadius: BorderRadius.circular(22.r),
+                                clipBehavior: Clip.hardEdge,
+                                child: CachedNetworkImage(
+                                  imageUrl: conversation
+                                          .responder?.profileImage ??
+                                      "https://ui-avatars.com/api/?name=${conversation.responder?.name}",
+                                  placeholder: (context, url) => const Center(
+                                    child: CircularProgressIndicator(
+                                      color: AppColors.white,
+                                    ),
+                                  ),
+                                  errorWidget: (context, url, error) => Icon(
+                                      IconsaxPlusLinear.user,
+                                      color: AppColors.white,
+                                      size: 20.r),
+                                )),
+                          ),
+                          title: Text(
+                              conversation.responder?.name ?? "GDV Support",
+                              style: GoogleFonts.poppins(
+                                  fontSize: 16.sp,
+                                  fontWeight: FontWeight.w600,
+                                  color: AppColors.textPrimary)),
+                          subtitle: Text(
+                              conversation.messages?.last.content ??
+                                  "No messages",
+                              style: GoogleFonts.poppins(
+                                  fontSize: 12.sp,
+                                  fontWeight: FontWeight.w400,
+                                  color: AppColors.textHint)),
+                        );
+                      },
+                    ),
                   ),
       ),
       floatingActionButton: FloatingActionButton(
@@ -134,7 +140,7 @@ class InboxView extends StackedView<InboxViewModel> {
 
   @override
   void onViewModelReady(InboxViewModel viewModel) {
-    viewModel.getUserConversations();
+    viewModel.initialize();
     super.onViewModelReady(viewModel);
   }
 }

@@ -48,21 +48,22 @@ class StartupService with ListenableServiceMixin {
 
   Future<void> runTokenTasks() async {
     // await _notificationService.getUserNotifications();
+    // await getUserConversations();
     await _userService.fetchCurrentUser();
-    await getUserConversations();
+    await intializeChatPusher();
     await _rentalService.init();
     await getInitalChatMessage();
   }
 
-  Future<void> getUserConversations() async {
+  Future<void> intializeChatPusher() async {
     try {
-      await _chatService.getUserConversations();
+      await _chatService.initializePusher();
     } on ApiException catch (e) {
-      logger.error("Error getting user conversations: ${e.message}");
+      logger.error("Error in initializing chat pusher: ${e.message}");
       _snackbarService.showCustomSnackBar(
           message: e.message, variant: SnackbarType.error);
     } catch (e) {
-      logger.error("Error getting user conversations: $e");
+      logger.error("Error in initializing chat pusher: $e");
       _snackbarService.showCustomSnackBar(
           message: "Something went wrong", variant: SnackbarType.error);
     }
