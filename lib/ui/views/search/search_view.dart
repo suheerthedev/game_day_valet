@@ -120,6 +120,7 @@ class SearchView extends StackedView<SearchViewModel> {
                                       ),
                                       itemBuilder: (context, index) {
                                         return MainItemCard(
+                                          showQuantitySelector: false,
                                           item: viewModel.items[index],
                                           onTapAdd: () {
                                             viewModel.addItem(

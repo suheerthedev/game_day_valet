@@ -13,11 +13,13 @@ class MainItemCard extends StackedView<MainItemCardModel> {
   final ItemModel item;
   final Function() onTapAdd;
   final Function() onTapRemove;
+  final bool showQuantitySelector;
   const MainItemCard(
       {super.key,
       required this.item,
       required this.onTapAdd,
-      required this.onTapRemove});
+      required this.onTapRemove,
+      this.showQuantitySelector = true});
 
   @override
   Widget builder(
@@ -78,60 +80,62 @@ class MainItemCard extends StackedView<MainItemCardModel> {
             ],
           ),
         ),
-        SizedBox(height: 5.h),
-        Container(
-          padding: EdgeInsets.all(5.w),
-          decoration: BoxDecoration(
-            color: AppColors.grey100,
-            borderRadius: BorderRadius.circular(15.r),
-          ),
-          child: Row(
-            mainAxisAlignment: MainAxisAlignment.spaceBetween,
-            children: [
-              GestureDetector(
-                onTap: onTapRemove,
-                child: Container(
-                  decoration: BoxDecoration(
-                    color: AppColors.primary,
-                    borderRadius: BorderRadius.circular(10.r),
-                  ),
-                  child: Center(
-                    child: Icon(
-                      IconsaxPlusLinear.minus,
-                      size: 24.sp,
-                      color: AppColors.white,
+        if (showQuantitySelector) ...[
+          SizedBox(height: 5.h),
+          Container(
+            padding: EdgeInsets.all(5.w),
+            decoration: BoxDecoration(
+              color: AppColors.grey100,
+              borderRadius: BorderRadius.circular(15.r),
+            ),
+            child: Row(
+              mainAxisAlignment: MainAxisAlignment.spaceBetween,
+              children: [
+                GestureDetector(
+                  onTap: onTapRemove,
+                  child: Container(
+                    decoration: BoxDecoration(
+                      color: AppColors.primary,
+                      borderRadius: BorderRadius.circular(10.r),
+                    ),
+                    child: Center(
+                      child: Icon(
+                        IconsaxPlusLinear.minus,
+                        size: 24.sp,
+                        color: AppColors.white,
+                      ),
                     ),
                   ),
                 ),
-              ),
-              Text(
-                "${item.quantity}",
-                maxLines: 1,
-                overflow: TextOverflow.ellipsis,
-                style: GoogleFonts.poppins(
-                    fontSize: 14.sp,
-                    fontWeight: FontWeight.w500,
-                    color: AppColors.primary),
-              ),
-              GestureDetector(
-                onTap: onTapAdd,
-                child: Container(
-                  decoration: BoxDecoration(
-                    color: AppColors.primary,
-                    borderRadius: BorderRadius.circular(10.r),
-                  ),
-                  child: Center(
-                    child: Icon(
-                      IconsaxPlusLinear.add,
-                      size: 24.sp,
-                      color: AppColors.white,
+                Text(
+                  "${item.quantity}",
+                  maxLines: 1,
+                  overflow: TextOverflow.ellipsis,
+                  style: GoogleFonts.poppins(
+                      fontSize: 14.sp,
+                      fontWeight: FontWeight.w500,
+                      color: AppColors.primary),
+                ),
+                GestureDetector(
+                  onTap: onTapAdd,
+                  child: Container(
+                    decoration: BoxDecoration(
+                      color: AppColors.primary,
+                      borderRadius: BorderRadius.circular(10.r),
+                    ),
+                    child: Center(
+                      child: Icon(
+                        IconsaxPlusLinear.add,
+                        size: 24.sp,
+                        color: AppColors.white,
+                      ),
                     ),
                   ),
                 ),
-              ),
-            ],
+              ],
+            ),
           ),
-        )
+        ]
       ],
     );
   }
