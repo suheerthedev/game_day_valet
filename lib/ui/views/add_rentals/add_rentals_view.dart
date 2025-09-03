@@ -87,8 +87,14 @@ class AddRentalsView extends StackedView<AddRentalsViewModel> {
                             SizedBox(height: 10.h),
                             Container(
                               decoration: BoxDecoration(
-                                color: const Color(
-                                    0xFFFFF9C4), // Light golden color
+                                gradient: const LinearGradient(
+                                  begin: Alignment.topCenter,
+                                  end: Alignment.bottomCenter,
+                                  colors: [
+                                    Color(0xFFFFE082),
+                                    Color(0xFFFFB300),
+                                  ],
+                                ), // Light golden color
                                 borderRadius: BorderRadius.circular(10.r),
                               ),
                               child: Column(
@@ -127,12 +133,12 @@ class AddRentalsView extends StackedView<AddRentalsViewModel> {
                                         padding: EdgeInsets.symmetric(
                                             vertical: 5.h, horizontal: 5.w),
                                         decoration: BoxDecoration(
-                                            color: const Color(0xFFFFB300),
-                                            borderRadius:
-                                                BorderRadius.circular(10.r),
-                                            border: Border.all(
-                                                color: AppColors.grey100,
-                                                width: 1.w)),
+                                          borderRadius:
+                                              BorderRadius.circular(10.r),
+                                          // border: Border.all(
+                                          //     color: AppColors.grey100,
+                                          //     width: 1.w),
+                                        ),
                                         child: Row(
                                           crossAxisAlignment:
                                               CrossAxisAlignment.center,
@@ -186,8 +192,7 @@ class AddRentalsView extends StackedView<AddRentalsViewModel> {
                                                       fontSize: 14.sp,
                                                       fontWeight:
                                                           FontWeight.w600,
-                                                      color:
-                                                          AppColors.textPrimary,
+                                                      color: AppColors.white,
                                                     ),
                                                   ),
                                                   SizedBox(height: 2.h),
@@ -197,7 +202,7 @@ class AddRentalsView extends StackedView<AddRentalsViewModel> {
                                                       fontSize: 12.sp,
                                                       fontWeight:
                                                           FontWeight.w400,
-                                                      color: AppColors.primary,
+                                                      color: AppColors.white,
                                                     ),
                                                   ),
                                                   SizedBox(height: 2.h),
