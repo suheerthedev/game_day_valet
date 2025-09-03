@@ -236,6 +236,10 @@ class ChatService with ListenableServiceMixin {
 
       final data = jsonDecode(eventData);
 
+      if (data['message']['sender_id'] == _user?.id) {
+        return;
+      }
+
       _conversations.value
           .where((element) => element.id == data['message']['conversation_id'])
           .first
