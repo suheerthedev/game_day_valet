@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:game_day_valet/app/app.locator.dart';
+import 'package:game_day_valet/app/app.router.dart';
 import 'package:game_day_valet/config/api_config.dart';
 import 'package:game_day_valet/core/enums/snackbar_type.dart';
 import 'package:game_day_valet/models/item_model.dart';
@@ -13,6 +14,7 @@ import 'package:stacked_services/stacked_services.dart';
 class SearchViewModel extends BaseViewModel {
   final _apiService = locator<ApiService>();
   final _snackbarService = locator<SnackbarService>();
+  final _navigationService = locator<NavigationService>();
 
   TextEditingController searchController = TextEditingController();
   DateTime? selectedDate;
@@ -235,6 +237,47 @@ class SearchViewModel extends BaseViewModel {
     } finally {
       rebuildUi();
       setBusy(false);
+    }
+  }
+
+  void navigateToRentalBook(int tournamentId) {
+    _navigationService.navigateToAddRentalsView(tournamentId: tournamentId);
+  }
+
+  void toggleFavorite(int tournamentId) async {
+    final url = ApiConfig.baseUrl + ApiConfig.toggleFavoriteEndPoint;
+
+    int index = tournaments.indexWhere((element) => element.id == tournamentId);
+
+    if (index != -1) {
+      tournaments[index].isFavorite = !tournaments[index].isFavorite;
+      rebuildUi();
+    }
+
+    try {
+      final response = await _apiService.post(url, {
+        "tournament_id": tournamentId.toString(),
+      });
+
+      logger.info("Favorite toggled successfully. Response: $response");
+      _snackbarService.showCustomSnackBar(
+        variant: SnackbarType.success,
+        message: response['message'],
+      );
+    } on ApiException catch (e) {
+      logger.error("Error toggling favorite", e);
+      _snackbarService.showCustomSnackBar(
+        variant: SnackbarType.error,
+        message: e.message,
+      );
+    } catch (e) {
+      logger.error("Error toggling favorite", e);
+      _snackbarService.showCustomSnackBar(
+        variant: SnackbarType.error,
+        message: e.toString(),
+      );
+    } finally {
+      rebuildUi();
     }
   }
 }

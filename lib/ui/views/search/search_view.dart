@@ -90,12 +90,19 @@ class SearchView extends StackedView<SearchViewModel> {
                                           const NeverScrollableScrollPhysics(),
                                       itemCount: viewModel.tournaments.length,
                                       itemBuilder: (context, index) {
+                                        final tournament =
+                                            viewModel.tournaments[index];
                                         return MainTournamentCard(
-                                          tournament:
-                                              viewModel.tournaments[index],
+                                          tournament: tournament,
                                           onTapMap: () {},
-                                          onBookNowTap: () {},
-                                          onTapFavorite: () {},
+                                          onBookNowTap: () {
+                                            viewModel.navigateToRentalBook(
+                                                tournament.id);
+                                          },
+                                          onTapFavorite: () {
+                                            viewModel
+                                                .toggleFavorite(tournament.id);
+                                          },
                                         );
                                       },
                                     )
