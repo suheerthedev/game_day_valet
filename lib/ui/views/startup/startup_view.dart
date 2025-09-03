@@ -25,46 +25,45 @@ class StartupView extends StackedView<StartupViewModel> {
         decoration: const BoxDecoration(
           color: AppColors.secondary,
         ),
-        child: Stack(
+        child: Column(
           children: [
-            Align(
-              alignment: Alignment.topCenter,
-              child: Image.asset(
-                'assets/logo/gdv_full_logo_white.png',
+            Image.asset(
+              'assets/logo/gdv_full_logo_white.png',
+            ),
+            const Expanded(
+              flex: 1,
+              child: SizedBox(),
+            ),
+            Text(
+              "READY FOR GAME DAY CONVENIENCE?",
+              textAlign: TextAlign.center,
+              style: GoogleFonts.poppins(
+                fontSize: 28.sp,
+                fontWeight: FontWeight.w500,
+                color: AppColors.white,
               ),
             ),
-            Align(
-                alignment: Alignment.center,
-                child: Text(
-                  "READY FOR GAME DAY CONVENIENCE?",
-                  textAlign: TextAlign.center,
-                  style: GoogleFonts.poppins(
-                    fontSize: 28.sp,
-                    fontWeight: FontWeight.w500,
-                    color: AppColors.white,
-                  ),
-                )),
-
-            const Align(
-                alignment: Alignment.bottomCenter,
-                child: CircularProgressIndicator(
-                  color: AppColors.white,
-                ))
-            // Align(
-            //   alignment: Alignment.bottomCenter,
-            //   child: Container(
-            //     width: 366.w,
-            //     height: 551.h,
-            //     decoration: BoxDecoration(
-            //       borderRadius: BorderRadius.circular(20.r),
-            //     ),
-            //     clipBehavior: Clip.hardEdge,
-            //     child: Image.asset(
-            //       'assets/images/splash_image_2.png',
-            //       fit: BoxFit.cover,
-            //     ),
-            //   ),
-            // ),
+            SizedBox(height: 5.h),
+            const CircularProgressIndicator(
+              color: AppColors.white,
+            ),
+            const Expanded(
+              flex: 10,
+              child: SizedBox(),
+            ),
+            Container(
+              width: double.infinity,
+              height: 0.35.sh,
+              margin: EdgeInsets.symmetric(horizontal: 10.r),
+              decoration: BoxDecoration(
+                borderRadius: BorderRadius.circular(20.r),
+              ),
+              clipBehavior: Clip.hardEdge,
+              child: Image.asset(
+                'assets/images/splash_image_3.png',
+                fit: BoxFit.cover,
+              ),
+            ),
           ],
         ),
       ),
