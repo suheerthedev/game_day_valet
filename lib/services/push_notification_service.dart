@@ -1,3 +1,5 @@
+import 'dart:io';
+
 import 'package:firebase_core/firebase_core.dart';
 import 'package:firebase_messaging/firebase_messaging.dart';
 import 'package:flutter/material.dart';
@@ -112,23 +114,25 @@ class PushNotificationService {
     final title = n?.title ?? message.data['title'];
     final body = n?.body ?? message.data['body'];
 
-    await _local.show(
-      message.hashCode,
-      title,
-      body,
-      NotificationDetails(
-        android: AndroidNotificationDetails(
-          _androidChannel.id,
-          _androidChannel.name,
-          channelDescription: _androidChannel.description,
-          importance: Importance.high,
-          priority: Priority.high,
-          icon: '@drawable/ic_stat_notification',
+    if (Platform.isAndroid) {
+      await _local.show(
+        message.hashCode,
+        title,
+        body,
+        NotificationDetails(
+          android: AndroidNotificationDetails(
+            _androidChannel.id,
+            _androidChannel.name,
+            channelDescription: _androidChannel.description,
+            importance: Importance.high,
+            priority: Priority.high,
+            icon: '@drawable/ic_stat_notification',
+          ),
+          iOS: const DarwinNotificationDetails(),
         ),
-        iOS: const DarwinNotificationDetails(),
-      ),
-      payload: message.data.isNotEmpty ? message.data.toString() : null,
-    );
+        payload: message.data.isNotEmpty ? message.data.toString() : null,
+      );
+    }
   }
 
   void _handleNotificationTap(RemoteMessage message) {
