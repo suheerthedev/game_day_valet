@@ -35,6 +35,8 @@ class DeepLinkingService {
       if (initialUri != null) {
         logger.info('Initial URI Recieved: $initialUri');
         pendingUri = initialUri;
+
+        await _handleUri(initialUri);
       }
     } catch (e) {
       logger.error("Error getting initial URI: $e");
@@ -52,7 +54,7 @@ class DeepLinkingService {
     return false;
   }
 
-  Future<void> _handleUri(Uri uri) async {
+  Future<bool> _handleUri(Uri uri) async {
     final path = uri.path;
     logger.info('Handling deep link: $uri with path: $path');
 
@@ -71,17 +73,21 @@ class DeepLinkingService {
             variant: SnackbarType.warning,
             duration: const Duration(seconds: 3),
           );
+          return true;
         } else {
           _navigationService.clearStackAndShow(Routes.signUpView,
               arguments: SignUpViewArguments(
                 referralCode: referralCode,
               ));
           clearAll();
+          return true;
         }
       } else {
         pendingRoute = Routes.signUpView;
+        return true;
       }
     }
+    return false;
   }
 
   String? getReferralCode() => referralCode;
