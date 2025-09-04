@@ -197,7 +197,7 @@ class AddRentalsView extends StackedView<AddRentalsViewModel> {
                                                   ),
                                                   SizedBox(height: 2.h),
                                                   Text(
-                                                    bundle.totalItems ?? '',
+                                                    bundle.description ?? '',
                                                     style: GoogleFonts.poppins(
                                                       fontSize: 12.sp,
                                                       fontWeight:
