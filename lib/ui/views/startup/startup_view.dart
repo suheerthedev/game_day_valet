@@ -16,6 +16,9 @@ class StartupView extends StackedView<StartupViewModel> {
     StartupViewModel viewModel,
     Widget? child,
   ) {
+    final double screenHeight = 1.sh;
+    // Show the bottom image only on sufficiently tall screens to avoid overflow
+    final bool showBottomImage = screenHeight >= 700;
     return Scaffold(
       backgroundColor: AppColors.scaffoldBackground,
       body: Container(
@@ -51,19 +54,20 @@ class StartupView extends StackedView<StartupViewModel> {
               flex: 10,
               child: SizedBox(),
             ),
-            Container(
-              width: double.infinity,
-              height: 0.3.sh,
-              margin: EdgeInsets.symmetric(horizontal: 10.r),
-              decoration: BoxDecoration(
-                borderRadius: BorderRadius.circular(20.r),
+            if (showBottomImage)
+              Container(
+                width: double.infinity,
+                height: 0.3.sh,
+                margin: EdgeInsets.symmetric(horizontal: 10.r),
+                decoration: BoxDecoration(
+                  borderRadius: BorderRadius.circular(20.r),
+                ),
+                clipBehavior: Clip.hardEdge,
+                child: Image.asset(
+                  'assets/images/splash_image_3.png',
+                  fit: BoxFit.cover,
+                ),
               ),
-              clipBehavior: Clip.hardEdge,
-              child: Image.asset(
-                'assets/images/splash_image_3.png',
-                fit: BoxFit.cover,
-              ),
-            ),
           ],
         ),
       ),
