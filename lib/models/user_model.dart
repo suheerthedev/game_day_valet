@@ -9,6 +9,8 @@ class UserModel {
   final List<String>? roles;
   final List<String>? permissions;
   final bool? isNotification;
+  final bool? isEmailNotification;
+  final bool? isSmsNotification;
   UserModel({
     required this.id,
     this.name,
@@ -20,6 +22,8 @@ class UserModel {
     this.roles,
     this.permissions,
     this.isNotification,
+    this.isEmailNotification,
+    this.isSmsNotification,
   });
 
   factory UserModel.fromJson(Map<String, dynamic> json) {
@@ -36,6 +40,8 @@ class UserModel {
           ? List<String>.from(json['permissions'])
           : [],
       isNotification: json['is_notification'] ?? false,
+      isEmailNotification: json['is_email_notification'] ?? false,
+      isSmsNotification: json['is_sms_notification'] ?? false,
     );
   }
 }

@@ -30,16 +30,14 @@ class ProfileViewModel extends ReactiveViewModel {
   bool isLoggingOut = false;
 
   bool? isNotificationsEnabled;
+  bool? isEmailNotificationsEnabled;
+  bool? isSmsNotificationsEnabled;
 
   void init() async {
     isNotificationsEnabled = currentUser?.isNotification ?? false;
-    // isNotificationsEnabled =
-    //     await _sharedPreferencesService.getBool('notifications_enabled');
-    // if (isNotificationsEnabled == null) {
-    //   isNotificationsEnabled = false;
-    //   await _sharedPreferencesService.setBool(
-    //       'notifications_enabled', isNotificationsEnabled!);
-    // }
+    isEmailNotificationsEnabled = currentUser?.isEmailNotification ?? false;
+    isSmsNotificationsEnabled = currentUser?.isSmsNotification ?? false;
+
     rebuildUi();
   }
 
@@ -87,8 +85,8 @@ class ProfileViewModel extends ReactiveViewModel {
 
   void onNotificationsTap() async {
     isNotificationsEnabled = !isNotificationsEnabled!;
-
     rebuildUi();
+
     final url = ApiConfig.baseUrl + ApiConfig.toggleNotificationsEndPoint;
 
     try {
@@ -99,11 +97,63 @@ class ProfileViewModel extends ReactiveViewModel {
             message: response['message'], variant: SnackbarType.success);
       }
     } on ApiException catch (e) {
-      logger.error("Error in updating user: ${e.message}");
+      logger.error("Error in toggle notifications: ${e.message}");
       _snackbarService.showCustomSnackBar(
           message: e.message, variant: SnackbarType.error);
     } catch (e) {
-      logger.error("Error in updating user: ${e.toString()}");
+      logger.error("Error in toggle notifications: ${e.toString()}");
+      _snackbarService.showCustomSnackBar(
+          message: "Something went wrong", variant: SnackbarType.error);
+    } finally {
+      rebuildUi();
+    }
+  }
+
+  void onEmailNotificationsTap() async {
+    isEmailNotificationsEnabled = !isEmailNotificationsEnabled!;
+    rebuildUi();
+
+    final url = ApiConfig.baseUrl + ApiConfig.toggleEmailNotificationsEndPoint;
+
+    try {
+      final response = await _apiService.post(url, {});
+
+      if (response.containsKey('enabled')) {
+        _snackbarService.showCustomSnackBar(
+            message: response['message'], variant: SnackbarType.success);
+      }
+    } on ApiException catch (e) {
+      logger.error("Error in toggle email notifications: ${e.message}");
+      _snackbarService.showCustomSnackBar(
+          message: e.message, variant: SnackbarType.error);
+    } catch (e) {
+      logger.error("Error in toggle email notifications: ${e.toString()}");
+      _snackbarService.showCustomSnackBar(
+          message: "Something went wrong", variant: SnackbarType.error);
+    } finally {
+      rebuildUi();
+    }
+  }
+
+  void onSmsNotificationsTap() async {
+    isSmsNotificationsEnabled = !isSmsNotificationsEnabled!;
+    rebuildUi();
+
+    final url = ApiConfig.baseUrl + ApiConfig.toggleSmsNotificationsEndPoint;
+
+    try {
+      final response = await _apiService.post(url, {});
+
+      if (response.containsKey('enabled')) {
+        _snackbarService.showCustomSnackBar(
+            message: response['message'], variant: SnackbarType.success);
+      }
+    } on ApiException catch (e) {
+      logger.error("Error in toggle sms notifications: ${e.message}");
+      _snackbarService.showCustomSnackBar(
+          message: e.message, variant: SnackbarType.error);
+    } catch (e) {
+      logger.error("Error in toggle sms notifications: ${e.toString()}");
       _snackbarService.showCustomSnackBar(
           message: "Something went wrong", variant: SnackbarType.error);
     } finally {

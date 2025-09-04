@@ -234,22 +234,66 @@ class ProfileView extends StackedView<ProfileViewModel> {
                               size: 24.w,
                               color: AppColors.textPrimary),
                         ),
+                        SizedBox(height: 10.h),
+                        ListTile(
+                          onTap: viewModel.onEmailNotificationsTap,
+                          tileColor: AppColors.grey600,
+                          shape: RoundedRectangleBorder(
+                            borderRadius: BorderRadius.circular(16.r),
+                          ),
+                          leading: Icon(IconsaxPlusBold.direct_normal,
+                              size: 24.w, color: AppColors.secondary),
+                          title: Text('Email Notifications',
+                              style: GoogleFonts.poppins(
+                                  fontSize: 14.sp,
+                                  fontWeight: FontWeight.w400,
+                                  color: AppColors.textPrimary)),
+                          trailing: Icon(
+                              viewModel.isEmailNotificationsEnabled ?? false
+                                  ? IconsaxPlusBold.toggle_on_circle
+                                  : IconsaxPlusLinear.toggle_off_circle,
+                              size: 24.w,
+                              color: AppColors.textPrimary),
+                        ),
+                        SizedBox(height: 10.h),
+                        ListTile(
+                          onTap: viewModel.onSmsNotificationsTap,
+                          tileColor: AppColors.grey600,
+                          shape: RoundedRectangleBorder(
+                            borderRadius: BorderRadius.circular(16.r),
+                          ),
+                          leading: Icon(IconsaxPlusBold.sms,
+                              size: 24.w, color: AppColors.secondary),
+                          title: Text('SMS Notifications',
+                              style: GoogleFonts.poppins(
+                                  fontSize: 14.sp,
+                                  fontWeight: FontWeight.w400,
+                                  color: AppColors.textPrimary)),
+                          trailing: Icon(
+                              viewModel.isSmsNotificationsEnabled ?? false
+                                  ? IconsaxPlusBold.toggle_on_circle
+                                  : IconsaxPlusLinear.toggle_off_circle,
+                              size: 24.w,
+                              color: AppColors.textPrimary),
+                        ),
+                        SizedBox(height: 20.h),
+                        MainButton(
+                          text: 'Logout',
+                          onTap: viewModel.onLogoutTap,
+                          textColor: AppColors.white,
+                          borderColor: AppColors.secondary,
+                        ),
                       ],
                     ),
                   ),
                 ),
-                Padding(
-                  padding: EdgeInsets.symmetric(vertical: 20.h),
-                  child: Align(
-                    alignment: Alignment.bottomCenter,
-                    child: MainButton(
-                      text: 'Logout',
-                      onTap: viewModel.onLogoutTap,
-                      textColor: AppColors.white,
-                      borderColor: AppColors.secondary,
-                    ),
-                  ),
-                ),
+                // Padding(
+                //   padding: EdgeInsets.symmetric(vertical: 20.h),
+                //   child: Align(
+                //     alignment: Alignment.bottomCenter,
+                //     child:
+                //   ),
+                // ),
                 FloatingChatButton(
                   onTap: (_) {
                     viewModel.onChatTap();
