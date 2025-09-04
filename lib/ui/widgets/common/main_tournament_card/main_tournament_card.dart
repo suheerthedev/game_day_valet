@@ -137,7 +137,7 @@ class MainTournamentCard extends StackedView<MainTournamentCardModel> {
                   SizedBox(width: 4.w),
                   ConstrainedBox(
                     constraints: BoxConstraints(
-                      maxWidth: 200.w,
+                      maxWidth: 300.w,
                     ),
                     child: Text(tournament.name ?? '',
                         maxLines: 2,
@@ -150,27 +150,27 @@ class MainTournamentCard extends StackedView<MainTournamentCardModel> {
                   ),
                 ],
               ),
-              Row(
-                children: [
-                  ConstrainedBox(
-                    constraints: BoxConstraints(
-                      maxWidth: 20.w,
-                    ),
-                    child: Text(
-                      '4.8',
-                      maxLines: 1,
-                      overflow: TextOverflow.ellipsis,
-                      softWrap: true,
-                      style: GoogleFonts.poppins(
-                          fontSize: 12.sp,
-                          fontWeight: FontWeight.w500,
-                          color: AppColors.textPrimary),
-                    ),
-                  ),
-                  SizedBox(width: 2.w),
-                  Icon(Icons.star, size: 16.w, color: AppColors.primary)
-                ],
-              )
+              // Row(
+              //   children: [
+              //     ConstrainedBox(
+              //       constraints: BoxConstraints(
+              //         maxWidth: 20.w,
+              //       ),
+              //       child: Text(
+              //         '4.8',
+              //         maxLines: 1,
+              //         overflow: TextOverflow.ellipsis,
+              //         softWrap: true,
+              //         style: GoogleFonts.poppins(
+              //             fontSize: 12.sp,
+              //             fontWeight: FontWeight.w500,
+              //             color: AppColors.textPrimary),
+              //       ),
+              //     ),
+              //     SizedBox(width: 2.w),
+              //     Icon(Icons.star, size: 16.w, color: AppColors.primary)
+              //   ],
+              // )
             ],
           ),
           SizedBox(height: 2.h),
