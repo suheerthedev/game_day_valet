@@ -33,7 +33,7 @@ class NotificationService with ListenableServiceMixin {
 
     final page = refresh ? 1 : (pagination?.currentPage ?? 0) + 1;
     final url =
-        '${ApiConfig.baseUrl}${ApiConfig.notificationsEndPoint}?limit=10&page=$page';
+        '${ApiConfig.baseUrl}${ApiConfig.notificationsEndPoint}?per_page=10&page=$page';
 
     _isFetching.value = true;
 
