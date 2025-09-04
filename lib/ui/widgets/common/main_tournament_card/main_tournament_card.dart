@@ -123,54 +123,28 @@ class MainTournamentCard extends StackedView<MainTournamentCardModel> {
           ),
           SizedBox(height: 10.h),
           Row(
-            mainAxisAlignment: MainAxisAlignment.spaceBetween,
             children: [
-              Row(
-                children: [
-                  ConstrainedBox(
-                    constraints: BoxConstraints(
-                      maxWidth: 12.w,
-                    ),
-                    child: Icon(IconsaxPlusLinear.location,
-                        size: 12.w, color: AppColors.textPrimary),
-                  ),
-                  SizedBox(width: 4.w),
-                  ConstrainedBox(
-                    constraints: BoxConstraints(
-                      maxWidth: 300.w,
-                    ),
-                    child: Text(tournament.name ?? '',
-                        maxLines: 2,
-                        overflow: TextOverflow.ellipsis,
-                        softWrap: true,
-                        style: GoogleFonts.poppins(
-                            fontSize: 14.sp,
-                            fontWeight: FontWeight.w500,
-                            color: AppColors.textPrimary)),
-                  ),
-                ],
+              ConstrainedBox(
+                constraints: BoxConstraints(
+                  maxWidth: 12.w,
+                ),
+                child: Icon(IconsaxPlusLinear.location,
+                    size: 12.w, color: AppColors.textPrimary),
               ),
-              // Row(
-              //   children: [
-              //     ConstrainedBox(
-              //       constraints: BoxConstraints(
-              //         maxWidth: 20.w,
-              //       ),
-              //       child: Text(
-              //         '4.8',
-              //         maxLines: 1,
-              //         overflow: TextOverflow.ellipsis,
-              //         softWrap: true,
-              //         style: GoogleFonts.poppins(
-              //             fontSize: 12.sp,
-              //             fontWeight: FontWeight.w500,
-              //             color: AppColors.textPrimary),
-              //       ),
-              //     ),
-              //     SizedBox(width: 2.w),
-              //     Icon(Icons.star, size: 16.w, color: AppColors.primary)
-              //   ],
-              // )
+              SizedBox(width: 4.w),
+              ConstrainedBox(
+                constraints: BoxConstraints(
+                  maxWidth: 300.w,
+                ),
+                child: Text(tournament.name ?? '',
+                    maxLines: 2,
+                    overflow: TextOverflow.ellipsis,
+                    softWrap: true,
+                    style: GoogleFonts.poppins(
+                        fontSize: 14.sp,
+                        fontWeight: FontWeight.w500,
+                        color: AppColors.textPrimary)),
+              ),
             ],
           ),
           SizedBox(height: 2.h),
