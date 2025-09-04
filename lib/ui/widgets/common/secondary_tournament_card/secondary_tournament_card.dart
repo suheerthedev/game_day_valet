@@ -109,7 +109,6 @@ class SecondaryTournamentCard
           ),
           SizedBox(height: 10.h),
           Row(
-            mainAxisAlignment: MainAxisAlignment.spaceBetween,
             children: [
               Row(
                 children: [
@@ -123,7 +122,8 @@ class SecondaryTournamentCard
                   SizedBox(width: 4.w),
                   ConstrainedBox(
                     constraints: BoxConstraints(
-                      maxWidth: 200.w,
+                      maxWidth: 300.w,
+                      maxHeight: 50.h,
                     ),
                     child: Text(tournament.name ?? '',
                         maxLines: 2,
@@ -136,27 +136,27 @@ class SecondaryTournamentCard
                   ),
                 ],
               ),
-              Row(
-                children: [
-                  ConstrainedBox(
-                    constraints: BoxConstraints(
-                      maxWidth: 20.w,
-                    ),
-                    child: Text(
-                      '4.8',
-                      maxLines: 1,
-                      overflow: TextOverflow.ellipsis,
-                      softWrap: true,
-                      style: GoogleFonts.poppins(
-                          fontSize: 12.sp,
-                          fontWeight: FontWeight.w500,
-                          color: AppColors.textPrimary),
-                    ),
-                  ),
-                  SizedBox(width: 2.w),
-                  Icon(Icons.star, size: 16.w, color: AppColors.primary)
-                ],
-              )
+              // Row(
+              //   children: [
+              //     ConstrainedBox(
+              //       constraints: BoxConstraints(
+              //         maxWidth: 20.w,
+              //       ),
+              //       child: Text(
+              //         '4.8',
+              //         maxLines: 1,
+              //         overflow: TextOverflow.ellipsis,
+              //         softWrap: true,
+              //         style: GoogleFonts.poppins(
+              //             fontSize: 12.sp,
+              //             fontWeight: FontWeight.w500,
+              //             color: AppColors.textPrimary),
+              //       ),
+              //     ),
+              //     SizedBox(width: 2.w),
+              //     Icon(Icons.star, size: 16.w, color: AppColors.primary)
+              //   ],
+              // )
             ],
           ),
         ],
