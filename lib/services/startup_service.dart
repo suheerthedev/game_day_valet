@@ -21,7 +21,7 @@ class StartupService with ListenableServiceMixin {
   final _apiService = locator<ApiService>();
   final _secureStorageService = locator<SecureStorageService>();
 
-  Future<dynamic> validateToken() async {
+  Future<bool> validateToken() async {
     final url = ApiConfig.baseUrl + ApiConfig.validateTokenEndPoint;
 
     final token = await _secureStorageService.getToken();
@@ -44,6 +44,9 @@ class StartupService with ListenableServiceMixin {
       _snackbarService.showCustomSnackBar(
           message: e.message, variant: SnackbarType.error);
     }
+    await _apiService.unauthorized();
+    notifyListeners();
+    return false;
   }
 
   Future<void> runTokenTasks() async {
