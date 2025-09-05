@@ -29,14 +29,14 @@
 			<string>Editor</string>
 			<key>CFBundleURLSchemes</key>
 			<array>
-				<string>com.googleusercontent.apps.222515758866-okrdr27ktvcpmc92sgma4m5prvkjagqh</string>
+				<string>com.googleusercontent.apps.222515758866-4su3m42dbljo1rv9ibr3hq07367nh3ln</string>
 			</array>
 		</dict>
 		<dict>
 			<key>CFBundleTypeRole</key>
 			<string>Editor</string>
 			<key>CFBundleURLName</key>
-			<string>com.example.gameDayValet</string>
+			<string>com.gdv.gameDayValet</string>
 			<key>CFBundleURLSchemes</key>
 			<array>
 				<string>gamedayvalet</string>
@@ -46,7 +46,7 @@
 	<key>CFBundleVersion</key>
 	<string>$(FLUTTER_BUILD_NUMBER)</string>
 	<key>GIDClientID</key>
-	<string>222515758866-okrdr27ktvcpmc92sgma4m5prvkjagqh.apps.googleusercontent.com</string>
+	<string>222515758866-4su3m42dbljo1rv9ibr3hq07367nh3ln.apps.googleusercontent.com</string>
 	<key>GIDServerClientID</key>
 	<string>222515758866-l59l7u1cu5drp8hdb5hvs1tbrhnhi3uf.apps.googleusercontent.com</string>
 	<key>LSRequiresIPhoneOS</key>

@@ -39,10 +39,10 @@
               "client_type": 3
             },
             {
-              "client_id": "222515758866-okrdr27ktvcpmc92sgma4m5prvkjagqh.apps.googleusercontent.com",
+              "client_id": "222515758866-4su3m42dbljo1rv9ibr3hq07367nh3ln.apps.googleusercontent.com",
               "client_type": 2,
               "ios_info": {
-                "bundle_id": "com.example.gameDayValet"
+                "bundle_id": "com.gdv.gameDayValet"
               }
             }
           ]

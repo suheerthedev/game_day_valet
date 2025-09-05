@@ -3,9 +3,9 @@
 <plist version="1.0">
 <dict>
 	<key>CLIENT_ID</key>
-	<string>222515758866-okrdr27ktvcpmc92sgma4m5prvkjagqh.apps.googleusercontent.com</string>
+	<string>222515758866-4su3m42dbljo1rv9ibr3hq07367nh3ln.apps.googleusercontent.com</string>
 	<key>REVERSED_CLIENT_ID</key>
-	<string>com.googleusercontent.apps.222515758866-okrdr27ktvcpmc92sgma4m5prvkjagqh</string>
+	<string>com.googleusercontent.apps.222515758866-4su3m42dbljo1rv9ibr3hq07367nh3ln</string>
 	<key>ANDROID_CLIENT_ID</key>
 	<string>222515758866-linosllsubbu2o54kfrq95t248ji7bdr.apps.googleusercontent.com</string>
 	<key>API_KEY</key>
@@ -15,7 +15,7 @@
 	<key>PLIST_VERSION</key>
 	<string>1</string>
 	<key>BUNDLE_ID</key>
-	<string>com.example.gameDayValet</string>
+	<string>com.gdv.gameDayValet</string>
 	<key>PROJECT_ID</key>
 	<string>game-day-valet-gdv</string>
 	<key>STORAGE_BUCKET</key>
@@ -31,6 +31,6 @@
 	<key>IS_SIGNIN_ENABLED</key>
 	<true></true>
 	<key>GOOGLE_APP_ID</key>
-	<string>1:222515758866:ios:a9e76eae8c6424c07bd5cb</string>
+	<string>1:222515758866:ios:14bf3ebd379908d87bd5cb</string>
 </dict>
 </plist>

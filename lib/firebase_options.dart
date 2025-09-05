@@ -59,14 +59,14 @@ class DefaultFirebaseOptions {
 
   static const FirebaseOptions ios = FirebaseOptions(
     apiKey: 'AIzaSyAgDFyOwwXckuc-Hy1s5RufBZ5xSoABfiI',
-    appId: '1:222515758866:ios:a9e76eae8c6424c07bd5cb',
+    appId: '1:222515758866:ios:14bf3ebd379908d87bd5cb',
     messagingSenderId: '222515758866',
     projectId: 'game-day-valet-gdv',
     storageBucket: 'game-day-valet-gdv.firebasestorage.app',
     androidClientId:
         '222515758866-linosllsubbu2o54kfrq95t248ji7bdr.apps.googleusercontent.com',
     iosClientId:
-        '222515758866-okrdr27ktvcpmc92sgma4m5prvkjagqh.apps.googleusercontent.com',
-    iosBundleId: 'com.example.gameDayValet',
+        '222515758866-4su3m42dbljo1rv9ibr3hq07367nh3ln.apps.googleusercontent.com',
+    iosBundleId: 'com.gdv.gameDayValet',
   );
 }
