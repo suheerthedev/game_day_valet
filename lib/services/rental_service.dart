@@ -130,7 +130,11 @@ class RentalService with ListenableServiceMixin {
 
       logger.info("Booking Rental Response: $response");
 
-      final isPaymentSuccess = await _handleStripePayment(context, totalAmount);
+      bool isPaymentSuccess = false;
+
+      if (context.mounted) {
+        isPaymentSuccess = await _handleStripePayment(context, totalAmount);
+      }
 
       await initializePusher(isNewRental: true);
       await _sharedPreferencesService.setInt(
@@ -438,11 +442,11 @@ class RentalService with ListenableServiceMixin {
 
   void resetItemsandBundles() {
     //change their quantites to 0 and unselect bundles
-    _items.forEach((element) {
+    for (var element in _items) {
       element.quantity = 0;
-    });
-    _bundles.forEach((element) {
+    }
+    for (var element in _bundles) {
       element.isSelected = false;
-    });
+    }
   }
 }
