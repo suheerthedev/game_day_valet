@@ -73,22 +73,24 @@ class RentalHistoryView extends StackedView<RentalHistoryViewModel> {
                                                 fontWeight: FontWeight.w600,
                                                 color: AppColors.textPrimary)),
                                         SizedBox(height: 10.h),
-                                        Text.rich(TextSpan(children: [
-                                          TextSpan(
-                                            text: 'Rentals: ',
-                                            style: GoogleFonts.poppins(
-                                                fontSize: 14.sp,
-                                                fontWeight: FontWeight.w600,
-                                                color: AppColors.textHint),
-                                          ),
-                                          TextSpan(
-                                            text: rental.totalRentals ?? '',
-                                            style: GoogleFonts.poppins(
-                                                fontSize: 14.sp,
-                                                fontWeight: FontWeight.w500,
-                                                color: AppColors.textHint),
-                                          )
-                                        ])),
+                                        if (rental.totalRentals != null) ...[
+                                          Text.rich(TextSpan(children: [
+                                            TextSpan(
+                                              text: 'Rentals: ',
+                                              style: GoogleFonts.poppins(
+                                                  fontSize: 14.sp,
+                                                  fontWeight: FontWeight.w600,
+                                                  color: AppColors.textHint),
+                                            ),
+                                            TextSpan(
+                                              text: rental.totalRentals ?? '',
+                                              style: GoogleFonts.poppins(
+                                                  fontSize: 14.sp,
+                                                  fontWeight: FontWeight.w500,
+                                                  color: AppColors.textHint),
+                                            )
+                                          ])),
+                                        ],
                                         SizedBox(height: 15.h),
                                         Align(
                                           alignment: Alignment.centerRight,
