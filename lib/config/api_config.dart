@@ -11,6 +11,8 @@ class ApiConfig {
   static const verifyPasswordResetCodeEndPoint = '/api/verify-reset-code';
   static const validateReferralCodeEndPoint = '/api/validate/referral-code';
   static const googleSignInEndPoint = '/api/auth/google/login';
+  static const appleSignInEndPoint = '/api/auth/apple/login';
+  static const deleteAccountEndPoint = '/api/account/delete';
 
   static const meEndPoint = '/api/me';
   static const profileEndPoint = '/api/profile';
