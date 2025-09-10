@@ -1,3 +1,5 @@
+import 'dart:io';
+
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
@@ -226,37 +228,41 @@ Account""",
                           ),
 
                           // //Apple button
-                          // SizedBox(height: 10.h),
-                          // InkWell(
-                          //   onTap: viewModel.onAppleSignIn,
-                          //   child: Container(
-                          //       width: 340.w,
-                          //       height: 58.h,
-                          //       decoration: BoxDecoration(
-                          //         color: AppColors.white,
-                          //         borderRadius: BorderRadius.circular(10.r),
-                          //         border: Border.all(
-                          //             width: 1.04.w, color: AppColors.primary),
-                          //       ),
-                          //       child: Center(
-                          //         child: Row(
-                          //           mainAxisAlignment: MainAxisAlignment.center,
-                          //           children: [
-                          //             FaIcon(FontAwesomeIcons.apple,
-                          //                 size: 24.sp,
-                          //                 color: AppColors.primary),
-                          //             SizedBox(width: 10.w),
-                          //             Text(
-                          //               "Continue with Apple",
-                          //               style: GoogleFonts.poppins(
-                          //                   fontSize: 16.sp,
-                          //                   fontWeight: FontWeight.w500,
-                          //                   color: AppColors.primary),
-                          //             ),
-                          //           ],
-                          //         ),
-                          //       )),
-                          // ),
+                          if (Platform.isIOS) ...[
+                            SizedBox(height: 10.h),
+                            InkWell(
+                              onTap: viewModel.onAppleSignIn,
+                              child: Container(
+                                  width: 340.w,
+                                  height: 58.h,
+                                  decoration: BoxDecoration(
+                                    color: AppColors.white,
+                                    borderRadius: BorderRadius.circular(10.r),
+                                    border: Border.all(
+                                        width: 1.04.w,
+                                        color: AppColors.primary),
+                                  ),
+                                  child: Center(
+                                    child: Row(
+                                      mainAxisAlignment:
+                                          MainAxisAlignment.center,
+                                      children: [
+                                        FaIcon(FontAwesomeIcons.apple,
+                                            size: 24.sp,
+                                            color: AppColors.primary),
+                                        SizedBox(width: 10.w),
+                                        Text(
+                                          "Continue with Apple",
+                                          style: GoogleFonts.poppins(
+                                              fontSize: 16.sp,
+                                              fontWeight: FontWeight.w500,
+                                              color: AppColors.primary),
+                                        ),
+                                      ],
+                                    ),
+                                  )),
+                            ),
+                          ],
 
                           //Terms and conditions
                           SizedBox(height: 20.h),
