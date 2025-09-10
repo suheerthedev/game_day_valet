@@ -17,107 +17,133 @@ class SettingsView extends StackedView<SettingsViewModel> {
     SettingsViewModel viewModel,
     Widget? child,
   ) {
-    return Scaffold(
-        backgroundColor: AppColors.scaffoldBackground,
-        appBar: MainAppBar(
-          title: Text(
-            "Settings",
-            style: GoogleFonts.poppins(
-                fontSize: 24.sp,
-                fontWeight: FontWeight.w600,
-                color: AppColors.textPrimary),
-          ),
-        ),
-        body: SafeArea(
-            child: Padding(
-          padding: EdgeInsetsGeometry.symmetric(horizontal: 25.w),
-          child: SingleChildScrollView(
-            child: Column(
-              children: [
-                SizedBox(height: 10.h),
-                ListTile(
-                  onTap: viewModel.onNotificationsTap,
-                  tileColor: AppColors.grey600,
-                  shape: RoundedRectangleBorder(
-                    borderRadius: BorderRadius.circular(16.r),
-                  ),
-                  leading: Icon(IconsaxPlusBold.notification,
-                      size: 24.w, color: AppColors.secondary),
-                  title: Text('Notifications',
-                      style: GoogleFonts.poppins(
-                          fontSize: 14.sp,
-                          fontWeight: FontWeight.w400,
-                          color: AppColors.textPrimary)),
-                  trailing: Icon(
-                      viewModel.isNotificationsEnabled ?? false
-                          ? IconsaxPlusBold.toggle_on_circle
-                          : IconsaxPlusLinear.toggle_off_circle,
-                      size: 24.w,
-                      color: AppColors.textPrimary),
+    return Stack(
+      children: [
+        Scaffold(
+            backgroundColor: AppColors.scaffoldBackground,
+            appBar: MainAppBar(
+              title: Text(
+                "Settings",
+                style: GoogleFonts.poppins(
+                    fontSize: 24.sp,
+                    fontWeight: FontWeight.w600,
+                    color: AppColors.textPrimary),
+              ),
+            ),
+            body: SafeArea(
+                child: Padding(
+              padding: EdgeInsetsGeometry.symmetric(horizontal: 25.w),
+              child: SingleChildScrollView(
+                child: Column(
+                  children: [
+                    SizedBox(height: 10.h),
+                    ListTile(
+                      onTap: viewModel.onNotificationsTap,
+                      tileColor: AppColors.grey600,
+                      shape: RoundedRectangleBorder(
+                        borderRadius: BorderRadius.circular(16.r),
+                      ),
+                      leading: Icon(IconsaxPlusBold.notification,
+                          size: 24.w, color: AppColors.secondary),
+                      title: Text('Notifications',
+                          style: GoogleFonts.poppins(
+                              fontSize: 14.sp,
+                              fontWeight: FontWeight.w400,
+                              color: AppColors.textPrimary)),
+                      trailing: Icon(
+                          viewModel.isNotificationsEnabled ?? false
+                              ? IconsaxPlusBold.toggle_on_circle
+                              : IconsaxPlusLinear.toggle_off_circle,
+                          size: 24.w,
+                          color: AppColors.textPrimary),
+                    ),
+                    SizedBox(height: 10.h),
+                    ListTile(
+                      onTap: viewModel.onEmailNotificationsTap,
+                      tileColor: AppColors.grey600,
+                      shape: RoundedRectangleBorder(
+                        borderRadius: BorderRadius.circular(16.r),
+                      ),
+                      leading: Icon(IconsaxPlusBold.direct_normal,
+                          size: 24.w, color: AppColors.secondary),
+                      title: Text('Email Notifications',
+                          style: GoogleFonts.poppins(
+                              fontSize: 14.sp,
+                              fontWeight: FontWeight.w400,
+                              color: AppColors.textPrimary)),
+                      trailing: Icon(
+                          viewModel.isEmailNotificationsEnabled ?? false
+                              ? IconsaxPlusBold.toggle_on_circle
+                              : IconsaxPlusLinear.toggle_off_circle,
+                          size: 24.w,
+                          color: AppColors.textPrimary),
+                    ),
+                    SizedBox(height: 10.h),
+                    ListTile(
+                      onTap: viewModel.onSmsNotificationsTap,
+                      tileColor: AppColors.grey600,
+                      shape: RoundedRectangleBorder(
+                        borderRadius: BorderRadius.circular(16.r),
+                      ),
+                      leading: Icon(IconsaxPlusBold.sms,
+                          size: 24.w, color: AppColors.secondary),
+                      title: Text('SMS Notifications',
+                          style: GoogleFonts.poppins(
+                              fontSize: 14.sp,
+                              fontWeight: FontWeight.w400,
+                              color: AppColors.textPrimary)),
+                      trailing: Icon(
+                          viewModel.isSmsNotificationsEnabled ?? false
+                              ? IconsaxPlusBold.toggle_on_circle
+                              : IconsaxPlusLinear.toggle_off_circle,
+                          size: 24.w,
+                          color: AppColors.textPrimary),
+                    ),
+                    SizedBox(height: 10.h),
+                    ListTile(
+                      onTap: viewModel.onDeleteAccountTap,
+                      tileColor: AppColors.grey600,
+                      shape: RoundedRectangleBorder(
+                        borderRadius: BorderRadius.circular(16.r),
+                      ),
+                      leading: Icon(IconsaxPlusBold.trash,
+                          size: 24.w, color: AppColors.secondary),
+                      title: Text('Delete Account',
+                          style: GoogleFonts.poppins(
+                              fontSize: 14.sp,
+                              fontWeight: FontWeight.w400,
+                              color: AppColors.textPrimary)),
+                      trailing: Icon(IconsaxPlusLinear.arrow_right_3,
+                          size: 24.w, color: AppColors.textPrimary),
+                    ),
+                  ],
                 ),
-                SizedBox(height: 10.h),
-                ListTile(
-                  onTap: viewModel.onEmailNotificationsTap,
-                  tileColor: AppColors.grey600,
-                  shape: RoundedRectangleBorder(
-                    borderRadius: BorderRadius.circular(16.r),
+              ),
+            ))),
+        if (viewModel.isDeletingAccount)
+          Container(
+            color: Colors.black.withValues(alpha: 0.5),
+            child: const Center(
+              child: Column(
+                mainAxisSize: MainAxisSize.min,
+                children: [
+                  CircularProgressIndicator(
+                    valueColor: AlwaysStoppedAnimation<Color>(Colors.white),
                   ),
-                  leading: Icon(IconsaxPlusBold.direct_normal,
-                      size: 24.w, color: AppColors.secondary),
-                  title: Text('Email Notifications',
-                      style: GoogleFonts.poppins(
-                          fontSize: 14.sp,
-                          fontWeight: FontWeight.w400,
-                          color: AppColors.textPrimary)),
-                  trailing: Icon(
-                      viewModel.isEmailNotificationsEnabled ?? false
-                          ? IconsaxPlusBold.toggle_on_circle
-                          : IconsaxPlusLinear.toggle_off_circle,
-                      size: 24.w,
-                      color: AppColors.textPrimary),
-                ),
-                SizedBox(height: 10.h),
-                ListTile(
-                  onTap: viewModel.onSmsNotificationsTap,
-                  tileColor: AppColors.grey600,
-                  shape: RoundedRectangleBorder(
-                    borderRadius: BorderRadius.circular(16.r),
+                  SizedBox(height: 16),
+                  Text(
+                    'Deleting account...',
+                    style: TextStyle(
+                      color: Colors.white,
+                      fontSize: 16,
+                    ),
                   ),
-                  leading: Icon(IconsaxPlusBold.sms,
-                      size: 24.w, color: AppColors.secondary),
-                  title: Text('SMS Notifications',
-                      style: GoogleFonts.poppins(
-                          fontSize: 14.sp,
-                          fontWeight: FontWeight.w400,
-                          color: AppColors.textPrimary)),
-                  trailing: Icon(
-                      viewModel.isSmsNotificationsEnabled ?? false
-                          ? IconsaxPlusBold.toggle_on_circle
-                          : IconsaxPlusLinear.toggle_off_circle,
-                      size: 24.w,
-                      color: AppColors.textPrimary),
-                ),
-                SizedBox(height: 10.h),
-                ListTile(
-                  onTap: viewModel.onDeleteAccountTap,
-                  tileColor: AppColors.grey600,
-                  shape: RoundedRectangleBorder(
-                    borderRadius: BorderRadius.circular(16.r),
-                  ),
-                  leading: Icon(IconsaxPlusBold.trash,
-                      size: 24.w, color: AppColors.secondary),
-                  title: Text('Delete Account',
-                      style: GoogleFonts.poppins(
-                          fontSize: 14.sp,
-                          fontWeight: FontWeight.w400,
-                          color: AppColors.textPrimary)),
-                  trailing: Icon(IconsaxPlusLinear.arrow_right_3,
-                      size: 24.w, color: AppColors.textPrimary),
-                ),
-              ],
+                ],
+              ),
             ),
           ),
-        )));
+      ],
+    );
   }
 
   @override
