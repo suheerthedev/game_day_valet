@@ -1,14 +1,11 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:game_day_valet/ui/common/app_colors.dart';
-import 'package:game_day_valet/ui/common/ui_helpers.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:stacked/stacked.dart';
 import 'package:stacked_services/stacked_services.dart';
 
 import 'confirmation_dialog_model.dart';
-
-const double _graphicSize = 60;
 
 class ConfirmationDialog extends StackedView<ConfirmationDialogModel> {
   final DialogRequest request;
