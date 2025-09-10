@@ -234,8 +234,6 @@ MockSharedPreferencesService getAndRegisterSharedPreferencesService() {
   return service;
 }
 
-
-
 MockSportsService getAndRegisterSportsService() {
   _removeRegistrationIfExists<SportsService>();
   final service = MockSportsService();

@@ -63,9 +63,10 @@ class DefaultFirebaseOptions {
     messagingSenderId: '222515758866',
     projectId: 'game-day-valet-gdv',
     storageBucket: 'game-day-valet-gdv.firebasestorage.app',
-    androidClientId: '222515758866-linosllsubbu2o54kfrq95t248ji7bdr.apps.googleusercontent.com',
-    iosClientId: '222515758866-4su3m42dbljo1rv9ibr3hq07367nh3ln.apps.googleusercontent.com',
+    androidClientId:
+        '222515758866-linosllsubbu2o54kfrq95t248ji7bdr.apps.googleusercontent.com',
+    iosClientId:
+        '222515758866-4su3m42dbljo1rv9ibr3hq07367nh3ln.apps.googleusercontent.com',
     iosBundleId: 'com.gdv.gameDayValet',
   );
-
 }

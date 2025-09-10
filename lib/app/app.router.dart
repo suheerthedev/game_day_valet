@@ -5,10 +5,10 @@
 // **************************************************************************
 
 // ignore_for_file: no_leading_underscores_for_library_prefixes
-import 'package:flutter/material.dart' as _i30;
+import 'package:flutter/material.dart' as _i31;
 import 'package:flutter/material.dart';
-import 'package:game_day_valet/models/bundle_model.dart' as _i32;
-import 'package:game_day_valet/models/item_model.dart' as _i31;
+import 'package:game_day_valet/models/bundle_model.dart' as _i33;
+import 'package:game_day_valet/models/item_model.dart' as _i32;
 import 'package:game_day_valet/ui/views/add_rentals/add_rentals_view.dart'
     as _i24;
 import 'package:game_day_valet/ui/views/chat/chat_view.dart' as _i20;
@@ -40,6 +40,7 @@ import 'package:game_day_valet/ui/views/rental_status/rental_status_view.dart'
 import 'package:game_day_valet/ui/views/reset_password/reset_password_view.dart'
     as _i8;
 import 'package:game_day_valet/ui/views/search/search_view.dart' as _i26;
+import 'package:game_day_valet/ui/views/settings/settings_view.dart' as _i30;
 import 'package:game_day_valet/ui/views/sign_in/sign_in_view.dart' as _i6;
 import 'package:game_day_valet/ui/views/sign_up/sign_up_view.dart' as _i5;
 import 'package:game_day_valet/ui/views/startup/startup_view.dart' as _i3;
@@ -52,7 +53,7 @@ import 'package:game_day_valet/ui/views/verify_email/verify_email_view.dart'
 import 'package:game_day_valet/ui/views/verify_password_reset_code/verify_password_reset_code_view.dart'
     as _i22;
 import 'package:stacked/stacked.dart' as _i1;
-import 'package:stacked_services/stacked_services.dart' as _i33;
+import 'package:stacked_services/stacked_services.dart' as _i34;
 
 class Routes {
   static const homeView = '/home-view';
@@ -111,6 +112,8 @@ class Routes {
 
   static const termsAndConditionsView = '/terms-and-conditions-view';
 
+  static const settingsView = '/settings-view';
+
   static const all = <String>{
     homeView,
     startupView,
@@ -140,6 +143,7 @@ class Routes {
     inboxView,
     tournamentsView,
     termsAndConditionsView,
+    settingsView,
   };
 }
 
@@ -257,23 +261,27 @@ class StackedRouter extends _i1.RouterBase {
       Routes.termsAndConditionsView,
       page: _i29.TermsAndConditionsView,
     ),
+    _i1.RouteDef(
+      Routes.settingsView,
+      page: _i30.SettingsView,
+    ),
   ];
 
   final _pagesMap = <Type, _i1.StackedRouteFactory>{
     _i2.HomeView: (data) {
-      return _i30.MaterialPageRoute<dynamic>(
+      return _i31.MaterialPageRoute<dynamic>(
         builder: (context) => const _i2.HomeView(),
         settings: data,
       );
     },
     _i3.StartupView: (data) {
-      return _i30.MaterialPageRoute<dynamic>(
+      return _i31.MaterialPageRoute<dynamic>(
         builder: (context) => const _i3.StartupView(),
         settings: data,
       );
     },
     _i4.OnboardingView: (data) {
-      return _i30.PageRouteBuilder<dynamic>(
+      return _i31.PageRouteBuilder<dynamic>(
         pageBuilder: (context, animation, secondaryAnimation) =>
             const _i4.OnboardingView(),
         settings: data,
@@ -288,94 +296,94 @@ class StackedRouter extends _i1.RouterBase {
       final args = data.getArgs<SignUpViewArguments>(
         orElse: () => const SignUpViewArguments(),
       );
-      return _i30.MaterialPageRoute<dynamic>(
+      return _i31.MaterialPageRoute<dynamic>(
         builder: (context) =>
             _i5.SignUpView(key: args.key, referralCode: args.referralCode),
         settings: data,
       );
     },
     _i6.SignInView: (data) {
-      return _i30.MaterialPageRoute<dynamic>(
+      return _i31.MaterialPageRoute<dynamic>(
         builder: (context) => const _i6.SignInView(),
         settings: data,
       );
     },
     _i7.ForgotPasswordView: (data) {
-      return _i30.MaterialPageRoute<dynamic>(
+      return _i31.MaterialPageRoute<dynamic>(
         builder: (context) => const _i7.ForgotPasswordView(),
         settings: data,
       );
     },
     _i8.ResetPasswordView: (data) {
       final args = data.getArgs<ResetPasswordViewArguments>(nullOk: false);
-      return _i30.MaterialPageRoute<dynamic>(
+      return _i31.MaterialPageRoute<dynamic>(
         builder: (context) => _i8.ResetPasswordView(
             key: args.key, email: args.email, code: args.code),
         settings: data,
       );
     },
     _i9.MainView: (data) {
-      return _i30.MaterialPageRoute<dynamic>(
+      return _i31.MaterialPageRoute<dynamic>(
         builder: (context) => const _i9.MainView(),
         settings: data,
       );
     },
     _i10.RentalBookingView: (data) {
-      return _i30.MaterialPageRoute<dynamic>(
+      return _i31.MaterialPageRoute<dynamic>(
         builder: (context) => const _i10.RentalBookingView(),
         settings: data,
       );
     },
     _i11.RentalStatusView: (data) {
-      return _i30.MaterialPageRoute<dynamic>(
+      return _i31.MaterialPageRoute<dynamic>(
         builder: (context) => const _i11.RentalStatusView(),
         settings: data,
       );
     },
     _i12.ProfileView: (data) {
-      return _i30.MaterialPageRoute<dynamic>(
+      return _i31.MaterialPageRoute<dynamic>(
         builder: (context) => const _i12.ProfileView(),
         settings: data,
       );
     },
     _i13.EditProfileView: (data) {
-      return _i30.MaterialPageRoute<dynamic>(
+      return _i31.MaterialPageRoute<dynamic>(
         builder: (context) => const _i13.EditProfileView(),
         settings: data,
       );
     },
     _i14.RentalHistoryView: (data) {
-      return _i30.MaterialPageRoute<dynamic>(
+      return _i31.MaterialPageRoute<dynamic>(
         builder: (context) => const _i14.RentalHistoryView(),
         settings: data,
       );
     },
     _i15.FavoritesView: (data) {
-      return _i30.MaterialPageRoute<dynamic>(
+      return _i31.MaterialPageRoute<dynamic>(
         builder: (context) => const _i15.FavoritesView(),
         settings: data,
       );
     },
     _i16.PrivacyPolicyView: (data) {
-      return _i30.MaterialPageRoute<dynamic>(
+      return _i31.MaterialPageRoute<dynamic>(
         builder: (context) => const _i16.PrivacyPolicyView(),
         settings: data,
       );
     },
     _i17.ReferAndEarnView: (data) {
-      return _i30.MaterialPageRoute<dynamic>(
+      return _i31.MaterialPageRoute<dynamic>(
         builder: (context) => const _i17.ReferAndEarnView(),
         settings: data,
       );
     },
     _i18.FaqView: (data) {
-      return _i30.MaterialPageRoute<dynamic>(
+      return _i31.MaterialPageRoute<dynamic>(
         builder: (context) => const _i18.FaqView(),
         settings: data,
       );
     },
     _i19.NotificationView: (data) {
-      return _i30.MaterialPageRoute<dynamic>(
+      return _i31.MaterialPageRoute<dynamic>(
         builder: (context) => const _i19.NotificationView(),
         settings: data,
       );
@@ -384,7 +392,7 @@ class StackedRouter extends _i1.RouterBase {
       final args = data.getArgs<ChatViewArguments>(
         orElse: () => const ChatViewArguments(),
       );
-      return _i30.MaterialPageRoute<dynamic>(
+      return _i31.MaterialPageRoute<dynamic>(
         builder: (context) =>
             _i20.ChatView(key: args.key, conversationId: args.conversationId),
         settings: data,
@@ -392,7 +400,7 @@ class StackedRouter extends _i1.RouterBase {
     },
     _i21.OtpView: (data) {
       final args = data.getArgs<OtpViewArguments>(nullOk: false);
-      return _i30.MaterialPageRoute<dynamic>(
+      return _i31.MaterialPageRoute<dynamic>(
         builder: (context) => _i21.OtpView(key: args.key, email: args.email),
         settings: data,
       );
@@ -400,7 +408,7 @@ class StackedRouter extends _i1.RouterBase {
     _i22.VerifyPasswordResetCodeView: (data) {
       final args =
           data.getArgs<VerifyPasswordResetCodeViewArguments>(nullOk: false);
-      return _i30.MaterialPageRoute<dynamic>(
+      return _i31.MaterialPageRoute<dynamic>(
         builder: (context) =>
             _i22.VerifyPasswordResetCodeView(key: args.key, email: args.email),
         settings: data,
@@ -408,7 +416,7 @@ class StackedRouter extends _i1.RouterBase {
     },
     _i23.VerifyEmailView: (data) {
       final args = data.getArgs<VerifyEmailViewArguments>(nullOk: false);
-      return _i30.MaterialPageRoute<dynamic>(
+      return _i31.MaterialPageRoute<dynamic>(
         builder: (context) =>
             _i23.VerifyEmailView(key: args.key, email: args.email),
         settings: data,
@@ -416,7 +424,7 @@ class StackedRouter extends _i1.RouterBase {
     },
     _i24.AddRentalsView: (data) {
       final args = data.getArgs<AddRentalsViewArguments>(nullOk: false);
-      return _i30.MaterialPageRoute<dynamic>(
+      return _i31.MaterialPageRoute<dynamic>(
         builder: (context) =>
             _i24.AddRentalsView(key: args.key, tournamentId: args.tournamentId),
         settings: data,
@@ -424,7 +432,7 @@ class StackedRouter extends _i1.RouterBase {
     },
     _i25.CheckoutView: (data) {
       final args = data.getArgs<CheckoutViewArguments>(nullOk: false);
-      return _i30.MaterialPageRoute<dynamic>(
+      return _i31.MaterialPageRoute<dynamic>(
         builder: (context) => _i25.CheckoutView(
             key: args.key,
             tournamentId: args.tournamentId,
@@ -437,7 +445,7 @@ class StackedRouter extends _i1.RouterBase {
       final args = data.getArgs<SearchViewArguments>(
         orElse: () => const SearchViewArguments(),
       );
-      return _i30.PageRouteBuilder<dynamic>(
+      return _i31.PageRouteBuilder<dynamic>(
         pageBuilder: (context, animation, secondaryAnimation) =>
             _i26.SearchView(
                 key: args.key,
@@ -449,22 +457,28 @@ class StackedRouter extends _i1.RouterBase {
       );
     },
     _i27.InboxView: (data) {
-      return _i30.MaterialPageRoute<dynamic>(
+      return _i31.MaterialPageRoute<dynamic>(
         builder: (context) => const _i27.InboxView(),
         settings: data,
       );
     },
     _i28.TournamentsView: (data) {
       final args = data.getArgs<TournamentsViewArguments>(nullOk: false);
-      return _i30.MaterialPageRoute<dynamic>(
+      return _i31.MaterialPageRoute<dynamic>(
         builder: (context) => _i28.TournamentsView(
             key: args.key, sportsName: args.sportsName, sportId: args.sportId),
         settings: data,
       );
     },
     _i29.TermsAndConditionsView: (data) {
-      return _i30.MaterialPageRoute<dynamic>(
+      return _i31.MaterialPageRoute<dynamic>(
         builder: (context) => const _i29.TermsAndConditionsView(),
+        settings: data,
+      );
+    },
+    _i30.SettingsView: (data) {
+      return _i31.MaterialPageRoute<dynamic>(
+        builder: (context) => const _i30.SettingsView(),
         settings: data,
       );
     },
@@ -483,7 +497,7 @@ class SignUpViewArguments {
     this.referralCode,
   });
 
-  final _i30.Key? key;
+  final _i31.Key? key;
 
   final String? referralCode;
 
@@ -511,7 +525,7 @@ class ResetPasswordViewArguments {
     required this.code,
   });
 
-  final _i30.Key? key;
+  final _i31.Key? key;
 
   final String email;
 
@@ -540,7 +554,7 @@ class ChatViewArguments {
     this.conversationId,
   });
 
-  final _i30.Key? key;
+  final _i31.Key? key;
 
   final int? conversationId;
 
@@ -567,7 +581,7 @@ class OtpViewArguments {
     required this.email,
   });
 
-  final _i30.Key? key;
+  final _i31.Key? key;
 
   final String email;
 
@@ -594,7 +608,7 @@ class VerifyPasswordResetCodeViewArguments {
     required this.email,
   });
 
-  final _i30.Key? key;
+  final _i31.Key? key;
 
   final String email;
 
@@ -621,7 +635,7 @@ class VerifyEmailViewArguments {
     required this.email,
   });
 
-  final _i30.Key? key;
+  final _i31.Key? key;
 
   final String email;
 
@@ -648,7 +662,7 @@ class AddRentalsViewArguments {
     required this.tournamentId,
   });
 
-  final _i30.Key? key;
+  final _i31.Key? key;
 
   final int tournamentId;
 
@@ -677,13 +691,13 @@ class CheckoutViewArguments {
     required this.bundles,
   });
 
-  final _i30.Key? key;
+  final _i31.Key? key;
 
   final int tournamentId;
 
-  final List<_i31.ItemModel> items;
+  final List<_i32.ItemModel> items;
 
-  final List<_i32.BundleModel> bundles;
+  final List<_i33.BundleModel> bundles;
 
   @override
   String toString() {
@@ -715,7 +729,7 @@ class SearchViewArguments {
     this.isItemSearch = false,
   });
 
-  final _i30.Key? key;
+  final _i31.Key? key;
 
   final bool isTournamentSearch;
 
@@ -747,7 +761,7 @@ class TournamentsViewArguments {
     required this.sportId,
   });
 
-  final _i30.Key? key;
+  final _i31.Key? key;
 
   final String sportsName;
 
@@ -772,7 +786,7 @@ class TournamentsViewArguments {
   }
 }
 
-extension NavigatorStateExtension on _i33.NavigationService {
+extension NavigatorStateExtension on _i34.NavigationService {
   Future<dynamic> navigateToHomeView([
     int? routerId,
     bool preventDuplicates = true,
@@ -816,7 +830,7 @@ extension NavigatorStateExtension on _i33.NavigationService {
   }
 
   Future<dynamic> navigateToSignUpView({
-    _i30.Key? key,
+    _i31.Key? key,
     String? referralCode,
     int? routerId,
     bool preventDuplicates = true,
@@ -861,7 +875,7 @@ extension NavigatorStateExtension on _i33.NavigationService {
   }
 
   Future<dynamic> navigateToResetPasswordView({
-    _i30.Key? key,
+    _i31.Key? key,
     required String email,
     required String code,
     int? routerId,
@@ -1034,7 +1048,7 @@ extension NavigatorStateExtension on _i33.NavigationService {
   }
 
   Future<dynamic> navigateToChatView({
-    _i30.Key? key,
+    _i31.Key? key,
     int? conversationId,
     int? routerId,
     bool preventDuplicates = true,
@@ -1051,7 +1065,7 @@ extension NavigatorStateExtension on _i33.NavigationService {
   }
 
   Future<dynamic> navigateToOtpView({
-    _i30.Key? key,
+    _i31.Key? key,
     required String email,
     int? routerId,
     bool preventDuplicates = true,
@@ -1068,7 +1082,7 @@ extension NavigatorStateExtension on _i33.NavigationService {
   }
 
   Future<dynamic> navigateToVerifyPasswordResetCodeView({
-    _i30.Key? key,
+    _i31.Key? key,
     required String email,
     int? routerId,
     bool preventDuplicates = true,
@@ -1085,7 +1099,7 @@ extension NavigatorStateExtension on _i33.NavigationService {
   }
 
   Future<dynamic> navigateToVerifyEmailView({
-    _i30.Key? key,
+    _i31.Key? key,
     required String email,
     int? routerId,
     bool preventDuplicates = true,
@@ -1102,7 +1116,7 @@ extension NavigatorStateExtension on _i33.NavigationService {
   }
 
   Future<dynamic> navigateToAddRentalsView({
-    _i30.Key? key,
+    _i31.Key? key,
     required int tournamentId,
     int? routerId,
     bool preventDuplicates = true,
@@ -1120,10 +1134,10 @@ extension NavigatorStateExtension on _i33.NavigationService {
   }
 
   Future<dynamic> navigateToCheckoutView({
-    _i30.Key? key,
+    _i31.Key? key,
     required int tournamentId,
-    required List<_i31.ItemModel> items,
-    required List<_i32.BundleModel> bundles,
+    required List<_i32.ItemModel> items,
+    required List<_i33.BundleModel> bundles,
     int? routerId,
     bool preventDuplicates = true,
     Map<String, String>? parameters,
@@ -1143,7 +1157,7 @@ extension NavigatorStateExtension on _i33.NavigationService {
   }
 
   Future<dynamic> navigateToSearchView({
-    _i30.Key? key,
+    _i31.Key? key,
     bool isTournamentSearch = false,
     bool isItemSearch = false,
     int? routerId,
@@ -1178,7 +1192,7 @@ extension NavigatorStateExtension on _i33.NavigationService {
   }
 
   Future<dynamic> navigateToTournamentsView({
-    _i30.Key? key,
+    _i31.Key? key,
     required String sportsName,
     required int sportId,
     int? routerId,
@@ -1204,6 +1218,20 @@ extension NavigatorStateExtension on _i33.NavigationService {
         transition,
   ]) async {
     return navigateTo<dynamic>(Routes.termsAndConditionsView,
+        id: routerId,
+        preventDuplicates: preventDuplicates,
+        parameters: parameters,
+        transition: transition);
+  }
+
+  Future<dynamic> navigateToSettingsView([
+    int? routerId,
+    bool preventDuplicates = true,
+    Map<String, String>? parameters,
+    Widget Function(BuildContext, Animation<double>, Animation<double>, Widget)?
+        transition,
+  ]) async {
+    return navigateTo<dynamic>(Routes.settingsView,
         id: routerId,
         preventDuplicates: preventDuplicates,
         parameters: parameters,
@@ -1253,7 +1281,7 @@ extension NavigatorStateExtension on _i33.NavigationService {
   }
 
   Future<dynamic> replaceWithSignUpView({
-    _i30.Key? key,
+    _i31.Key? key,
     String? referralCode,
     int? routerId,
     bool preventDuplicates = true,
@@ -1298,7 +1326,7 @@ extension NavigatorStateExtension on _i33.NavigationService {
   }
 
   Future<dynamic> replaceWithResetPasswordView({
-    _i30.Key? key,
+    _i31.Key? key,
     required String email,
     required String code,
     int? routerId,
@@ -1471,7 +1499,7 @@ extension NavigatorStateExtension on _i33.NavigationService {
   }
 
   Future<dynamic> replaceWithChatView({
-    _i30.Key? key,
+    _i31.Key? key,
     int? conversationId,
     int? routerId,
     bool preventDuplicates = true,
@@ -1488,7 +1516,7 @@ extension NavigatorStateExtension on _i33.NavigationService {
   }
 
   Future<dynamic> replaceWithOtpView({
-    _i30.Key? key,
+    _i31.Key? key,
     required String email,
     int? routerId,
     bool preventDuplicates = true,
@@ -1505,7 +1533,7 @@ extension NavigatorStateExtension on _i33.NavigationService {
   }
 
   Future<dynamic> replaceWithVerifyPasswordResetCodeView({
-    _i30.Key? key,
+    _i31.Key? key,
     required String email,
     int? routerId,
     bool preventDuplicates = true,
@@ -1522,7 +1550,7 @@ extension NavigatorStateExtension on _i33.NavigationService {
   }
 
   Future<dynamic> replaceWithVerifyEmailView({
-    _i30.Key? key,
+    _i31.Key? key,
     required String email,
     int? routerId,
     bool preventDuplicates = true,
@@ -1539,7 +1567,7 @@ extension NavigatorStateExtension on _i33.NavigationService {
   }
 
   Future<dynamic> replaceWithAddRentalsView({
-    _i30.Key? key,
+    _i31.Key? key,
     required int tournamentId,
     int? routerId,
     bool preventDuplicates = true,
@@ -1557,10 +1585,10 @@ extension NavigatorStateExtension on _i33.NavigationService {
   }
 
   Future<dynamic> replaceWithCheckoutView({
-    _i30.Key? key,
+    _i31.Key? key,
     required int tournamentId,
-    required List<_i31.ItemModel> items,
-    required List<_i32.BundleModel> bundles,
+    required List<_i32.ItemModel> items,
+    required List<_i33.BundleModel> bundles,
     int? routerId,
     bool preventDuplicates = true,
     Map<String, String>? parameters,
@@ -1580,7 +1608,7 @@ extension NavigatorStateExtension on _i33.NavigationService {
   }
 
   Future<dynamic> replaceWithSearchView({
-    _i30.Key? key,
+    _i31.Key? key,
     bool isTournamentSearch = false,
     bool isItemSearch = false,
     int? routerId,
@@ -1615,7 +1643,7 @@ extension NavigatorStateExtension on _i33.NavigationService {
   }
 
   Future<dynamic> replaceWithTournamentsView({
-    _i30.Key? key,
+    _i31.Key? key,
     required String sportsName,
     required int sportId,
     int? routerId,
@@ -1641,6 +1669,20 @@ extension NavigatorStateExtension on _i33.NavigationService {
         transition,
   ]) async {
     return replaceWith<dynamic>(Routes.termsAndConditionsView,
+        id: routerId,
+        preventDuplicates: preventDuplicates,
+        parameters: parameters,
+        transition: transition);
+  }
+
+  Future<dynamic> replaceWithSettingsView([
+    int? routerId,
+    bool preventDuplicates = true,
+    Map<String, String>? parameters,
+    Widget Function(BuildContext, Animation<double>, Animation<double>, Widget)?
+        transition,
+  ]) async {
+    return replaceWith<dynamic>(Routes.settingsView,
         id: routerId,
         preventDuplicates: preventDuplicates,
         parameters: parameters,
