@@ -215,66 +215,20 @@ class ProfileView extends StackedView<ProfileViewModel> {
                         ),
                         SizedBox(height: 10.h),
                         ListTile(
-                          onTap: viewModel.onNotificationsTap,
+                          onTap: viewModel.onSettingsTap,
                           tileColor: AppColors.grey600,
                           shape: RoundedRectangleBorder(
                             borderRadius: BorderRadius.circular(16.r),
                           ),
-                          leading: Icon(IconsaxPlusBold.notification,
+                          leading: Icon(IconsaxPlusBold.setting,
                               size: 24.w, color: AppColors.secondary),
-                          title: Text('Notifications',
+                          title: Text('Settings',
                               style: GoogleFonts.poppins(
                                   fontSize: 14.sp,
                                   fontWeight: FontWeight.w400,
                                   color: AppColors.textPrimary)),
-                          trailing: Icon(
-                              viewModel.isNotificationsEnabled ?? false
-                                  ? IconsaxPlusBold.toggle_on_circle
-                                  : IconsaxPlusLinear.toggle_off_circle,
-                              size: 24.w,
-                              color: AppColors.textPrimary),
-                        ),
-                        SizedBox(height: 10.h),
-                        ListTile(
-                          onTap: viewModel.onEmailNotificationsTap,
-                          tileColor: AppColors.grey600,
-                          shape: RoundedRectangleBorder(
-                            borderRadius: BorderRadius.circular(16.r),
-                          ),
-                          leading: Icon(IconsaxPlusBold.direct_normal,
-                              size: 24.w, color: AppColors.secondary),
-                          title: Text('Email Notifications',
-                              style: GoogleFonts.poppins(
-                                  fontSize: 14.sp,
-                                  fontWeight: FontWeight.w400,
-                                  color: AppColors.textPrimary)),
-                          trailing: Icon(
-                              viewModel.isEmailNotificationsEnabled ?? false
-                                  ? IconsaxPlusBold.toggle_on_circle
-                                  : IconsaxPlusLinear.toggle_off_circle,
-                              size: 24.w,
-                              color: AppColors.textPrimary),
-                        ),
-                        SizedBox(height: 10.h),
-                        ListTile(
-                          onTap: viewModel.onSmsNotificationsTap,
-                          tileColor: AppColors.grey600,
-                          shape: RoundedRectangleBorder(
-                            borderRadius: BorderRadius.circular(16.r),
-                          ),
-                          leading: Icon(IconsaxPlusBold.sms,
-                              size: 24.w, color: AppColors.secondary),
-                          title: Text('SMS Notifications',
-                              style: GoogleFonts.poppins(
-                                  fontSize: 14.sp,
-                                  fontWeight: FontWeight.w400,
-                                  color: AppColors.textPrimary)),
-                          trailing: Icon(
-                              viewModel.isSmsNotificationsEnabled ?? false
-                                  ? IconsaxPlusBold.toggle_on_circle
-                                  : IconsaxPlusLinear.toggle_off_circle,
-                              size: 24.w,
-                              color: AppColors.textPrimary),
+                          trailing: Icon(IconsaxPlusLinear.arrow_right_3,
+                              size: 24.w, color: AppColors.textPrimary),
                         ),
                         SizedBox(height: 20.h),
                         MainButton(
@@ -354,10 +308,4 @@ class ProfileView extends StackedView<ProfileViewModel> {
     BuildContext context,
   ) =>
       ProfileViewModel();
-
-  @override
-  void onViewModelReady(ProfileViewModel viewModel) {
-    viewModel.init();
-    super.onViewModelReady(viewModel);
-  }
 }
