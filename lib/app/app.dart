@@ -51,6 +51,7 @@ import 'package:game_day_valet/ui/views/terms_and_conditions/terms_and_condition
 import 'package:game_day_valet/services/notification_service.dart';
 import 'package:game_day_valet/services/startup_service.dart';
 import 'package:game_day_valet/ui/views/settings/settings_view.dart';
+import 'package:game_day_valet/ui/dialogs/confirmation/confirmation_dialog.dart';
 // @stacked-import
 
 @StackedApp(
@@ -127,6 +128,7 @@ import 'package:game_day_valet/ui/views/settings/settings_view.dart';
   dialogs: [
     StackedDialog(classType: InfoAlertDialog),
     StackedDialog(classType: SuccessDialog),
+    StackedDialog(classType: ConfirmationDialog),
 // @stacked-dialog
   ],
 )

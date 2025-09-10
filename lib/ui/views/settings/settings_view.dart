@@ -97,6 +97,23 @@ class SettingsView extends StackedView<SettingsViewModel> {
                       size: 24.w,
                       color: AppColors.textPrimary),
                 ),
+                SizedBox(height: 10.h),
+                ListTile(
+                  onTap: viewModel.onDeleteAccountTap,
+                  tileColor: AppColors.grey600,
+                  shape: RoundedRectangleBorder(
+                    borderRadius: BorderRadius.circular(16.r),
+                  ),
+                  leading: Icon(IconsaxPlusBold.trash,
+                      size: 24.w, color: AppColors.secondary),
+                  title: Text('Delete Account',
+                      style: GoogleFonts.poppins(
+                          fontSize: 14.sp,
+                          fontWeight: FontWeight.w400,
+                          color: AppColors.textPrimary)),
+                  trailing: Icon(IconsaxPlusLinear.arrow_right_3,
+                      size: 24.w, color: AppColors.textPrimary),
+                ),
               ],
             ),
           ),

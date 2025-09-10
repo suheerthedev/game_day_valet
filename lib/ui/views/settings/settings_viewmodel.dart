@@ -1,3 +1,4 @@
+import 'package:game_day_valet/app/app.dialogs.dart';
 import 'package:game_day_valet/app/app.locator.dart';
 import 'package:game_day_valet/config/api_config.dart';
 import 'package:game_day_valet/core/enums/snackbar_type.dart';
@@ -13,6 +14,7 @@ class SettingsViewModel extends BaseViewModel {
   final _apiService = locator<ApiService>();
   final _snackbarService = locator<SnackbarService>();
   final _userService = locator<UserService>();
+  final _dialogService = locator<DialogService>();
 
   UserModel? get currentUser => _userService.currentUser;
 
@@ -108,6 +110,23 @@ class SettingsViewModel extends BaseViewModel {
           message: "Something went wrong", variant: SnackbarType.error);
     } finally {
       rebuildUi();
+    }
+  }
+
+  void onDeleteAccountTap() async {
+    logger.info("Delete Account");
+
+    final response = await _dialogService.showCustomDialog(
+      variant: DialogType.confirmation,
+      title: "Delete Account",
+      description:
+          "Are you sure you want to delete your account? This action cannot be undone.",
+    );
+
+    if (response?.confirmed ?? false) {
+      logger.info("Delete Account");
+    } else {
+      logger.info("Cancel");
     }
   }
 }
