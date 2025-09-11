@@ -31,8 +31,7 @@ class SignInView extends StackedView<SignInViewModel> {
             child: viewModel.isBusy
                 ? const Center(child: CircularProgressIndicator())
                 : Padding(
-                    padding:
-                        EdgeInsets.symmetric(horizontal: 20.w, vertical: 20.h),
+                    padding: EdgeInsets.symmetric(horizontal: 20.w),
                     child: SingleChildScrollView(
                       child: Column(
                         crossAxisAlignment: CrossAxisAlignment.start,
@@ -231,7 +230,7 @@ Account""",
                           if (Platform.isIOS) ...[
                             SizedBox(height: 10.h),
                             InkWell(
-                              onTap: viewModel.onAppleSignIn,
+                              onTap: viewModel.onAppleSignUp,
                               child: Container(
                                   width: 340.w,
                                   height: 58.h,

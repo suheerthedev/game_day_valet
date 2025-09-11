@@ -30,7 +30,7 @@ Future<void> main() async {
 
   // Initialize deep linking service
 
-  logger.intialize();
+  logger.intialize(isProduction: true);
 
   await dotenv.load(fileName: ".env");
   await setupLocator();

@@ -29,7 +29,7 @@ class ResetPasswordView extends StackedView<ResetPasswordViewModel> {
         ),
         body: SafeArea(
             child: Padding(
-          padding: EdgeInsets.symmetric(horizontal: 20.w, vertical: 20.h),
+          padding: EdgeInsets.symmetric(horizontal: 20.w),
           child: viewModel.isBusy
               ? const Center(child: CircularProgressIndicator())
               : SingleChildScrollView(

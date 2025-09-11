@@ -3,6 +3,7 @@ import 'package:game_day_valet/app/app.locator.dart';
 import 'package:game_day_valet/app/app.router.dart';
 import 'package:game_day_valet/core/enums/snackbar_type.dart';
 import 'package:game_day_valet/services/api_exception.dart';
+import 'package:game_day_valet/services/apple_sign_in_service.dart';
 import 'package:game_day_valet/services/auth_service.dart';
 import 'package:game_day_valet/services/chat_service.dart';
 import 'package:game_day_valet/services/google_sign_in_service.dart';
@@ -21,6 +22,7 @@ class SignUpViewModel extends BaseViewModel {
   final _secureStorageService = locator<SecureStorageService>();
   // final _userService = locator<UserService>();
   final _startupService = locator<StartupService>();
+  final _appleSignInService = locator<AppleSignInService>();
 
   final String? referralCode;
   SignUpViewModel({this.referralCode});
@@ -165,7 +167,7 @@ class SignUpViewModel extends BaseViewModel {
     }
   }
 
-  void onGoogleSignUp() async {
+  Future<void> onGoogleSignUp() async {
     try {
       final response = await _googleSignInService.signIn();
 
@@ -185,6 +187,8 @@ class SignUpViewModel extends BaseViewModel {
             message: response['message'],
             duration: const Duration(seconds: 3),
           );
+
+          logger.info(response.toString());
 
           if (!response.containsKey('token')) {
             throw ApiException("Token not found in response", 500);
@@ -221,8 +225,62 @@ class SignUpViewModel extends BaseViewModel {
     }
   }
 
-  void onAppleSignUp() {
+  Future<void> onAppleSignUp() async {
     logger.info("Apple Sign Up");
+
+    try {
+      final response = await _appleSignInService.signIn();
+
+      if (response != null) {
+        if (response.containsKey('errors')) {
+          if (response['message'] != null) {
+            _snackbarService.showCustomSnackBar(
+              variant: SnackbarType.error,
+              message: response['message'],
+            );
+          }
+        } else {
+          setBusy(true);
+          await _snackbarService.showCustomSnackBar(
+            variant: SnackbarType.success,
+            title: 'Success',
+            message: response['message'],
+            duration: const Duration(seconds: 3),
+          );
+
+          if (!response.containsKey('token')) {
+            throw ApiException("Token not found in response", 500);
+          }
+
+          await _secureStorageService.saveToken(response['token']);
+
+          await _startupService.runTokenTasks();
+
+          // Ensure ChatService initializes Pusher after user fetch
+          final chatService = locator<ChatService>();
+          await chatService.initializePusher();
+
+          await _navigationService.clearStackAndShow(Routes.mainView);
+        }
+      }
+
+      logger.info("Apple Sign In Response: $response");
+    } on ApiException catch (e) {
+      logger.error("Apple Sign In failed from ViewModel - API Exception", e);
+      _snackbarService.showCustomSnackBar(
+        variant: SnackbarType.error,
+        message: e.message,
+      );
+    } catch (e) {
+      logger.error("Apple Sign In failed from ViewModel - Unknown error", e);
+      _snackbarService.showCustomSnackBar(
+        variant: SnackbarType.error,
+        message: e.toString(),
+      );
+    } finally {
+      setBusy(false);
+      rebuildUi();
+    }
   }
 
   void goToSignIn() {

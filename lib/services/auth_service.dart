@@ -168,4 +168,26 @@ class AuthService {
       throw ApiException("Google Sign In Failed. $e");
     }
   }
+
+  Future<dynamic> signInWithApple({required String idToken}) async {
+    final url = ApiConfig.baseUrl + ApiConfig.appleSignInEndPoint;
+
+    try {
+      final response = await _apiService.post(url, {
+        'id_token': idToken,
+        if (PushNotificationService.fcmToken != null)
+          'fcm_token': PushNotificationService.fcmToken
+      });
+
+      logger.info("Apple Sign In successful for idToken: $idToken");
+      logger.info("Apple Sign In Response: $response");
+      return response;
+    } on ApiException catch (e) {
+      logger.error("Apple Sign In failed - API Exception", e);
+      rethrow;
+    } catch (e) {
+      logger.error("Apple Sign In failed - Unknown error", e);
+      throw ApiException("Apple Sign In Failed. $e");
+    }
+  }
 }

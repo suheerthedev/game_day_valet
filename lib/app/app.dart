@@ -52,6 +52,7 @@ import 'package:game_day_valet/services/notification_service.dart';
 import 'package:game_day_valet/services/startup_service.dart';
 import 'package:game_day_valet/ui/views/settings/settings_view.dart';
 import 'package:game_day_valet/ui/dialogs/confirmation/confirmation_dialog.dart';
+import 'package:game_day_valet/services/apple_sign_in_service.dart';
 // @stacked-import
 
 @StackedApp(
@@ -119,6 +120,7 @@ import 'package:game_day_valet/ui/dialogs/confirmation/confirmation_dialog.dart'
     LazySingleton(classType: PushNotificationService),
     LazySingleton(classType: NotificationService),
     LazySingleton(classType: StartupService),
+    LazySingleton(classType: AppleSignInService),
 // @stacked-service
   ],
   bottomsheets: [
