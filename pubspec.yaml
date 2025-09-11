@@ -41,6 +41,7 @@ dependencies:
   pusher_channels_flutter: ^2.4.0
   share_plus: ^11.1.0
   shared_preferences: ^2.5.3
+  sign_in_with_apple: ^7.0.1
   stacked: ^3.4.0
   stacked_services: ^1.1.0
 
