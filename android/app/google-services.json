@@ -14,6 +14,14 @@
       },
       "oauth_client": [
         {
+          "client_id": "222515758866-7qif875kc2k3dhqo7s4nsafmn215e0ti.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "com.gdv.game_day_valet",
+            "certificate_hash": "9098f54051d3332e570ecb7df2acbc4136605da3"
+          }
+        },
+        {
           "client_id": "222515758866-linosllsubbu2o54kfrq95t248ji7bdr.apps.googleusercontent.com",
           "client_type": 1,
           "android_info": {

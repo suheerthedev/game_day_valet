@@ -30,8 +30,7 @@ class ForgotPasswordView extends StackedView<ForgotPasswordViewModel> {
                     child: CircularProgressIndicator(),
                   )
                 : Padding(
-                    padding:
-                        EdgeInsets.symmetric(horizontal: 20.w, vertical: 20.h),
+                    padding: EdgeInsets.symmetric(horizontal: 20.w),
                     child: SingleChildScrollView(
                       child: Column(
                         crossAxisAlignment: CrossAxisAlignment.start,

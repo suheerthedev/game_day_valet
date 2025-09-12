@@ -29,7 +29,7 @@ class SignUpView extends StackedView<SignUpViewModel> {
                 ? const Center(child: CircularProgressIndicator())
                 : Padding(
                     padding:
-                        EdgeInsets.symmetric(horizontal: 20.w, vertical: 20.h),
+                        EdgeInsets.only(left: 20.w, right: 20.w, top: 20.h),
                     child: SingleChildScrollView(
                       child: Column(
                         crossAxisAlignment: CrossAxisAlignment.start,
