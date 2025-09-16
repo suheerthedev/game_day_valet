@@ -22,11 +22,27 @@
           }
         },
         {
+          "client_id": "222515758866-a2p76mi5b686d7kusvch1q95l8tto9d3.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "com.gdv.game_day_valet",
+            "certificate_hash": "4de3668d542eb717c7774504609e1dab9050a15f"
+          }
+        },
+        {
           "client_id": "222515758866-linosllsubbu2o54kfrq95t248ji7bdr.apps.googleusercontent.com",
           "client_type": 1,
           "android_info": {
             "package_name": "com.gdv.game_day_valet",
             "certificate_hash": "0af55908ddefd2d3dde48c29986b911722af88b8"
+          }
+        },
+        {
+          "client_id": "222515758866-n4vkin328uscv5eihpp3vfd5r5d5c6dm.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "com.gdv.game_day_valet",
+            "certificate_hash": "27192be1065bbbaa0b07aeb71e7084e1ba75d9c2"
           }
         },
         {

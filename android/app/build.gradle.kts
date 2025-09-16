@@ -45,12 +45,22 @@ android {
 
     signingConfigs {
         create("release") {
-            storeFile = keystoreProperties["storeFile"]?.let { file(it) }
-            storePassword = keystoreProperties["storePassword"] as String?
-            keyAlias = keystoreProperties["keyAlias"] as String?
-            keyPassword = keystoreProperties["keyPassword"] as String?
+            val keyAliasValue = keystoreProperties["keyAlias"]?.toString()
+            val keyPasswordValue = keystoreProperties["keyPassword"]?.toString()
+            val storeFileValue = keystoreProperties["storeFile"]?.toString()
+            val storePasswordValue = keystoreProperties["storePassword"]?.toString()
+    
+            if (keyAliasValue == null || keyPasswordValue == null || storeFileValue == null || storePasswordValue == null) {
+                throw GradleException("❌ Missing keystore properties. Check android/key.properties.")
+            }
+    
+            keyAlias = keyAliasValue
+            keyPassword = keyPasswordValue
+            storeFile = file(storeFileValue)
+            storePassword = storePasswordValue
         }
     }
+    
 
     buildTypes {
         getByName("release") {
