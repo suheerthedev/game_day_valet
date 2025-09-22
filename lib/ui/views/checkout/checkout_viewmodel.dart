@@ -43,6 +43,7 @@ class CheckoutViewModel extends BaseViewModel {
   // String fieldNumberError = '';
 
   void init() {
+    logger.info(tournament.taxRate.toString());
     emailController.text = user?.email ?? '';
     phoneNumberController.text = user?.contactNumber ?? '';
   }
@@ -74,15 +75,20 @@ class CheckoutViewModel extends BaseViewModel {
   }
 
   double totalAmount = 0;
+  double subtotalAmount = 0;
+  double insuranceAmount = 0;
+  double damageWaiverAmount = 0;
+  double discountAmount = 0;
+  double taxAmount = 0;
 
   void calculateTotalAmount() {
-    double subtotal = 0;
+    double itemsSubtotal = 0;
 
     // Items
     for (final item in items) {
       final double itemPrice = double.tryParse(item.price ?? '0') ?? 0;
       if (item.quantity > 0) {
-        subtotal += itemPrice * (item.quantity);
+        itemsSubtotal += itemPrice * (item.quantity);
       }
     }
 
@@ -90,38 +96,56 @@ class CheckoutViewModel extends BaseViewModel {
     for (final bundle in bundles) {
       final double bundlePrice = double.tryParse(bundle.price ?? '0') ?? 0;
       if (bundle.quantity > 0) {
-        subtotal += bundlePrice * (bundle.quantity);
+        itemsSubtotal += bundlePrice * (bundle.quantity);
       }
     }
 
+    subtotalAmount = itemsSubtotal;
+
     // Selected insurance (single select)
+    insuranceAmount = 0;
     for (final option in insuranceOptions) {
       if (option.isSelected) {
-        subtotal += (option.price).toDouble();
+        insuranceAmount = (option.price).toDouble();
         break;
       }
     }
 
     // Selected damage waiver (single select)
+    damageWaiverAmount = 0;
     for (final option in damageWaiverOptions) {
       if (option.isSelected) {
-        subtotal += (option.price).toDouble();
+        damageWaiverAmount = (option.price).toDouble();
         break;
       }
     }
 
-    double finalTotal = subtotal;
+    // Calculate subtotal after insurance and damage waiver
+    double subtotalWithExtras =
+        subtotalAmount + insuranceAmount + damageWaiverAmount;
+
+    // Apply promo code discount
+    discountAmount = 0;
+    double afterDiscount = subtotalWithExtras;
     if (isPromoCodeValid && coupon != null) {
       if (coupon?.type == "fixed") {
-        finalTotal = subtotal - (double.tryParse(coupon?.value ?? '0') ?? 0);
+        discountAmount = double.tryParse(coupon?.value ?? '0') ?? 0;
+        afterDiscount = subtotalWithExtras - discountAmount;
       } else if (coupon?.type == "percent") {
         final double percent = double.tryParse(coupon?.value ?? '0') ?? 0;
-        finalTotal = subtotal * (1 - (percent / 100));
+        discountAmount = subtotalWithExtras * (percent / 100);
+        afterDiscount = subtotalWithExtras - discountAmount;
       }
     }
 
-    if (finalTotal < 0) finalTotal = 0;
-    totalAmount = finalTotal;
+    if (afterDiscount < 0) afterDiscount = 0;
+
+    // Calculate tax on the amount after discount
+    final num taxRate = tournament.taxRate ?? 0;
+    taxAmount = afterDiscount * (taxRate / 100);
+
+    // Final total
+    totalAmount = afterDiscount + taxAmount;
   }
 
   // Future<void> pickDropOffDateTime(BuildContext context) async {
@@ -391,6 +415,12 @@ class CheckoutViewModel extends BaseViewModel {
       "payment_method": "stripe",
       "payment_status": "pending",
       "total_amount": totalAmount.toStringAsFixed(2),
+      "subtotal_amount": subtotalAmount.toStringAsFixed(2),
+      "insurance_amount": insuranceAmount.toStringAsFixed(2),
+      "damage_waiver_amount": damageWaiverAmount.toStringAsFixed(2),
+      "discount_amount": discountAmount.toStringAsFixed(2),
+      "tax_rate": tournament.taxRate,
+      "tax_amount": taxAmount.toStringAsFixed(2),
     };
 
     logger.info("Booking rental body: $body");

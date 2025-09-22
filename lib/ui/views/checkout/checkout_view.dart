@@ -577,7 +577,7 @@ class CheckoutView extends StackedView<CheckoutViewModel> {
                                   }),
                               Expanded(
                                 child: Text(
-                                  "${insurance.label} – \$${insurance.price}",
+                                  "${insurance.label} – \${insurance.price}",
                                   softWrap: true,
                                   style: GoogleFonts.poppins(
                                       fontSize: 14.sp,
@@ -650,6 +650,91 @@ class CheckoutView extends StackedView<CheckoutViewModel> {
                         },
                       ),
                     ],
+
+                    // Order Summary Card
+                    SizedBox(height: 30.h),
+                    Text(
+                      'Order Summary',
+                      style: GoogleFonts.poppins(
+                          fontSize: 18.sp,
+                          fontWeight: FontWeight.w600,
+                          color: AppColors.textPrimary),
+                    ),
+                    SizedBox(height: 10.h),
+                    Container(
+                      width: double.infinity,
+                      decoration: BoxDecoration(
+                        color: AppColors.white,
+                        borderRadius: BorderRadius.circular(10.r),
+                        border:
+                            Border.all(color: AppColors.grey200, width: 1.w),
+                        boxShadow: [
+                          BoxShadow(
+                            color: Colors.black.withValues(alpha: 0.05),
+                            blurRadius: 8,
+                            offset: const Offset(0, 2),
+                          )
+                        ],
+                      ),
+                      child: Padding(
+                        padding: EdgeInsets.symmetric(
+                            horizontal: 16.w, vertical: 16.h),
+                        child: Column(
+                          crossAxisAlignment: CrossAxisAlignment.start,
+                          children: [
+                            _buildSummaryRow(
+                              'Subtotal',
+                              '\$ ${viewModel.subtotalAmount.toStringAsFixed(2)}',
+                              false,
+                            ),
+                            if (viewModel.insuranceAmount > 0) ...[
+                              SizedBox(height: 8.h),
+                              _buildSummaryRow(
+                                'Insurance',
+                                '\$ ${viewModel.insuranceAmount.toStringAsFixed(2)}',
+                                false,
+                              ),
+                            ],
+                            if (viewModel.damageWaiverAmount > 0) ...[
+                              SizedBox(height: 8.h),
+                              _buildSummaryRow(
+                                'Damage Waiver',
+                                '\$ ${viewModel.damageWaiverAmount.toStringAsFixed(2)}',
+                                false,
+                              ),
+                            ],
+                            if (viewModel.discountAmount > 0) ...[
+                              SizedBox(height: 8.h),
+                              _buildSummaryRow(
+                                'Promo Discount',
+                                '-\$ ${viewModel.discountAmount.toStringAsFixed(2)}',
+                                false,
+                                textColor: AppColors.success,
+                              ),
+                            ],
+                            if (viewModel.taxAmount > 0) ...[
+                              SizedBox(height: 8.h),
+                              _buildSummaryRow(
+                                'Tax (${viewModel.tournament.taxRate?.toStringAsFixed(1)}%)',
+                                '\$ ${viewModel.taxAmount.toStringAsFixed(2)}',
+                                false,
+                              ),
+                            ],
+                            SizedBox(height: 12.h),
+                            Container(
+                              height: 1.h,
+                              color: AppColors.grey200,
+                            ),
+                            SizedBox(height: 12.h),
+                            _buildSummaryRow(
+                              'Total',
+                              '\$ ${viewModel.totalAmount.toStringAsFixed(2)}',
+                              true,
+                            ),
+                          ],
+                        ),
+                      ),
+                    ),
 
                     // SizedBox(height: 20.h),
                     // Text(
@@ -799,6 +884,31 @@ class CheckoutView extends StackedView<CheckoutViewModel> {
               ),
             ),
           ),
+      ],
+    );
+  }
+
+  Widget _buildSummaryRow(String label, String value, bool isTotal,
+      {Color? textColor}) {
+    return Row(
+      mainAxisAlignment: MainAxisAlignment.spaceBetween,
+      children: [
+        Text(
+          label,
+          style: GoogleFonts.poppins(
+            fontSize: isTotal ? 16.sp : 14.sp,
+            fontWeight: isTotal ? FontWeight.w600 : FontWeight.w500,
+            color: textColor ?? AppColors.textPrimary,
+          ),
+        ),
+        Text(
+          value,
+          style: GoogleFonts.poppins(
+            fontSize: isTotal ? 16.sp : 14.sp,
+            fontWeight: isTotal ? FontWeight.w600 : FontWeight.w500,
+            color: textColor ?? AppColors.textPrimary,
+          ),
+        ),
       ],
     );
   }
