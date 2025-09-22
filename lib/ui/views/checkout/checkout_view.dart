@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:game_day_valet/models/bundle_model.dart';
 import 'package:game_day_valet/models/item_model.dart';
+import 'package:game_day_valet/models/tournament_model.dart';
 import 'package:game_day_valet/ui/common/app_colors.dart';
 import 'package:game_day_valet/ui/widgets/common/bundles_summary_item/bundles_summary_item.dart';
 import 'package:game_day_valet/ui/widgets/common/main_app_bar/main_app_bar.dart';
@@ -15,12 +16,12 @@ import 'package:stacked/stacked.dart';
 import 'checkout_viewmodel.dart';
 
 class CheckoutView extends StackedView<CheckoutViewModel> {
-  final int tournamentId;
+  final TournamentModel tournament;
   final List<ItemModel> items;
   final List<BundleModel> bundles;
   const CheckoutView(
       {Key? key,
-      required this.tournamentId,
+      required this.tournament,
       required this.items,
       required this.bundles})
       : super(key: key);
@@ -806,8 +807,7 @@ class CheckoutView extends StackedView<CheckoutViewModel> {
   CheckoutViewModel viewModelBuilder(
     BuildContext context,
   ) =>
-      CheckoutViewModel(
-          items: items, bundles: bundles, tournamentId: tournamentId);
+      CheckoutViewModel(items: items, bundles: bundles, tournament: tournament);
 
   @override
   void onViewModelReady(CheckoutViewModel viewModel) {

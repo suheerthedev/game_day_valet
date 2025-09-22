@@ -60,8 +60,8 @@ class TournamentsViewModel extends BaseViewModel {
     _navigationService.navigateToSearchView(isTournamentSearch: true);
   }
 
-  void navigateToRentalBook(int tournamentId) {
-    _navigationService.navigateToAddRentalsView(tournamentId: tournamentId);
+  void navigateToRentalBook(TournamentModel tournament) {
+    _navigationService.navigateToAddRentalsView(tournament: tournament);
   }
 
   void init() async {

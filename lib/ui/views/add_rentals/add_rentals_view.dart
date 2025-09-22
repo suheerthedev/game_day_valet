@@ -1,6 +1,7 @@
 import 'package:cached_network_image/cached_network_image.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
+import 'package:game_day_valet/models/tournament_model.dart';
 import 'package:game_day_valet/ui/common/app_colors.dart';
 import 'package:game_day_valet/ui/widgets/common/main_app_bar/main_app_bar.dart';
 import 'package:game_day_valet/ui/widgets/common/main_button/main_button.dart';
@@ -13,9 +14,8 @@ import 'package:stacked/stacked.dart';
 import 'add_rentals_viewmodel.dart';
 
 class AddRentalsView extends StackedView<AddRentalsViewModel> {
-  final int tournamentId;
-  const AddRentalsView({Key? key, required this.tournamentId})
-      : super(key: key);
+  final TournamentModel tournament;
+  const AddRentalsView({Key? key, required this.tournament}) : super(key: key);
 
   @override
   Widget builder(
@@ -393,7 +393,7 @@ class AddRentalsView extends StackedView<AddRentalsViewModel> {
   AddRentalsViewModel viewModelBuilder(
     BuildContext context,
   ) =>
-      AddRentalsViewModel(tournamentId: tournamentId);
+      AddRentalsViewModel(tournament: tournament);
 
   @override
   void onViewModelReady(AddRentalsViewModel viewModel) {

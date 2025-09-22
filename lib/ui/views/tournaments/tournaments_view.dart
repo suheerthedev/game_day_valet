@@ -250,16 +250,14 @@ class TournamentsView extends StackedView<TournamentsViewModel> {
                                               itemCount: viewModel
                                                   .tournamentsList.length,
                                               itemBuilder: (context, index) {
+                                                final tournament = viewModel
+                                                    .tournamentsList[index];
                                                 return MainTournamentCard(
-                                                  tournament: viewModel
-                                                      .tournamentsList[index],
+                                                  tournament: tournament,
                                                   onBookNowTap: () {
                                                     viewModel
                                                         .navigateToRentalBook(
-                                                            viewModel
-                                                                .tournamentsList[
-                                                                    index]
-                                                                .id);
+                                                            tournament);
                                                   },
                                                   onTapFavorite: () {
                                                     viewModel.toggleFavorite(
@@ -334,16 +332,18 @@ class TournamentsView extends StackedView<TournamentsViewModel> {
                                                           Axis.horizontal,
                                                       itemBuilder:
                                                           (context, index) {
+                                                        final recommendedTournament =
+                                                            viewModel
+                                                                    .recommendedTournamentsList[
+                                                                index];
                                                         return SecondaryTournamentCard(
                                                             tournament: viewModel
                                                                     .recommendedTournamentsList[
                                                                 index],
                                                             onBookNowTap: () {
-                                                              viewModel.navigateToRentalBook(
-                                                                  viewModel
-                                                                      .recommendedTournamentsList[
-                                                                          index]
-                                                                      .id);
+                                                              viewModel
+                                                                  .navigateToRentalBook(
+                                                                      recommendedTournament);
                                                             },
                                                             onTapFavorite: () {
                                                               viewModel.toggleFavorite(

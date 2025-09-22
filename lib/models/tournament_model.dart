@@ -9,6 +9,7 @@ class TournamentModel {
   final String? endDate;
   final String? location;
   final String? status;
+  final num? taxRate;
   bool isFavorite;
 
   TournamentModel({
@@ -20,6 +21,7 @@ class TournamentModel {
     this.endDate,
     this.location,
     this.status,
+    this.taxRate,
     this.isFavorite = false,
   });
 
@@ -33,6 +35,7 @@ class TournamentModel {
       endDate: json['end_date'],
       location: json['location'],
       status: json['status'],
+      taxRate: json['tax_rate'],
       isFavorite: json['is_favorite'],
     );
   }

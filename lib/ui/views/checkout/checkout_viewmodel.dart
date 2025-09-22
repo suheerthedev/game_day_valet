@@ -3,6 +3,7 @@ import 'package:flutter_chat_core/flutter_chat_core.dart';
 import 'package:game_day_valet/core/enums/snackbar_type.dart';
 import 'package:game_day_valet/models/coupon_model.dart';
 import 'package:game_day_valet/models/settings_item_model.dart';
+import 'package:game_day_valet/models/tournament_model.dart';
 import 'package:game_day_valet/models/user_model.dart';
 import 'package:game_day_valet/services/rental_service.dart';
 import 'package:game_day_valet/services/user_service.dart';
@@ -203,11 +204,11 @@ class CheckoutViewModel extends BaseViewModel {
   // bool applePay = false;
   // bool googlePay = false;
 
-  final int tournamentId;
+  final TournamentModel tournament;
   List<ItemModel> items = [];
   List<BundleModel> bundles = [];
   CheckoutViewModel(
-      {required this.items, required this.bundles, required this.tournamentId});
+      {required this.items, required this.bundles, required this.tournament});
 
   void toggleRentalSummaryExpanded() {
     isRentalSummaryExpanded = !isRentalSummaryExpanded;
@@ -374,7 +375,7 @@ class CheckoutViewModel extends BaseViewModel {
     }
 
     final body = {
-      "tournament_id": tournamentId,
+      "tournament_id": tournament.id,
       "team_name_with_age_group": teamNameController.text,
       "coach_name": coachNameController.text,
       "phone_number": phoneNumberController.text,

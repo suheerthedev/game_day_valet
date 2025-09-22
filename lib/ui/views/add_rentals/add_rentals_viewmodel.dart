@@ -3,6 +3,7 @@ import 'package:game_day_valet/app/app.locator.dart';
 import 'package:game_day_valet/app/app.router.dart';
 import 'package:game_day_valet/models/bundle_model.dart';
 import 'package:game_day_valet/models/item_model.dart';
+import 'package:game_day_valet/models/tournament_model.dart';
 import 'package:game_day_valet/models/tournament_rental_model.dart';
 import 'package:game_day_valet/services/rental_service.dart';
 import 'package:stacked/stacked.dart';
@@ -22,13 +23,13 @@ class AddRentalsViewModel extends BaseViewModel {
 
   // bool viewSmartSuggestions = false;
 
-  final int tournamentId;
-  AddRentalsViewModel({required this.tournamentId});
+  final TournamentModel tournament;
+  AddRentalsViewModel({required this.tournament});
 
   Future<void> getTournamentRentalItems() async {
     setBusy(true);
     rebuildUi();
-    await _rentalService.getTournamentRentalItems(tournamentId);
+    await _rentalService.getTournamentRentalItems(tournament.id);
     setBusy(false);
     rebuildUi();
   }
@@ -95,7 +96,7 @@ class AddRentalsViewModel extends BaseViewModel {
 
   Future<void> proceedToCheckout() async {
     await _navigationService.navigateToCheckoutView(
-        tournamentId: tournamentId,
+        tournament: tournament,
         items: items.where((item) => item.quantity > 0).toList(),
         bundles: bundles.where((bundle) => bundle.quantity > 0).toList());
     rebuildUi();

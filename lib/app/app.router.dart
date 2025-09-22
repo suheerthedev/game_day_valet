@@ -7,8 +7,9 @@
 // ignore_for_file: no_leading_underscores_for_library_prefixes
 import 'package:flutter/material.dart' as _i31;
 import 'package:flutter/material.dart';
-import 'package:game_day_valet/models/bundle_model.dart' as _i33;
-import 'package:game_day_valet/models/item_model.dart' as _i32;
+import 'package:game_day_valet/models/bundle_model.dart' as _i34;
+import 'package:game_day_valet/models/item_model.dart' as _i33;
+import 'package:game_day_valet/models/tournament_model.dart' as _i32;
 import 'package:game_day_valet/ui/views/add_rentals/add_rentals_view.dart'
     as _i24;
 import 'package:game_day_valet/ui/views/chat/chat_view.dart' as _i20;
@@ -53,7 +54,7 @@ import 'package:game_day_valet/ui/views/verify_email/verify_email_view.dart'
 import 'package:game_day_valet/ui/views/verify_password_reset_code/verify_password_reset_code_view.dart'
     as _i22;
 import 'package:stacked/stacked.dart' as _i1;
-import 'package:stacked_services/stacked_services.dart' as _i34;
+import 'package:stacked_services/stacked_services.dart' as _i35;
 
 class Routes {
   static const homeView = '/home-view';
@@ -426,7 +427,7 @@ class StackedRouter extends _i1.RouterBase {
       final args = data.getArgs<AddRentalsViewArguments>(nullOk: false);
       return _i31.MaterialPageRoute<dynamic>(
         builder: (context) =>
-            _i24.AddRentalsView(key: args.key, tournamentId: args.tournamentId),
+            _i24.AddRentalsView(key: args.key, tournament: args.tournament),
         settings: data,
       );
     },
@@ -435,7 +436,7 @@ class StackedRouter extends _i1.RouterBase {
       return _i31.MaterialPageRoute<dynamic>(
         builder: (context) => _i25.CheckoutView(
             key: args.key,
-            tournamentId: args.tournamentId,
+            tournament: args.tournament,
             items: args.items,
             bundles: args.bundles),
         settings: data,
@@ -659,56 +660,56 @@ class VerifyEmailViewArguments {
 class AddRentalsViewArguments {
   const AddRentalsViewArguments({
     this.key,
-    required this.tournamentId,
+    required this.tournament,
   });
 
   final _i31.Key? key;
 
-  final int tournamentId;
+  final _i32.TournamentModel tournament;
 
   @override
   String toString() {
-    return '{"key": "$key", "tournamentId": "$tournamentId"}';
+    return '{"key": "$key", "tournament": "$tournament"}';
   }
 
   @override
   bool operator ==(covariant AddRentalsViewArguments other) {
     if (identical(this, other)) return true;
-    return other.key == key && other.tournamentId == tournamentId;
+    return other.key == key && other.tournament == tournament;
   }
 
   @override
   int get hashCode {
-    return key.hashCode ^ tournamentId.hashCode;
+    return key.hashCode ^ tournament.hashCode;
   }
 }
 
 class CheckoutViewArguments {
   const CheckoutViewArguments({
     this.key,
-    required this.tournamentId,
+    required this.tournament,
     required this.items,
     required this.bundles,
   });
 
   final _i31.Key? key;
 
-  final int tournamentId;
+  final _i32.TournamentModel tournament;
 
-  final List<_i32.ItemModel> items;
+  final List<_i33.ItemModel> items;
 
-  final List<_i33.BundleModel> bundles;
+  final List<_i34.BundleModel> bundles;
 
   @override
   String toString() {
-    return '{"key": "$key", "tournamentId": "$tournamentId", "items": "$items", "bundles": "$bundles"}';
+    return '{"key": "$key", "tournament": "$tournament", "items": "$items", "bundles": "$bundles"}';
   }
 
   @override
   bool operator ==(covariant CheckoutViewArguments other) {
     if (identical(this, other)) return true;
     return other.key == key &&
-        other.tournamentId == tournamentId &&
+        other.tournament == tournament &&
         other.items == items &&
         other.bundles == bundles;
   }
@@ -716,7 +717,7 @@ class CheckoutViewArguments {
   @override
   int get hashCode {
     return key.hashCode ^
-        tournamentId.hashCode ^
+        tournament.hashCode ^
         items.hashCode ^
         bundles.hashCode;
   }
@@ -786,7 +787,7 @@ class TournamentsViewArguments {
   }
 }
 
-extension NavigatorStateExtension on _i34.NavigationService {
+extension NavigatorStateExtension on _i35.NavigationService {
   Future<dynamic> navigateToHomeView([
     int? routerId,
     bool preventDuplicates = true,
@@ -1117,7 +1118,7 @@ extension NavigatorStateExtension on _i34.NavigationService {
 
   Future<dynamic> navigateToAddRentalsView({
     _i31.Key? key,
-    required int tournamentId,
+    required _i32.TournamentModel tournament,
     int? routerId,
     bool preventDuplicates = true,
     Map<String, String>? parameters,
@@ -1125,8 +1126,7 @@ extension NavigatorStateExtension on _i34.NavigationService {
         transition,
   }) async {
     return navigateTo<dynamic>(Routes.addRentalsView,
-        arguments:
-            AddRentalsViewArguments(key: key, tournamentId: tournamentId),
+        arguments: AddRentalsViewArguments(key: key, tournament: tournament),
         id: routerId,
         preventDuplicates: preventDuplicates,
         parameters: parameters,
@@ -1135,9 +1135,9 @@ extension NavigatorStateExtension on _i34.NavigationService {
 
   Future<dynamic> navigateToCheckoutView({
     _i31.Key? key,
-    required int tournamentId,
-    required List<_i32.ItemModel> items,
-    required List<_i33.BundleModel> bundles,
+    required _i32.TournamentModel tournament,
+    required List<_i33.ItemModel> items,
+    required List<_i34.BundleModel> bundles,
     int? routerId,
     bool preventDuplicates = true,
     Map<String, String>? parameters,
@@ -1146,10 +1146,7 @@ extension NavigatorStateExtension on _i34.NavigationService {
   }) async {
     return navigateTo<dynamic>(Routes.checkoutView,
         arguments: CheckoutViewArguments(
-            key: key,
-            tournamentId: tournamentId,
-            items: items,
-            bundles: bundles),
+            key: key, tournament: tournament, items: items, bundles: bundles),
         id: routerId,
         preventDuplicates: preventDuplicates,
         parameters: parameters,
@@ -1568,7 +1565,7 @@ extension NavigatorStateExtension on _i34.NavigationService {
 
   Future<dynamic> replaceWithAddRentalsView({
     _i31.Key? key,
-    required int tournamentId,
+    required _i32.TournamentModel tournament,
     int? routerId,
     bool preventDuplicates = true,
     Map<String, String>? parameters,
@@ -1576,8 +1573,7 @@ extension NavigatorStateExtension on _i34.NavigationService {
         transition,
   }) async {
     return replaceWith<dynamic>(Routes.addRentalsView,
-        arguments:
-            AddRentalsViewArguments(key: key, tournamentId: tournamentId),
+        arguments: AddRentalsViewArguments(key: key, tournament: tournament),
         id: routerId,
         preventDuplicates: preventDuplicates,
         parameters: parameters,
@@ -1586,9 +1582,9 @@ extension NavigatorStateExtension on _i34.NavigationService {
 
   Future<dynamic> replaceWithCheckoutView({
     _i31.Key? key,
-    required int tournamentId,
-    required List<_i32.ItemModel> items,
-    required List<_i33.BundleModel> bundles,
+    required _i32.TournamentModel tournament,
+    required List<_i33.ItemModel> items,
+    required List<_i34.BundleModel> bundles,
     int? routerId,
     bool preventDuplicates = true,
     Map<String, String>? parameters,
@@ -1597,10 +1593,7 @@ extension NavigatorStateExtension on _i34.NavigationService {
   }) async {
     return replaceWith<dynamic>(Routes.checkoutView,
         arguments: CheckoutViewArguments(
-            key: key,
-            tournamentId: tournamentId,
-            items: items,
-            bundles: bundles),
+            key: key, tournament: tournament, items: items, bundles: bundles),
         id: routerId,
         preventDuplicates: preventDuplicates,
         parameters: parameters,

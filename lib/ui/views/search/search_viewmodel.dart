@@ -240,8 +240,8 @@ class SearchViewModel extends BaseViewModel {
     }
   }
 
-  void navigateToRentalBook(int tournamentId) {
-    _navigationService.navigateToAddRentalsView(tournamentId: tournamentId);
+  void navigateToRentalBook(TournamentModel tournament) {
+    _navigationService.navigateToAddRentalsView(tournament: tournament);
   }
 
   void toggleFavorite(int tournamentId) async {
