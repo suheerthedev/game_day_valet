@@ -1,4 +1,5 @@
 import 'package:flutter_secure_storage/flutter_secure_storage.dart';
+import 'package:game_day_valet/services/logger_service.dart';
 
 class SecureStorageService {
   final FlutterSecureStorage _storage = const FlutterSecureStorage();
@@ -10,18 +11,41 @@ class SecureStorageService {
   }
 
   Future<String?> getToken() async {
-    return await _storage.read(key: _tokenKey);
+    try {
+      return await _storage.read(key: _tokenKey);
+    } catch (e) {
+      logger.warning(
+          'Failed to read token from secure storage, clearing storage: $e');
+      // If decryption fails (due to signing change), clear all data
+      await clear();
+      return null;
+    }
   }
 
   Future<bool> hasToken() async {
-    return await _storage.containsKey(key: _tokenKey);
+    try {
+      return await _storage.containsKey(key: _tokenKey);
+    } catch (e) {
+      logger.warning('Failed to check token existence, clearing storage: $e');
+      await clear();
+      return false;
+    }
   }
 
   Future<void> deleteToken() async {
-    await _storage.delete(key: _tokenKey);
+    try {
+      await _storage.delete(key: _tokenKey);
+    } catch (e) {
+      logger.warning('Failed to delete token, clearing all: $e');
+      await clear();
+    }
   }
 
   Future<void> clear() async {
-    await _storage.deleteAll();
+    try {
+      await _storage.deleteAll();
+    } catch (e) {
+      logger.error('Failed to clear secure storage: $e');
+    }
   }
 }

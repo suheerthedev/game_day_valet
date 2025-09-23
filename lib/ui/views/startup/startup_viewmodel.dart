@@ -1,4 +1,5 @@
 import 'package:game_day_valet/services/deep_linking_service.dart';
+import 'package:game_day_valet/services/logger_service.dart';
 import 'package:game_day_valet/services/secure_storage_service.dart';
 import 'package:game_day_valet/services/shared_preferences_service.dart';
 import 'package:game_day_valet/services/startup_service.dart';
@@ -21,55 +22,53 @@ class StartupViewModel extends BaseViewModel {
 
   // Place anything here that needs to happen before we get into the application
   Future runStartupLogic() async {
-    // This is where you can make decisions on where your app should navigate when
-    // you have custom startup logic
-    // final hasDeepLink = await _deepLinkingService.processPendingUri();
+    try {
+      logger.info('Starting startup logic');
 
-    await _sharedPreferencesService.init();
-    final token = await _secureStorageService.getToken();
+      await _sharedPreferencesService.init();
+      logger.info('SharedPreferences initialized');
 
-    _deepLinkingService.isStartupInitiated = true;
+      // Add try-catch specifically for secure storage
+      String? token;
+      try {
+        token = await _secureStorageService.getToken();
+        logger.info('Token retrieved: ${token != null ? 'exists' : 'null'}');
+      } catch (e) {
+        logger.error('Failed to get token from secure storage: $e');
+        // Clear storage and continue without token
+        await _secureStorageService.clear();
+        token = null;
+      }
 
-    final pendingRoute = _deepLinkingService.getPendingRoute();
+      _deepLinkingService.isStartupInitiated = true;
 
-    // if (pendingRoute != null) {
-    //   // Deep link handled; do not perform any further navigation here.
-    //   await _deepLinkingService.processPendingUri();
-    //   // return;
-    // }
+      final pendingRoute = _deepLinkingService.getPendingRoute();
+      logger.info('Pending route: $pendingRoute');
 
-    // if (pendingRoute != null) {
-    //   logger.info('Pending route: $pendingRoute');
-    //   if (token != null) {
-    //     if (await _startupService.validateToken()) {
-    //       await _startupService.runTokenTasks();
-    //       await _navigationService.replaceWithMainView();
-    //     }
-    //   } else {
-    //     _navigationService.clearStackAndShow(pendingRoute,
-    //         arguments: SignUpViewArguments(
-    //           referralCode: _deepLinkingService.getReferralCode(),
-    //         ));
-
-    //     _deepLinkingService.clearAll();
-    //   }
-    // } else
-
-    if (pendingRoute != null) {
-      await _deepLinkingService.processPendingUri();
-      if (token != null) {
+      if (pendingRoute != null) {
+        await _deepLinkingService.processPendingUri();
+        if (token != null) {
+          if (await _startupService.validateToken()) {
+            await _startupService.runTokenTasks();
+            await _navigationService.replaceWithMainView();
+          }
+        }
+      } else if (token != null) {
+        logger.info('Validating token...');
         if (await _startupService.validateToken()) {
+          logger.info('Token valid, running token tasks...');
           await _startupService.runTokenTasks();
           await _navigationService.replaceWithMainView();
         }
+      } else {
+        logger.info('No token, navigating to onboarding');
+        await Future.delayed(const Duration(seconds: 2));
+        _navigationService.replaceWithOnboardingView();
       }
-    } else if (token != null) {
-      if (await _startupService.validateToken()) {
-        await _startupService.runTokenTasks();
-        await _navigationService.replaceWithMainView();
-      }
-    } else {
-      await Future.delayed(const Duration(seconds: 2));
+      logger.info('Startup logic completed');
+    } catch (e, stackTrace) {
+      logger.error('Error in startup logic: $e', e, stackTrace);
+      // Fallback navigation
       _navigationService.replaceWithOnboardingView();
     }
   }

@@ -428,7 +428,8 @@ class CheckoutViewModel extends BaseViewModel {
     try {
       isLoading = true;
       rebuildUi();
-      await _rentalService.createRentalBooking(context, totalAmount, body);
+      await _rentalService.createRentalBooking(
+          context, num.parse(totalAmount.toStringAsFixed(2)), body);
     } on ApiException catch (e) {
       _snackbarService.showCustomSnackBar(
           message: e.message,
