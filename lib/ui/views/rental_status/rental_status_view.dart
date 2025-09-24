@@ -1,6 +1,6 @@
 import 'package:cached_network_image/cached_network_image.dart';
 import 'package:dotted_line/dotted_line.dart';
-import 'package:floating_chat_button/floating_chat_button.dart';
+// import 'package:floating_chat_button/floating_chat_button.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:game_day_valet/ui/common/app_colors.dart';
@@ -41,31 +41,31 @@ class RentalStatusView extends StackedView<RentalStatusViewModel> {
                 : viewModel.rentalStatus.isNotEmpty
                     ? _buildRentalActiveState(context, viewModel)
                     : _buildNoRentalState(context),
-            FloatingChatButton(
-              onTap: (_) {
-                viewModel.onChatTap();
-              },
-              chatIconWidget: const Padding(
-                padding: EdgeInsets.all(14.0),
-                child: Icon(
-                  IconsaxPlusLinear.message_2,
-                  color: AppColors.white,
-                  size: 24,
-                ),
-              ),
-              messageBackgroundColor: AppColors.secondary,
-              chatIconBorderColor: AppColors.secondary,
-              chatIconBackgroundColor: AppColors.secondary,
-              messageBorderWidth: 2,
-              // messageText: "You've received a message!",
-              messageTextStyle: GoogleFonts.poppins(
-                  fontSize: 14.sp,
-                  fontWeight: FontWeight.w400,
-                  color: AppColors.white),
-              showMessageParameters: ShowMessageParameters(
-                  delayDuration: const Duration(seconds: 2),
-                  durationToShowMessage: const Duration(seconds: 5)),
-            )
+            // FloatingChatButton(
+            //   onTap: (_) {
+            //     viewModel.onChatTap();
+            //   },
+            //   chatIconWidget: const Padding(
+            //     padding: EdgeInsets.all(14.0),
+            //     child: Icon(
+            //       IconsaxPlusLinear.message_2,
+            //       color: AppColors.white,
+            //       size: 24,
+            //     ),
+            //   ),
+            //   messageBackgroundColor: AppColors.secondary,
+            //   chatIconBorderColor: AppColors.secondary,
+            //   chatIconBackgroundColor: AppColors.secondary,
+            //   messageBorderWidth: 2,
+            //   // messageText: "You've received a message!",
+            //   messageTextStyle: GoogleFonts.poppins(
+            //       fontSize: 14.sp,
+            //       fontWeight: FontWeight.w400,
+            //       color: AppColors.white),
+            //   showMessageParameters: ShowMessageParameters(
+            //       delayDuration: const Duration(seconds: 2),
+            //       durationToShowMessage: const Duration(seconds: 5)),
+            // )
           ],
         )));
   }
