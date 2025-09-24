@@ -54,7 +54,7 @@ class StartupService with ListenableServiceMixin {
     // await getUserConversations();
     await _userService.fetchCurrentUser();
     await _rentalService.init();
-    await intializeChatPusher();
+    // await intializeChatPusher();
     // await getInitalChatMessage();
   }
 
